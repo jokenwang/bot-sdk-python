@@ -10,7 +10,7 @@
 """
 import json
 import re
-from lib.card.TextCard import TextCard
+from sdk.card.TextCard import TextCard
 
 
 class Response(object):

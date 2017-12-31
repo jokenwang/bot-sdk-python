@@ -11,8 +11,8 @@
 
 import json
 import re
-from lib.Request import Request
-from lib.Response import Response
+from sdk.Request import Request
+from sdk.Response import Response
 
 class Bot(object):
 

@@ -8,7 +8,7 @@
 """
     desc:pass
 """
-from lib.directive.BaseDirective import BaseDirective
+from sdk.directive.BaseDirective import BaseDirective
 
 
 class Stop(BaseDirective):

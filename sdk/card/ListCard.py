@@ -9,7 +9,7 @@
 暂未搞
 """
 
-from lib.card.BaseCard import BaseCard
+from sdk.card.BaseCard import BaseCard
 class ListCard(BaseCard):
 
     pass

@@ -10,8 +10,8 @@
 '''
 
 import json
-from lib.Nlu import Nlu
-from lib.Session import Session
+from sdk.Nlu import Nlu
+from sdk.Session import Session
 
 class Request(object):
 

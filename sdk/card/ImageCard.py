@@ -9,7 +9,7 @@
 暂未搞
 """
 
-from lib.card import BaseCard as lib
+from sdk.card.BaseCard import BaseCard
 class ImageCard(lib.BaseCard):
     pass
 

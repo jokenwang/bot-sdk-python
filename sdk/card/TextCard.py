@@ -8,7 +8,7 @@
 """
 卡片形式展示
 """
-from  lib.card.BaseCard import BaseCard
+from  sdk.card.BaseCard import BaseCard
 
 class TextCard(BaseCard):
 
