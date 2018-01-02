@@ -9,6 +9,11 @@
     desc:pass
 """
 
+import random
+import hashlib
+
+import time
+import datetime
 import json
 import logging
 from sdk.Bot import Bot
@@ -68,10 +73,23 @@ if __name__ == '__main__':
         with open("./json/control.json", 'r') as load_f:
             return load_f.read()
 
-    data = searchData()
-    bot = BotTest(data)
-    bot.run()
+    # data = searchData()
+    # bot = BotTest(data)
+    # bot.run()
     #
 
+    rand = str(random.randint(0, 9999999999))
+    t = str(round(time.time() * 1000))
+    md5 = hashlib.md5()
+    md5Str = rand + t
+    print("md5Str = %s, encode = %s ", (md5Str,md5Str.encode('utf-8')))
+    md5.update(md5Str.encode('utf-8'))
+    token = md5.hexdigest()
+    uuid = token[0:8] + '-'
+    uuid = uuid + token[8:12] + '-'
+    uuid = uuid + token[12:16] + '-'
+    uuid = uuid + token[16:20] + '-'
+    uuid = uuid + token[20:]
 
+    print(uuid)
     pass

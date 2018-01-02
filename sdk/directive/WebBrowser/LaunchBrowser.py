@@ -6,13 +6,18 @@
 # create_time: 2017/12/31 上午12:25
 
 """
-    desc:pass
+    用于调用浏览器指令的类
 """
 
 from sdk.directive.BaseDirective import BaseDirective
-class LaunchBrowser(BaseDirective):
-    pass
 
+class LaunchBrowser(BaseDirective):
+
+    def __init__(self, url):
+
+        super(LaunchBrowser, self).__init__('WebBrowser.LaunchBrowser')
+        self.data['url'] = url
+        self.data['token'] = self.getToken()
 
 if __name__ == '__main__':
     pass

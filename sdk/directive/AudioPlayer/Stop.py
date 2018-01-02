@@ -6,13 +6,15 @@
 # create_time: 2017/12/31 上午12:25
 
 """
-    desc:pass
+    用于生成Stop指令的类
 """
 from sdk.directive.BaseDirective import BaseDirective
 
 
 class Stop(BaseDirective):
-    pass
+
+    def __init__(self):
+        super(Stop, self).__init__('AudioPlayer.Stop')
 
 
 if __name__ == '__main__':
