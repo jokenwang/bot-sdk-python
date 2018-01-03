@@ -95,6 +95,4 @@ if __name__ == '__main__':
     # uuid = uuid + token[12:16] + '-'
     # uuid = uuid + token[16:20] + '-'
     # uuid = uuid + token[20:]
-    d = ['a', 'b']
-    print(json.dumps(d))
     pass

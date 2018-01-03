@@ -11,6 +11,9 @@
 
 import json
 import re
+from monitor.botmonitor.BotMonitor import BotMonitor
+from monitor.botmonitor.Certificate import Certificate
+from sdk.Intercept import Intercept
 from sdk.Request import Request
 from sdk.Response import Response
 
@@ -34,6 +37,9 @@ class Bot(object):
         self.nlu = self.request.getNlu()
         self.response = Response(self.request, self.session, self.nlu)
         self.handler = []
+        self.certificate = Certificate(privateKey)
+        self.botMonitor = BotMonitor(postData)
+        self.intercept = []
 
     def addLanchHandler(self, func):
         '''
@@ -93,7 +99,8 @@ class Bot(object):
             })
 
     def addIntercept(self, intercept):
-        self.intercept = intercept
+        if(isinstance(intercept, Intercept)):
+            self.intercept.append(intercept)
 
 
     def addEventListener(self, event, func):
@@ -117,7 +124,7 @@ class Bot(object):
         if(event and func):
             self.event[event] = func
 
-    def addDefaultEventListener(self, event, func):
+    def addDefaultEventListener(self, func):
         '''
         默认兜底事件的处理函数
         :param event:
@@ -194,7 +201,7 @@ class Bot(object):
         :return:
         '''
 
-        if(self.response != None):
+        if(self.response):
             self.response.setShouldEndSession(False)
 
     def endDialog(self):
@@ -203,7 +210,7 @@ class Bot(object):
         :return:
         '''
 
-        if(self.response != None):
+        if(self.response):
             self.response.setShouldEndSession(True)
 
     def run(self, build = True):
@@ -214,32 +221,44 @@ class Bot(object):
         :return:
         '''
 
-        #TODO 验证请求签名
+        if(not self.certificate.verifyRequest()):
+            return self.response.illegalRequest()
 
         eventHandler = self.__getRegisterEventHandler()
 
         if(self.request.getType() == 'IntentRequest' and not self.nlu and not eventHandler):
             return self.response.defaultResult()
 
-        #TODO 请求前拦截器
+        ret = {}
+        for intercept in self.intercept:
+            self.botMonitor.setPreEventStart()
+            ret = intercept.preprocess(self)
+            self.botMonitor.setPreEventEnd()
+            if(ret):
+                return
 
-        if(eventHandler):
-            #TODO 添加监控
-            event = self.request.getEventData()
-            ret = self.__callFunc(eventHandler, event)
-            #TODO 添加监控
-        else:
-            #TODO 添加监控
-            ret = self.dispatch()
-            #TODO 添加监控
+        if(not ret):
+            if(eventHandler):
+                self.botMonitor.setDeviceEventStart()
+                event = self.request.getEventData()
+                ret = self.__callFunc(eventHandler, event)
+                self.botMonitor.setDeviceEventEnd()
+            else:
+                self.botMonitor.setEventStart()
+                ret = self.dispatch()
+                self.botMonitor.setEventEnd()
 
-        #TODO 返回后拦截器
+        for intercept in self.intercept:
+            self.botMonitor.setPostEventStart()
+            ret = intercept.postprocess(self, ret)
+            self.botMonitor.setPostEventEnd()
 
         if(ret):
             print('====== ret %s' % ret)
             res = self.response.build(ret)
-            print('%s' % json.dumps(res))
-            #TODO 监控
+            print(json.dumps(res))
+            self.botMonitor.setResponseData(res)
+            self.botMonitor.updateData()
 
             if(not build):
                 return json.dumps(ret)
@@ -300,7 +319,6 @@ class Bot(object):
                 ret = directive_func(arg)
         return ret
 
-    # TODO
     def getToken(self, rule):
         '''
 
@@ -312,7 +330,6 @@ class Bot(object):
         return self.getSlots(token, rule)
         pass
 
-    #TODO
     def __getToke(self, token, rule):
         '''
 

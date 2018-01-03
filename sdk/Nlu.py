@@ -34,12 +34,15 @@ class Nlu(object):
         :return:
         '''
 
+        if(not field):
+            return
+
         slots = self.data[index]['slots']
 
         if(field in slots.keys()):
-            slots[field]['value'] = value
+            self.data[index]['slots'][field]['value'] = value
         else:
-            slots[field] = {
+            self.data[index]['slots'][field] = {
                 'name': field,
                 'value': value
             }
@@ -55,15 +58,23 @@ class Nlu(object):
         '''
 
         '''
-           "slots": {
-                "{{STRING}}": {
-                    "name": "{{STRING}}",
-                    "value": ["{{STRING}}"],
-                    "confirmationStatus": "{{STRING}}"
-                }
-            } 
+            intent:[
+                {
+                   "slots": {
+                        "{{STRING}}": {
+                            "name": "{{STRING}}",
+                            "value": ["{{STRING}}"],
+                            "confirmationStatus": "{{STRING}}"
+                        }
+                    }
+                },{
+                .....
+                } 
+            ]
         '''
-        # #此处有坑 文档是values
+        if(not field):
+            return
+        # #此处有坑 文档是values 但是PHP demo是value
         return self.__getSlotValueByKey(field, 'value', index)
 
     def getSlotConfirmationStatus(self, field, index = 0):
@@ -92,6 +103,8 @@ class Nlu(object):
         :return:
         '''
 
+        if(not 'slots' in self.data[index]):
+            return ''
         slots = self.data[index]['slots']
 
         return slots[field][subField]
@@ -184,15 +197,12 @@ class Nlu(object):
 
         if('slots' in self.data[0].keys()):
             slots = self.data[0]['slots']
-        else:
-            slots = {}
-
-        if(field in slots.keys()):
-            self.directive = [{
-                'type': 'Dialog.ConfirmSlot',
-                'slotToConfirm': field,
-                'updatedIntent': self.__getUpdateIntent()
-            }]
+            if(field in slots.keys()):
+                self.directive = [{
+                    'type': 'Dialog.ConfirmSlot',
+                    'slotToConfirm': field,
+                    'updatedIntent': self.__getUpdateIntent()
+                }]
 
     def setConfirmIntent(self):
         '''

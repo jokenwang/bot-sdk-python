@@ -13,16 +13,14 @@ Session相关 暂未搞
 class Session(object):
     def __init__(self, data):
         print('data %s' % data)
-
+        self.data = {}
         if('attributes' in data.keys()):
             self.data = data['attributes']
-        else:
-            self.data = {}
 
         if('sessionId' in data.keys()):
             self.sessionId = data['sessionId']
         else:
-            self.sessionId = ''
+            self.sessionId = None
 
         if('new' in data.keys()):
             self.isNew = data['new']
@@ -30,7 +28,7 @@ class Session(object):
             self.isNew = False
 
     def clear(self):
-        self.data = ''
+        self.data = {}
 
     def toResponse(self):
 
@@ -39,7 +37,8 @@ class Session(object):
         }
 
     def getData(self, field, default):
-        return self.data[field]
+        if(field in self.data.keys()):
+            return self.data[field]
 
     def setData(self, field, value, default):
 
