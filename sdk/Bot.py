@@ -37,8 +37,8 @@ class Bot(object):
         self.nlu = self.request.getNlu()
         self.response = Response(self.request, self.session, self.nlu)
         self.handler = []
-        self.certificate = Certificate(privateKey)
-        self.botMonitor = BotMonitor(postData)
+        # self.certificate = Certificate(privateKey)
+        # self.botMonitor = BotMonitor(postData)
         self.intercept = []
 
     def addLanchHandler(self, func):
@@ -221,8 +221,8 @@ class Bot(object):
         :return:
         '''
 
-        if(not self.certificate.verifyRequest()):
-            return self.response.illegalRequest()
+        # if(not self.certificate.verifyRequest()):
+        #     return self.response.illegalRequest()
 
         eventHandler = self.__getRegisterEventHandler()
 
@@ -230,35 +230,34 @@ class Bot(object):
             return self.response.defaultResult()
 
         ret = {}
-        for intercept in self.intercept:
-            self.botMonitor.setPreEventStart()
-            ret = intercept.preprocess(self)
-            self.botMonitor.setPreEventEnd()
-            if(ret):
-                return
+        # for intercept in self.intercept:
+            # self.botMonitor.setPreEventStart()
+            # ret = intercept.preprocess(self)
+            # self.botMonitor.setPreEventEnd()
+            # if(ret):
+            #     return
 
-        if(not ret):
-            if(eventHandler):
-                self.botMonitor.setDeviceEventStart()
-                event = self.request.getEventData()
-                ret = self.__callFunc(eventHandler, event)
-                self.botMonitor.setDeviceEventEnd()
-            else:
-                self.botMonitor.setEventStart()
-                ret = self.dispatch()
-                self.botMonitor.setEventEnd()
+        if(eventHandler):
+            # self.botMonitor.setDeviceEventStart()
+            event = self.request.getEventData()
+            ret = self.__callFunc(eventHandler, event)
+            # self.botMonitor.setDeviceEventEnd()
+        else:
+            # self.botMonitor.setEventStart()
+            ret = self.dispatch()
+            # self.botMonitor.setEventEnd()
 
-        for intercept in self.intercept:
-            self.botMonitor.setPostEventStart()
-            ret = intercept.postprocess(self, ret)
-            self.botMonitor.setPostEventEnd()
+        # for intercept in self.intercept:
+            # self.botMonitor.setPostEventStart()
+            # ret = intercept.postprocess(self, ret)
+            # self.botMonitor.setPostEventEnd()
 
         if(ret):
             print('====== ret %s' % ret)
             res = self.response.build(ret)
             print(json.dumps(res))
-            self.botMonitor.setResponseData(res)
-            self.botMonitor.updateData()
+            # self.botMonitor.setResponseData(res)
+            # self.botMonitor.updateData()
 
             if(not build):
                 return json.dumps(ret)
