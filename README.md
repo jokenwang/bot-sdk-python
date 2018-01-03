@@ -12,13 +12,12 @@ Dueros Bot Python版SDK，鉴于官网只提供了PHP和Node的SDK，不能满�
 * Response.py Bot数据处理完后交由Response封装返回结果
 * Session.py 处理会话信息(暂未实现)
 * card 目录处理展示卡片相关
-* directive 生成指令相关比如：浏览器指令、音频指令(暂未实现)
+* directive 生成指令相关比如：浏览器指令、音频指令
 
 ### 暂未实现
 * 拦截器
 * 监控器
 * 会话
-* 指令处理
 
 
 ### 免责声明
