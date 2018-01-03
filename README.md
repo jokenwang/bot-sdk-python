@@ -18,6 +18,7 @@ Dueros Bot Python版SDK，鉴于官网只提供了PHP和Node的SDK，不能满�
 * 拦截器
 * 监控器
 * 会话
+* ~~指令处理~~
 
 
 ### 免责声明
