@@ -35,8 +35,13 @@ class BotTest(Bot):
 
         self.ask('deviceName')
 
+        card = TextCard('您要查找什么智能设备呢? 比如"查找我的空调"')
+        card.addCueWords("百度")
+        card.addCueWords("百度")
+        card.addCueWords("百度")
+        card.setAnchor("http://www.baidu.com", "百度")
         return {
-            'card': TextCard('您要查找什么智能设备呢? 比如"查找我的空调"'),
+            'card': card,
             'outputSpeech': '<speak>您要查找什么智能设备呢? 比如"查找我的空调"</speak>'
         }
 
@@ -73,23 +78,23 @@ if __name__ == '__main__':
         with open("./json/control.json", 'r') as load_f:
             return load_f.read()
 
-    # data = searchData()
-    # bot = BotTest(data)
-    # bot.run()
+    data = searchData()
+    bot = BotTest(data)
+    bot.run()
     #
 
-    rand = str(random.randint(0, 9999999999))
-    t = str(round(time.time() * 1000))
-    md5 = hashlib.md5()
-    md5Str = rand + t
-    print("md5Str = %s, encode = %s ", (md5Str,md5Str.encode('utf-8')))
-    md5.update(md5Str.encode('utf-8'))
-    token = md5.hexdigest()
-    uuid = token[0:8] + '-'
-    uuid = uuid + token[8:12] + '-'
-    uuid = uuid + token[12:16] + '-'
-    uuid = uuid + token[16:20] + '-'
-    uuid = uuid + token[20:]
-
-    print(uuid)
+    # rand = str(random.randint(0, 9999999999))
+    # t = str(round(time.time() * 1000))
+    # md5 = hashlib.md5()
+    # md5Str = rand + t
+    # print("md5Str = %s, encode = %s ", (md5Str,md5Str.encode('utf-8')))
+    # md5.update(md5Str.encode('utf-8'))
+    # token = md5.hexdigest()
+    # uuid = token[0:8] + '-'
+    # uuid = uuid + token[8:12] + '-'
+    # uuid = uuid + token[12:16] + '-'
+    # uuid = uuid + token[16:20] + '-'
+    # uuid = uuid + token[20:]
+    d = ['a', 'b']
+    print(json.dumps(d))
     pass
