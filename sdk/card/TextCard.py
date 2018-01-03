@@ -17,15 +17,17 @@ class TextCard(BaseCard):
         文本卡片显示的content
         :param content:
         '''
-        self.data['type'] = "text"
+        super(TextCard, self).__init__({content})
+        self.data['type'] = "txt"
         self.data['content'] = "%s" % content
-        super(TextCard, self).__init__(content)
 
     def getData(self):
-        return {
-            "type": "txt",
-            "content": self.data['content']
-        }
+
+        return self.data
+        # return {
+        #     "type": "txt",
+        #     "content": self.data['content']
+        # }
 
 if __name__ == '__main__':
     pass

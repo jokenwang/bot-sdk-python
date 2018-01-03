@@ -9,25 +9,37 @@
 卡片基类
 """
 
-import json
-
 class BaseCard(object):
 
-	data = {}
-
-	def __init__(self, field):
-		print('field %s' % field)
+	def __init__(self, field = ''):
+		self.data = {}
 		self.supportSetField = field
 
 	def addCueWords(self, arr):
 		'''
 		为卡片添加cue words 提示用户输入
-		:param arr:
+		:param arr: 数组
 		:return:
 		'''
-		pass
+		if(arr):
+			if(isinstance(arr, str)):
+				arr = [arr]
+
+			if('cueWords' in self.data):
+				self.data['cueWords'] = self.data['cueWords']
+			else:
+				self.data['cueWords'] = []
+
+			self.data['cueWords'].extend(arr)
+		return self
 
 	def setAnchor(self, url, anchorText):
+		'''
+		设置卡片链接
+		:param url:	 比如:http(s)://....
+		:param anchorText:	链接显示的文字
+		:return:
+		'''
 		if(url):
 			self.data['url'] = url
 			if(anchorText):
@@ -43,3 +55,7 @@ class BaseCard(object):
 	def getContentData(self):
 
 		return self.data['content']
+
+if __name__ == '__main__':
+
+	pass

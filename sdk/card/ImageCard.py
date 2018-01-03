@@ -10,9 +10,46 @@
 """
 
 from sdk.card.BaseCard import BaseCard
-class ImageCard(lib.BaseCard):
-    pass
+
+class ImageCard(BaseCard):
+
+    def __init__(self):
+        super(ImageCard, self).__init__()
+        self.data['type'] = 'image'
+
+    def addItem(self, src, thumbnail = ''):
+        '''
+        添加
+        :param src:
+        :param thumbnail:
+        :return:
+        '''
+
+        if(not src):
+            return self
+
+        if(not 'list' in self.data.keys()):
+            self.data['list'] = []
+
+        item = {}
+        item['src'] = src
+
+        if(thumbnail):
+            item['thumbnail'] = thumbnail
+        self.data['list'].append(item)
+        return self
+
+    def getData(self):
+        return self.data
 
 
 if __name__ == '__main__':
+
+    list = []
+
+    dit = {'name':'adfa'}
+    list.append(dit)
+
+    print(list)
+
     pass

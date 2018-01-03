@@ -8,12 +8,52 @@
 """
 暂未搞
 """
-
+# 'title', 'content', 'url', 'image'
+import json
 from sdk.card.BaseCard import BaseCard
+from sdk.card.ListCardItem import ListCardItem
+
 class ListCard(BaseCard):
 
-    pass
+    def __init__(self):
+        super(ListCard, self).__init__()
+        self.data['type'] = 'list'
+
+    def addItem(self, listCardIetm):
+
+        if(isinstance(listCardIetm, ListCardItem)):
+
+            if(not 'list' in self.data.keys()):
+                self.data['list'] = []
+            self.data['list'].append(listCardIetm.getData())
+        return self
+
+    def getData(self):
+        return self.data
 
 
 if __name__ == '__main__':
+
+    listCardItem1 = ListCardItem()
+    listCardItem1.setTitle('baidu')
+    listCardItem1.setUrl("http://www.baidu.com")
+    listCardItem1.setImage("http://www.baidu.com")
+    listCardItem1.setContent("http://www.baidu.com")
+
+    print(id(listCardItem1))
+    listCardItem2 = ListCardItem()
+    listCardItem2.setTitle("百度2")
+    print(id(listCardItem2))
+
+    listCardItem3 = ListCardItem()
+    listCardItem3.setTitle("百度3")
+    print(id(listCardItem3))
+
+    listCard = ListCard()
+    listCard.addItem(listCardItem1)
+    listCard.addItem(listCardItem2)
+    listCard.addItem(listCardItem3)
+
+    print(json.dumps(listCard.getData()))
+
     pass
