@@ -17,9 +17,9 @@ class BaseDirective(object):
     指令基类
     '''
 
-    data = {}
 
     def __init__(self, type):
+        self.data = {}
 
         self.data['type'] = type
 

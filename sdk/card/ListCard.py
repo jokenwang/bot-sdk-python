@@ -28,9 +28,6 @@ class ListCard(BaseCard):
             self.data['list'].append(listCardIetm.getData())
         return self
 
-    def getData(self):
-        return self.data
-
 
 if __name__ == '__main__':
 

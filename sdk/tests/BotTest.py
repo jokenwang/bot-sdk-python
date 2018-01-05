@@ -31,7 +31,7 @@ class BotTest(Bot):
             'outputSpeech': r'<speak>欢迎使用家居控制!请告诉我您要查找什么智能设备，比如查找我的空调</speak>'
         }
 
-    def intentRequest(self):
+    def searchRequest(self):
 
         self.ask('deviceName')
 
@@ -61,7 +61,7 @@ class BotTest(Bot):
 
         self.addIntentHandler('dueros.device_interface.smart_device.control', self.controlRequest)
 
-        self.addIntentHandler('dueros.device_interface.smart_device.search', self.intentRequest)
+        self.addIntentHandler('dueros.device_interface.smart_device.search', self.searchRequest)
     pass
 
 if __name__ == '__main__':

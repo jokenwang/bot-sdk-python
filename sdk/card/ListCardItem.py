@@ -13,24 +13,8 @@ from sdk.card.BaseCard import BaseCard
 
 class ListCardItem(BaseCard):
 
-    def setTitle(self, title):
-        if(title):
-            self.data['title'] = title
-
-    def setContent(self, content):
-        if(content):
-            self.data['content'] = content
-
-    def setUrl(self, url):
-        if(url):
-            self.data['url'] = url
-
-    def setImage(self, image):
-        if(image):
-            self.data['image'] = image
-
-    def getData(self):
-        return self.data
+    def __init__(self):
+        super(ListCardItem, self).__init__(['title', 'content', 'url', 'image'])
 
 
 if __name__ == '__main__':

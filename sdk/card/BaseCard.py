@@ -11,7 +11,7 @@
 
 class BaseCard(object):
 
-	def __init__(self, field = ''):
+	def __init__(self, field = []):
 		self.data = {}
 		self.supportSetField = field
 
@@ -46,15 +46,33 @@ class BaseCard(object):
 				self.data['anchorText'] = anchorText
 		return self
 
-	def getData(self, key):
-		if(key):
-			return self.data[key]
+	# def getData(self, key):
+	# 	if(key):
+	# 		return self.data[key]
+	# 	else:
+	# 		return self.data
+
+	def getData(self):
+		return self.data
+
+	def __getattr__(self, item):
+		'''
+		添加魔术方法
+		:param item:
+		:return:
+		'''
+		#获取操作类型 set
+		operation = item[0:3]
+		#获取被操作的属性
+		field = item[3:]
+		if(operation == 'set' and field and (field.lower() in self.supportSetField)):
+			def function(*args):
+				self.data[field.lower()] = str(*args)
+			return function
 		else:
-			return self.data
-
-	def getContentData(self):
-
-		return self.data['content']
+			def function(*args):
+				print('不支持', operation, field)
+			return function
 
 if __name__ == '__main__':
 

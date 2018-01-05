@@ -17,17 +17,14 @@ class TextCard(BaseCard):
         文本卡片显示的content
         :param content:
         '''
-        super(TextCard, self).__init__({content})
+        super(TextCard, self).__init__(['content'])
         self.data['type'] = "txt"
         self.data['content'] = "%s" % content
 
-    def getData(self):
-
-        return self.data
-        # return {
-        #     "type": "txt",
-        #     "content": self.data['content']
-        # }
-
 if __name__ == '__main__':
+
+
+    textCard = TextCard('sdfasdfs')
+    textCard.setContent('hehe')
+    print(textCard.getData())
     pass

@@ -39,9 +39,6 @@ class ImageCard(BaseCard):
         self.data['list'].append(item)
         return self
 
-    def getData(self):
-        return self.data
-
 
 if __name__ == '__main__':
 
