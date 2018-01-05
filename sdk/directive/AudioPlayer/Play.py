@@ -44,7 +44,7 @@ class Play(BaseDirective):
         }
 
     def setToken(self, token):
-        if(token):
+        if token:
             self.data['audioItem']['stream']['token'] = token
 
     def getToken(self):
@@ -52,7 +52,7 @@ class Play(BaseDirective):
 
 
     def setUrl(self, url):
-        if(url):
+        if url:
             self.data['audioItem']['stream']['url'] = url
 
     def setOffsetInMilliSeconds(self, milliSeconds):
@@ -61,7 +61,7 @@ class Play(BaseDirective):
         :param milliSeconds:    毫秒数。比如5分钟的歌曲，播放的长度是5*60*1000毫秒，选择起始的播放位置
         :return:
         '''
-        if (milliSeconds.isdigit()):
+        if milliSeconds.isdigit():
             milliSeconds = int(milliSeconds)
             self.data['audioItem']['stream']['offsetInMilliSeconds'] = milliSeconds
 
@@ -71,7 +71,7 @@ class Play(BaseDirective):
         :param intervalMs:  毫秒数。
         :return:
         '''
-        if(intervalMs.isdigit()):
+        if intervalMs.isdigit():
             intervalMs = int(intervalMs)
             self.data['audioItem']['stream']['progressReportIntervalMs'] = intervalMs
 
@@ -83,7 +83,7 @@ class Play(BaseDirective):
         '''
         streamFormatArray = ['AUDIO_MP3', 'AUDIO_M3U8', 'AUDIO_M4A']
 
-        if(streamFormat in streamFormatArray):
+        if streamFormat in streamFormatArray:
             self.data['audioItem']['stream']['streamFormat'] = streamFormat
 
 

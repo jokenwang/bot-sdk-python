@@ -5,11 +5,11 @@
 # author:jack
 # create_time: 2017/12/30
 
-"""
-卡片基类
-"""
 
 class BaseCard(object):
+	'''
+	卡片基类
+	'''
 
 	def __init__(self, field = []):
 		self.data = {}
@@ -21,11 +21,11 @@ class BaseCard(object):
 		:param arr: 数组
 		:return:
 		'''
-		if(arr):
-			if(isinstance(arr, str)):
+		if arr:
+			if isinstance(arr, str):
 				arr = [arr]
 
-			if('cueWords' in self.data):
+			if 'cueWords' in self.data:
 				self.data['cueWords'] = self.data['cueWords']
 			else:
 				self.data['cueWords'] = []
@@ -40,17 +40,11 @@ class BaseCard(object):
 		:param anchorText:	链接显示的文字
 		:return:
 		'''
-		if(url):
+		if url:
 			self.data['url'] = url
 			if(anchorText):
 				self.data['anchorText'] = anchorText
 		return self
-
-	# def getData(self, key):
-	# 	if(key):
-	# 		return self.data[key]
-	# 	else:
-	# 		return self.data
 
 	def getData(self):
 		return self.data

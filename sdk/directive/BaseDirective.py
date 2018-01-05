@@ -12,11 +12,11 @@ import time
 import random
 import hashlib
 
+
 class BaseDirective(object):
     '''
     指令基类
     '''
-
 
     def __init__(self, type):
         self.data = {}
@@ -32,7 +32,6 @@ class BaseDirective(object):
         rand = str(random.randint(0, 9999999999))
         t = str(round(time.time() * 1000))
         md5Str = rand + t
-        print('md5Str = %s' % md5Str)
         md5 = hashlib.md5()
         md5.update(md5Str.encode('utf-8'))
         token = md5.hexdigest()
@@ -41,11 +40,10 @@ class BaseDirective(object):
         uuid = uuid + token[12:16] + '-'
         uuid = uuid + token[16:20] + '-'
         uuid = uuid + token[20:]
-        print('token = ',  uuid)
         return uuid
 
     def getData(self):
-        return self.data;
+        return self.data
 
     def setToken(self, token):
         if(token):

@@ -3,15 +3,15 @@
 
 # description:
 # author:jack
-# create_time: 2018/1/2 下午10:59
-
-"""
-   用于调用app的指令类
-"""
+# create_time: 2018/1/2
 
 from sdk.directive.BaseDirective import BaseDirective
 
+
 class LaunchApp(BaseDirective):
+    """
+       用于调用app的指令类
+    """
 
     def __init__(self, appName, packageName, deepLink):
         '''
@@ -22,7 +22,7 @@ class LaunchApp(BaseDirective):
         '''
 
         super(LaunchApp, self).__init__('AppLauncher.LaunchApp')
-        if(not appName and not packageName and not deepLink):
+        if not appName and not packageName and not deepLink:
             print('appName packageName deepLink 必须要有一个')
         else:
             self.data = dict({
@@ -33,15 +33,18 @@ class LaunchApp(BaseDirective):
             },**self.data)
 
     def setAppName(self, appName):
-        if(appName):
+
+        if appName:
             self.data['appName'] = appName
 
     def setPackageName(self, packageName):
-        if(packageName):
+
+        if packageName:
             self.data['packageName'] = packageName
 
     def setDeepLink(self, deepLink):
-        if(deepLink):
+
+        if deepLink:
             self.data['deepLink'] = deepLink
 
 if __name__ == '__main__':

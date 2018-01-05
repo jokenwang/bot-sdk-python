@@ -3,7 +3,7 @@
 
 # description:
 # author:jack
-# create_time: 2018/1/3 下午3:29
+# create_time: 2018/1/3
 
 """
     desc:pass

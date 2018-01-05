@@ -5,15 +5,16 @@
 # author:jack
 # create_time: 2017/12/30
 
-"""
-处理完后构建返回数据
-"""
 import json
 import re
 from sdk.card.TextCard import TextCard
+from sdk.directive.BaseDirective import BaseDirective
 
 
 class Response(object):
+    """
+    处理完后构建返回数据
+    """
 
     def __init__(self, request, session, nlu):
         '''
@@ -37,7 +38,7 @@ class Response(object):
         :param val:
         :return:
         '''
-        if(val == True):
+        if val:
             self.shouldEndSession = True
         else:
             self.shouldEndSession = False
@@ -61,54 +62,53 @@ class Response(object):
         }
         :return:
         '''
-        #TODO
-        if(self.nlu and self.nlu.hasAsked()):
+
+        if self.nlu and self.nlu.hasAsked():
             self.shouldEndSession = False
 
-        if('directives' in data.keys()):
+        if 'directives' in data.keys():
             data['directives'] = data.get('directives')
         else:
             data['directives'] = []
 
-        if('card' in data.keys()):
+        if 'card' in data.keys():
             data['card'] = data.get('card')
         else:
             data['card'] = None
 
-        if('outputSpeech' in data.keys()):
+        if 'outputSpeech' in data.keys():
             data['outputSpeech'] = data.get('outputSpeech')
         else:
             data['outputSpeech'] = None
 
-        #
-        if ('resource' in data.keys()):
+        if 'resource' in data.keys():
             data['resource'] = data.get('resource')
         else:
             data['resource'] = None
 
-        if ('reprompt' in data.keys()):
+        if 'reprompt' in data.keys():
             data['reprompt'] = data.get('reprompt')
         else:
             data['reprompt'] = None
 
-
-        if ('directives' in data.keys()):
+        if 'directives' in data.keys():
             directives = data.get('directives')
         else:
             directives = []
 
-        #TODO
+        if len(directives) > 0:
+            directives = list(map(lambda value: value.getData(), list(filter(lambda value: isinstance(value, BaseDirective), directives))))
 
-        if(self.nlu):
+        if self.nlu:
             arr = self.nlu.toDirective()
             if(arr):
                 directives = arr
 
-        if(not data['outputSpeech'] and data['card'] and isinstance(data['card'], TextCard)):
+        if not data['outputSpeech'] and data['card'] and isinstance(data['card'], TextCard):
             data['outputSpeech'] = data['card']['content']
 
-        if(self.nlu):
-            if(self.nlu.toUpdateIntent()):
+        if self.nlu:
+            if self.nlu.toUpdateIntent():
                 context = self.nlu.toUpdateIntent()
             else:
                 context = {}
@@ -129,19 +129,15 @@ class Response(object):
             }
         }
 
-        if(self.needDetermine):
+        if self.needDetermine:
             ret['response']['needDetermine'] = self.needDetermine
 
-        if(self.expectSpeech):
+        if self.expectSpeech:
             ret['response']['expectSpeech'] = self.expectSpeech
 
-        if(self.fallBack):
+        if self.fallBack:
             ret['response']['fallBack'] = self.fallBack
-
-
-        print('=====data = %s' % json.dumps(ret))
         return ret
-
 
     def formatSpeech(self, mix):
         '''
@@ -149,11 +145,11 @@ class Response(object):
         :param mix:
         :return:
         '''
-        if(not mix or mix == 'null' or mix == ''):
+        if not mix or mix == 'null' or mix == '':
             return None
 
         result = {}
-        if(re.search(r'<speak>', mix)):
+        if re.search(r'<speak>', mix):
             result = {
                 "type": "SSML",
                 "ssml": mix

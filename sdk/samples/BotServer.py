@@ -3,7 +3,7 @@
 
 # description:
 # author:jack
-# create_time: 2018/1/3 下午10:42
+# create_time: 2018/1/3
 
 """
     desc:pass
@@ -22,6 +22,7 @@ def application(environ, start_response):
     request_body = environ['wsgi.input'].read(request_body_size)
     print(type(request_body))
     bot = Bot(request_body)
+    bot.initCertificate(environ)
     body_str = bot.run()
 
     body = body_str.encode('utf-8')

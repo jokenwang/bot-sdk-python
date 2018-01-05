@@ -5,10 +5,6 @@
 # author:jack
 # create_time: 2017/12/30
 
-"""
-    desc:Bot入口
-"""
-
 import json
 import re
 from monitor.botmonitor.BotMonitor import BotMonitor
@@ -17,37 +13,44 @@ from sdk.Intercept import Intercept
 from sdk.Request import Request
 from sdk.Response import Response
 
+
 class Bot(object):
+    '''
+    Bot入口
+    '''
 
-    def __init__(self, postData, privateKey = ''):
+    def __init__(self, postdata):
         '''
-
+        构造方法
         :param postData:
-        :param privateKey:
         '''
-
-        #如果第一个参数为字符串，认为是privateKey
-        if(postData and isinstance(postData, str)):
-            self.privateKey = postData
-            self.postData = False
-        #TODO
-
-        self.request = Request(postData)
+        self.postData = postdata
+        self.request = Request(postdata)
         self.session = self.request.getSession()
         self.nlu = self.request.getNlu()
         self.response = Response(self.request, self.session, self.nlu)
         self.handler = []
-        # self.certificate = Certificate(privateKey)
         # self.botMonitor = BotMonitor(postData)
         self.intercept = []
+        self.certificate = None
+
+    def initCertificate(self, environ):
+        '''
+        创建Certificate
+        :param environ:
+        :return:
+        '''
+
+        self.certificate = Certificate(environ, self.postData)
+
 
     def addLanchHandler(self, func):
         '''
         添加对LaunchRequest的处理函数
-
         :param func:    回调方法
         :return:
         '''
+
         return self.__addHandler('LaunchRequest', func)
 
     def addSessionEndedHandler(self, func):
@@ -81,16 +84,16 @@ class Bot(object):
         :return:
         '''
 
-        if(isinstance(mix, str) and hasattr(func,'__call__') ):
+        if isinstance(mix, str) and hasattr(func, '__call__'):
             arr = {mix: func}
             mix = arr
 
-        if(not isinstance(mix, dict)):
+        if not isinstance(mix, dict):
             return
 
         for key, value in mix.items():
 
-            if (not key or not value):
+            if not key or not value:
                 return
 
             self.handler.append({
@@ -99,9 +102,14 @@ class Bot(object):
             })
 
     def addIntercept(self, intercept):
-        if(isinstance(intercept, Intercept)):
-            self.intercept.append(intercept)
+        '''
+        添加拦截器
+        :param intercept:
+        :return:
+        '''
 
+        if isinstance(intercept, Intercept):
+            self.intercept.append(intercept)
 
     def addEventListener(self, event, func):
         '''
@@ -121,7 +129,7 @@ class Bot(object):
         :return:
         '''
 
-        if(event and func):
+        if event and func:
             self.event[event] = func
 
     def addDefaultEventListener(self, func):
@@ -131,7 +139,7 @@ class Bot(object):
         :param func:
         :return:
         '''
-        if(hasattr(func,'__call__')):
+        if hasattr(func, '__call__'):
             self.event['__default__'] = func
 
     def getIntentName(self):
@@ -140,7 +148,7 @@ class Bot(object):
         :return:
         '''
 
-        if(self.nlu):
+        if self.nlu:
             return self.nlu.getIntentName()
 
     def getSessionAttribute(self, field, default):
@@ -180,7 +188,7 @@ class Bot(object):
         :return:
         '''
 
-        if(self.nlu):
+        if self.nlu:
             return self.nlu.getSlot(field, index)
 
     def setSlots(self, field, value, index = 0):
@@ -192,7 +200,7 @@ class Bot(object):
         :return:
         '''
 
-        if(self.nlu):
+        if self.nlu:
             self.nlu.setSlot(field, value, index)
 
     def waitAnswer(self):
@@ -201,7 +209,7 @@ class Bot(object):
         :return:
         '''
 
-        if(self.response):
+        if self.response:
             self.response.setShouldEndSession(False)
 
     def endDialog(self):
@@ -210,7 +218,7 @@ class Bot(object):
         :return:
         '''
 
-        if(self.response):
+        if self.response:
             self.response.setShouldEndSession(True)
 
     def run(self, build = True):
@@ -221,12 +229,12 @@ class Bot(object):
         :return:
         '''
 
-        # if(not self.certificate.verifyRequest()):
-        #     return self.response.illegalRequest()
+        if self.certificate and not self.certificate.verifyRequest():
+            return self.response.illegalRequest()
 
         eventHandler = self.__getRegisterEventHandler()
 
-        if(self.request.getType() == 'IntentRequest' and not self.nlu and not eventHandler):
+        if self.request.getType() == 'IntentRequest' and not self.nlu and not eventHandler:
             return self.response.defaultResult()
 
         ret = {}
@@ -237,7 +245,7 @@ class Bot(object):
             # if(ret):
             #     return
 
-        if(eventHandler):
+        if eventHandler:
             # self.botMonitor.setDeviceEventStart()
             event = self.request.getEventData()
             ret = self.__callFunc(eventHandler, event)
@@ -252,14 +260,13 @@ class Bot(object):
             # ret = intercept.postprocess(self, ret)
             # self.botMonitor.setPostEventEnd()
 
-        if(ret):
-            print('====== ret %s' % ret)
+        if ret:
             res = self.response.build(ret)
             print(json.dumps(res))
             # self.botMonitor.setResponseData(res)
             # self.botMonitor.updateData()
 
-            if(not build):
+            if not build:
                 return json.dumps(ret)
             return json.dumps(res)
         else:
@@ -271,31 +278,31 @@ class Bot(object):
         :return:
         '''
 
-        if(not self.handler):
+        if not self.handler:
             return
 
         #循环遍历handler 通过正则判断调用哪个handler
         for item in self.handler:
-            if(item):
+            if item:
                 #获取rule(其实是自己的技能意图的英文标识)
                 rule = item['rule']
                 #校验handler
-                if(self.__checkHandler(rule)):
+                if self.__checkHandler(rule):
                     #匹配到handler获取对应的回调方法并立即执行
                     func = item['func']
                     ret = self.__callFunc(func, None)
-                    if(ret):
+                    if ret:
                         return ret
 
 
     def __getRegisterEventHandler(self):
 
         eventData = self.request.getEventData()
-        if(eventData and eventData['type']):
+        if eventData and eventData['type']:
             key = eventData['type']
-            if(self.event[key]):
+            if self.event[key]:
                 return self.event[key]
-            elif (self.event['__default__']):
+            elif self.event['__default__']:
                 return self.event['__default__']
 
     def __callFunc(self, func, arg):
@@ -307,12 +314,12 @@ class Bot(object):
         '''
 
         ret = ''
-        if(hasattr(func, '__call__')):
+        if hasattr(func, '__call__'):
             if(arg == None):
                 ret = func()
             else:
                 ret = func(arg)
-        elif(isinstance(func, str)):
+        elif isinstance(func, str):
             directive_func = getattr(self, func, None)
             if directive_func:
                 ret = directive_func(arg)
@@ -337,7 +344,7 @@ class Bot(object):
         :return:
         '''
 
-        if(rule == '' or not rule):
+        if rule == '' or not rule:
             return token
         pass
 
@@ -353,18 +360,13 @@ class Bot(object):
             'requestType': r'^(LaunchRequest|SessionEndedRequest)$'
         }
 
-        match = False
-
-        if(re.match(rg['requestType'], handler) and self.request.getType() == handler):
-            match = True
+        if re.match(rg['requestType'], handler) and self.request.getType() == handler:
             return True
 
-        if(re.match(rg['intent'], handler) and ('#' + self.getIntentName()) == handler):
-            match = True
+        if re.match(rg['intent'], handler) and ('#' + self.getIntentName()) == handler:
             return True
 
-        if(handler == 'true' or handler == True):
-            match = True
+        if handler == 'true' or handler == True:
             return True
 
         return False
@@ -402,7 +404,7 @@ class Bot(object):
         self.response.setFallBack()
 
     def ask(self, slot):
-        if(self.nlu):
+        if self.nlu:
             self.nlu.ask(slot)
 
 

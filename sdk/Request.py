@@ -5,15 +5,15 @@
 # author:jack
 # create_time: 2017/12/30
 
-'''
-    DuerOS对Bot的请求封装
-'''
-
 import json
 from sdk.Nlu import Nlu
 from sdk.Session import Session
 
+
 class Request(object):
+    '''
+        DuerOS对Bot的请求封装
+    '''
 
     def __init__(self, data):
         '''
@@ -24,7 +24,7 @@ class Request(object):
         self.requestType = self.data['request']['type']
         self.session = Session(self.data['session'])
         self.nlu = None
-        if(self.requestType == 'IntentRequest'):
+        if self.requestType == 'IntentRequest':
             self.nlu = Nlu(self.data['request']['intents'])
         self.deviceData = None
         self.arrUserProfile = None
@@ -94,7 +94,7 @@ class Request(object):
         :return:
         '''
 
-        if(self.requestType == 'IntentRequest' or self.isSessionEndedRequest() or self.isLaunchRequest()):
+        if self.requestType == 'IntentRequest' or self.isSessionEndedRequest() or self.isLaunchRequest():
             return
         else:
             return self.data['request']
@@ -158,7 +158,7 @@ class Request(object):
         :return:
         '''
 
-        if(self.requestType == 'IntentRequest' and self.data['request']['query']['original']):
+        if self.requestType == 'IntentRequest' and self.data['request']['query']['original']:
             return self.data['request']['query']['original']
         else:
             return ''
@@ -168,12 +168,12 @@ class Request(object):
         获取设备位置信息
         :return:
         '''
-        if(self.__getSystemUser()['userInfo']['location']):
+        if self.__getSystemUser()['userInfo']['location']:
             return self.__getSystemUser()['userInfo']['location']
 
     def isDetermined(self):
 
-        if(self.requestType == 'IntentRequest' and self.data['request']['determined']):
+        if self.requestType == 'IntentRequest' and self.data['request']['determined']:
             return self.data['request']['determined']
         else:
             return False
@@ -197,17 +197,17 @@ class Request(object):
 
     def getTimestamp(self):
 
-        if(self.data['request']['timestamp']):
+        if self.data['request']['timestamp']:
             return self.data['request']['timestamp']
 
     def getLogId(self):
 
-        if (self.data['request']['requestId']):
+        if self.data['request']['requestId']:
             return self.data['request']['requestId']
 
     def getBotId(self):
 
-        if (self.data['context']['System']['application']['applicationId']):
+        if self.data['context']['System']['application']['applicationId']:
             return self.data['context']['System']['application']['applicationId']
 
     def isDialogStateCompleted(self):

@@ -13,6 +13,7 @@ import json
 from sdk.card.BaseCard import BaseCard
 from sdk.card.ListCardItem import ListCardItem
 
+
 class ListCard(BaseCard):
 
     def __init__(self):
@@ -21,9 +22,9 @@ class ListCard(BaseCard):
 
     def addItem(self, listCardIetm):
 
-        if(isinstance(listCardIetm, ListCardItem)):
+        if isinstance(listCardIetm, ListCardItem):
 
-            if(not 'list' in self.data.keys()):
+            if not 'list' in self.data.keys():
                 self.data['list'] = []
             self.data['list'].append(listCardIetm.getData())
         return self

@@ -3,13 +3,10 @@
 
 # description:
 # author:jack
-# create_time: 2017/12/31 上午12:21
-
-"""
-暂未搞
-"""
+# create_time: 2017/12/31
 
 from sdk.card.BaseCard import BaseCard
+
 
 class ImageCard(BaseCard):
 
@@ -25,16 +22,16 @@ class ImageCard(BaseCard):
         :return:
         '''
 
-        if(not src):
+        if not src:
             return self
 
-        if(not 'list' in self.data.keys()):
+        if not 'list' in self.data.keys():
             self.data['list'] = []
 
         item = {}
         item['src'] = src
 
-        if(thumbnail):
+        if thumbnail:
             item['thumbnail'] = thumbnail
         self.data['list'].append(item)
         return self

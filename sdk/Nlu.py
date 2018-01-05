@@ -8,7 +8,7 @@
 """
 
 """
-import logging
+
 
 class Nlu(object):
 
@@ -17,14 +17,14 @@ class Nlu(object):
         self.askSlot = None
         self.directive = None
 
-    def getIntentName(self, index = 0):
+    def getIntentName(self, index=0):
         '''
         获取当前的意图intent名
         :return:
         '''
         return self.data[index]['name']
 
-    def setSlot(self, field, value, index = 0):
+    def setSlot(self, field, value, index=0):
         '''
         设置槽位信息
         desc 设置slot, 如果不存在,新增一个solt
@@ -34,12 +34,12 @@ class Nlu(object):
         :return:
         '''
 
-        if(not field):
+        if not field:
             return
 
         slots = self.data[index]['slots']
 
-        if(field in slots.keys()):
+        if field in slots.keys():
             self.data[index]['slots'][field]['value'] = value
         else:
             self.data[index]['slots'][field] = {
@@ -72,7 +72,7 @@ class Nlu(object):
                 } 
             ]
         '''
-        if(not field):
+        if not field:
             return
         # #此处有坑 文档是values 但是PHP demo是value
         return self.__getSlotValueByKey(field, 'value', index)
@@ -96,14 +96,13 @@ class Nlu(object):
 
     def __getSlotValueByKey(self, field, subField, index = 0):
         '''
-
         :param field:
         :param subField:
         :param index:
         :return:
         '''
 
-        if(not 'slots' in self.data[index]):
+        if not 'slots' in self.data[index]:
             return ''
         slots = self.data[index]['slots']
 
@@ -114,7 +113,7 @@ class Nlu(object):
         是否询问过用户
         :return:
         '''
-        if(self.directive):
+        if self.directive:
             return True
         else:
             return False
@@ -126,7 +125,7 @@ class Nlu(object):
         :return:
         '''
 
-        if(slot != '' and slot):
+        if slot != '' and slot:
             print('askSlot = %s' % slot)
             self.askSlot = slot
             self.directive = [{
@@ -151,7 +150,7 @@ class Nlu(object):
         :return:
         '''
 
-        if('slots' in self.data[0].keys()):
+        if 'slots' in self.data[0].keys():
             return {
                 'name': self.getIntentName(),
                 'slots': self.data[0]['slots']
@@ -169,7 +168,7 @@ class Nlu(object):
         :return:
         '''
 
-        if(self.data[0]):
+        if self.data[0]:
             return {
                 'intent': self.data[0]
             }
@@ -195,9 +194,9 @@ class Nlu(object):
         :return:
         '''
 
-        if('slots' in self.data[0].keys()):
+        if 'slots' in self.data[0].keys():
             slots = self.data[0]['slots']
-            if(field in slots.keys()):
+            if field in slots.keys():
                 self.directive = [{
                     'type': 'Dialog.ConfirmSlot',
                     'slotToConfirm': field,

@@ -5,12 +5,13 @@
 # author:jack
 # create_time: 2017/12/30
 
-"""
-卡片形式展示
-"""
-from  sdk.card.BaseCard import BaseCard
+from sdk.card.BaseCard import BaseCard
+
 
 class TextCard(BaseCard):
+    """
+    卡片形式展示
+    """
 
     def __init__(self, content):
         '''
@@ -22,7 +23,6 @@ class TextCard(BaseCard):
         self.data['content'] = "%s" % content
 
 if __name__ == '__main__':
-
 
     textCard = TextCard('sdfasdfs')
     textCard.setContent('hehe')

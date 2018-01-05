@@ -8,7 +8,6 @@
 """
     desc:pass
 """
-
 import random
 import hashlib
 
@@ -18,10 +17,13 @@ import json
 import logging
 from sdk.Bot import Bot
 from sdk.card.TextCard import TextCard
-
-
+import os
+import hashlib
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('bot')
+
+from sdk.directive.AudioPlayer.Play import Play
+from sdk.directive.BaseDirective import BaseDirective
 
 class BotTest(Bot):
 
@@ -78,11 +80,10 @@ if __name__ == '__main__':
         with open("./json/control.json", 'r') as load_f:
             return load_f.read()
 
-    data = launchData()
+    data = searchData()
     bot = BotTest(data)
     bot.run()
     #
-
     # rand = str(random.randint(0, 9999999999))
     # t = str(round(time.time() * 1000))
     # md5 = hashlib.md5()

@@ -3,12 +3,12 @@
 
 # description:
 # author:jack
-# create_time: 2018/1/3 下午1:13
-
+# create_time: 2018/1/3
 """
     desc:pass
 """
 
+from monitor.botmonitor.Utils import Utils
 
 class Response:
 
@@ -16,20 +16,28 @@ class Response:
         self.data = responseData
 
     def getOutputSpeech(self):
-        pass
-
+        if(Utils.checkKeysInDict(self.data,['response','outputSpeech'])):
+            return self.data['response']['outputSpeech']
 
     def getShouldEndSession(self):
+        if(Utils.checkKeysInDict(self.data, ['response','shouldEndSession'])):
+            return self.data['response']['shouldEndSession']
         pass
 
 
     def getSlotName(self):
-        pass
+
+        if(Utils.checkKeysInDict(self.data, ['response','directives'])):
+            directive = self.data['response']['directives']
+            if(directive and directive[0]['slotToElicit']):
+                return directive[0]['slotToElicit']
+        return None
 
 
     def getReprompt(self):
-        pass
-
+        if(Utils.checkKeysInDict(self.data,['response','reprompt','outputSpeech'])):
+            return self.data['response']['reprompt']['outputSpeech']
+        return None
 
 if __name__ == '__main__':
     pass
