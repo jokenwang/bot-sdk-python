@@ -24,6 +24,7 @@ class Bot(object):
         构造方法
         :param postData:
         '''
+
         self.postData = postdata
         self.request = Request(postdata)
         self.session = self.request.getSession()
@@ -43,6 +44,25 @@ class Bot(object):
 
         self.certificate = Certificate(environ, self.postData)
 
+    def enableVerifyRequestSign(self):
+        '''
+        开启签名验证
+        :return:
+        '''
+
+        if self.certificate:
+            self.certificate.enableVerifyRequestSign()
+        return self
+
+    def disableVerifyRequestSign(self):
+        '''
+        关闭签名验证
+        :return:
+        '''
+
+        if self.certificate:
+            self.certificate.disableVerifyRequestSign()
+        return self
 
     def addLanchHandler(self, func):
         '''
