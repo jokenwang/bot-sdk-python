@@ -13,6 +13,35 @@ Dueros Bot Python版SDK，鉴于官网只提供了PHP和Node的SDK，不能满�
 * Session.py 处理会话信息(暂未实现)
 * card 目录处理展示卡片相关
 * directive 生成指令相关比如：浏览器指令、音频指令
+* tests 目录存放本地测试代码
+* samples 搭建有Python Wsgi 的Demo,通过执行sh start.sh
+
+### Bot-Python-SDK使用说明
+
+* 实现自己的Bot逻辑需要继承Bot.py类
+
+```
+from sdk.Bot import Bot
+
+class BotTest(Bot):
+    def __init__(self, data):
+        super(BotTest, self).__init__(data)
+        self.addLaunchHandler(launchHandlerFunc)
+        self.addIntentHandler('自己的意图标识英文名', 自定义func)
+```
+
+* 创建自己的Handler函数,回调函数返回的是dict类型数据，可以包含多个字段card，directives，outputSpeech，reprompt
+
+```
+def lanuchHandlerFunc():
+    return {
+        'card': TextCard('欢迎使用家居控制!请告诉我您要查找什么智能设备，比如查找我的空调'),
+        'outputSpeech': '<speak>欢迎使用家居控制!请告诉我您要查找什么智能设备，比如查找我的空调</speak>'
+    }
+```
+
+* 搭建服务 详见samples
+
 
 ### 更新记录
 
