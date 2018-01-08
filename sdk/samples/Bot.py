@@ -44,7 +44,7 @@ class Bot(Bot):
     def __init__(self, data):
         super(Bot, self).__init__(data)
 
-        self.addLanchHandler(self.launchRequest)
+        self.addLaunchHandler(self.launchRequest)
 
         self.addIntentHandler('dueros.device_interface.smart_device.control', self.controlRequest)
 

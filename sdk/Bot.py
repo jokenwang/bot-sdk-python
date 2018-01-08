@@ -64,7 +64,7 @@ class Bot(object):
             self.certificate.disableVerifyRequestSign()
         return self
 
-    def addLanchHandler(self, func):
+    def addLaunchHandler(self, func):
         '''
         添加对LaunchRequest的处理函数
         :param func:    回调方法
