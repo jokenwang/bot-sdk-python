@@ -15,6 +15,7 @@ from Crypto.Signature import PKCS1_v1_5
 from Crypto.Hash import SHA
 from base64 import b64encode, b64decode
 
+
 class Certificate(object):
 
     def __init__(self, environ, requestBody, privateKeyContent = ""):
@@ -45,11 +46,11 @@ class Certificate(object):
         cache = os.getcwd() + os.path.sep + md5.hexdigest()
         content = ''
         if not os.path.exists(cache):
-            with open(filename, 'r',encoding = 'utf-8') as f:
+            with open(filename, 'r', encoding='utf-8') as f:
                 content = f.read()
             if not content:
                 return
-            with open(cache,'w',encoding='utf-8') as f:
+            with open(cache, 'w', encoding='utf-8') as f:
                 f.write(content)
 
         return content
@@ -95,9 +96,9 @@ class Certificate(object):
             return b64encode(signature)
         else:
             return False
+
     def getRequestSign(self):
         self.environ['HTTP_SIGNATURE']
-        pass
 
 if __name__ == '__main__':
 

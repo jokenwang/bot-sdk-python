@@ -22,7 +22,8 @@ def application(environ, start_response):
     request_body = environ['wsgi.input'].read(request_body_size)
     print(type(request_body))
     bot = Bot(request_body)
-    bot.initCertificate(environ)
+    #验证签名enableVerifyRequestSign  disableVerifyRequestSign 关闭验证签名
+    bot.initCertificate(environ).enableVerifyRequestSign()
     body_str = bot.run()
 
     body = body_str.encode('utf-8')

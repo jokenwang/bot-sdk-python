@@ -43,6 +43,7 @@ class Bot(object):
         '''
 
         self.certificate = Certificate(environ, self.postData)
+        return self
 
     def enableVerifyRequestSign(self):
         '''
