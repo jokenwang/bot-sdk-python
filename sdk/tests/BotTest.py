@@ -21,6 +21,7 @@ import os
 import hashlib
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('bot')
+import sys
 
 from sdk.directive.AudioPlayer.Play import Play
 from sdk.directive.BaseDirective import BaseDirective
@@ -56,6 +57,12 @@ class BotTest(Bot):
             'outputSpeech': '请告诉您的指令，比如调小空调风速、设置温度为30度'
         }
 
+    def inquiry(self):
+        return {
+            'card': TextCard('请告诉您的指令，比如调小空调风速、设置温度为30度'),
+            'outputSpeech': '请告诉您的指令，比如调小空调风速、设置温度为30度'
+        }
+
     def __init__(self, data):
         super(BotTest, self).__init__(data)
 
@@ -64,6 +71,7 @@ class BotTest(Bot):
         self.addIntentHandler('dueros.device_interface.smart_device.control', self.controlRequest)
 
         self.addIntentHandler('dueros.device_interface.smart_device.search', self.searchRequest)
+        # self.addIntentHandler('inquiry', self.inquiry)
     pass
 
 if __name__ == '__main__':
@@ -80,8 +88,17 @@ if __name__ == '__main__':
         with open("./json/control.json", 'r') as load_f:
             return load_f.read()
 
-    data = searchData()
+
+    def controlData2():
+        with open("./json/a.json", 'r', encoding='utf-8') as load_f:
+            return load_f.read()
+
+
+    def tt(data):
+        print(data)
+    data = controlData2()
     bot = BotTest(data)
+    bot.setCallBack(tt)
     bot.run()
     #
     # rand = str(random.randint(0, 9999999999))
@@ -96,4 +113,5 @@ if __name__ == '__main__':
     # uuid = uuid + token[12:16] + '-'
     # uuid = uuid + token[16:20] + '-'
     # uuid = uuid + token[20:]
+    print(sys.version_info[0])
     pass
