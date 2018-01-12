@@ -36,16 +36,19 @@ class LaunchApp(BaseDirective):
 
         if appName:
             self.data['appName'] = appName
+        return self
 
     def setPackageName(self, packageName):
 
         if packageName:
             self.data['packageName'] = packageName
+        return self
 
     def setDeepLink(self, deepLink):
 
         if deepLink:
             self.data['deepLink'] = deepLink
+        return self
 
 if __name__ == '__main__':
 

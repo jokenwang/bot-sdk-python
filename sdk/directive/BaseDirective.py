@@ -48,6 +48,7 @@ class BaseDirective(object):
     def setToken(self, token):
         if(token):
             self.data['token'] = token
+        return self
 
     def getToken(self):
         return self.data['token']

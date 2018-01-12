@@ -46,6 +46,7 @@ class Play(BaseDirective):
     def setToken(self, token):
         if token:
             self.data['audioItem']['stream']['token'] = token
+        return self
 
     def getToken(self):
         return self.data['audioItem']['stream']['token']
@@ -54,6 +55,7 @@ class Play(BaseDirective):
     def setUrl(self, url):
         if url:
             self.data['audioItem']['stream']['url'] = url
+        return self
 
     def setOffsetInMilliSeconds(self, milliSeconds):
         '''
@@ -64,6 +66,7 @@ class Play(BaseDirective):
         if milliSeconds.isdigit():
             milliSeconds = int(milliSeconds)
             self.data['audioItem']['stream']['offsetInMilliSeconds'] = milliSeconds
+        return self
 
     def setProgressReportIntervalMs(self, intervalMs):
         '''
@@ -74,6 +77,7 @@ class Play(BaseDirective):
         if intervalMs.isdigit():
             intervalMs = int(intervalMs)
             self.data['audioItem']['stream']['progressReportIntervalMs'] = intervalMs
+        return self
 
     def setStreamFormat(self, streamFormat = 'AUDIO_MP3'):
         '''
@@ -85,6 +89,7 @@ class Play(BaseDirective):
 
         if streamFormat in streamFormatArray:
             self.data['audioItem']['stream']['streamFormat'] = streamFormat
+        return self
 
 
 if __name__ == '__main__':
