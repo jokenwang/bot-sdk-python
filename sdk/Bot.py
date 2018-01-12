@@ -34,6 +34,8 @@ class Bot(object):
         # self.botMonitor = BotMonitor(postData)
         self.intercept = []
         self.certificate = None
+        self.callBackFunc = None
+        self.cakkBackData = None
 
     def initCertificate(self, environ):
         '''
@@ -121,6 +123,7 @@ class Bot(object):
                 'rule': key,
                 'func': value
             })
+        return self
 
     def addIntercept(self, intercept):
         '''
@@ -286,12 +289,15 @@ class Bot(object):
             print(json.dumps(res))
             # self.botMonitor.setResponseData(res)
             # self.botMonitor.updateData()
-
             if not build:
                 return json.dumps(ret)
             return json.dumps(res)
         else:
-            return ret
+            #出错了 返回错误信息
+            if self.cakkBackData:
+                return json.dumps(self.cakkBackData)
+            else:
+                return json.dumps({'message': '出错了'})
 
     def dispatch(self):
         '''
@@ -314,6 +320,8 @@ class Bot(object):
                     ret = self.__callFunc(func, None)
                     if ret:
                         return ret
+        #调用回调
+        self.unMatchHandler(self.cakkBackData)
 
 
     def __getRegisterEventHandler(self):
@@ -381,16 +389,42 @@ class Bot(object):
             'requestType': r'^(LaunchRequest|SessionEndedRequest)$'
         }
 
-        if re.match(rg['requestType'], handler) and self.request.getType() == handler:
-            return True
+        if re.match(rg['requestType'], handler):
+            if self.request.getType() == handler:
+                self.cakkBackData = None
+                return True
+            else:
+                self.unMatchHandler({'type': 'requestType', 'message': '未匹配到:' + self.request.getType()})
 
-        if re.match(rg['intent'], handler) and ('#' + self.getIntentName()) == handler:
-            return True
+        if re.match(rg['intent'], handler):
+            if ('#' + self.getIntentName()) == handler:
+                self.cakkBackData = None
+                return True
+            else:
+                self.cakkBackData = {'type': 'intent', 'message': 'handler未匹配到:' + self.getIntentName()}
 
         if handler == 'true' or handler == True:
             return True
 
         return False
+
+    def setCallBack(self, func):
+        '''
+        设置回调方法
+        :param func:
+        :return:
+        '''
+        if hasattr(func, '__call__'):
+            self.callBackFunc = func
+
+    def unMatchHandler(self, data):
+        '''
+        未匹配到Handler回调
+        :param func:
+        :return:
+        '''
+        if self.callBackFunc and data:
+            self.callBackFunc(data)
 
     #TODO
     def tokenValue(self, str):
