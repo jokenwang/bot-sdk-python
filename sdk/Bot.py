@@ -95,7 +95,6 @@ class Bot(object):
 
         return self.__addHandler('#' + intentName, func)
 
-
     def __addHandler(self, mix, func):
         '''
         私有方法
@@ -394,14 +393,14 @@ class Bot(object):
                 self.cakkBackData = None
                 return True
             else:
-                self.unMatchHandler({'type': 'requestType', 'message': '未匹配到:' + self.request.getType()})
+                self.unMatchHandler({'type': 'requestType', 'message': u'未匹配到:' + self.request.getType()})
 
         if re.match(rg['intent'], handler):
             if ('#' + self.getIntentName()) == handler:
                 self.cakkBackData = None
                 return True
             else:
-                self.cakkBackData = {'type': 'intent', 'message': 'handler未匹配到:' + self.getIntentName()}
+                self.cakkBackData = {'type': 'intent', 'message': u'handler未匹配到:' + self.getIntentName()}
 
         if handler == 'true' or handler == True:
             return True
