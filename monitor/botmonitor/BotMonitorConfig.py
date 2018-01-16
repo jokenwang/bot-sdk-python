@@ -13,12 +13,29 @@
 class BotMonitorConfig:
 
     @staticmethod
-    def getConfig():
-        return {
-            'sdkType': 'python',
-            'sdkVersion': '1.0.0',
-            'uploadUrl': 'https://dueros-api.baidu.com/uploadmonitordata'
-        }
+    def getHost():
+        return 'dueros-api.baidu.com'
+
+    @staticmethod
+    def getUploadUrl():
+        return 'https://dueros-api.baidu.com/uploadmonitordata'
+        # return 'http://127.0.0.1:8000'
+
+    @staticmethod
+    def getSdkVersion():
+        return '1.0.0'
+
+    @staticmethod
+    def getSdkType():
+        return 'python'
+
+    @staticmethod
+    def getUploadPort():
+        return 443
+
+    @staticmethod
+    def getUploadPath():
+        return '/uploadmonitordata'
 
 
 if __name__ == '__main__':

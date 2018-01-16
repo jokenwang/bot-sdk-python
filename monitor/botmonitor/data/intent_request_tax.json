@@ -1,0 +1,75 @@
+{
+    "version": "2.0",
+    "session": {
+        "new": true,
+        "sessionId": "sessionId",
+        "attributes": []
+    },
+    "context": {
+        "System": {
+            "user": {
+                "userId": "55188137",
+                "userInfo": {
+                    "location": {
+                        "geo": {
+                            "bd09ll": {
+                                "longitude": 116.41650585765,
+                                "latitude": 39.922589823265
+                            },
+                            "wgs84": {
+                                "longitude": 116.40387397,
+                                "latitude": 39.91488908
+                            },
+                            "bd09mc": {
+                                "longitude": 12959567.403034,
+                                "latitude": 4827021.8235075
+                            }
+                        }
+                    }
+                }
+            },
+            "application": {
+                "applicationId": "97d6bf29-4482-934e-c44c-626b151b46ba"
+            },
+            "device": {
+                "originalDeviceId": "deviceId",
+                "deviceId": "deviceIdreal",
+                "supportedInterfaces": {
+                    "VoiceInput": {},
+                    "VoiceOutput": {}
+                }
+            }
+        }
+    },
+    "request": {
+        "query": {
+            "type": "TEXT",
+            "original": "查个税",
+            "rewritten": "查个税"
+        },
+        "dialogState": "COMPLETED",
+        "determined": false,
+        "intents": [
+            {
+                "name": "inquiry",
+                "score": 100,
+                "confirmationStatus": "NONE",
+                "slots": {
+                    "compute_type": {
+                        "name": "compute_type",
+                        "value": "个税",
+                        "values": [
+                            "个税"
+                        ],
+                        "score": 0,
+                        "confirmationStatus": "NONE"
+                    }
+                }
+            }
+        ],
+        "type": "IntentRequest",
+        "reason": "USER_INITIATED",
+        "requestId": "cf9e4558cb664ed0993a4f3f5662efb7_1",
+        "timestamp": "1509502673"
+    }
+}

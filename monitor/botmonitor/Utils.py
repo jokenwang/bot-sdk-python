@@ -8,6 +8,7 @@
 """
     desc:pass
 """
+import json
 
 class Utils:
 
@@ -26,9 +27,14 @@ class Utils:
     @staticmethod
     def checkKeysInDict(dicts, keys):
 
+        if isinstance(dicts, str):
+            dicts = json.loads(dicts)
+        lastKey = keys[len(keys)-1]
         for key in keys:
-            if (key in dicts.keys()):
+            if key in dicts.keys():
                 dicts = dicts[key]
+                if lastKey == key:
+                    return True
                 continue
             return False
 

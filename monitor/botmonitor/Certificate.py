@@ -84,13 +84,13 @@ class Certificate(object):
         :param content: 待签名内容
         :return:
         '''
-        if not self.privateKey or not content :
+        if not self.privateKey or not content:
             return False
 
         rsakey = RSA.importKey(self.privateKey)
-        if rsakey :
+        if rsakey:
             digest = SHA.new()
-            digest.update(data.encode('utf-8'))
+            digest.update(content.encode('utf-8'))
             signer = PKCS1_v1_5.new(rsakey)
             signature = signer.sign(digest)
             return b64encode(signature)
@@ -126,7 +126,7 @@ IYdYV3QpYohFszH3wQIDAQAB
 
     data = 'partner="2088701924089318"&seller="774653@qq.com"&out_trade_no="123000"&subject="123456"&body="2010新款NIKE 耐克902第三代板鞋 耐克男女鞋 386201 白红"&total_fee="0.01"¬ify_url="http://notify.java.jpxx.org/index.jsp'
     def sign(data):
-        key = RSA.importKey(None)
+        key = RSA.importKey(priKey)
         digest = SHA.new()
         digest.update(data.encode('utf-8'))
         signer = PKCS1_v1_5.new(key)

@@ -1,0 +1,72 @@
+{
+    "version": "2.0",
+    "context": {
+        "intent": {
+            "name": "inquiry",
+            "confirmationStatus": "NONE",
+            "slots": {
+                "compute_type": {
+                    "name": "compute_type",
+                    "value": "个税",
+                    "confirmationStatus": "NONE",
+                    "score": 0
+                }
+            },
+            "score": 100
+        }
+    },
+    "session": {
+        "attributes": {
+            "key_2": "value_2",
+            "key_1": "value_1"
+        }
+    },
+    "response": {
+        "needDetermine": false,
+        "fallBack": false,
+        "outputSpeech": {
+            "type": "SSML",
+            "text": "",
+            "ssml": "java-sdk您的税前工资是多少呢?"
+        },
+        "reprompt": {
+            "outputSpeech": {
+                "type": "SSML",
+                "text": "",
+                "ssml": "java-sdk您的税前工资是多少呢?"
+            }
+        },
+        "resource": {
+            "entities": null
+        },
+        "card": {
+            "type": "txt",
+            "content": "您的税前工资是多少呢?",
+            "url": "www:......",
+            "anchorText": "链接文本",
+            "cueWords": [
+                "您的税前工资是多少呢?"
+            ]
+        },
+        "directives": [
+            {
+                "type": "Dialog.ElicitSlot",
+                "updatedIntent": {
+                    "name": "inquiry",
+                    "confirmationStatus": "NONE",
+                    "slots": {
+                        "compute_type": {
+                            "name": "compute_type",
+                            "value": "个税",
+                            "confirmationStatus": "NONE",
+                            "score": 0
+                        }
+                    },
+                    "score": 100
+                },
+                "slotToElicit": "monthlysalary"
+            }
+        ],
+        "shouldEndSession": false
+    }
+}
