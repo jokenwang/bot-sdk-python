@@ -19,7 +19,7 @@ def application(environ, start_response):
         request_body_size = 0
 
     request_body = environ['wsgi.input'].read(request_body_size).decode('utf-8')
-    print(type(request_body))
+    print('request_body = %s\n' % request_body)
     if not request_body:
         return ['未获取到请求数据']
 
