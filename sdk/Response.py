@@ -27,7 +27,7 @@ class Response(object):
         self.session = session
         self.nlu = nlu
         self.sourceType = self.request.getBotId()
-        self.shouldEndSession = False
+        self.shouldEndSession = True
         self.needDetermine = False
         self.expectSpeech = False
         self.fallBack = False
@@ -122,7 +122,7 @@ class Response(object):
             "response": {
                 "directives":  directives,
                 "shouldEndSession": self.shouldEndSession,
-                "card": data['card'].getData(),
+                "card": data['card'].getData() if data['card'] else None,
                 "resource": data['resource'],
                 "outputSpeech": self.formatSpeech(data['outputSpeech']),
                 "reprompt": self.formatSpeech(data['reprompt'])
