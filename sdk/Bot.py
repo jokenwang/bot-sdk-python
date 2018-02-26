@@ -36,6 +36,7 @@ class Bot(object):
         self.certificate = None
         self.callBackFunc = None
         self.cakkBackData = None
+        self.event = {}
 
     def initCertificate(self, environ):
         '''
