@@ -21,14 +21,14 @@ class Utils:
         :return:
         '''
         if(isinstance(dicts, dict)):
-            return key in dicts.keys()
+            return key in dicts
         return False
 
     @staticmethod
     def checkKeysInDict(dicts, keys):
 
         for key in keys:
-            if (key in dicts.keys()):
+            if (key in dicts):
                 dicts = dicts[key]
                 continue
             return False

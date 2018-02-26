@@ -24,7 +24,7 @@ class ListCard(BaseCard):
 
         if isinstance(listCardIetm, ListCardItem):
 
-            if not 'list' in self.data.keys():
+            if not 'list' in self.data:
                 self.data['list'] = []
             self.data['list'].append(listCardIetm.getData())
         return self

@@ -21,7 +21,7 @@ class Utils:
         :return:
         '''
         if(isinstance(dicts, dict)):
-            return key in dicts.keys()
+            return key in dicts
         return False
 
     @staticmethod
@@ -31,7 +31,7 @@ class Utils:
             dicts = json.loads(dicts)
         lastKey = keys[len(keys)-1]
         for key in keys:
-            if key in dicts.keys():
+            if key in dicts:
                 dicts = dicts[key]
                 if lastKey == key:
                     return True

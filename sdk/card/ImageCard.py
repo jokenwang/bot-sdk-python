@@ -25,7 +25,7 @@ class ImageCard(BaseCard):
         if not src:
             return self
 
-        if not 'list' in self.data.keys():
+        if not 'list' in self.data:
             self.data['list'] = []
 
         item = {}

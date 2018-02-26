@@ -39,7 +39,7 @@ class Nlu(object):
 
         slots = self.data[index]['slots']
 
-        if field in slots.keys():
+        if field in slots:
             self.data[index]['slots'][field]['value'] = value
         else:
             self.data[index]['slots'][field] = {
@@ -150,7 +150,7 @@ class Nlu(object):
         :return:
         '''
 
-        if 'slots' in self.data[0].keys():
+        if 'slots' in self.data[0]:
             return {
                 'name': self.getIntentName(),
                 'slots': self.data[0]['slots']
@@ -194,9 +194,9 @@ class Nlu(object):
         :return:
         '''
 
-        if 'slots' in self.data[0].keys():
+        if 'slots' in self.data[0]:
             slots = self.data[0]['slots']
-            if field in slots.keys():
+            if field in slots:
                 self.directive = [{
                     'type': 'Dialog.ConfirmSlot',
                     'slotToConfirm': field,

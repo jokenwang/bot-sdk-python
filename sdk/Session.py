@@ -16,15 +16,15 @@ class Session(object):
 
         self.data = {}
 
-        if 'attributes' in data.keys():
+        if 'attributes' in data:
             self.data = data['attributes']
 
-        if 'sessionId' in data.keys():
+        if 'sessionId' in data:
             self.sessionId = data['sessionId']
         else:
             self.sessionId = None
 
-        if 'new' in data.keys():
+        if 'new' in data:
             self.isNew = data['new']
         else:
             self.isNew = False
@@ -39,7 +39,7 @@ class Session(object):
         }
 
     def getData(self, field, default):
-        if field in self.data.keys():
+        if field in self.data:
             return self.data[field]
 
     def setData(self, field, value, default):

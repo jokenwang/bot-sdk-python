@@ -66,32 +66,32 @@ class Response(object):
         if self.nlu and self.nlu.hasAsked():
             self.shouldEndSession = False
 
-        if 'directives' in data.keys():
+        if 'directives' in data:
             data['directives'] = data.get('directives')
         else:
             data['directives'] = []
 
-        if 'card' in data.keys():
+        if 'card' in data:
             data['card'] = data.get('card')
         else:
             data['card'] = None
 
-        if 'outputSpeech' in data.keys():
+        if 'outputSpeech' in data:
             data['outputSpeech'] = data.get('outputSpeech')
         else:
             data['outputSpeech'] = None
 
-        if 'resource' in data.keys():
+        if 'resource' in data:
             data['resource'] = data.get('resource')
         else:
             data['resource'] = None
 
-        if 'reprompt' in data.keys():
+        if 'reprompt' in data:
             data['reprompt'] = data.get('reprompt')
         else:
             data['reprompt'] = None
 
-        if 'directives' in data.keys():
+        if 'directives' in data:
             directives = data.get('directives')
         else:
             directives = []

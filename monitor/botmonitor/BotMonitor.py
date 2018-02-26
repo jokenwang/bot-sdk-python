@@ -103,7 +103,7 @@ class BotMonitor:
             return
         if taskName:
 
-            if taskName in self.userEventList.keys():
+            if taskName in self.userEventList:
                 oldTime = self.userEventList[taskName]
             oldTime = None
             currTime = self.getMillisecond()
