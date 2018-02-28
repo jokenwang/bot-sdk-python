@@ -31,7 +31,7 @@ class Bot(object):
         self.nlu = self.request.getNlu()
         self.response = Response(self.request, self.session, self.nlu)
         self.handler = []
-        # self.botMonitor = BotMonitor(postData)
+        # self.botMonitor = BotMonitor(postdata)
         self.intercept = []
         self.certificate = None
         self.callBackFunc = None

@@ -17,6 +17,13 @@ def application(environ, start_response):
         request_body_size = int(environ.get('CONTENT_LENGTH', 0))
     except(ValueError):
         request_body_size = 0
+    print(environ)
+    print("Content-Type=%s" % environ['CONTENT_TYPE'])
+    print("Content-Length=%s" % environ['CONTENT_LENGTH'])
+    print("SIGNATURE=%s" % environ['HTTP_SIGNATURE'])
+    print("botId=%s" % environ['HTTP_BOTID'])
+    print("timestamp=%s" % environ['HTTP_TIMESTAMP'])
+    print("pkversion=%s" % environ['HTTP_PKVERSION'])
 
     request_body = environ['wsgi.input'].read(request_body_size).decode('utf-8')
     print('request_body = %s\n' % request_body)

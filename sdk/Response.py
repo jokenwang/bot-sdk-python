@@ -5,7 +5,6 @@
 # author:jack
 # create_time: 2017/12/30
 
-import json
 import re
 from sdk.card.TextCard import TextCard
 from sdk.directive.BaseDirective import BaseDirective

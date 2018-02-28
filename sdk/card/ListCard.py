@@ -5,10 +5,6 @@
 # author:jack
 # create_time: 2017/12/31 上午12:21
 
-"""
-暂未搞
-"""
-# 'title', 'content', 'url', 'image'
 import json
 from sdk.card.BaseCard import BaseCard
 from sdk.card.ListCardItem import ListCardItem

@@ -77,15 +77,15 @@ class BotTest(Bot):
 if __name__ == '__main__':
 
     def launchData():
-        with open("./json/launch.json", 'r') as load_f:
+        with open("./json/launch.json", 'r', encoding='utf-8') as load_f:
             return load_f.read()
 
     def searchData():
-        with open("./json/search2.json", 'r') as load_f:
+        with open("./json/search2.json", 'r', encoding='utf-8') as load_f:
             return load_f.read()
 
     def controlData():
-        with open("./json/control.json", 'r') as load_f:
+        with open("./json/control.json", 'r', encoding='utf-8') as load_f:
             return load_f.read()
 
 
@@ -96,7 +96,7 @@ if __name__ == '__main__':
 
     def tt(data):
         print(data)
-    data = controlData2()
+    data = launchData()
     bot = BotTest(data)
     bot.setCallBack(tt)
     bot.run()
@@ -114,4 +114,6 @@ if __name__ == '__main__':
     # uuid = uuid + token[16:20] + '-'
     # uuid = uuid + token[20:]
     print(sys.version_info[0])
+    #while True:
+    #    print("====")
     pass

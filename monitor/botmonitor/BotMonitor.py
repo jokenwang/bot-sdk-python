@@ -144,7 +144,7 @@ class BotMonitor:
             self.audioUrl = audioUrl
 
     def updateData(self):
-
+        print('botMonitor updata')
         if self.isShouldDisable():
             return
         botId = self.request.getBotId()
@@ -163,6 +163,7 @@ class BotMonitor:
         if not signature or len(pkversion) == 0:
             return
 
+        print('content-length=%s, signature=%s, botId=%s, timestamp=%s' % (str(len(base64Data)),signature,str(botId), str(timestamp)))
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Content-Length': str(len(base64Data)),
