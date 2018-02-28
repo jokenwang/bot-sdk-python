@@ -7,12 +7,14 @@
 
 import json
 import re
+import logging
+
 from monitor.botmonitor.BotMonitor import BotMonitor
 from monitor.botmonitor.Certificate import Certificate
 from sdk.Intercept import Intercept
 from sdk.Request import Request
 from sdk.Response import Response
-
+import sdk.Log as Log
 
 class Bot(object):
     '''
@@ -24,7 +26,7 @@ class Bot(object):
         构造方法
         :param postData:
         '''
-
+        Log.init_log('./log/bot-sdk-python')
         self.postData = postdata
         self.request = Request(postdata)
         self.session = self.request.getSession()
@@ -37,6 +39,7 @@ class Bot(object):
         self.callBackFunc = None
         self.cakkBackData = None
         self.event = {}
+        logging.info('Bot init')
 
     def initCertificate(self, environ):
         '''

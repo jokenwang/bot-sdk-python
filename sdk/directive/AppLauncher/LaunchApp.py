@@ -6,7 +6,7 @@
 # create_time: 2018/1/2
 
 from sdk.directive.BaseDirective import BaseDirective
-
+import logging
 
 class LaunchApp(BaseDirective):
     """

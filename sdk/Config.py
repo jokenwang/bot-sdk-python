@@ -10,7 +10,7 @@
 """
 
 
-class config:
+class Config:
     pass
 
 
