@@ -20,7 +20,7 @@ class Utils:
         :param key:
         :return:
         '''
-        if(isinstance(dicts, dict)):
+        if isinstance(dicts, dict):
             return key in dicts
         return False
 
@@ -28,7 +28,7 @@ class Utils:
     def checkKeysInDict(dicts, keys):
 
         for key in keys:
-            if (key in dicts):
+            if key in dicts:
                 dicts = dicts[key]
                 continue
             return False
