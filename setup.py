@@ -13,15 +13,16 @@ from setuptools import setup
 from setuptools import find_packages
 
 setup(
-    name='Bot',
-    version='0.2.1',
+    name='dueros-bot',
+    version='0.2.2',
     author='jack',
-    author_email='xxxxxxx',
+    author_email='mupdf@sina.com',
     description='Third party DuerOS Bot Python SDK',
     keywords='DuerOS Bot',
     url='https://github.com/jokenwang/bot-sdk-python',
     packages=find_packages(),
     install_requires=[
-        'pycrypto>=2.6.1'
+        'pycrypto>=2.6.1',
+        'requests==2.18.4'
     ]
 )
