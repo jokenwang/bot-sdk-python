@@ -1,5 +1,5 @@
 # bot-sdk
-Dueros Bot Python版SDK，鉴于官网只提供了PHP和Node的SDK，不能满足大家的需求，
+Dueros Bot Python版SDK(基于Python3)，鉴于官网只提供了PHP和Node的SDK，不能满足大家的需求，
 于是硬着头皮试着搞一搞Python版本的SDK。这里不得不吐槽下百度的文档(实在挺烂的)。
 另外Python自学了1周，代码还比较烂（勿喷），希望大家不断来完善。
 
