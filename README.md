@@ -43,8 +43,7 @@ def createRemind(self):
 示例如下：
 
 * 可以搭建服务 详见samples
-
-###card展现卡片
+### card展示卡片
 * 文本卡片:TextCard
 ```
 card = TextCard('content')
@@ -55,7 +54,7 @@ card.setAnchor('http://www.baidu.com');
 //设置cueWords
 card.addCueWords('hint1');
 ```
-*标准卡片 StandardCard
+* 标准卡片 StandardCard
 ```
 card = StandardCard()
 card.setTitle('title');
@@ -63,7 +62,7 @@ card.setContent('content');
 card.setImage('http://www...');
 card.setAnchor('http://www.baidu.com');
 ```
-*列表卡片ListCard
+* 列表卡片ListCard
 ```
 card = new ListCard();
 item = new ListCardItem();
@@ -73,7 +72,7 @@ item.setUrl('http://www')
 item.setImage('http://www.png');
 card.addItem(item);
 ```
-*图片卡片ImageCard
+* 图片卡片ImageCard
 ```
 card = ImageCard();
 card.addItem('http://src.image', 'http://thumbnail.image');
