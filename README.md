@@ -21,9 +21,13 @@ Dueros Bot Python版SDK，鉴于官网只提供了PHP和Node的SDK，不能满�
 
 ### 安装、使用BOT SDK进行开发
 
-下载bot-sdk代码后，可以使用如下命令安装bot-sdk:python setup.py install
-为了开始使用BOT SDK，你需要先新建一个python文件，比如文件名是Bot.py,该文件需要继承sdk/Bot.py。下一步，我们处理意图，Bot-sdk提供了一个函数来handle这些意图，
-例如继承sdk/Bot.py中的addIntentHandler函数，添加一个意图处理函数，比如，为新建闹钟，创建一个handler，在构造函数中添加：
+下载bot-sdk代码后，可以使用如下命令安装:
+```javascript
+bot-sdk:python setup.py install。
+```
+为了开始使用BOT SDK，你需要先新建一个python文件，比如文件名是Bot.py,该文件需要继承sdk/Bot.py。下一步，我们处理意图，Bot-sdk提供个函数来handle这些意图，
+为了开始使用BOT SDK，你需要先新建一个python文件，比如文件名是Bot.py,该文件需要继承sdk/Bot.py。下一步，我们处理意图，Bot-sdk提供个函数来handle这些意图,例如继承sdk/Bot.py中的addIntentHandler函数，添加一个意图处理函数，比如，为新建闹钟，创建一个handler，在构造函数中添加：
+```javascript
 self.addIntentHandler('remind', self.createRemind)，其中需要自定义createRemind处理函数：例如定义一个函数
 def createRemind(self):
 	remindTime = self.getSlots('remindTime')
@@ -33,16 +37,16 @@ def createRemind(self):
             'card':card,
         }
 	}
-
-
-第一个参数代表意图名称，第二个参数代表意图命中后的回调函数，这里addHandler可以用来建立intent和handler的映射，第一个参数是意图名称是条件，如果满足则执行对应的回调函数(第二个参数)。 其中回调函数中，self指向当前的Bot，getSlots继承自父类Bot，通过slot名字来获取对应的值。回调函数返回值是一个字典，可以包含多个字段，比如：card，directives，outputSpeech，reprompt等
+```
+第一个参数代表意图名称，第二个参数代表意图命中后的回调函数，这里addHandler可以用来建立intent和handler的映射，第一个参数是意图名称,
+是条件，如果满足则执行对应的回调函数(第二个参数)。 其中回调函数中，self指向当前的Bot，getSlots继承自父类Bot，通过slot名字来获取对应的值。回调函数返回值是一个字典，可以包含多个字段，比如：card，directives，outputSpeech，reprompt等
 示例如下：
 
 * 可以搭建服务 详见samples
 
 ###card展现卡片
-* 文本卡片
-TextCard
+* 文本卡片:TextCard
+```
 card = TextCard('content')
 or 
 card = TextCard()
@@ -50,31 +54,33 @@ card = TextCard()
 card.setAnchor('http://www.baidu.com');
 //设置cueWords
 card.addCueWords('hint1');
-*标准卡片
-StandardCard
+```
+*标准卡片 StandardCard
+```
 card = StandardCard()
 card.setTitle('title');
 card.setContent('content');
 card.setImage('http://www...');
 card.setAnchor('http://www.baidu.com');
-*列表卡片
-ListCard
+```
+*列表卡片ListCard
+```
 card = new ListCard();
 item = new ListCardItem();
 item.setTitle('title')
 item.setContent('content')
 item.setUrl('http://www')
 item.setImage('http://www.png');
-
 card.addItem(item);
-*图片卡片
-ImageCard
+```
+*图片卡片ImageCard
+```
 card = ImageCard();
 card.addItem('http://src.image', 'http://thumbnail.image');
-
-###directive返回指令
-* 播放指令
-AudioPlayer.Play
+```
+### directive返回指令
+* 播放指令 AudioPlayer.Play
+```
 directives = []
 directive = Play('http://www.music', Play::REPLACE_ALL)
 directives.append(directive)
@@ -82,8 +88,9 @@ return {
     'directives':directives,
     'outputSpeech':'正在为你播放歌曲',
 }
-* 停止端上的播放音频
-AudioPlayer.Stop
+```
+* 停止端上的播放音频 AudioPlayer.Stop
+```
 directives = []
 directive = Stop()
 directives.append(directive)
@@ -91,30 +98,28 @@ return {
     'directives':directives,
     'outputSpeech':'已停止播放',
 }
+```
 设置好handler之后，就可以实例化刚刚定义的Bot，在webserver中接受DuerOS来的请求。例如samples中的文件。
 ###返回speech
 * outputSpeech
 上面例子，除了返回card之外，还可以返回outputSpeech，让客户端播报tts：
+```
 return {
     'outputSpeech':'请问你要干啥呢',
     'outputSpeech':'<speak>请问你要干啥呢</speak>'
 }
+```
 * reprompt
 当客户端响应用户后，用户可能会一段时间不说话，如果你返回了reprompt，客户端会提示用户输入
+```
 return {
     'reprompt':'请问你要干啥呢',
     //或者ssml
     'reprompt':'<speak>请问你要干啥呢</speak>'
-};
+}
+```
 ###Lanuch & SessionEnd
 * bot开始服务
-当bot被@（通过bot唤醒名打开时），DuerOS会发送LanuchRequest给bot，此时，bot可以返回欢迎语或者操作提示：
-$this->addLaunchHandler(function(){
-    return [
-        'outputSpeech' => '<speak>欢迎光临</speak>' 
-    ];
-
-});
 ===========================================
 
 2018-01-12
