@@ -172,6 +172,29 @@ clearSession()
 你的Bot可以订阅端上触发的事件，通过接口addEventListener实现，比如端上设置闹钟成功后，会下发SetAlertSucceeded的事件，Bot通过注册事件处理函数，进行相关的操作。
 
 ### NLU交互协议
+在DuerOS Bot Platform平台，可以通过nlu工具，添加了针对槽位询问的配置，包括：
+1、是否必选，对应询问的默认话术
+2、是否需要用户确认槽位内容，以及对应的话术
+3、是否需要用户在执行动作前，对所有的槽位确认一遍，以及对应的话术
+针对填槽多轮，Bot发起对用户收集、确认槽位（如果针对特定槽位有设置确认选项，就进行确认）、确认意图（如果有设置确认选项）的询问，bot-sdk提供了方便的快捷函数支持：
+注意：一次返回的对话directive，只有一个，如果多次设置，只有最后一次的生效
+
+#ask
+多轮对话的bot，会通过询问用户来收集完成任务所需要的槽位信息，询问用户的特点总结为3点，ask：问一个特定的槽位。比如，打车服务收到用户的打车意图的时候，发现没有提供目的地，就可以ask destination(目的地的槽位名)：
+```
+#命中打车意图rent_car.book，但是没有提供目的地
+def RentCar(self):
+    destination = self.getSlots('destination')
+    if not destination:
+        self.nlu.ask('destination')
+        card = TextCard('打车去哪呢')
+        return {
+            'card' : card,
+        }
+self.addIntentHandler('rent_car.book', self.RentCar)
+```
+#delegate
+将处理交给DuerOS的对话管理模块DM（Dialog Management），按事先配置的顺序，包括对缺失槽位的询问，槽位值的确认（如果设置了槽位需要确认，以及确认的话术）,整个意图的确认（如果设置了意图需要确认，以及确认的话术。比如可以将收集的槽位依次列出，等待用户确认）
 
 ===========================================
 
@@ -183,6 +206,7 @@ clearSession()
 
 
 2018-01-06
+
 
 * 完成拦截器
 * 完成会话
