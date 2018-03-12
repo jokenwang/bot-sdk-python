@@ -215,6 +215,7 @@ if money and phone:
     return {
         'outputSpeech':'你确认充话费：' + money + '，充值手机：' + phone,
     }
+```
 ### 插件
 你还可以写插件(拦截器Intercept)，干预对话流程、干预返回结果。比如，用户没有通过百度帐号登录，bot直接让用户去登录，不响应意图，可以使用LoginIntercept：
 ===========================================
