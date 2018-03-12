@@ -182,7 +182,7 @@ clearSession()
 * ask
 多轮对话的bot，会通过询问用户来收集完成任务所需要的槽位信息，询问用户的特点总结为3点，ask：问一个特定的槽位。比如，打车服务收到用户的打车意图的时候，发现没有提供目的地，就可以ask destination(目的地的槽位名)：
 ```
-* 命中打车意图rent_car.book，但是没有提供目的地
+#命中打车意图rent_car.book，但是没有提供目的地
 def RentCar(self):
     destination = self.getSlots('destination')
     if not destination:
@@ -193,7 +193,7 @@ def RentCar(self):
         }
 self.addIntentHandler('rent_car.book', self.RentCar)
 ```
-#delegate
+*delegate
 将处理交给DuerOS的对话管理模块DM（Dialog Management），按事先配置的顺序，包括对缺失槽位的询问，槽位值的确认（如果设置了槽位需要确认，以及确认的话术）,整个意图的确认（如果设置了意图需要确认，以及确认的话术。比如可以将收集的槽位依次列出，等待用户确认）
 
 ===========================================
