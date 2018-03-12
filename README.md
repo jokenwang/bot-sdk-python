@@ -133,6 +133,45 @@ def endRequest(self):
 self.addLaunchHandler(self.endRequest)
 ```
 ### 使多轮对话管理更加简单
+往往用户一次表达的需求，信息不一定完整，比如：'给我创建一个闹钟'，由于query中没有提醒的时间，一个好的bot实现会问用户：'我应该什么时候提醒你呢？'，这时用户说明天上午8点，这样bot就能获取设置时间，可以为用户创建一个闹钟。比如，你可以这样来实现：
+```
+def getRemindSlot(self):
+    remindTime = self.getSlots('remind_time');
+    if remindTime:
+        ```
+        返回设置闹钟指令
+        ```
+    self.nlu.ask('remind_time')
+    return {
+        'outputSpeech': r'要几点的闹钟呢?'
+    }
+self.addLaunchHandler(self.getRemindSlot)
+#监听events
+def dealAlertEvent(self):
+    card = TextCard('闹钟创建成功')
+    return {
+        'card' : card,
+    }
+self.addEventListener('Alerts.SetAlertSucceeded', self.dealAlertEvent)
+```
+Bot-sdk会根据通过addIntentHandler添加handler的顺序来遍历所有的检查条件，寻找条件满足的handler来执行回调，并且当回调函数返回值不是None时结束遍历，将这个不为None的值返回。
+
+NLU会维护slot的值，merge每次对话解析出的slot，你可以不用自己来处理，DuerOS每次请求Bot时会将merge的slot都下发。session内的数据完全由你来维护，你可以用来存储一些状态，比如打车Bot会用来存储当前的订单状态。你可以通过如下接口来使用slot和session：
+```
+getSlot('slot name')
+setSlot('slot name', 'slot value'); #如果没有找到对应的slot，会自动新增一个slot
+#session
+getSessionAttribute('key')
+setSessionAttribute('key', 'value')
+#or
+setSessionAttribute('key.key1', 'value')
+getSessionAttribute('key.key1')
+#清空session
+clearSession()
+```
+你的Bot可以订阅端上触发的事件，通过接口addEventListener实现，比如端上设置闹钟成功后，会下发SetAlertSucceeded的事件，Bot通过注册事件处理函数，进行相关的操作。
+
+### NLU交互协议
 
 ===========================================
 
