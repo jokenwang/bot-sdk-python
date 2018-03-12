@@ -30,7 +30,7 @@ python setup.py install。
 self.addIntentHandler('remind', self.createRemind)，其中需要自定义createRemind处理函数：例如定义一个函数
 def createRemind(self):
 	remindTime = self.getSlots('remindTime')
-	if($remindTime) {
+	if(remindTime) {
 		card = new TextCard('创建中')
 		 return {
             'card':card,
@@ -179,10 +179,10 @@ clearSession()
 针对填槽多轮，Bot发起对用户收集、确认槽位（如果针对特定槽位有设置确认选项，就进行确认）、确认意图（如果有设置确认选项）的询问，bot-sdk提供了方便的快捷函数支持：
 注意：一次返回的对话directive，只有一个，如果多次设置，只有最后一次的生效
 
-#ask
+* ask
 多轮对话的bot，会通过询问用户来收集完成任务所需要的槽位信息，询问用户的特点总结为3点，ask：问一个特定的槽位。比如，打车服务收到用户的打车意图的时候，发现没有提供目的地，就可以ask destination(目的地的槽位名)：
 ```
-#命中打车意图rent_car.book，但是没有提供目的地
+* 命中打车意图rent_car.book，但是没有提供目的地
 def RentCar(self):
     destination = self.getSlots('destination')
     if not destination:
