@@ -37,8 +37,7 @@ def createRemind(self):
         }
 	}
 ```
-第一个参数代表意图名称，第二个参数代表意图命中后的回调函数，这里addHandler可以用来建立intent和handler的映射，第一个参数意图名称是条件，如果满足则执行对应的回调函数(第二个参数)。 其中回调函数中，self指向当前的Bot，getSlots继承自父类Bot，通过slot名字来获取对应的槽位值。回调函数返回值是一个字典，可以包含多个字段，比如：card，directives，outputSpeech，reprompt等
-示例如下：
+第一个参数代表意图名称，第二个参数代表意图命中后的回调函数，这里addHandler可以用来建立intent和handler的映射，第一个参数意图名称是条件，如果满足则执行对应的回调函数(第二个参数)。 其中回调函数中，self指向当前的Bot，getSlots继承自父类Bot，通过slot名字来获取对应的槽位值。回调函数返回值是一个字典，可以包含多个字段，比如：card，directives，outputSpeech，reprompt等,下面会一一给出示例。
 ### card展示卡片
 * 文本卡片:TextCard
 ```
@@ -73,7 +72,7 @@ card.addItem(item);
 card = ImageCard();
 card.addItem('http://src.image', 'http://thumbnail.image');
 ```
-### directive返回指令
+### directive指令
 * 播放指令 AudioPlayer.Play
 ```
 directives = []
@@ -95,7 +94,7 @@ return {
 }
 ```
 设置好handler之后，就可以实例化刚刚定义的Bot，在webserver中接受DuerOS来的请求。例如samples中的文件。
-###返回speech
+### 返回speech
 * outputSpeech
 上面例子，除了返回card之外，还可以返回outputSpeech，让客户端播报tts：
 ```
