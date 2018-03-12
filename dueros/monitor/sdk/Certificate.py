@@ -9,7 +9,10 @@
     desc:pass
 """
 import os
+import fcntl
 import hashlib
+import urllib2
+import OpenSSL
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from Crypto.Hash import SHA
@@ -46,14 +49,15 @@ class Certificate(object):
         cache = os.getcwd() + os.path.sep + md5.hexdigest()
         content = ''
         if not os.path.exists(cache):
-            with open(filename, 'r', encoding='utf-8') as f:
-                content = f.read()
+            content = urllib2.urlopen(filename).read()
             if not content:
                 return
-            with open(cache, 'w', encoding='utf-8') as f:
+            with open(cache, 'w') as f:
+                fcntl.flock(f, fcntl.LOCK_EX)
                 f.write(content)
-
-        return content
+                fcntl.flock(f, fcntl.LOCK_UN)
+        content = self.getFileContentSafety(cache)
+        return self.getPublicKeyFromX509(content)
 
     def verifyRequest(self):
         '''
@@ -71,7 +75,7 @@ class Certificate(object):
         key = RSA.importKey(publicKey)
         if key:
             digest = SHA.new()
-            digest.update(self.data.encode('utf-8'))
+            digest.update(self.data)
             verifier = PKCS1_v1_5.new(key)
             if verifier.verify(digest, b64decode(self.getRequestSign())):
                 return True
@@ -90,7 +94,7 @@ class Certificate(object):
         rsakey = RSA.importKey(self.privateKey)
         if rsakey:
             digest = SHA.new()
-            digest.update(content.encode('utf-8'))
+            digest.update(content)
             signer = PKCS1_v1_5.new(rsakey)
             signature = signer.sign(digest)
             return b64encode(signature)
@@ -98,7 +102,30 @@ class Certificate(object):
             return False
 
     def getRequestSign(self):
-        self.environ['HTTP_SIGNATURE']
+        return self.environ['HTTP_SIGNATURE']
+    
+    def getPublicKeyFromX509(self, content):
+        '''
+        获取publicKey
+        :param X509 content
+        :return publicKey
+        '''
+        x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, content)
+        pk = x509.get_pubkey()
+        publicKey = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
+        return publicKey
+
+    def getFileContentSafety(self, filename):
+        '''
+        获取文件内容
+        :param filename
+        :return content
+        '''
+        with open(filename, 'r') as f:
+            fcntl.flock(f,fcntl.LOCK_SH)
+            content = f.read()
+            return content
+            fcntl.flock(f,fcntl.LOCK_UN)
 
 if __name__ == '__main__':
 
