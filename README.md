@@ -193,9 +193,30 @@ def RentCar(self):
         }
 self.addIntentHandler('rent_car.book', self.RentCar)
 ```
-*delegate
+* delegate
 将处理交给DuerOS的对话管理模块DM（Dialog Management），按事先配置的顺序，包括对缺失槽位的询问，槽位值的确认（如果设置了槽位需要确认，以及确认的话术）,整个意图的确认（如果设置了意图需要确认，以及确认的话术。比如可以将收集的槽位依次列出，等待用户确认）
-
+```
+self.nlu.setDelegate()
+```
+* confirm slot
+主动发起对一个槽位的确认，此时还需同时返回询问的outputSpeach。主动发起的确认，DM不会使用默认配置的话术。
+```
+self.nlu.setConfirmSlot('money')
+return {
+    'outputSpeech':'你确认充话费：10000000000',
+    }
+```
+* confirm intent
+主动发起对一个意图的确认，此时还需同时返回询问的outputSpeach。主动发起的确认，DM不会使用默认配置的话术。一般当槽位填槽完毕，在进行下一步操作之前，一次性的询问各个槽位，是否符合用户预期。
+```
+money = self.getSlots('money')
+phone = self.getSlots('phone')
+if money and phone:
+    return {
+        'outputSpeech':'你确认充话费：' + money + '，充值手机：' + phone,
+    }
+### 插件
+你还可以写插件(拦截器Intercept)，干预对话流程、干预返回结果。比如，用户没有通过百度帐号登录，bot直接让用户去登录，不响应意图，可以使用LoginIntercept：
 ===========================================
 
 2018-01-12
