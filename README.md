@@ -22,8 +22,8 @@ Dueros Bot Python版SDK，鉴于官网只提供了PHP和Node的SDK，不能满�
 ### 安装、使用BOT SDK进行开发
 
 下载bot-sdk代码后，可以使用如下命令安装:
-```javascript
-bot-sdk:python setup.py install。
+```
+python setup.py install。
 ```
 为了开始使用BOT SDK，你需要先新建一个python文件，比如文件名是Bot.py,该文件需要继承sdk/Bot.py。下一步，我们处理意图，Bot-sdk提供个函数来handle这些意图,例如继承sdk/Bot.py中的addIntentHandler函数，添加一个意图处理函数，比如，为新建闹钟，创建一个handler，在构造函数中添加：
 ```
@@ -112,8 +112,27 @@ return {
     'reprompt':'<speak>请问你要干啥呢</speak>'
 }
 ```
-###Lanuch & SessionEnd
+### Lanuch & SessionEnd
 * bot开始服务
+当bot被@（通过bot唤醒名打开时），DuerOS会发送LanuchRequest给bot，此时，bot可以返回欢迎语或者操作提示：
+```
+def launchRequest(self):
+    return {
+        'outputSpeech': r'欢迎进入'
+    }
+
+self.addLaunchHandler(self.launchRequest)
+```
+* bot 结束服务
+当用户表达退出bot时，DuerOS会发送SessionEndedRequest：
+def endRequest(self):
+    ```
+    清空状态，结束会话
+    ```
+self.addLaunchHandler(self.endRequest)
+
+### 使多轮对话管理更加简单
+
 ===========================================
 
 2018-01-12
