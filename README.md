@@ -220,10 +220,26 @@ if money and phone:
 
 可以使用如下命令安装:你还可以写插件(拦截器Intercept),干预对话流程、干预返回结果。比如，用户没有通过百度帐号登录，bot直接让用户去登录，不响应意图，可以使用LoginIntercept:
 ```
+loginIntercept = LoginIntercept()
+self.addIntercept(loginIntercept)
 ```
+开发自己的拦截器，继承Intercept,通过重载preprocess，能够在处理通过addHandler、addEventListener添加的回调之前，定义一些逻辑。通过重载postprocess能够对回调函数的返回值，进行统一的处理：
+```
+class YourIntercept(Intercept):
+    def preprocess(self, bot):
+        '''
+        bot: 你的bot实例化对象
+        '''
+
+    def postprocess(self, bot, result):
+        '''
+        maybe format result 
+        '''
+        return result
+```
+intercept可以定义多个，执行顺序，以调用addIntercept的顺序来执行
 
 2018-01-12
-
 * Bot.py添加错误回调，用户可以调用setCallBack方法设置错误回调方法
 * 优化samples demo
 * 添加个税demo数据
