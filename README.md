@@ -1,60 +1,252 @@
 # bot-sdk
-Dueros Bot Python版SDK(基于Python3)，鉴于官网只提供了PHP和Node的SDK，不能满足大家的需求，
+Dueros Bot Python版SDK，鉴于官网只提供了PHP和Node的SDK，不能满足大家的需求，
 于是硬着头皮试着搞一搞Python版本的SDK。这里不得不吐槽下百度的文档(实在挺烂的)。
 另外Python自学了1周，代码还比较烂（勿喷），希望大家不断来完善。
 
+
+
 ### SDK结构介绍
 
-* Bot.py 为SDK的入口，用于接收请求并返回结果
-* Nlu.py 负责对数据的加工，如槽位、意图信息等
-* Request.py Bot接收到的数据全部交给Request进行处理，Request再委托Nlu、Session
-对数据做处理
+* 封装了DuerOS的request和response,其中Request.py中用来处理DuerOS发送给Bot的请求数据，其中包含Request再委托Nlu、Session
+对请求数据做处理；Response.py Bot数据处理完后交由Response封装返回给DuerOS
+* Bot.py 为SDK的入口，用于接收DuerOs请求并返回结果
+* Nlu.py 负责对请求关键信息的提取，如槽位、意图信息等
+* Request.py Bot接收到的数据全部交给Request进行处理，Request再委托Nlu、Session 对数据做处理
 * Response.py Bot数据处理完后交由Response封装返回结果
-* Session.py 处理会话信息(暂未实现)
+* Session.py 处理会话信息
 * card 目录处理展示卡片相关
 * directive 生成指令相关比如：浏览器指令、音频指令
 * tests 目录存放本地测试代码
 * samples 搭建有Python Wsgi 的Demo,通过执行sh start.sh
 
-### Bot-Python-SDK使用说明
+### 安装、使用BOT SDK进行开发
 
-* 实现自己的Bot逻辑需要继承Bot.py类
-
+下载bot-sdk代码后，可以使用如下命令安装:
 ```
-from sdk.Bot import Bot
-
-class BotTest(Bot):
-    def __init__(self, data):
-        super(BotTest, self).__init__(data)
-        self.addLaunchHandler(launchHandlerFunc)
-        self.addIntentHandler('自己的意图标识英文名', 自定义func)
+python setup.py install。
 ```
-
-* 创建自己的Handler函数,回调函数返回的是dict类型数据，可以包含多个字段card，directives，outputSpeech，reprompt
-
+为了开始使用BOT SDK，你需要先新建一个python文件，比如文件名是Bot.py,该文件需要继承sdk/Bot.py。下一步，我们处理意图，Bot-sdk提供个函数来handle这些意图,例如继承sdk/Bot.py中的addIntentHandler函数，添加一个意图处理函数，比如，为新建闹钟，创建一个handler，在构造函数中添加：
+```python
+self.addIntentHandler('remind', self.createRemind)，其中需要自定义createRemind处理函数：例如定义一个函数
+def createRemind(self):
+	remindTime = self.getSlots('remindTime')
+	if(remindTime) {
+		card = new TextCard('创建中')
+		 return {
+            'card':card,
+        }
+	}
 ```
-def lanuchHandlerFunc():
+第一个参数代表意图名称，第二个参数代表意图命中后的回调函数，这里addHandler可以用来建立intent和handler的映射，第一个参数意图名称是条件，如果满足则执行对应的回调函数(第二个参数)。 其中回调函数中，self指向当前的Bot，getSlots继承自父类Bot，通过slot名字来获取对应的槽位值。回调函数返回值是一个字典，可以包含多个字段，比如：card，directives，outputSpeech，reprompt等,下面会一一给出示例。
+### card展示卡片
+* 文本卡片:TextCard
+```
+card = TextCard('content')
+or 
+card = TextCard()
+//设置链接
+card.setAnchor('http://www.baidu.com');
+//设置cueWords
+card.addCueWords('hint1');
+```
+* 标准卡片 StandardCard
+```
+card = StandardCard()
+card.setTitle('title');
+card.setContent('content');
+card.setImage('http://www...');
+card.setAnchor('http://www.baidu.com');
+```
+* 列表卡片ListCard
+```
+card = new ListCard();
+item = new ListCardItem();
+item.setTitle('title')
+item.setContent('content')
+item.setUrl('http://www')
+item.setImage('http://www.png');
+card.addItem(item);
+```
+* 图片卡片ImageCard
+```
+card = ImageCard();
+card.addItem('http://src.image', 'http://thumbnail.image');
+```
+### directive指令
+* 播放指令 AudioPlayer.Play
+```
+directives = []
+directive = Play('http://www.music', Play::REPLACE_ALL)
+directives.append(directive)
+return {
+    'directives':directives,
+    'outputSpeech':'正在为你播放歌曲',
+}
+```
+* 停止端上的播放音频 AudioPlayer.Stop
+```
+directives = []
+directive = Stop()
+directives.append(directive)
+return {
+    'directives':directives,
+    'outputSpeech':'已停止播放',
+}
+```
+设置好handler之后，就可以实例化刚刚定义的Bot，在webserver中接受DuerOS来的请求。例如samples中的文件。
+### 返回speech
+* outputSpeech
+上面例子，除了返回card之外，还可以返回outputSpeech，让客户端播报tts：
+```
+return {
+    'outputSpeech':'请问你要干啥呢',
+    'outputSpeech':'<speak>请问你要干啥呢</speak>'
+}
+```
+* reprompt
+当客户端响应用户后，用户可能会一段时间不说话，如果你返回了reprompt，客户端会提示用户输入
+```
+return {
+    'reprompt':'请问你要干啥呢',
+    #或者ssml
+    'reprompt':'<speak>请问你要干啥呢</speak>'
+}
+```
+### Lanuch & SessionEnd
+* bot开始服务
+当bot被@（通过bot唤醒名打开时），DuerOS会发送LanuchRequest给bot，此时，bot可以返回欢迎语或者操作提示：
+```
+def launchRequest(self):
     return {
-        'card': TextCard('欢迎使用家居控制!请告诉我您要查找什么智能设备，比如查找我的空调'),
-        'outputSpeech': '<speak>欢迎使用家居控制!请告诉我您要查找什么智能设备，比如查找我的空调</speak>'
+        'outputSpeech': r'欢迎进入'
+    }
+
+self.addLaunchHandler(self.launchRequest)
+```
+* bot 结束服务
+当用户表达退出bot时，DuerOS会发送SessionEndedRequest：
+```
+def endRequest(self):
+    ```
+    清空状态，结束会话
+    ```
+self.addLaunchHandler(self.endRequest)
+```
+### 使多轮对话管理更加简单
+往往用户一次表达的需求，信息不一定完整，比如：'给我创建一个闹钟'，由于query中没有提醒的时间，一个好的bot实现会问用户：'我应该什么时候提醒你呢？'，这时用户说明天上午8点，这样bot就能获取设置时间，可以为用户创建一个闹钟。比如，你可以这样来实现：
+```
+def getRemindSlot(self):
+    remindTime = self.getSlots('remind_time');
+    if remindTime:
+        ```
+        返回设置闹钟指令
+        ```
+    self.nlu.ask('remind_time')
+    return {
+        'outputSpeech': r'要几点的闹钟呢?'
+    }
+self.addLaunchHandler(self.getRemindSlot)
+#监听events
+def dealAlertEvent(self):
+    card = TextCard('闹钟创建成功')
+    return {
+        'card' : card,
+    }
+self.addEventListener('Alerts.SetAlertSucceeded', self.dealAlertEvent)
+```
+Bot-sdk会根据通过addIntentHandler添加handler的顺序来遍历所有的检查条件，寻找条件满足的handler来执行回调，并且当回调函数返回值不是None时结束遍历，将这个不为None的值返回。
+
+NLU会维护slot的值，merge每次对话解析出的slot，你可以不用自己来处理，DuerOS每次请求Bot时会将merge的slot都下发。session内的数据完全由你来维护，你可以用来存储一些状态，比如打车Bot会用来存储当前的订单状态。你可以通过如下接口来使用slot和session：
+```
+getSlot('slot name')
+setSlot('slot name', 'slot value'); #如果没有找到对应的slot，会自动新增一个slot
+#session
+getSessionAttribute('key')
+setSessionAttribute('key', 'value')
+#or
+setSessionAttribute('key.key1', 'value')
+getSessionAttribute('key.key1')
+#清空session
+clearSession()
+```
+你的Bot可以订阅端上触发的事件，通过接口addEventListener实现，比如端上设置闹钟成功后，会下发SetAlertSucceeded的事件，Bot通过注册事件处理函数，进行相关的操作。
+
+### NLU交互协议
+在DuerOS Bot Platform平台，可以通过nlu工具，添加了针对槽位询问的配置，包括：
+1、是否必选，对应询问的默认话术
+2、是否需要用户确认槽位内容，以及对应的话术
+3、是否需要用户在执行动作前，对所有的槽位确认一遍，以及对应的话术
+针对填槽多轮，Bot发起对用户收集、确认槽位（如果针对特定槽位有设置确认选项，就进行确认）、确认意图（如果有设置确认选项）的询问，bot-sdk提供了方便的快捷函数支持：
+注意：一次返回的对话directive，只有一个，如果多次设置，只有最后一次的生效
+
+* ask
+多轮对话的bot，会通过询问用户来收集完成任务所需要的槽位信息，询问用户的特点总结为3点，ask：问一个特定的槽位。比如，打车服务收到用户的打车意图的时候，发现没有提供目的地，就可以ask destination(目的地的槽位名)：
+```
+#命中打车意图rent_car.book，但是没有提供目的地
+def RentCar(self):
+    destination = self.getSlots('destination')
+    if not destination:
+        self.nlu.ask('destination')
+        card = TextCard('打车去哪呢')
+        return {
+            'card' : card,
+        }
+self.addIntentHandler('rent_car.book', self.RentCar)
+```
+* delegate
+将处理交给DuerOS的对话管理模块DM（Dialog Management），按事先配置的顺序，包括对缺失槽位的询问，槽位值的确认（如果设置了槽位需要确认，以及确认的话术）,整个意图的确认（如果设置了意图需要确认，以及确认的话术。比如可以将收集的槽位依次列出，等待用户确认）
+```
+self.nlu.setDelegate()
+```
+* confirm slot
+主动发起对一个槽位的确认，此时还需同时返回询问的outputSpeach。主动发起的确认，DM不会使用默认配置的话术。
+```
+self.nlu.setConfirmSlot('money')
+return {
+    'outputSpeech':'你确认充话费：10000000000',
     }
 ```
+* confirm intent
+主动发起对一个意图的确认，此时还需同时返回询问的outputSpeach。主动发起的确认，DM不会使用默认配置的话术。一般当槽位填槽完毕，在进行下一步操作之前，一次性的询问各个槽位，是否符合用户预期。
+```
+money = self.getSlots('money')
+phone = self.getSlots('phone')
+if money and phone:
+    return {
+        'outputSpeech':'你确认充话费：' + money + '，充值手机：' + phone,
+    }
+```
+### 插件
 
-* 搭建服务 详见samples
+可以使用如下命令安装:你还可以写插件(拦截器Intercept),干预对话流程、干预返回结果。比如，用户没有通过百度帐号登录，bot直接让用户去登录，不响应意图，可以使用LoginIntercept:
+```
+loginIntercept = LoginIntercept()
+self.addIntercept(loginIntercept)
+```
+开发自己的拦截器，继承Intercept,通过重载preprocess，能够在处理通过addHandler、addEventListener添加的回调之前，定义一些逻辑。通过重载postprocess能够对回调函数的返回值，进行统一的处理：
+```
+class YourIntercept(Intercept):
+    def preprocess(self, bot):
+        '''
+        bot: 你的bot实例化对象
+        '''
 
-
-### 更新记录
-
-===========================================
+    def postprocess(self, bot, result):
+        '''
+        maybe format result 
+        '''
+        return result
+```
+intercept可以定义多个，执行顺序，以调用addIntercept的顺序来执行
 
 2018-01-12
-
 * Bot.py添加错误回调，用户可以调用setCallBack方法设置错误回调方法
 * 优化samples demo
 * 添加个税demo数据
 
 
 2018-01-06
+
 
 * 完成拦截器
 * 完成会话

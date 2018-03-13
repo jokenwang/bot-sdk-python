@@ -105,7 +105,10 @@ class Nlu(object):
         if not 'slots' in self.data[index]:
             return ''
         slots = self.data[index]['slots']
-
+        if field in slots:
+            return slots[field][subField]
+        else:
+            return None
         return slots[field][subField]
 
     def hasAsked(self):

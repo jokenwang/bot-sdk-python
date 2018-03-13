@@ -1,8 +1,0 @@
-*.pyc
-.idea
-venv
-*/build
-dist
-*-info
-
-
