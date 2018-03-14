@@ -109,7 +109,7 @@ class Nlu(object):
             return slots[field][subField]
         else:
             return None
-        return slots[field][subField]
+        
 
     def hasAsked(self):
         '''
