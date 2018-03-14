@@ -131,11 +131,11 @@ class Nlu(object):
         if slot != '' and slot:
             print('askSlot = %s' % slot)
             self.askSlot = slot
-            self.directive = [{
+            self.directive = {
                 'type': 'Dialog.ElicitSlot',
                 'slotToElicit': slot,
                 'updatedIntent': self.__getUpdateIntent()
-            }]
+            }
         else:
             return
 
