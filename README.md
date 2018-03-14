@@ -22,8 +22,8 @@ Dueros Bot Python版SDK，鉴于官网只提供了PHP和Node的SDK，不能满�
 ### 安装、使用BOT SDK进行开发
 
 下载bot-sdk代码后，可以使用如下命令安装:
-```
-python setup.py install。
+```python
+python setup.py install
 ```
 为了开始使用BOT SDK，你需要先新建一个python文件，比如文件名是Bot.py,该文件需要继承sdk/Bot.py。下一步，我们处理意图，Bot-sdk提供个函数来handle这些意图,例如继承sdk/Bot.py中的addIntentHandler函数，添加一个意图处理函数，比如，为新建闹钟，创建一个handler，在构造函数中添加：
 ```python
@@ -40,7 +40,7 @@ def createRemind(self):
 第一个参数代表意图名称，第二个参数代表意图命中后的回调函数，这里addHandler可以用来建立intent和handler的映射，第一个参数意图名称是条件，如果满足则执行对应的回调函数(第二个参数)。 其中回调函数中，self指向当前的Bot，getSlots继承自父类Bot，通过slot名字来获取对应的槽位值。回调函数返回值是一个字典，可以包含多个字段，比如：card，directives，outputSpeech，reprompt等,下面会一一给出示例。
 ### card展示卡片
 * 文本卡片:TextCard
-```
+```python
 card = TextCard('content')
 or 
 card = TextCard()
