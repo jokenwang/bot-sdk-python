@@ -196,7 +196,7 @@ self.addIntentHandler('rent_car.book', self.RentCar)
 * delegate
 将处理交给DuerOS的对话管理模块DM（Dialog Management），按事先配置的顺序，包括对缺失槽位的询问，槽位值的确认（如果设置了槽位需要确认，以及确认的话术）,整个意图的确认（如果设置了意图需要确认，以及确认的话术。比如可以将收集的槽位依次列出，等待用户确认）
 ```
-self.nlu.setDelegate()
+return self.nlu.setDelegate()
 ```
 * confirm slot
 主动发起对一个槽位的确认，此时还需同时返回询问的outputSpeach。主动发起的确认，DM不会使用默认配置的话术。

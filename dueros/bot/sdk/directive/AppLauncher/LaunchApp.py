@@ -13,7 +13,7 @@ class LaunchApp(BaseDirective):
        用于调用app的指令类
     """
 
-    def __init__(self, appName, packageName, deepLink):
+    def __init__(self, appName='', packageName='', deepLink=''):
         '''
         三者必须传一个
         :param appName:     应用名称
