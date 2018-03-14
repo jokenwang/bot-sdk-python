@@ -32,7 +32,7 @@ def createRemind(self):
 	remindTime = self.getSlots('remindTime')
 	if(remindTime) {
 		card = new TextCard('创建中')
-		 return {
+        return {
             'card':card,
         }
 	}
