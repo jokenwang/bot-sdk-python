@@ -212,6 +212,7 @@ return {
 money = self.getSlots('money')
 phone = self.getSlots('phone')
 if money and phone:
+    self.nlu.setConfirmIntent()
     return {
         'outputSpeech':'你确认充话费：' + money + '，充值手机：' + phone,
     }
