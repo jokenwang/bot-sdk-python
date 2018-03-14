@@ -200,21 +200,21 @@ class Nlu(object):
         if 'slots' in self.data[0]:
             slots = self.data[0]['slots']
             if field in slots:
-                self.directive = [{
+                self.directive = {
                     'type': 'Dialog.ConfirmSlot',
                     'slotToConfirm': field,
                     'updatedIntent': self.__getUpdateIntent()
-                }]
+                }
 
     def setConfirmIntent(self):
         '''
         设置confirm 意图。询问用户是否对意图确认，设置后需要自行返回outputSpeech
         :return:
         '''
-        self.directive = [{
+        self.directive = {
             'type': 'Dialog.ConfirmIntent',
             'updatedIntent': self.__getUpdateIntent()
-        }]
+        }
 
 
 if __name__ == '__main__':
