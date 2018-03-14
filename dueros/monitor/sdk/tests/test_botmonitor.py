@@ -12,8 +12,8 @@
 from dueros.monitor.sdk.model.Response import Response
 from dueros.monitor.sdk.model.Request import Request
 from dueros.monitor.sdk.BotMonitor import BotMonitor
+from dueros.bot.sdk.Certificate import Certificate
 import json
-from dueros.monitor.sdk.Certificate import Certificate
 import os
 import hashlib
 from Crypto.PublicKey import RSA

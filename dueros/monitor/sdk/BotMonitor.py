@@ -9,8 +9,8 @@
 """
 from dueros.monitor.sdk.model.Request import Request
 from dueros.monitor.sdk.model.Response import Response
-from dueros.monitor.sdk.Certificate import Certificate
 from dueros.monitor.sdk.BotMonitorConfig import BotMonitorConfig
+from dueros.bot.sdk.Certificate import Certificate
 import json
 import base64
 import time

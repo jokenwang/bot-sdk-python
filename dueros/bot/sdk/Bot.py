@@ -10,7 +10,7 @@ import re
 import logging
 
 from dueros.monitor.sdk.BotMonitor import BotMonitor
-from dueros.monitor.sdk.Certificate import Certificate
+from dueros.bot.sdk.Certificate import Certificate
 from dueros.bot.sdk.Intercept import Intercept
 from dueros.bot.sdk.Request import Request
 from dueros.bot.sdk.Response import Response
