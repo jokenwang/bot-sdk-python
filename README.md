@@ -29,13 +29,12 @@ python setup.py install
 ```python
 self.addIntentHandler('remind', self.createRemind)，其中需要自定义createRemind处理函数：例如定义一个函数
 def createRemind(self):
-	remindTime = self.getSlots('remindTime')
-	if(remindTime) {
-		card = new TextCard('创建中')
+    remindTime = self.getSlots('remindTime')
+    if remindTime:
+        card = new TextCard('创建中')
         return {
             'card':card,
         }
-	}
 ```
 第一个参数代表意图名称，第二个参数代表意图命中后的回调函数，这里addHandler可以用来建立intent和handler的映射，第一个参数意图名称是条件，如果满足则执行对应的回调函数(第二个参数)。 其中回调函数中，self指向当前的Bot，getSlots继承自父类Bot，通过slot名字来获取对应的槽位值。回调函数返回值是一个字典，可以包含多个字段，比如：card，directives，outputSpeech，reprompt等,下面会一一给出示例。
 ### card展示卡片
