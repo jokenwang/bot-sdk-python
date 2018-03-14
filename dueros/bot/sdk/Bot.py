@@ -287,21 +287,20 @@ class Bot(object):
             # ret = intercept.postprocess(self, ret)
             # self.botMonitor.setPostEventEnd()
 
-        if ret:
-            res = self.response.build(ret)
-            print(json.dumps(res))
-            # self.botMonitor.setResponseData(res)
-            # self.botMonitor.updateData()
-            if not build:
-                return json.dumps(ret)
-            return json.dumps(res)
-        else:
-            #出错了 返回错误信息
+        if not build:
             if self.cakkBackData:
                 return json.dumps(self.cakkBackData)
             else:
-                return json.dumps({'message': '出错了'})
-
+                return json.dumps(ret)
+        if not ret:
+            ret = {}
+        res = self.response.build(ret)
+        print(json.dumps(res))
+        if self.cakkBackData:
+            return json.dumps(self.cakkBackData)
+        else:
+            return json.dumps(res)
+    
     def dispatch(self):
         '''
         分发请求并调用回调方法
