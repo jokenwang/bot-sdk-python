@@ -25,6 +25,7 @@ class Bot(Bot):
         '''
         num = self.getSlots('sys.number')
         city = self.getSlots('sys.city')
+        return self.nlu.setDelegate()
         if num and not city:
             self.nlu.ask('sys.city')
             return {
@@ -50,21 +51,18 @@ class Bot(Bot):
             return {
                 'outputSpeech': r'你需要缴纳' + str(taxNum)
             }
-    def testSetDelegate(self):
-        if not self.request.isDialogStateCompleted():
-            self.nlu.setDelegate()
-            return {
-                'outputSpeech': r'你要查询什么税种呢'
-            }
+    
     def computeType(self, num, city):
-        #调用接口计算个税
-            return 100
+        '''
+        调用接口计算个税
+        '''
+        return 100
 
 
     def __init__(self, data):
         super(Bot, self).__init__(data)
         self.addLaunchHandler(self.launchRequest)
-        self.addIntentHandler('personal_income_tax.inquiry', self.testSetDelegate)
+        self.addIntentHandler('personal_income_tax.inquiry', self.getTaxSlot)
 
 
 if __name__ == '__main__':

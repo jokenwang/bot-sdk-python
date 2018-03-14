@@ -25,7 +25,7 @@ def application(environ, start_response):
         return ['未获取到请求数据']
 
     bot = Bot(request_body)
-    bot.initCertificate(environ).enableVerifyRequestSign()
+    #bot.initCertificate(environ).enableVerifyRequestSign()
     #添加错误回调方法
     bot.setCallBack(callback)
 
