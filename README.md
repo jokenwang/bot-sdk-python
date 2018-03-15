@@ -126,7 +126,7 @@ def endRequest(self):
     ```
     清空状态，结束会话
     ```
-self.addLaunchHandler(self.endRequest)
+self.addSessionEndedHandler(self.endRequest)
 ```
 ### 使多轮对话管理更加简单
 往往用户一次表达的需求，信息不一定完整，比如：'给我创建一个闹钟'，由于query中没有提醒的时间，一个好的bot实现会问用户：'我应该什么时候提醒你呢？'，这时用户说明天上午8点，这样bot就能获取设置时间，可以为用户创建一个闹钟。比如，你可以这样来实现：
