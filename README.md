@@ -30,7 +30,7 @@ def createRemind(self):
     if remindTime:
         card = new TextCard('创建中')
         return {
-            'card':card,
+            'card' : card,
         }
 ```
 第一个参数代表意图名称，第二个参数代表意图命中后的回调函数，这里addHandler可以用来建立intent和handler的映射，第一个参数意图名称是条件，如果满足则执行对应的回调函数(第二个参数)。 其中回调函数中，self指向当前的Bot，getSlots继承自父类Bot，通过slot名字来获取对应的槽位值。回调函数返回值是一个字典，可以包含多个字段，比如：card，directives，outputSpeech，reprompt等,下面会一一给出示例。
@@ -199,7 +199,7 @@ return self.nlu.setDelegate()
 ```python
 self.nlu.setConfirmSlot('money')
 return {
-    'outputSpeech':'你确认充话费：10000000000',
+    'outputSpeech' : '你确认充话费：10000000000',
     }
 ```
 * confirm intent
@@ -210,7 +210,7 @@ phone = self.getSlots('phone')
 if money and phone:
     self.nlu.setConfirmIntent()
     return {
-        'outputSpeech':'你确认充话费：' + money + '，充值手机：' + phone,
+        'outputSpeech' : '你确认充话费：' + money + '，充值手机：' + phone,
     }
 ```
 ### 插件
