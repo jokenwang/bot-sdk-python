@@ -25,7 +25,6 @@ class Bot(Bot):
         '''
         num = self.getSlots('sys.number')
         city = self.getSlots('sys.city')
-        return self.nlu.setDelegate()
         if num and not city:
             self.nlu.ask('sys.city')
             return {
