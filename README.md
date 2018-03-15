@@ -235,6 +235,7 @@ class YourIntercept(Intercept):
         return result
 ```
 intercept可以定义多个，执行顺序，以调用addIntercept的顺序来执行
+# 完成过程记录
 
 2018-01-12
 * Bot.py添加错误回调，用户可以调用setCallBack方法设置错误回调方法
