@@ -253,6 +253,33 @@ class YourIntercept(Intercept):
 ```
 intercept可以定义多个，执行顺序，以调用addIntercept的顺序来执行
 
+### 常见问题
+* 运行sh start.sh 出现 ImportError: No module named OpenSSL
+执行下面命令
+```
+sudo pip install pyOpenSSL
+
+```
+
+*ImportError: No module named Crypto.PublicKey
+执行下面命令
+```
+sudo pip install pycrypto
+
+```
+
+*ImportError: No module named requests
+执行下面命令
+```
+sudo pip install requests
+
+```
+或者在根目录执行下面命令解决全部问题
+```
+pip install -r requirements.txt
+
+```
+
 2018-01-12
 * Bot.py添加错误回调，用户可以调用setCallBack方法设置错误回调方法
 * 优化samples demo
