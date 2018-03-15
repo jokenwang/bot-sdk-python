@@ -7,8 +7,8 @@
 * Nlu.py负责对请求关键信息的提取，如槽位、意图信息等
 * Request.py技能接收到DuerOS的数据全部交给Request进行处理，Request再委托Nlu、Session对数据做处理
 * Response.py技能数据处理完后交由Response封装结果返回DuerOS
-* Session.py 处理会话信息
-* Certificate.py 封装DuerOS和技能交换的通信认证
+* Session.py处理会话信息
+* Certificate.py封装DuerOS和技能通信认证
 * card目录处理展示卡片相关
 * directive目录生成指令相关比如：浏览器指令、音频指令
 * tests 目录存放本地测试代码
