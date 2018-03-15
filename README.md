@@ -3,19 +3,16 @@
 
 
 ### SDK结构介绍
-
-* 封装了DuerOS的request和response,其中Request.py中用来处理DuerOS发送给Bot的请求数据，其中包含Request再委托Nlu、Session
-对请求数据做处理；Response.py Bot数据处理完后交由Response封装返回给DuerOS
-* Bot.py 为SDK的入口，用于接收DuerOs请求并返回结果
-* Nlu.py 负责对请求关键信息的提取，如槽位、意图信息等
-* Request.py Bot接收到的数据全部交给Request进行处理，Request再委托Nlu、Session 对数据做处理
-* Response.py Bot数据处理完后交由Response封装返回结果
+* Bot.py为SDK的入口，用于接收DuerOs请求并返回结果
+* Nlu.py负责对请求关键信息的提取，如槽位、意图信息等
+* Request.py技能接收到DuerOS的数据全部交给Request进行处理，Request再委托Nlu、Session对数据做处理
+* Response.py技能数据处理完后交由Response封装返回结果返回DuerOS
 * Session.py 处理会话信息
-* card 目录处理展示卡片相关
-* directive 生成指令相关比如：浏览器指令、音频指令
+* Certificate.py 封装DuerOS和技能交换的通信认证
+* card目录处理展示卡片相关
+* directive目录生成指令相关比如：浏览器指令、音频指令
 * tests 目录存放本地测试代码
-* samples 搭建有Python Wsgi 的Demo,通过执行sh start.sh
-
+* samples 示例demo，其中包括guess_num、audio_play、personal_income_tax
 ### 安装、使用BOT SDK进行开发
 
 下载bot-sdk代码后，可以使用如下命令安装:
