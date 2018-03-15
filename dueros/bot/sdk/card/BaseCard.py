@@ -61,7 +61,7 @@ class BaseCard(object):
 		field = item[3:]
 		if(operation == 'set' and field and (field.lower() in self.supportSetField)):
 			def function(*args):
-				self.data[field.lower()] = str(*args)
+				self.data[field.lower()] = args[0]
 			return function
 		else:
 			def function(*args):
