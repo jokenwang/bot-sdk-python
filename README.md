@@ -261,13 +261,13 @@ intercept可以定义多个，执行顺序，以调用addIntercept的顺序来�
 sudo pip install pyOpenSSL
 ```
 
-*ImportError: No module named Crypto.PublicKey
+* ImportError: No module named Crypto.PublicKey
 执行下面命令
 ```
 sudo pip install pycrypto
 ```
 
-*ImportError: No module named requests
+* ImportError: No module named requests
 执行下面命令
 ```
 sudo pip install requests
