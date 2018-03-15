@@ -6,7 +6,7 @@
 * Bot.py为SDK的入口，用于接收DuerOS请求并返回结果
 * Nlu.py负责对请求关键信息的提取，如槽位、意图信息等
 * Request.py技能接收到DuerOS的数据全部交给Request进行处理，Request再委托Nlu、Session对数据做处理
-* Response.py技能数据处理完后交由Response封装返回结果返回DuerOS
+* Response.py技能数据处理完后交由Response封装结果返回DuerOS
 * Session.py 处理会话信息
 * Certificate.py 封装DuerOS和技能交换的通信认证
 * card目录处理展示卡片相关
