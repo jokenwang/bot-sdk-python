@@ -131,7 +131,7 @@ self.addSessionEndedHandler(self.endRequest)
 def getRemindSlot(self):
     remindTime = self.getSlots('remind_time');
     if remindTime:
-        #返回设置闹钟指令
+        return 返回设置闹钟指令
     self.nlu.ask('remind_time')
     return {
         'outputSpeech': r'要几点的闹钟呢?'
