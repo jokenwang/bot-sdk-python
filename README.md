@@ -22,9 +22,9 @@
 ```python
 python setup.py install
 ```
-为了开始使用BOT SDK，你需要先新建一个python文件，比如文件名是Bot.py,该文件需要继承sdk/Bot.py。下一步，我们处理意图，Bot-sdk提供个函数来handle这些意图,例如继承sdk/Bot.py中的addIntentHandler函数，添加一个意图处理函数，比如，为新建闹钟，创建一个handler，在构造函数中添加：
+为了开始使用BOT SDK，你需要先新建一个python文件，比如文件名是Bot.py,该文件需要继承sdk/Bot.py。下一步，我们处理意图，Bot-sdk提供个函数来handle这些意图,例如继承sdk/Bot.py中的addIntentHandler函数，添加一个意图处理函数，比如，为新建闹钟，创建一个handler，在构造函数中添加自定义函数，例如添加一个创建闹钟的函数，示例如下:
 ```python
-self.addIntentHandler('remind', self.createRemind)，其中需要自定义createRemind处理函数：例如定义一个函数
+self.addIntentHandler('remind', self.createRemind)
 def createRemind(self):
     remindTime = self.getSlots('remindTime')
     if remindTime:
