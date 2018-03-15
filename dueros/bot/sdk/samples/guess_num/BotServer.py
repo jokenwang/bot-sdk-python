@@ -18,7 +18,7 @@ def application(environ, start_response):
     except(ValueError):
         request_body_size = 0
 
-    request_body = environ['wsgi.input'].read(request_body_size).decode('utf-8')
+    request_body = environ['wsgi.input'].read(request_body_size)
     print('request_body = %s\n' % request_body)
     if not request_body:
         return ['未获取到请求数据']
