@@ -30,7 +30,7 @@ def createRemind(self):
     if remindTime:
         card = new TextCard('创建中')
         return {
-            'card' : card,
+            'card': card,
         }
 ```
 第一个参数代表意图名称，第二个参数代表意图命中后的回调函数，这里addHandler可以用来建立intent和handler的映射，第一个参数意图名称是条件，如果满足则执行对应的回调函数(第二个参数)。 其中回调函数中，self指向当前的Bot，getSlots继承自父类Bot，通过slot名字来获取对应的槽位值。回调函数返回值是一个字典，可以包含多个字段，比如：card，directives，outputSpeech，reprompt等,下面会一一给出示例。
@@ -75,8 +75,8 @@ directives = []
 directive = Play('http://www.music', Play::REPLACE_ALL)
 directives.append(directive)
 return {
-    'directives' : directives,
-    'outputSpeech' : '正在为你播放歌曲',
+    'directives': directives,
+    'outputSpeech': '正在为你播放歌曲',
 }
 ```
 * 停止端上的播放音频 AudioPlayer.Stop
@@ -85,8 +85,8 @@ directives = []
 directive = Stop()
 directives.append(directive)
 return {
-    'directives' : directives,
-    'outputSpeech' : '已停止播放',
+    'directives': directives,
+    'outputSpeech': '已停止播放',
 }
 ```
 设置好handler之后，就可以实例化刚刚定义的Bot，在webserver中接受DuerOS来的请求。例如samples中的文件。
@@ -95,17 +95,17 @@ return {
 上面例子，除了返回card之外，还可以返回outputSpeech，让客户端播报tts：
 ```python
 return {
-    'outputSpeech' : '请问你要干啥呢',
-    'outputSpeech' : '<speak>请问你要干啥呢</speak>'
+    'outputSpeech': '请问你要干啥呢',
+    'outputSpeech': '<speak>请问你要干啥呢</speak>'
 }
 ```
 * reprompt
 当客户端响应用户后，用户可能会一段时间不说话，如果你返回了reprompt，客户端会提示用户输入
 ```python
 return {
-    'reprompt' : '请问你要干啥呢',
+    'reprompt': '请问你要干啥呢',
     #或者ssml
-    'reprompt' : '<speak>请问你要干啥呢</speak>'
+    'reprompt': '<speak>请问你要干啥呢</speak>'
 }
 ```
 ### Lanuch & SessionEnd
@@ -114,7 +114,7 @@ return {
 ```python
 def launchRequest(self):
     return {
-        'outputSpeech' : r'欢迎进入'
+        'outputSpeech': r'欢迎进入'
     }
 
 self.addLaunchHandler(self.launchRequest)
@@ -146,7 +146,7 @@ self.addLaunchHandler(self.getRemindSlot)
 def dealAlertEvent(self):
     card = TextCard('闹钟创建成功')
     return {
-        'card' : card,
+        'card': card,
     }
 self.addEventListener('Alerts.SetAlertSucceeded', self.dealAlertEvent)
 ```
@@ -185,7 +185,7 @@ def RentCar(self):
         self.nlu.ask('destination')
         card = TextCard('打车去哪呢')
         return {
-            'card' : card,
+            'card': card,
         }
 self.addIntentHandler('rent_car.book', self.RentCar)
 ```
@@ -199,7 +199,7 @@ return self.nlu.setDelegate()
 ```python
 self.nlu.setConfirmSlot('money')
 return {
-    'outputSpeech' : '你确认充话费：10000000000',
+    'outputSpeech': '你确认充话费：10000000000',
     }
 ```
 * confirm intent
@@ -210,7 +210,7 @@ phone = self.getSlots('phone')
 if money and phone:
     self.nlu.setConfirmIntent()
     return {
-        'outputSpeech' : '你确认充话费：' + money + '，充值手机：' + phone,
+        'outputSpeech': '你确认充话费：' + money + '，充值手机：' + phone,
     }
 ```
 ### 插件
