@@ -38,7 +38,7 @@ git clone https://github.com/jokenwang/bot-sdk-python.git
 ```
 python setup.py install。
 ```
-3、sh start.sh 运行，如出现问题请参考[常见问题](#question)
+3、sh start.sh 运行，如出现问题请参考[常见问题](#常见问题)
 
 为了开始使用BOT SDK，你需要先新建一个python文件，比如文件名是Bot.py,该文件需要继承sdk/Bot.py。下一步，我们处理意图，Bot-sdk提供个函数来handle这些意图,例如继承sdk/Bot.py中的addIntentHandler函数，添加一个意图处理函数，比如，为新建闹钟，创建一个handler，在构造函数中添加：
 ```python
