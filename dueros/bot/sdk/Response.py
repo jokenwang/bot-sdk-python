@@ -104,7 +104,7 @@ class Response(object):
                 directives = arr
 
         if not data['outputSpeech'] and data['card'] and isinstance(data['card'], TextCard):
-            data['outputSpeech'] = data['card']['content']
+            data['outputSpeech'] = data['card'].getData()['content']
 
         if self.nlu:
             if self.nlu.toUpdateIntent():
