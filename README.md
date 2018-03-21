@@ -1,5 +1,5 @@
 # bot-sdk
-Dueros Bot Python版SDK，鉴于官网只提供了PHP和Node的SDK，不能满足大家的需求，
+DuerOS Bot Python版SDK，鉴于官网只提供了PHP和Node的SDK，不能满足大家的需求，
 于是硬着头皮试着搞一搞Python版本的SDK。这里不得不吐槽下百度的文档(实在挺烂的)。
 另外Python自学了1周，代码还比较烂（勿喷），希望大家不断来完善。
 
@@ -9,7 +9,7 @@ Dueros Bot Python版SDK，鉴于官网只提供了PHP和Node的SDK，不能满�
 
 * 封装了DuerOS的request和response,其中Request.py中用来处理DuerOS发送给Bot的请求数据，其中包含Request再委托Nlu、Session
 对请求数据做处理；Response.py Bot数据处理完后交由Response封装返回给DuerOS
-* Bot.py 为SDK的入口，用于接收DuerOs请求并返回结果
+* Bot.py 为SDK的入口，用于接收DuerO请求并返回结果
 * Nlu.py 负责对请求关键信息的提取，如槽位、意图信息等
 * Request.py Bot接收到的数据全部交给Request进行处理，Request再委托Nlu、Session 对数据做处理
 * Response.py Bot数据处理完后交由Response封装返回结果
@@ -39,6 +39,9 @@ git clone https://github.com/jokenwang/bot-sdk-python.git
 python setup.py install。
 ```
 3、sh start.sh 运行，如出现问题请参考[常见问题](#常见问题)
+
+
+4、开发教程
 
 为了开始使用BOT SDK，你需要先新建一个python文件，比如文件名是Bot.py,该文件需要继承sdk/Bot.py。下一步，我们处理意图，Bot-sdk提供个函数来handle这些意图,例如继承sdk/Bot.py中的addIntentHandler函数，添加一个意图处理函数，比如，为新建闹钟，创建一个handler，在构造函数中添加：
 ```python
@@ -277,6 +280,8 @@ sudo pip install requests
 pip install -r requirements.txt
 ```
 
+### 变更记录
+
 2018-01-12
 * Bot.py添加错误回调，用户可以调用setCallBack方法设置错误回调方法
 * 优化samples demo
@@ -298,6 +303,8 @@ pip install -r requirements.txt
 * ~~会话~~
 * ~~指令处理~~
 
+### 鸣谢
+[@gongqingliang821](https://github.com/gongqingliang821)
 
 ### 免责声明
 
