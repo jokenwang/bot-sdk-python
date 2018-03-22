@@ -2,4 +2,4 @@
 WORK_PATH="${PWD}"
 export PYTHONPATH=${WORK_PATH}:${PYTHONPATH}
 
-python ./sdk/samples/Server.py
+python ./dueros/bot/sdk/samples/Server.py
