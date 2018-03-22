@@ -15,22 +15,28 @@
 * samples 示例demo，其中包括guess_num、audio_play、personal_income_tax
 ### 安装、使用BOT SDK进行开发
 
-1、 通过pip进行安装
+1、 通过pip进行安装   
 
 ```
 pip install dueros-bot
 ```
-
+  
 2、 下载源码安装
-
+    
+* 通过GitHub获取最新源码
 ```
 git clone https://github.com/jokenwang/bot-sdk-python.git
 ```
+
+* 通过Pypi获取最新发布版本源码
+
+    * dueros-bot-0.2.2 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.2)
 
 下载bot-sdk代码后，可以使用如下命令安装:
 ```python
 python setup.py install
 ```
+
 3、sh start.sh 运行，如出现问题请参考[常见问题](#常见问题)
 
 4、开发教程
