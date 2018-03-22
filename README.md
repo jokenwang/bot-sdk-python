@@ -159,7 +159,7 @@ def getRemindSlot(self):
     }
 self.addLaunchHandler(self.getRemindSlot)
 ```
-#监听events
+### 监听events
 ```python
 def dealAlertEvent(self):
     card = TextCard('闹钟创建成功')
