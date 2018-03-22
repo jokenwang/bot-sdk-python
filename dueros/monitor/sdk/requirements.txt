@@ -1,3 +1,0 @@
-#依赖库
-pycrypto==2.6.1
-requests==2.18.4
