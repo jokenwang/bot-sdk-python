@@ -187,7 +187,7 @@ class Nlu(object):
         '''
         self.directive = {
             'type': 'Dialog.Delegate',
-            'updateIntent': self.__getUpdateIntent()
+            'updatedIntent': self.__getUpdateIntent()
         }
 
     def setConfirmSlot(self, field):

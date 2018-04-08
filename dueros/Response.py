@@ -124,7 +124,9 @@ class Response(object):
                 "card": data['card'].getData() if data['card'] else None,
                 "resource": data['resource'],
                 "outputSpeech": self.formatSpeech(data['outputSpeech']),
-                "reprompt": self.formatSpeech(data['reprompt'])
+                "reprompt": {
+			"outputSpeech": self.formatSpeech(data['reprompt']),
+		}
             }
         }
 
