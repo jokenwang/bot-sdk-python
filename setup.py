@@ -24,6 +24,6 @@ setup(
     install_requires=[
         'pycrypto>=2.6.1',
         'requests',
-	'pyOpenSSL'
+	    'pyOpenSSL'
     ]
 )
