@@ -8,9 +8,9 @@
 import json
 from dueros.Nlu import Nlu
 from dueros.Session import Session
+from dueros.Base import Base
 
-
-class Request(object):
+class Request(Base):
     '''
         DuerOS对Bot的请求封装
     '''
@@ -20,6 +20,8 @@ class Request(object):
 
         :param data:  请求数据
         '''
+        super(Request, self).__init__()
+
         self.data = json.loads(data)
         self.requestType = self.data['request']['type']
         self.session = Session(self.data['session'])

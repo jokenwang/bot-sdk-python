@@ -8,9 +8,9 @@
 import re
 from dueros.card.TextCard import TextCard
 from dueros.directive.BaseDirective import BaseDirective
+from dueros.Base import Base
 
-
-class Response(object):
+class Response(Base):
     """
     处理完后构建返回数据
     """
@@ -22,6 +22,7 @@ class Response(object):
         :param session:
         :param nlu:
         '''
+        super(Response, self).__init__()
         self.request = request
         self.session = session
         self.nlu = nlu
@@ -125,8 +126,8 @@ class Response(object):
                 "resource": data['resource'],
                 "outputSpeech": self.formatSpeech(data['outputSpeech']),
                 "reprompt": {
-			"outputSpeech": self.formatSpeech(data['reprompt']),
-		}
+			        "outputSpeech": self.formatSpeech(data['reprompt']),
+		        }
             }
         }
 

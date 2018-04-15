@@ -17,9 +17,9 @@ from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from Crypto.Hash import SHA
 from base64 import b64encode, b64decode
+from dueros.Base import Base
 
-
-class Certificate(object):
+class Certificate(Base):
 
     def __init__(self, environ, requestBody, privateKeyContent = ""):
         '''
@@ -28,6 +28,9 @@ class Certificate(object):
         :param requestBody:
         :param privateKeyContent:
         '''
+
+        super(Certificate, self).__init__()
+
         self.environ = environ
         self.data = requestBody
         self.privateKey = privateKeyContent
