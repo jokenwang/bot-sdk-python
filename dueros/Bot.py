@@ -248,6 +248,13 @@ class Bot(object):
         if self.response:
             self.response.setShouldEndSession(True)
 
+    def endSession(self):
+        '''
+        告诉DuerOS 需要结束对话
+        :return:
+        '''
+        self.endDialog()
+
     def run(self, build = True):
         '''
         事件路由添加后，需要执行此函数，对添加的条件、事件进行判断
