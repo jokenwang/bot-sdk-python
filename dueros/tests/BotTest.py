@@ -77,20 +77,20 @@ class BotTest(Bot):
 if __name__ == '__main__':
 
     def launchData():
-        with open("./json/launch.json", 'r', encoding='utf-8') as load_f:
+        with open("./json/launch.json", 'r') as load_f:
             return load_f.read()
 
     def searchData():
-        with open("./json/search2.json", 'r', encoding='utf-8') as load_f:
+        with open("./json/search2.json", 'r') as load_f:
             return load_f.read()
 
     def controlData():
-        with open("./json/control.json", 'r', encoding='utf-8') as load_f:
+        with open("./json/control.json", 'r') as load_f:
             return load_f.read()
 
 
     def controlData2():
-        with open("./json/a.json", 'r', encoding='utf-8') as load_f:
+        with open("./json/a.json", 'r') as load_f:
             return load_f.read()
 
 
