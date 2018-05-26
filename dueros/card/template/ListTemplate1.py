@@ -15,6 +15,9 @@ from dueros.card.template.TextStructure import TextStructure
 from dueros.card.template.ImageStructure import ImageStructure
 
 class ListTemplate1(BodyTemplate):
+    def __init__(self):
+        super(ListTemplate1, self).__init__()
+        self.setType('ListTemplate1')
 
     pass
 
