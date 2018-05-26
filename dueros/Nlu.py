@@ -129,7 +129,7 @@ class Nlu(Base):
         '''
 
         if slot != '' and slot:
-            logging.info('askSlot = %s' % slot)
+            # logging.info('askSlot = %s' % slot)
             self.askSlot = slot
             self.directive = {
                 'type': 'Dialog.ElicitSlot',
