@@ -9,6 +9,7 @@
     desc:pass
 """
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
+from dueros.directive.Display.template.TextType import TextType
 
 class TextImageTemplate(BaseTemplate):
 
@@ -23,7 +24,7 @@ class TextImageTemplate(BaseTemplate):
             self.data['image'] = imageStructure.getData()
 
     def setPlainContent(self, text):
-        textStructure = self.createTextStructure(text, '')
+        textStructure = self.createTextStructure(text, TextType.PLAIN_TEXT)
         if textStructure:
             self.data['content'] = textStructure.getData()
         pass

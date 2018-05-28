@@ -9,7 +9,7 @@
     desc:pass
 """
 
-class TextStructure():
+class TextStructure:
 
     def __init__(self):
         super(TextStructure, self).__init__()
@@ -17,12 +17,15 @@ class TextStructure():
         self.setType('PlainText')
 
     def setType(self, type):
+
         if type:
             self.data['type'] = type
 
     def setText(self, text):
+
         if text:
             self.data['text'] = text
+
     def getData(self):
         return self.data
     pass

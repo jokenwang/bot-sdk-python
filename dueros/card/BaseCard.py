@@ -49,10 +49,6 @@ class BaseCard(object):
 	def getData(self):
 		return self.data
 
-	def setToken(self, token):
-		if token:
-			self.data['token'] = token
-
 	def __getattr__(self, item):
 		'''
 		添加魔术方法

@@ -11,8 +11,9 @@
 
 from dueros.directive.Display.template.TextStructure import TextStructure
 from dueros.directive.Display.template.ImageStructure import ImageStructure
+from dueros.directive.Display.template.TextType import TextType
 
-class BaseTemplate():
+class BaseTemplate:
 
     def __init__(self, field):
         super(BaseTemplate, self).__init__()
@@ -20,13 +21,26 @@ class BaseTemplate():
         self.supportSetField = field
 
     def setBackGroundImage(self, url, widthPixels='', heightPixels = ''):
+        '''
+
+        :param url:
+        :param widthPixels:
+        :param heightPixels:
+        :return:
+        '''
         if url:
             image = self.createImageStructure(url, widthPixels, heightPixels)
             if image:
                 self.data['backgroundImage'] = image.getData()
 
     def createImageStructure(self, url, widthPixels, heightPixels):
+        '''
 
+        :param url:
+        :param widthPixels:
+        :param heightPixels:
+        :return:
+        '''
         if url:
             image = ImageStructure()
             image.setUrl(url)
@@ -37,13 +51,21 @@ class BaseTemplate():
                 image.setHeightPixels(heightPixels)
             return image
 
-    def createTextStructure(self, content, type):
+    def createTextStructure(self, content, type=TextType.PLAIN_TEXT):
+        '''
 
+        :param content:
+        :param type:
+        :return:
+        '''
         if content:
             textStructure = TextStructure()
             textStructure.setText(content)
-            if type:
-                textStructure.setType(type)
+            if TextType.inEnum(type):
+                textStructure.setType(type.value)
+            else:
+                textStructure.setType(TextType.PLAIN_TEXT)
+
             return textStructure
 
     def getData(self):

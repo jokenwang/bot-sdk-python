@@ -10,6 +10,7 @@
 """
 
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
+from dueros.directive.Display.template.TextType import TextType
 
 class ListTemplateItem(BaseTemplate):
 
@@ -23,7 +24,7 @@ class ListTemplateItem(BaseTemplate):
         :param primaryText:
         :return:
         '''
-        primaryTextStructure = self.createTextStructure(primaryText, '')
+        primaryTextStructure = self.createTextStructure(primaryText, TextType.PLAIN_TEXT)
         if primaryTextStructure:
            self.data['textContent']['primaryText'] = primaryTextStructure.getData()
 
@@ -33,7 +34,7 @@ class ListTemplateItem(BaseTemplate):
         :param secondaryText:
         :return:
         '''
-        secondaryTextStructure = self.createTextStructure(secondaryText, '')
+        secondaryTextStructure = self.createTextStructure(secondaryText, TextType.PLAIN_TEXT)
         if secondaryTextStructure:
             self.data['textContent']['secondaryText'] = secondaryTextStructure.getData()
         pass
@@ -44,12 +45,12 @@ class ListTemplateItem(BaseTemplate):
         :param tertiaryText:
         :return:
         '''
-        tertiaryTextStructure = self.createTextStructure(tertiaryText, '')
+        tertiaryTextStructure = self.createTextStructure(tertiaryText, TextType.PLAIN_TEXT)
         if tertiaryTextStructure:
             self.data['textContent']['tertiaryText'] = tertiaryTextStructure.getData()
         pass
 
-    def setImage(self, url,  widthPixels='', heightPixels = ''):
+    def setImage(self, url, widthPixels='', heightPixels = ''):
         '''
         设置
         :param url:
