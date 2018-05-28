@@ -14,9 +14,9 @@ from dueros.Certificate import Certificate
 from dueros.Intercept import Intercept
 from dueros.Request import Request
 from dueros.Response import Response
-import dueros.Log as Log
+from dueros.Base import Base
 
-class Bot(object):
+class Bot(Base):
     '''
     Bot入口
     '''
@@ -26,7 +26,7 @@ class Bot(object):
         构造方法
         :param postData:
         '''
-        Log.init_log('./log/bot-sdk-python')
+        super(Bot, self).__init__()
         self.postData = postdata
         self.request = Request(postdata)
         self.session = self.request.getSession()
@@ -286,7 +286,7 @@ class Bot(object):
             # self.botMonitor.setDeviceEventEnd()
         else:
             # self.botMonitor.setEventStart()
-            ret = self.dispatch()
+            ret = self.__dispatch()
             # self.botMonitor.setEventEnd()
 
         # for intercept in self.intercept:
@@ -308,7 +308,7 @@ class Bot(object):
         else:
             return json.dumps(res)
     
-    def dispatch(self):
+    def __dispatch(self):
         '''
         分发请求并调用回调方法
         :return:

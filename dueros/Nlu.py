@@ -5,14 +5,15 @@
 # author:jack
 # create_time: 2017/12/30
 
-"""
+from dueros.Base import Base
 
-"""
+class Nlu(Base):
+    '''
 
-
-class Nlu(object):
+    '''
 
     def __init__(self, data):
+        super(Nlu, self).__init__()
         self.data = data
         self.askSlot = None
         self.directive = None
@@ -109,7 +110,6 @@ class Nlu(object):
             return slots[field][subField]
         else:
             return None
-        
 
     def hasAsked(self):
         '''
@@ -129,7 +129,7 @@ class Nlu(object):
         '''
 
         if slot != '' and slot:
-            print('askSlot = %s' % slot)
+            # logging.info('askSlot = %s' % slot)
             self.askSlot = slot
             self.directive = {
                 'type': 'Dialog.ElicitSlot',

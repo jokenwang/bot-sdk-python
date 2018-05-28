@@ -8,23 +8,16 @@
 """
     desc:pass
 """
-import random
-import hashlib
 
-import time
-import datetime
-import json
 import logging
 from dueros.Bot import Bot
 from dueros.card.TextCard import TextCard
-import os
-import hashlib
+from dueros.directive.Display.template.BodyTemplate1 import BodyTemplate1
+from dueros.directive.Display.RenderTemplate import RenderTemplate
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('bot')
 import sys
 
-from dueros.directive.AudioPlayer.Play import Play
-from dueros.directive.BaseDirective import BaseDirective
 
 class BotTest(Bot):
 
@@ -38,13 +31,22 @@ class BotTest(Bot):
 
         self.ask('deviceName')
 
-        card = TextCard('您要查找什么智能设备呢? 比如"查找我的空调"')
-        card.addCueWords("百度")
-        card.addCueWords("百度")
-        card.addCueWords("百度")
-        card.setAnchor("http://www.baidu.com", "百度")
+        # card = TextCard('您要查找什么智能设备呢? 比如"查找我的空调"')
+        # card.addCueWords("百度")
+        # card.addCueWords("百度")
+        # card.addCueWords("百度")
+        # card.setAnchor("http://www.baidu.com", "百度")
+
+        renderTemplate = RenderTemplate()
+        bodyTemplate = BodyTemplate1()
+        bodyTemplate.setToken('token')
+        bodyTemplate.setTitle('托尔斯泰的格言')
+        bodyTemplate.setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+        bodyTemplate.setPlainTextContent('拖尔斯泰-理想的书籍是智慧的钥匙')
+        renderTemplate.setTemplate(bodyTemplate)
+        renderTemplate.setToken("renderTemplate")
         return {
-            'card': card,
+            'directives': [renderTemplate],
             'outputSpeech': '<speak>您要查找什么智能设备呢? 比如"查找我的空调"</speak>'
         }
 
@@ -59,7 +61,7 @@ class BotTest(Bot):
 
     def inquiry(self):
         return {
-            'card': TextCard('请告诉您的指令，比如调小空调风速、设置温度为30度'),
+            'directives': TextCard('请告诉您的指令，比如调小空调风速、设置温度为30度'),
             'outputSpeech': '请告诉您的指令，比如调小空调风速、设置温度为30度'
         }
 
@@ -96,7 +98,7 @@ if __name__ == '__main__':
 
     def tt(data):
         print(data)
-    data = launchData()
+    data = searchData()
     bot = BotTest(data)
     bot.setCallBack(tt)
     bot.run()

@@ -9,10 +9,13 @@
 Session相关 暂未搞
 """
 
+from dueros.Base import Base
 
-class Session(object):
+class Session(Base):
 
     def __init__(self, data):
+
+        super(Session,self).__init__()
 
         self.data = {}
 
