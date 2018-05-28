@@ -90,6 +90,169 @@ card.addItem(item);
 card = ImageCard();
 card.addItem('http://src.image', 'http://thumbnail.image');
 ```
+
+### 文本展现模板
+* BodyTemplate1
+```python
+
+bodyTemplate = BodyTemplate1()
+bodyTemplate.setToken('token')
+#设置模版背景图片
+bodyTemplate.setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版标题
+bodyTemplate.setTitle('托尔斯泰的格言')
+#设置模版plain类型的文本
+bodyTemplate.setPlainTextContent('拖尔斯泰-理想的书籍是智慧的钥匙') 
+#定义RenderTemplate指令
+directive = RenderTemplate(bodyTemplate)
+return {
+    'directives': [directive],
+    'outputSpeech': '这是BodyTemplate1模板'
+}
+```
+### 上图下文模版
+* BodyTemplate2
+```python
+bodyTemplate = BodyTemplate2()
+#设置模版token
+bodyTemplate.setToken('token')
+#设置模版展示图片
+bodyTemplate.setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版背景图片
+bodyTemplate.setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版标题
+bodyTemplate.setTitle('托尔斯泰的格言')
+#设置模版plain类型的文本结构
+bodyTemplate.setPlainContent('拖尔斯泰-理想的书籍是智慧的钥匙') 
+#定义RenderTemplate指令
+directive = RenderTemplate(bodyTemplate)
+return {
+    'directives':[directive],
+    'outputSpeech': '这是BodyTemplate2模板'
+}
+
+```
+
+### 左图右文模版
+* BodyTemplate3
+```python
+bodyTemplate = BodyTemplate3()
+#设置模版token
+bodyTemplate.setToken('token')
+#设置模版展示图片
+bodyTemplate.setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版背景图片
+bodyTemplate.setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版标题
+bodyTemplate.setTitle('托尔斯泰的格言')
+#设置模版plain类型的文本结构
+bodyTemplate.setPlainContent('拖尔斯泰-理想的书籍是智慧的钥匙')  
+#定义RenderTemplate指令
+directive = RenderTemplate(bodyTemplate)
+return {
+    'directives': [directive],
+    'outputSpeech' : '这是BodyTemplate3模板'
+}
+```
+
+### 右图左文
+* BodyTemplate4
+```python
+bodyTemplate = BodyTemplate4()
+bodyTemplate.setToken('token')
+#设置模版展示图片
+bodyTemplate.setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版背景图片
+bodyTemplate.setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版标题
+bodyTemplate.setTitle('托尔斯泰的格言')
+#设置模版plain类型的文本结构
+bodyTemplate.setPlainContent('拖尔斯泰-理想的书籍是智慧的钥匙') 
+#定义RenderTemplate指令
+directive = RenderTemplate(bodyTemplate)
+return {
+    'directives': [directive],
+    'outputSpeech': '这是BodyTemplate4模板'
+}
+```
+
+### 图片模板
+* BodyTemplate5
+```python
+bodyTemplate = BodyTemplate5()
+#设置模版token
+bodyTemplate.setToken('token')
+#模版图片数组添加一张图片
+bodyTemplate.addImages('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版背景图片
+bodyTemplate.setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版标题
+bodyTemplate.setTitle('托尔斯泰的格言')
+#定义RenderTemplate指令
+directive = RenderTemplate(bodyTemplate)
+return {
+    'directives': [directive],
+    'outputSpeech': '这是BodyTemplate5模板'
+}
+```
+
+### 横向列表模板
+* ListTemplate1
+```python
+listTemplate = ListTemplate1()
+#设置模板token
+listTemplate.setToken('token')
+#设置模板背景图
+listTemplate.setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版标题
+listTemplate.setTitle('托尔斯泰的格言')
+
+#设置模版列表数组listItems其中一项，即列表的一个元素
+listTemplateItem = ListTemplateItem()
+listTemplateItem.setToken('token')
+listTemplateItem.setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+listTemplateItem.setPlainPrimaryText('一级标题')
+listTemplateItem.setPlainSecondaryText('二级标题')
+
+#把listTemplateItem添加到模版listItems
+listTemplate.addItem(listTemplateItem)
+#定义RenderTemplate指令
+directive = RenderTemplate(listTemplate)
+return {
+    'directives': [directive],
+    'outputSpeech': '这是ListTemplate1模板'
+}
+```
+
+### 纵向列表模板
+* ListTemplate2
+```python
+listTemplate = ListTemplate2()
+#设置模板token
+listTemplate.setToken('token')
+#设置模板背景图
+listTemplate.setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版标题
+listTemplate.setTitle('托尔斯泰的格言')
+
+#设置模版列表数组listItems其中一项，即列表的一个元素
+listTemplateItem = ListTemplateItem()
+listTemplateItem.setToken('token')
+listTemplateItem.setImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+listTemplateItem.setPlainPrimaryText('一级标题')
+listTemplateItem.setPlainSecondaryText('二级标题')
+
+#把listTemplateItem添加到模版listItems
+listTemplate.addItem(listTemplateItem)
+#定义RenderTemplate指令
+directive = RenderTemplate(listTemplate)
+return {
+    'directives': [directive],
+    'outputSpeech': '这是ListTemplate1模板'
+}
+```
+
+
 ### directive指令
 * 播放指令 AudioPlayer.Play
 ```python
