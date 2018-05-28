@@ -17,7 +17,16 @@ class RenderTemplate(BaseDirective):
     def __init__(self):
         super(RenderTemplate, self).__init__('Display.RenderTemplate')
 
+    def __init__(self, baseTemplate):
+        super(RenderTemplate, self).__init__('Display.RenderTemplate')
+        self.setTemplate(baseTemplate)
+
     def setTemplate(self, template):
+        '''
+        设置模板
+        :param template:
+        :return:
+        '''
         if isinstance(template, BaseTemplate):
             self.data['template'] = template.getData()
 
