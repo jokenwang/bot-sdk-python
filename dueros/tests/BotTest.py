@@ -37,13 +37,15 @@ class BotTest(Bot):
         # card.addCueWords("百度")
         # card.setAnchor("http://www.baidu.com", "百度")
 
-        renderTemplate = RenderTemplate()
+        # renderTemplate = RenderTemplate()
         bodyTemplate = BodyTemplate1()
         bodyTemplate.setToken('token')
         bodyTemplate.setTitle('托尔斯泰的格言')
         bodyTemplate.setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
         bodyTemplate.setPlainTextContent('拖尔斯泰-理想的书籍是智慧的钥匙')
-        renderTemplate.setTemplate(bodyTemplate)
+        renderTemplate = RenderTemplate(bodyTemplate)
+
+        # renderTemplate.setTemplate(bodyTemplate)
         renderTemplate.setToken("renderTemplate")
         return {
             'directives': [renderTemplate],
