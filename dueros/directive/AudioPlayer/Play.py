@@ -3,26 +3,23 @@
 
 # description:
 # author:jack
-# create_time: 2017/12/31 上午12:25
+# create_time: 2017/12/31
 
 """
     用于生成Play指令的类
 """
 
 from dueros.directive.BaseDirective import BaseDirective
-
+from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
+from dueros.directive.AudioPlayer.StreamFormatEnum import StreamFormatEnum
+from dueros.directive.AudioPlayer.PlayerInfo import PlayerInfo
+from dueros.directive.AudioPlayer.Control.PlayPauseButton import PlayPauseButton
+from dueros.directive.AudioPlayer.Control.PreviousButton import PreviousButton
+from dueros.directive.AudioPlayer.Control.NextButoon import NextButoon
 
 class Play(BaseDirective):
 
-    # TODO 常量移走
-    REPLACE_ALL = 'REPLACE_ALL'
-    REPLACE_ENQUEUED = 'REPLACE_ENQUEUED'
-    ENQUEUE = 'ENQUEUE'
-    STREAM_FORMAT_MP3 = 'AUDIO_MP3'
-    STREAM_FORMAT_M3U8 = 'AUDIO_M3U8'
-    STREAM_FORMAT_M4A = 'AUDIO_M4A'
-
-    def __init__(self, url, playBehavior = 'REPLACE_ALL'):
+    def __init__(self, url, playBehavior = PlayBehaviorEnum.REPLACE_ALL):
         '''
 
         :param url:     音频播放地址
@@ -32,16 +29,19 @@ class Play(BaseDirective):
         '''
 
         super(Play, self).__init__('AudioPlayer.Play')
-
-        self.data['playBehavior'] = playBehavior
+        self.data['playBehavior'] = playBehavior.value
         self.data['audioItem'] = {
             'stream': {
-                'streamFormat': self.STREAM_FORMAT_MP3,
+                'streamFormat': StreamFormatEnum.STREAM_FORMAT_MP3.value,
                 'url': url,
                 'offsetInMilliSeconds': 0,
                 'token': self.genToken()
             }
         }
+
+    def setPlayerInfo(self, playerInfo):
+        if isinstance(playerInfo,PlayerInfo):
+            self.data['audioItem']['playerInfo'] = playerInfo.getData()
 
     def setToken(self, token):
         if token:
@@ -50,7 +50,6 @@ class Play(BaseDirective):
 
     def getToken(self):
         return self.data['audioItem']['stream']['token']
-
 
     def setUrl(self, url):
         if url:
@@ -79,22 +78,38 @@ class Play(BaseDirective):
             self.data['audioItem']['stream']['progressReportIntervalMs'] = intervalMs
         return self
 
-    def setStreamFormat(self, streamFormat = 'AUDIO_MP3'):
+    def setStreamFormat(self, streamFormat=StreamFormatEnum.STREAM_FORMAT_MP3):
         '''
         设置directive的属性。音频流格式，streamFormat 默认STREAM_FORMAT_MP3
         :param streamFormat:    取值: STREAM_FORMAT_MP3、STREAM_FORMAT_M3U8、STREAM_FORMAT_M4A
         :return:
         '''
-        streamFormatArray = ['AUDIO_MP3', 'AUDIO_M3U8', 'AUDIO_M4A']
-
-        if streamFormat in streamFormatArray:
-            self.data['audioItem']['stream']['streamFormat'] = streamFormat
+        if StreamFormatEnum.inEnum(streamFormat):
+            self.data['audioItem']['stream']['streamFormat'] = streamFormat.value
+        else:
+            self.data['audioItem']['stream']['streamFormat'] = StreamFormatEnum.STREAM_FORMAT_MP3.value
         return self
 
 
 if __name__ == '__main__':
+    directive = Play('http://www.baidu.com')
+    directive.setStreamFormat('AUDIO_M3U8')
 
-    play = Play('http://www.baidu.com')
-    play.setStreamFormat('AUDIO_M3U8')
-    print(play.getData())
+    playerInfo = PlayerInfo()
+
+    # 创建暂停按钮
+    playpause = PlayPauseButton()
+    previous = PreviousButton()
+    previous.setSelected(True)
+    controls = [playpause, previous]
+    playerInfo.setControls(controls)
+    playerInfo.addControl(NextButoon())
+
+    playerInfo.setTitle('周杰伦')
+    playerInfo.setTitleSubtext1('七里香')
+    playerInfo.setArt('http://adfadfa')
+
+    # 设置Play指令的PlayerInfo
+    directive.setPlayerInfo(playerInfo)
+    print(directive.getData())
 
