@@ -48,9 +48,6 @@ def application(environ, start_response):
 def callback(data):
     print(data)
 
-def test():
-    print "test112312312"
-
 def askContol():
         response = '''
         {

@@ -12,7 +12,6 @@
 
 from dueros.directive.Display.template.ListTemplate import ListTemplate
 from dueros.directive.Display.template.ListTemplateItem import ListTemplateItem
-
 class ListTemplate1(ListTemplate):
 
     def __init__(self):

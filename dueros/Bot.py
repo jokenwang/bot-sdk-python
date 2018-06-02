@@ -145,11 +145,11 @@ class Bot(Base):
 
         @example
         <pre>
-        $this->addEventListener('AudioPlayer.PlaybackStarted', function($event){
-          return [
-              'outputSpeech' => '事件处理好啦',
-          ];
-        });
+        self.addEventListener('AudioPlayer.PlaybackStarted', function(event){
+          return {
+              'outputSpeech' => '事件处理好啦'
+          }
+        })
         </pre>
         :param event:   绑定的事件名称，比如AudioPlayer.PlaybackStarted
         :param func:    处理函数，传入参数为事件的request，返回值做完response给DuerOS

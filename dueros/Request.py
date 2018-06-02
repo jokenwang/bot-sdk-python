@@ -82,6 +82,22 @@ class Request(Base):
         '''
         return self.data['context']['AudioPlayer']
 
+    def getVideoPlayerContext(self):
+
+        return self.data['context']['VideoPlayer']
+
+    def getScreenContext(self):
+        return self.data['context']['Screen']
+
+    def getScreenTokenFromContext(self):
+        return self.data['context']['Screen']['token']
+
+    def getScreenTokenFromContext(self):
+        return self.data['context']['Screen']['token']
+    def getScreenCardFromContext(self):
+        return self.data['context']['Screen']['card']
+
+
     def getAppLauncherContext(self):
         '''
         获取设备app安装列表

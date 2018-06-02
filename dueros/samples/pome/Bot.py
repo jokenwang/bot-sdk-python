@@ -11,6 +11,7 @@
 
 from dueros.Bot import Bot
 from dueros.card.TextCard import TextCard
+import json
 
 class Bot(Bot):
     def launchRequest(self):
