@@ -1,0 +1,38 @@
+{
+	"version": "v2.0",
+	"session": {
+		"new": false,
+		"sessionId": "e0eb563f-66ef-4227-b151-3d05f4f7fec6",
+		"attributes": {}
+	},
+	"context": {
+		"System": {
+			"user": {
+				"userId": "60095845",
+				"userInfo": {
+					"account": {}
+				}
+			},
+			"application": {
+				"applicationId": "bd19d692-027c-50a0-6f09-f8e85be66f95"
+			},
+			"device": {
+				"deviceId": "06442b832a39e129aa8f0df14197d9b2",
+				"supportedInterfaces": {
+					"VoiceInput": {},
+					"VoiceOutput": {},
+					"AudioPlayer": {}
+				}
+			},
+			"apiAccessToken": "QIWSGe4kpvjR4fUOqGEtioC7/7TN61WmI9EbmMAEj6MYRuntaAR+cHxAObo2t+dOUTZPek55MX2E85mF87YRndxEAJnf35XwqaOZSB19PPBjkOAEcQMMl+/0Um6ZQpxoxPIG32Q4JRYZUTbhBrKuYtNmIj8OA1XZyXJ16Stow4dnrl07OBIhW3xUTy/4GjfrTTyGm0KUQtmksqrLM5fjtAf40g6LyOJpmbvo7S92yHIniKhw2t6TcS5JYUBhj6QXito4tIieXWYU+7yPYe7rpnM7j5cdxFSkbqpBDEgT+RQAGO+Jt8sRThOyCMK1OWRU",
+			"apiEndPoint": "https://xiaodu.baidu.com"
+		}
+	},
+	"request": {
+		"reason": "USER_INITIATED",
+		"type": "SessionEndedRequest",
+		"requestId": "dd1fe307639247a0a519e126287b3967_0",
+		"timestamp": "1524326436",
+		"dialogRequestId": "56a9588c-b9eb-4b13-9651-04958e79c74f"
+	}
+}
