@@ -47,7 +47,7 @@ class Bot(Bot):
 
         self.addLaunchHandler(self.launchRequest)
 
-        self.addIntentHandler('dueros.device_interface.smart_device.control', self.controlRequest)
+        self.addIntentHandler('ai.dueros.common.default_intent', self.controlRequest)
 
         self.addIntentHandler('dueros.device_interface.smart_device.search', self.intentRequest)
     pass

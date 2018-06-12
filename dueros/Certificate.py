@@ -18,6 +18,8 @@ from Crypto.Signature import PKCS1_v1_5
 from Crypto.Hash import SHA
 from base64 import b64encode, b64decode
 from dueros.Base import Base
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 class Certificate(Base):
 
@@ -67,7 +69,7 @@ class Certificate(Base):
                 return
             with open(cache, 'w') as f:
                 fcntl.flock(f, fcntl.LOCK_EX)
-                f.write(content)
+                f.write(content.decode('utf-8'))
                 fcntl.flock(f, fcntl.LOCK_UN)
         content = self.getFileContentSafety(cache)
         return self.getPublicKeyFromX509(content)
@@ -88,7 +90,7 @@ class Certificate(Base):
         key = RSA.importKey(publicKey)
         if key:
             digest = SHA.new()
-            digest.update(self.data)
+            digest.update(self.data.encode('utf-8'))
             verifier = PKCS1_v1_5.new(key)
             if verifier.verify(digest, b64decode(self.getRequestSign())):
                 return True
@@ -107,7 +109,7 @@ class Certificate(Base):
         rsakey = RSA.importKey(self.privateKey)
         if rsakey:
             digest = SHA.new()
-            digest.update(content)
+            digest.update(content.encode('utf8'))
             signer = PKCS1_v1_5.new(rsakey)
             signature = signer.sign(digest)
             return b64encode(signature)

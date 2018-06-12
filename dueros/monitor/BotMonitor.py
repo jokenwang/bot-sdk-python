@@ -44,7 +44,7 @@ class BotMonitor:
         self.response = None
 
     def setEnvironmentInfo(self, privateKey, environment):
-
+        print(privateKey)
         self.privateKey = privateKey
         self.environment = environment
         self.certificate = Certificate(None, self.data, privateKey)
@@ -144,7 +144,6 @@ class BotMonitor:
             self.audioUrl = audioUrl
 
     def updateData(self):
-        print('botMonitor updata')
         if self.isShouldDisable():
             return
         botId = self.request.getBotId()
@@ -185,7 +184,7 @@ class BotMonitor:
         :return:
         '''
         response = requests.post(self.config.getUploadUrl(), data=data, headers=headers)
-        print(response)
+        print(response.text)
 
     def __buildUploadData(self):
 
@@ -255,5 +254,4 @@ class BotMonitor:
 
 if __name__ == '__main__':
 
-    print(int(time.time()))
     pass

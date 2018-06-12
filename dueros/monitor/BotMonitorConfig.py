@@ -19,7 +19,6 @@ class BotMonitorConfig:
     @staticmethod
     def getUploadUrl():
         return 'https://dueros-api.baidu.com/uploadmonitordata'
-        #return 'http://127.0.0.1:8000'
 
     @staticmethod
     def getSdkVersion():
