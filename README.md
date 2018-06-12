@@ -1,4 +1,4 @@
-# bot-sdk
+# bot-sdk  [适配百度CFC](#部署CFC)
 
 
 
@@ -450,6 +450,13 @@ sudo pip install requests
 ```
 pip install -r requirements.txt
 ```
+# 部署CFC
+采用源码安装方式
+* 在百度CFC创建基于python2.7的函数
+* 选择触发器类型为 Dueros技能，保存
+* 下载刚才创建的完整ZIP:"点击下载完整 ZIP 程序包"
+* 将dueros sdk 添加到压缩包
+* 上传压缩包，即可实现调用Dueros Bot Python SDK
 
 # 完成过程记录
 
