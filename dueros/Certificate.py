@@ -25,7 +25,7 @@ class Certificate(Base):
         '''
         私钥内容,使用统计功能必须要提供
         :param environ: 环境上下文
-        :param requestBody:
+        :param requestBody: 请求数据
         :param privateKeyContent:
         '''
 
@@ -37,20 +37,30 @@ class Certificate(Base):
         self.verifyRequestSign = False
 
     def enableVerifyRequestSign(self):
+        '''
+        校验请求合法性
+        :return:
+        '''
         self.verifyRequestSign = True
 
     def disableVerifyRequestSign(self):
+        '''
+        不校验请求合法性
+        :return:
+        '''
         self.verifyRequestSign = False
 
     def getRequestPublicKey(self):
-
+        '''
+        获取Dueros发送过来的公钥(此公钥信息是在技能参数配置中设置的)
+        :return:
+        '''
         filename = self.environ['HTTP_SIGNATURECERTURL']
         if not filename:
             return
         md5 = hashlib.md5()
         md5.update(filename.encode('utf-8'))
         cache = os.getcwd() + os.path.sep + md5.hexdigest()
-        content = ''
         if not os.path.exists(cache):
             content = urllib.request.urlopen(filename).read()
             if not content:
@@ -127,8 +137,9 @@ class Certificate(Base):
         with open(filename, 'r') as f:
             fcntl.flock(f,fcntl.LOCK_SH)
             content = f.read()
-            return content
             fcntl.flock(f,fcntl.LOCK_UN)
+            return content
+
 
 if __name__ == '__main__':
 

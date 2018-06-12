@@ -156,7 +156,7 @@ class Bot(Base):
         :return:
         '''
 
-        if event and func:
+        if isinstance(event, str) and hasattr(func, '__call__'):
             self.event[event] = func
 
     def addDefaultEventListener(self, func):
@@ -178,68 +178,70 @@ class Bot(Base):
         if self.nlu:
             return self.nlu.getIntentName()
 
-    def getSessionAttribute(self, field, default):
+    def getSessionAttribute(self, field, default=''):
         '''
         获取session某个字段值
-        :param field:
-        :param default:
+        :param field:   属性名
+        :param default: 未获取 返回默认值
         :return:
         '''
-
-        return self.session.getData(field, default)
+        if isinstance(field, str) and field:
+            return self.session.getData(field, default)
+        else:
+            return default
 
     def setSessionAttribute(self, field, value, default):
         '''
         设置session某个字段值
-        :param field:
-        :param value:
-        :param default:
+        :param field:       属性名
+        :param value:       属性值
+        :param default:     默认值
         :return:
         '''
-
-        self.session.setData(field, value, default)
+        if isinstance(field, str) and field:
+            self.session.setData(field, value, default)
 
     def clearSessionAttribute(self):
         '''
-        清空session
+        清空session字段所有值
         :return:
         '''
 
         self.session.clear()
 
-    def getSlots(self, field, index = 0):
+    def getSlots(self, field, index=0):
         '''
         获取槽位值
-        :param field:
-        :param index:
+        :param field:   槽位名
+        :param index:   槽位 位置 默认值为0
         :return:
         '''
 
-        if self.nlu:
+        if self.nlu and isinstance(field, str) and field:
             return self.nlu.getSlot(field, index)
 
-    def setSlots(self, field, value, index = 0):
+    def setSlots(self, field, value, index=0):
         '''
         设置槽位值
-        :param field:
-        :param value:
+        :param field:   槽位名称(创建技能时的槽位名)
+        :param value:   槽位填充的值(通过Dueros处理后放置进来的,为定义的词典值)
         :param index:
         :return:
         '''
 
-        if self.nlu:
+        if self.nlu and isinstance(field, str) and field:
             self.nlu.setSlot(field, value, index)
 
     def waitAnswer(self):
         '''
-        告诉DuerOS, 在多轮对话中，等待用户回答
+        告诉DuerOS, 在多轮对话中，等待用户回答。用来设置session是否为新的会话
         :return:
         '''
 
         if self.response:
             self.response.setShouldEndSession(False)
 
-    def endDialog(self):
+    def __endDialog(self):
         '''
         告诉DuerOS 需要结束对话
         :return:
@@ -250,13 +252,18 @@ class Bot(Base):
 
     def endSession(self):
         '''
-        告诉DuerOS 需要结束对话
+        告诉DuerOS 需要结束对话, 当技能需要关闭的时候在对应的意图中调用此方法
         :return:
         '''
-        self.endDialog()
+        self.__endDialog()
 
-    def run(self, build = True):
+    def run(self, build=True):
         '''
+        Bot SDK 主要逻辑在这里
+        1、判断是否校验请求数据的合法性
+        2、获取事件的处理器Handler(通过addEventListener添加事件处理器)
+        3、判断事件处理器是否存在是否能处理
+
         事件路由添加后，需要执行此函数，对添加的条件、事件进行判断
         将第一个return 非null的结果作为此次的response
         :param build: False:不进行response封装，直接返回handler的result
@@ -271,7 +278,7 @@ class Bot(Base):
         if self.request.getType() == 'IntentRequest' and not self.nlu and not eventHandler:
             return self.response.defaultResult()
 
-        ret = {}
+        # ret = {}
         # for intercept in self.intercept:
             # self.botMonitor.setPreEventStart()
             # ret = intercept.preprocess(self)
@@ -311,6 +318,7 @@ class Bot(Base):
     def __dispatch(self):
         '''
         分发请求并调用回调方法
+        1、判断handler是否
         :return:
         '''
 
@@ -334,7 +342,11 @@ class Bot(Base):
 
 
     def __getRegisterEventHandler(self):
-
+        '''
+        根据Dueros传递来的事件，在本地查找是否注册过本事件，如果找到则返回对应的handler方法，否则返回默认的handler
+        :see addEventListener
+        :return:
+        '''
         eventData = self.request.getEventData()
         if eventData and eventData['type']:
             key = eventData['type']
@@ -353,7 +365,7 @@ class Bot(Base):
 
         ret = ''
         if hasattr(func, '__call__'):
-            if(arg == None):
+            if not arg:
                 ret = func()
             else:
                 ret = func(arg)
@@ -468,7 +480,12 @@ class Bot(Base):
         self.response.setFallBack()
 
     def ask(self, slot):
-        if self.nlu:
+        '''
+        询问槽位信息
+        :param slot:
+        :return:
+        '''
+        if self.nlu and slot:
             self.nlu.ask(slot)
 
 
