@@ -338,7 +338,7 @@ class Bot(Base):
                     if ret:
                         return ret
         #调用回调
-        self.unMatchHandler(self.cakkBackData)
+        self.unMatchHandler(self.callBackData)
 
 
     def __getRegisterEventHandler(self):
@@ -412,17 +412,17 @@ class Bot(Base):
 
         if re.match(rg['requestType'], handler):
             if self.request.getType() == handler:
-                self.cakkBackData = None
+                self.callBackData = None
                 return True
             else:
                 self.unMatchHandler({'type': 'requestType', 'message': u'未匹配到:' + self.request.getType()})
 
         if re.match(rg['intent'], handler):
             if ('#' + self.getIntentName()) == handler:
-                self.cakkBackData = None
+                self.callBackData = None
                 return True
             else:
-                self.cakkBackData = {'type': 'intent', 'message': u'handler未匹配到:' + self.getIntentName()}
+                self.callBackData = {'type': 'intent', 'message': u'handler未匹配到:' + self.getIntentName()}
 
         if handler == 'true' or handler == True:
             return True

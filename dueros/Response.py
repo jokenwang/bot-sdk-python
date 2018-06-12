@@ -50,18 +50,7 @@ class Response(Base):
             'msg': ''
         }
 
-    def build(self, data):
-        '''
-        构造response 返回结果
-        :param data:
-        data = {
-            'card': card,
-            'directives': directives,
-            'outputSpeech': string,
-            'reprompt': string
-        }
-        :return:
-        '''
+    def __preBuild(self, data):
 
         if self.nlu and self.nlu.hasAsked():
             self.shouldEndSession = False
@@ -91,6 +80,21 @@ class Response(Base):
         else:
             data['reprompt'] = None
 
+    def build(self, data):
+        '''
+        构造response 返回结果
+        :param data:
+        data = {
+            'card': card,
+            'directives': directives,
+            'outputSpeech': string,
+            'reprompt': string
+        }
+        :return:
+        '''
+
+        self.__preBuild(data)
+
         if 'directives' in data:
             directives = data.get('directives')
         else:
@@ -101,7 +105,7 @@ class Response(Base):
 
         if self.nlu:
             arr = self.nlu.toDirective()
-            if(arr):
+            if arr:
                 directives.append(arr)
 
         if not data['outputSpeech'] and data['card'] and isinstance(data['card'], TextCard):
@@ -126,7 +130,7 @@ class Response(Base):
                 "resource": data['resource'],
                 "outputSpeech": self.formatSpeech(data['outputSpeech']),
                 "reprompt": {
-			        "outputSpeech": self.formatSpeech(data['reprompt']),
+			        "outputSpeech": self.formatSpeech(data['reprompt'])
 		        }
             }
         }

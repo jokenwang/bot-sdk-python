@@ -5,17 +5,13 @@
 # author:jack
 # create_time: 2017/12/30
 
-"""
-Session相关 暂未搞
-"""
-
 from dueros.Base import Base
 
 class Session(Base):
 
     def __init__(self, data):
 
-        super(Session,self).__init__()
+        super(Session, self).__init__()
 
         self.data = {}
 
@@ -42,6 +38,7 @@ class Session(Base):
         }
 
     def getData(self, field, default):
+
         if field in self.data:
             return self.data[field]
 

@@ -87,7 +87,7 @@ class Nlu(Base):
         '''
         return self.__getSlotValueByKey(field, 'confirmationStatus', index)
 
-    def getIntentConfirmationStatus(self, index = 0):
+    def getIntentConfirmationStatus(self, index=0):
         '''
         获取意图的确认状态
         :param index:
@@ -103,7 +103,7 @@ class Nlu(Base):
         :return:
         '''
 
-        if not 'slots' in self.data[index]:
+        if not ('slots' in self.data[index]):
             return ''
         slots = self.data[index]['slots']
         if field in slots:
@@ -129,7 +129,6 @@ class Nlu(Base):
         '''
 
         if slot != '' and slot:
-            # logging.info('askSlot = %s' % slot)
             self.askSlot = slot
             self.directive = {
                 'type': 'Dialog.ElicitSlot',
