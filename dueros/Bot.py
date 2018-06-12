@@ -9,12 +9,13 @@ import json
 import re
 import logging
 
-from dueros.monitor.BotMonitor import BotMonitor
+# from dueros.monitor.BotMonitor import BotMonitor
 from dueros.Certificate import Certificate
 from dueros.Intercept import Intercept
 from dueros.Request import Request
 from dueros.Response import Response
 from dueros.Base import Base
+
 
 class Bot(Base):
     '''
@@ -207,7 +208,7 @@ class Bot(Base):
 
         self.session.clear()
 
-    def getSlots(self, field, index = 0):
+    def getSlots(self, field, index=0):
         '''
         获取槽位值
         :param field:
@@ -218,7 +219,7 @@ class Bot(Base):
         if self.nlu:
             return self.nlu.getSlot(field, index)
 
-    def setSlots(self, field, value, index = 0):
+    def setSlots(self, field, value, index=0):
         '''
         设置槽位值
         :param field:
@@ -255,7 +256,7 @@ class Bot(Base):
         '''
         self.endDialog()
 
-    def run(self, build = True):
+    def run(self, build=True):
         '''
         事件路由添加后，需要执行此函数，对添加的条件、事件进行判断
         将第一个return 非null的结果作为此次的response
@@ -273,11 +274,11 @@ class Bot(Base):
 
         ret = {}
         # for intercept in self.intercept:
-            # self.botMonitor.setPreEventStart()
-            # ret = intercept.preprocess(self)
-            # self.botMonitor.setPreEventEnd()
-            # if(ret):
-            #     return
+        # self.botMonitor.setPreEventStart()
+        # ret = intercept.preprocess(self)
+        # self.botMonitor.setPreEventEnd()
+        # if(ret):
+        #     return
 
         if eventHandler:
             # self.botMonitor.setDeviceEventStart()
@@ -290,9 +291,9 @@ class Bot(Base):
             # self.botMonitor.setEventEnd()
 
         # for intercept in self.intercept:
-            # self.botMonitor.setPostEventStart()
-            # ret = intercept.postprocess(self, ret)
-            # self.botMonitor.setPostEventEnd()
+        # self.botMonitor.setPostEventStart()
+        # ret = intercept.postprocess(self, ret)
+        # self.botMonitor.setPostEventEnd()
 
         if not build:
             if self.cakkBackData:
@@ -307,7 +308,7 @@ class Bot(Base):
             return json.dumps(self.cakkBackData)
         else:
             return json.dumps(res)
-    
+
     def __dispatch(self):
         '''
         分发请求并调用回调方法
@@ -317,21 +318,20 @@ class Bot(Base):
         if not self.handler:
             return
 
-        #循环遍历handler 通过正则判断调用哪个handler
+        # 循环遍历handler 通过正则判断调用哪个handler
         for item in self.handler:
             if item:
-                #获取rule(其实是自己的技能意图的英文标识)
+                # 获取rule(其实是自己的技能意图的英文标识)
                 rule = item['rule']
-                #校验handler
+                # 校验handler
                 if self.__checkHandler(rule):
-                    #匹配到handler获取对应的回调方法并立即执行
+                    # 匹配到handler获取对应的回调方法并立即执行
                     func = item['func']
                     ret = self.__callFunc(func, None)
                     if ret:
                         return ret
-        #调用回调
+        # 调用回调
         self.unMatchHandler(self.cakkBackData)
-
 
     def __getRegisterEventHandler(self):
 
@@ -353,7 +353,7 @@ class Bot(Base):
 
         ret = ''
         if hasattr(func, '__call__'):
-            if(arg == None):
+            if (arg == None):
                 ret = func()
             else:
                 ret = func(arg)
@@ -435,7 +435,7 @@ class Bot(Base):
         if self.callBackFunc and data:
             self.callBackFunc(data)
 
-    #TODO
+    # TODO
     def tokenValue(self, str):
         '''
 

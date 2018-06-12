@@ -14,7 +14,7 @@ from dueros.Certificate import Certificate
 import json
 import base64
 import time
-import requests
+# import requests
 import threading
 
 class BotMonitor:
@@ -184,8 +184,9 @@ class BotMonitor:
         :param headers:
         :return:
         '''
-        response = requests.post(self.config.getUploadUrl(), data=data, headers=headers)
-        print(response)
+        # response = requests.post(self.config.getUploadUrl(), data=data, headers=headers)
+        # print(response)
+        pass
 
     def __buildUploadData(self):
 

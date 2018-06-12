@@ -13,15 +13,16 @@ import fcntl
 import hashlib
 # import OpenSSL
 import urllib2
-from Crypto.PublicKey import RSA
-from Crypto.Signature import PKCS1_v1_5
-from Crypto.Hash import SHA
+# from Crypto.PublicKey import RSA
+# from Crypto.Signature import PKCS1_v1_5
+# from Crypto.Hash import SHA
 from base64 import b64encode, b64decode
 from dueros.Base import Base
 
+
 class Certificate(Base):
 
-    def __init__(self, environ, requestBody, privateKeyContent = ""):
+    def __init__(self, environ, requestBody, privateKeyContent=""):
         '''
         私钥内容,使用统计功能必须要提供
         :param environ: 环境上下文
@@ -75,14 +76,14 @@ class Certificate(Base):
         if not publicKey or not self.data:
             return False
 
-        key = RSA.importKey(publicKey)
-        if key:
-            digest = SHA.new()
-            digest.update(self.data)
-            verifier = PKCS1_v1_5.new(key)
-            if verifier.verify(digest, b64decode(self.getRequestSign())):
-                return True
-            return False
+        # key = RSA.importKey(publicKey)
+        # if key:
+        #     digest = SHA.new()
+        #     digest.update(self.data)
+        #     verifier = PKCS1_v1_5.new(key)
+        #     if verifier.verify(digest, b64decode(self.getRequestSign())):
+        #         return True
+        #     return False
         return False
 
     def getSign(self, content):
@@ -94,29 +95,30 @@ class Certificate(Base):
         if not self.privateKey or not content:
             return False
 
-        rsakey = RSA.importKey(self.privateKey)
-        if rsakey:
-            digest = SHA.new()
-            digest.update(content)
-            signer = PKCS1_v1_5.new(rsakey)
-            signature = signer.sign(digest)
-            return b64encode(signature)
-        else:
-            return False
+        # rsakey = RSA.importKey(self.privateKey)
+        # if rsakey:
+        #     digest = SHA.new()
+        #     digest.update(content)
+        #     signer = PKCS1_v1_5.new(rsakey)
+        #     signature = signer.sign(digest)
+        #     return b64encode(signature)
+        # else:
+        return False
 
     def getRequestSign(self):
         return self.environ['HTTP_SIGNATURE']
-    
+
     def getPublicKeyFromX509(self, content):
         '''
         获取publicKey
         :param X509 content
         :return publicKey
         '''
-        x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, content)
-        pk = x509.get_pubkey()
-        publicKey = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
-        return publicKey
+        # x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, content)
+        # pk = x509.get_pubkey()
+        # publicKey = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
+        # return publicKey
+        return ""
 
     def getFileContentSafety(self, filename):
         '''
@@ -125,13 +127,13 @@ class Certificate(Base):
         :return content
         '''
         with open(filename, 'r') as f:
-            fcntl.flock(f,fcntl.LOCK_SH)
+            fcntl.flock(f, fcntl.LOCK_SH)
             content = f.read()
             return content
-            fcntl.flock(f,fcntl.LOCK_UN)
+            fcntl.flock(f, fcntl.LOCK_UN)
+
 
 if __name__ == '__main__':
-
     priKey = '''-----BEGIN RSA PRIVATE KEY-----
 MIICXQIBAAKBgQDKoeRzRVf8WoRSDYYqUzThpYCr90jfdFwTSXHJ526K8C6TEwdT
 UA+CFPQPRUg9jrYgFcown+J2myzO8BRLynD+XHb9ilLb49Mqk2CvDt/yK32lgHv3
@@ -155,25 +157,25 @@ IYdYV3QpYohFszH3wQIDAQAB
 -----END PUBLIC KEY-----'''
 
     data = 'partner="2088701924089318"&seller="774653@qq.com"&out_trade_no="123000"&subject="123456"&body="2010新款NIKE 耐克902第三代板鞋 耐克男女鞋 386201 白红"&total_fee="0.01"¬ify_url="http://notify.java.jpxx.org/index.jsp'
-    def sign(data):
-        key = RSA.importKey(priKey)
-        digest = SHA.new()
-        digest.update(data.encode('utf-8'))
-        signer = PKCS1_v1_5.new(key)
-        signature = signer.sign(digest)
-        return b64encode(signature)
+    # def sign(data):
+    #     key = RSA.importKey(priKey)
+    #     digest = SHA.new()
+    #     digest.update(data.encode('utf-8'))
+    #     signer = PKCS1_v1_5.new(key)
+    #     signature = signer.sign(digest)
+    #     return b64encode(signature)
+    #
+    #
+    # def verify(data, signature):
+    #     key = RSA.importKey(pubKey)
+    #     digest = SHA.new()
+    #     digest.update(data.encode('utf-8'))
+    #     verifier = PKCS1_v1_5.new(key)
+    #     if verifier.verify(digest, b64decode(signature)):
+    #         return True
+    #     return False
 
-
-    def verify(data, signature):
-        key = RSA.importKey(pubKey)
-        digest = SHA.new()
-        digest.update(data.encode('utf-8'))
-        verifier = PKCS1_v1_5.new(key)
-        if verifier.verify(digest, b64decode(signature)):
-            return True
-        return False
-
-    signData = sign(data)
-    print(sign(data))
-    print(verify(data, signData))
+    # signData = sign(data)
+    # print(sign(data))
+    # print(verify(data, signData))
     pass
