@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- coding=utf-8 -*-
 
 # description:
@@ -9,6 +9,7 @@ import json
 from dueros.Nlu import Nlu
 from dueros.Session import Session
 from dueros.Base import Base
+from dueros.Utils import Utils
 
 class Request(Base):
     '''
@@ -235,6 +236,15 @@ class Request(Base):
         :return:
         '''
         return self.data['request']['dialogState'] == 'COMPLETED'
+
+    def getRequestQueryOriginal(self):
+        '''
+        获取最原始的请求内容
+        :return:
+        '''
+        if Utils.checkKeyInDict(self.data['request'], ['query']):
+            return self.data['request']['query']['original']
+
 
 
 

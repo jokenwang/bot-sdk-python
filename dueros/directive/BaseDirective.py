@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -20,7 +20,6 @@ class BaseDirective(object):
 
     def __init__(self, type):
         self.data = {}
-
         self.data['type'] = type
 
     def genToken(self):

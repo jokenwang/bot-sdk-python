@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -11,8 +11,8 @@
 import os
 import fcntl
 import hashlib
-import OpenSSL
-import urllib.request
+# import OpenSSL
+import urllib2
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from Crypto.Hash import SHA
@@ -52,7 +52,7 @@ class Certificate(Base):
         cache = os.getcwd() + os.path.sep + md5.hexdigest()
         content = ''
         if not os.path.exists(cache):
-            content = urllib.request.urlopen(filename).read()
+            content = urllib2.urlopen(filename).read()
             if not content:
                 return
             with open(cache, 'w') as f:

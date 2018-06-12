@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -13,7 +13,7 @@ from setuptools import setup
 from setuptools import find_packages
 
 setup(
-    name='dueros-bot',
+    name='dueros-bot-python2',
     version='0.2.5',
     author='jack',
     author_email='mupdf@sina.com',
@@ -24,6 +24,6 @@ setup(
     install_requires=[
         'pycrypto>=2.6.1',
         'requests',
-	 'pyOpenSSL'
+	    'pyOpenSSL'
     ]
 )
