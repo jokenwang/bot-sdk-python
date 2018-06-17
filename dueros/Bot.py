@@ -39,7 +39,7 @@ class Bot(Base):
         self.callBackFunc = None
         self.cakkBackData = None
         self.event = {}
-        logging.info('Bot init')
+        # logging.info('Bot init')
 
     def initCertificate(self, environ, privateKey=''):
         '''
@@ -180,8 +180,7 @@ class Bot(Base):
         :return:
         '''
 
-        if self.nlu:
-            return self.nlu.getIntentName()
+        return self.nlu.getIntentName() if self.nlu else ''
 
     def getSessionAttribute(self, field, default=''):
         '''
@@ -203,7 +202,7 @@ class Bot(Base):
         :param default:     默认值
         :return:
         '''
-        if isinstance(field, str) and field:
+        if field and isinstance(field, str):
             self.session.setData(field, value, default)
 
     def clearSessionAttribute(self):
@@ -222,7 +221,7 @@ class Bot(Base):
         :return:
         '''
 
-        if self.nlu and isinstance(field, str) and field:
+        if self.nlu and field and isinstance(field, str):
             return self.nlu.getSlot(field, index)
 
     def setSlots(self, field, value, index=0):
@@ -234,7 +233,7 @@ class Bot(Base):
         :return:
         '''
 
-        if self.nlu and isinstance(field, str) and field:
+        if self.nlu and field and isinstance(field, str):
             self.nlu.setSlot(field, value, index)
 
     def waitAnswer(self):

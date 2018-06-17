@@ -42,7 +42,7 @@ class BaseCard(object):
 		'''
 		if url:
 			self.data['url'] = url
-			if(anchorText):
+			if anchorText:
 				self.data['anchorText'] = anchorText
 		return self
 

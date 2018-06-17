@@ -23,7 +23,8 @@ class Nlu(Base):
         获取当前的意图intent名
         :return:
         '''
-        return self.data[index]['name']
+
+        return self.data[index]['name'] if 'name' in self.data[index] else ''
 
     def setSlot(self, field, value, index=0):
         '''
@@ -48,7 +49,7 @@ class Nlu(Base):
                 'value': value
             }
 
-    def getSlot(self, field, index = 0):
+    def getSlot(self, field, index=0):
 
         '''
         获取槽位
@@ -74,11 +75,11 @@ class Nlu(Base):
             ]
         '''
         if not field:
-            return
+            return ''
         # #此处有坑 文档是values 但是PHP demo是value
         return self.__getSlotValueByKey(field, 'value', index)
 
-    def getSlotConfirmationStatus(self, field, index = 0):
+    def getSlotConfirmationStatus(self, field, index=0):
         '''
         槽位确认状态
         :param field:
@@ -93,9 +94,9 @@ class Nlu(Base):
         :param index:
         :return:    NONE: 未确认；CONFIRMED: 确认；DENIED: 否认
         '''
-        return self.data[index]['confirmationStatus']
+        return self.data[index]['confirmationStatus'] if 'confirmationStatus' in self.data[index] else ''
 
-    def __getSlotValueByKey(self, field, subField, index = 0):
+    def __getSlotValueByKey(self, field, subField, index=0):
         '''
         :param field:
         :param subField:
@@ -128,7 +129,7 @@ class Nlu(Base):
         :return:
         '''
 
-        if slot != '' and slot:
+        if slot and slot != '':
             self.askSlot = slot
             self.directive = {
                 'type': 'Dialog.ElicitSlot',

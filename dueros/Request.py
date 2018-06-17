@@ -22,8 +22,11 @@ class Request(Base):
         :param data:  请求数据
         '''
         super(Request, self).__init__()
+        if isinstance(data, dict):
+            self.data = data
+        elif isinstance(data, str):
+            self.data = json.loads(data)
 
-        self.data = json.loads(data)
         self.requestType = self.data['request']['type']
         self.session = Session(self.data['session'])
         self.nlu = None

@@ -154,7 +154,6 @@ class Response(Base):
         if not mix or mix == 'null' or mix == '':
             return None
 
-        result = {}
         if re.search(r'<speak>', mix):
             result = {
                 "type": "SSML",

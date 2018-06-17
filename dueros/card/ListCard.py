@@ -3,7 +3,7 @@
 
 # description:
 # author:jack
-# create_time: 2017/12/31 上午12:21
+# create_time: 2017/12/31
 
 import json
 from dueros.card.BaseCard import BaseCard
