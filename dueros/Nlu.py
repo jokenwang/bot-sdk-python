@@ -23,7 +23,7 @@ class Nlu(Base):
         获取当前的意图intent名
         :return:
         '''
-        return self.data[index]['name']
+        return self.data[index]['name'] if 'name' in self.data[index] else ''
 
     def setSlot(self, field, value, index=0):
         '''

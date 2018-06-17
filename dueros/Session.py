@@ -42,12 +42,14 @@ class Session(Base):
         }
 
     def getData(self, field, default):
-        if field in self.data:
-            return self.data[field]
+        return self.data[field] if field in self.data else default
 
     def setData(self, field, value, default):
 
-        self.data[field] = value
+        if value:
+            self.data[field] = value
+        else:
+            self.data[field] = default
 
 
 if __name__ == '__main__':
