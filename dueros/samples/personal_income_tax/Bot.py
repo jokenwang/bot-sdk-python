@@ -9,6 +9,9 @@
 """
 
 from dueros.Bot import Bot
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 class Bot(Bot):
     def launchRequest(self):
         '''

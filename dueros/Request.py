@@ -23,10 +23,10 @@ class Request(Base):
         '''
         super(Request, self).__init__()
 
-        if isinstance(data, str):
-            self.data = json.loads(data)
-        elif isinstance(data, dict):
+        if isinstance(data, dict):
             self.data = data
+        else:
+            self.data = json.loads(data)
 
         self.requestType = self.data['request']['type']
         self.session = Session(self.data['session'])
