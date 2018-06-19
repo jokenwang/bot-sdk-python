@@ -43,9 +43,6 @@ class BotMonitor:
         self.certificate = None
         self.response = None
 
-    def __init__(self, postData):
-        self.__init__(postData, '')
-
     def setEnvironmentInfo(self, privateKey, environment):
         print(privateKey)
         self.privateKey = privateKey
