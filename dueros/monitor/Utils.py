@@ -38,6 +38,18 @@ class Utils:
                 continue
             return False
 
+    @staticmethod
+    def getDictDataByKeys(dicts, keys):
+        if isinstance(dicts, dict):
+            for key in keys:
+                if key in dicts:
+                    v = dicts[key]
+                    if isinstance(v, dict):
+                        dicts = v
+                        continue
+                    elif isinstance(v, str):
+                        return v
+
 
 if __name__ == '__main__':
     pass

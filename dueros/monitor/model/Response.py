@@ -19,13 +19,10 @@ class Response:
         self.data = responseData
 
     def getOutputSpeech(self):
-        if Utils.checkKeysInDict(self.data, ['response', 'outputSpeech']):
-            return self.data['response']['outputSpeech']
+        return Utils.getDictDataByKeys(self.data, ['response', 'outputSpeech'])
 
     def getShouldEndSession(self):
-        if Utils.checkKeysInDict(self.data, ['response', 'shouldEndSession']):
-            return self.data['response']['shouldEndSession']
-        pass
+        return Utils.getDictDataByKeys(self.data, ['response', 'shouldEndSession'])
 
 
     def getSlotName(self):
@@ -39,9 +36,7 @@ class Response:
 
     def getReprompt(self):
 
-        if Utils.checkKeysInDict(self.data, ['response', 'reprompt', 'outputSpeech']):
-            return self.data['response']['reprompt']['outputSpeech']
-        return None
+        return Utils.getDictDataByKeys(self.data, ['response', 'reprompt', 'outputSpeech'])
 
 if __name__ == '__main__':
     pass

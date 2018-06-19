@@ -19,8 +19,8 @@ import threading
 
 class BotMonitor:
 
-    def __init__(self, postData):
-        if isinstance(postData, str):
+    def __init__(self, postData, privateKey = ''):
+        if not isinstance(postData, dict):
             postData = json.loads(postData)
         self.data = postData
         self.requestStartTime = self.getMillisecond()
@@ -37,11 +37,14 @@ class BotMonitor:
         self.userEventList = {}
         self.isEventMakePair = {}
         self.config = BotMonitorConfig()
-        self.privateKey = None
+        self.privateKey = privateKey
         self.environment = 0
         self.enabled = True
         self.certificate = None
         self.response = None
+
+    def __init__(self, postData):
+        self.__init__(postData, '')
 
     def setEnvironmentInfo(self, privateKey, environment):
         print(privateKey)
@@ -55,7 +58,6 @@ class BotMonitor:
         :param enabled:
         :return:
         '''
-        print('setMonitorEnable = %s' % enabled)
         self.enabled = enabled
 
     def setResponseData(self, responseData):
@@ -105,12 +107,13 @@ class BotMonitor:
 
             if taskName in self.userEventList:
                 oldTime = self.userEventList[taskName]
-            oldTime = None
-            currTime = self.getMillisecond()
+            else:
+                oldTime = None
             costTime = 0
 
             if oldTime:
-                costTime = currTime = oldTime
+                currTime = self.getMillisecond()
+                costTime = currTime - oldTime
 
             self.userEventList[taskName] = costTime
             self.isEventMakePair[taskName] = True
@@ -233,7 +236,6 @@ class BotMonitor:
 
         base64Data = str(base64.b64encode(orginData.encode('utf-8')), 'utf-8')
         print(base64Data)
-        pkversion = None
         if self.environment == 0:
             pkversion = 'debug'
         else:
@@ -242,6 +244,10 @@ class BotMonitor:
         return (base64Data, timestamp, pkversion)
 
     def isShouldDisable(self):
+        '''
+        判断Monitor是否可用
+        :return:
+        '''
 
         if not self.privateKey or len(self.privateKey) == 0 or not self.enabled:
             return True
@@ -249,6 +255,10 @@ class BotMonitor:
 
 
     def getMillisecond(self):
+        '''
+        获取当前时间
+        :return:
+        '''
 
         return int(time.time())
 

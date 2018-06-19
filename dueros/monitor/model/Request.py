@@ -33,27 +33,21 @@ class Request:
 
     def getDeviceId(self):
 
-        if Utils.checkKeysInDict(self.data,['context','System','device','deviceId']):
-            return self.data['context']['System']['device']['deviceId']
-        return None
+        return Utils.getDictDataByKeys(self.data,['context','System','device','deviceId'])
 
     def getAudioPlayerContext(self):
         '''
         获取设备音频播放的状态
         :return:
         '''
-        if Utils.checkKeysInDict(self.data,['context','AudioPlayer']):
-            return self.data['context']['AudioPlayer']
-        return None
+        return Utils.getDictDataByKeys(self.data,['context','AudioPlayer'])
 
     def getAppLauncherContext(self):
         '''
         获取设备app安装列表
         :return:
         '''
-        if Utils.checkKeysInDict(self.data,['context','AppLauncher']):
-            return self.data['context']['AppLauncher']
-        return None
+        return Utils.getDictDataByKeys(self.data,['context','AppLauncher'])
 
     def getEventData(self):
         '''
@@ -83,9 +77,7 @@ class Request:
 
     def getUserId(self):
 
-        if Utils.checkKeysInDict(self.data, ['context', 'System', 'user', 'userId']):
-            return self.data['context']['System']['user']['userId']
-        return None
+        return Utils.getDictDataByKeys(self.data,['context', 'System', 'user', 'userId'])
 
     def getCuid(self):
 
@@ -101,37 +93,26 @@ class Request:
         return None
 
     def getLocation(self):
-        if Utils.checkKeysInDict(self.data, ['context','System','user', 'userInfo','location','geo']):
-            return self.data['context']['System']['user']['userInfo']['location']['geo']
-        return None
+        return Utils.getDictDataByKeys(self.data,['context','System','user', 'userInfo','location','geo'])
 
     def getTimestamp(self):
 
-        if Utils.checkKeysInDict(self.data, ['request','timestamp']):
-            return self.data['request']['timestamp']
-        return None
+        return Utils.getDictDataByKeys(self.data,['request','timestamp'])
 
     def getLogId(self):
 
         return self.data['log_id']
 
     def getBotId(self):
-        if Utils.checkKeysInDict(self.data,['context','System','application','applicationId']):
-            return self.data['context']['System']['application']['applicationId']
-        return None
+        return Utils.getDictDataByKeys(self.data,['context','System','application','applicationId'])
 
     def getRequestId(self):
 
-        if Utils.checkKeysInDict(self.data,['request','requestId']):
-            return self.data['request']['requestId']
-
-        return None
+        return Utils.getDictDataByKeys(self.data,['request','requestId'])
 
     def getReson(self):
 
-        if Utils.checkKeysInDict(self.data, ['request','reason']):
-            return self.data['request']['reason']
-        return None
+        return Utils.getDictDataByKeys(self.data,['request','reason'])
 
     def getIntentName(self):
 
@@ -143,9 +124,7 @@ class Request:
 
     def getSessionId(self):
 
-        if Utils.checkKeysInDict(self.data,['session', 'sessionId']):
-            return self.data['session']['sessionId']
-        return None
+        return Utils.getDictDataByKeys(self.data,['session', 'sessionId'])
 
     def isDialogStateCompleted(self):
         if Utils.checkKeysInDict(self.data, ['request', 'dialogState']):
