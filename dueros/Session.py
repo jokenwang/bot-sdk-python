@@ -39,8 +39,10 @@ class Session(Base):
 
     def getData(self, field, default):
 
-        if field in self.data:
+        if field and field in self.data:
             return self.data[field]
+        else:
+            return default
 
     def setData(self, field, value, default):
         if value:

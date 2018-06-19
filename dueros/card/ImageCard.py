@@ -39,11 +39,4 @@ class ImageCard(BaseCard):
 
 if __name__ == '__main__':
 
-    list = []
-
-    dit = {'name':'adfa'}
-    list.append(dit)
-
-    print(list)
-
     pass

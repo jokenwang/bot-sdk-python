@@ -61,9 +61,5 @@ class Utils:
 
 
 if __name__ == '__main__':
-    dicttest = {"result": {"code": "110002", "msg": "设备设备序列号或验证码错误"}}
-    ret = Utils.getDictDataByKey(dicttest, 'msg2')
-    print(ret)
 
-    print(Utils.getDictDataByKeys(dicttest, ['result', 'code', ]))
     pass

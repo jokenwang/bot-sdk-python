@@ -189,7 +189,7 @@ class Bot(Base):
         :param default: 未获取 返回默认值
         :return:
         '''
-        if isinstance(field, str) and field:
+        if field and isinstance(field, str):
             return self.session.getData(field, default)
         else:
             return default
@@ -282,42 +282,41 @@ class Bot(Base):
         if self.request.getType() == 'IntentRequest' and not self.nlu and not eventHandler:
             return self.response.defaultResult()
 
-        # ret = {}
-        # for intercept in self.intercept:
-            # self.botMonitor.setPreEventStart()
-            # ret = intercept.preprocess(self)
-            # self.botMonitor.setPreEventEnd()
-            # if(ret):
-            #     return
+        ret = {}
+        if self.intercept:
+            for intercept in self.intercept:
+                self.botMonitor.setPreEventStart()
+                ret = intercept.preprocess(self)
+                self.botMonitor.setPreEventEnd()
+                if ret:
+                    return
 
-        if eventHandler:
-            self.botMonitor.setDeviceEventStart()
-            event = self.request.getEventData()
-            ret = self.__callFunc(eventHandler, event)
-            self.botMonitor.setDeviceEventEnd()
-        else:
-            self.botMonitor.setEventStart()
-            ret = self.__dispatch()
-            self.botMonitor.setEventEnd()
-
-        # for intercept in self.intercept:
-            # self.botMonitor.setPostEventStart()
-            # ret = intercept.postprocess(self, ret)
-            # self.botMonitor.setPostEventEnd()
-
-        if not build:
-            if self.cakkBackData:
-                return json.dumps(self.cakkBackData)
-            else:
-                return json.dumps(ret)
         if not ret:
-            ret = {}
+            if eventHandler:
+                self.botMonitor.setDeviceEventStart()
+                event = self.request.getEventData()
+                ret = self.__callFunc(eventHandler, event)
+                self.botMonitor.setDeviceEventEnd()
+            else:
+                self.botMonitor.setEventStart()
+                ret = self.__dispatch()
+                self.botMonitor.setEventEnd()
+        else:
+            for intercept in self.intercept:
+                self.botMonitor.setPostEventStart()
+                ret = intercept.postprocess(self, ret)
+                self.botMonitor.setPostEventEnd()
+
         res = self.response.build(ret)
+        print(json.dumps(res))
         self.botMonitor.setResponseData(res)
         self.botMonitor.updateData()
-        print(json.dumps(res))
+
         if self.cakkBackData:
             return json.dumps(self.cakkBackData)
+
+        if not build:
+            return json.dumps(ret)
         else:
             return json.dumps(res)
     
@@ -468,13 +467,12 @@ class Bot(Base):
     def effectConfirmed(self):
         self.request.isDetermined()
 
-    def setExpectSpeech(self, expectSpeech):
+    def setExpectSpeech(self, expectSpeech=False):
         '''
         通过控制expectSpeech来控制麦克风开
         :param expectSpeech:
         :return:
         '''
-
         self.response.setExpectSpeech(expectSpeech)
 
     def setFallBack(self):

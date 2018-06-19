@@ -178,14 +178,14 @@ class Response(Base):
 
         self.needDetermine = True
 
-    def setExpectSpeech(self, expectSpeech):
+    def setExpectSpeech(self, expectSpeech=False):
         '''
         通过控制expectSpeech来控制麦克风开关
         :param expectSpeech:
         :return:
         '''
-
-        self.expectSpeech = expectSpeech
+        if expectSpeech and isinstance(expectSpeech, bool):
+            self.expectSpeech = expectSpeech
 
     def setFallBack(self):
         '''
