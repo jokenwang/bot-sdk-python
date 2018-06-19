@@ -450,8 +450,15 @@ sudo pip install requests
 ```
 pip install -r requirements.txt
 ```
+# 技能调试
+为了避免每次调试都要部署到服务器可以使用[ngrok](https://ngrok.com/)将请求数据转发到自己的机器上(注意:ngrok访问比较慢,有时会链接超时)
 
 # 完成过程记录
+
+2018-06-19 
+* 添加屏幕支持
+* 支持数据统计功能
+* 优化代码
 
 2018-01-12
 * Bot.py添加错误回调，用户可以调用setCallBack方法设置错误回调方法
@@ -460,7 +467,6 @@ pip install -r requirements.txt
 
 
 2018-01-06
-
 
 * 完成拦截器
 * 完成会话
