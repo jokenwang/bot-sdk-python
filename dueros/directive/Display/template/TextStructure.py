@@ -12,7 +12,6 @@
 class TextStructure:
 
     def __init__(self):
-        super(TextStructure, self).__init__()
         self.data = {}
         self.setType('PlainText')
 
