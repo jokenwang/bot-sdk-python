@@ -9,6 +9,7 @@
     desc:pass
 """
 from dueros.directive.AudioPlayer.Control.BaseButton import BaseButton
+from dueros.Utils import Utils
 
 class PlayerInfo:
 
@@ -31,6 +32,8 @@ class PlayerInfo:
         self.data['content']['titleSubtext2'] = titleSubtext2
 
     def setLyric(self, url):
+        if not Utils.checkKeyInDict(self.data['content'], 'lyric'):
+            self.data['content']['lyric'] = {}
         self.data['content']['lyric']['url'] = url
         self.data['content']['lyric']['format'] = 'FORMAT_LRC'
 
@@ -39,9 +42,13 @@ class PlayerInfo:
         self.data['content']['mediaLengthInMilliseconds'] = mediaLengthInMs
 
     def setArt(self, src):
+        if not Utils.checkKeyInDict(self.data['content'], 'art'):
+            self.data['content']['art'] = {}
         self.data['content']['art']['src'] = src
 
     def setProvider(self, name, logo):
+        if not Utils.checkKeyInDict(self.data['content'], 'provider'):
+            self.data['content']['provider'] = {}
         self.data['content']['provider']['name'] = name;
         self.data['content']['provider']['logo']['src'] = logo
 

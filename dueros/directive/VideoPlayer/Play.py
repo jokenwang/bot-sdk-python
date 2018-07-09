@@ -18,7 +18,7 @@ class VideroPlayer(BaseDirective):
         self.data['playBehavior'] = playBehavior.value
         self.data['videoItem'] = {
             'videoItemId': self.getToken(),
-            'stream':{
+            'stream': {
                 'url': url,
                 'offsetInMilliseconds': 0,
                 'token': self.getToken()

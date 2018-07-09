@@ -69,21 +69,21 @@ class Request(Base):
         获取设备Id
         :return:
         '''
-        return Utils.getDictDataByKeys(self.data,['context', 'System', 'device', 'deviceId', ])
+        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'device', 'deviceId'])
 
     def getOriginalDeviceId(self):
         '''
         获取来自端上报的原始设备Id
         :return:
         '''
-        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'device', 'originalDeviceId', ])
+        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'device', 'originalDeviceId' ])
 
     def getAudioPlayerContext(self):
         '''
         获取设备音频播放状态
         :return:
         '''
-        return Utils.getDictDataByKeys(self.data, ['context', 'AudioPlayer' ])
+        return Utils.getDictDataByKeys(self.data, ['context', 'AudioPlayer'])
 
     def getVideoPlayerContext(self):
 

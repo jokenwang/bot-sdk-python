@@ -10,7 +10,6 @@
 """
 import dueros.Log as Log
 from dueros.Constants import constants
-import logging
 
 class Base:
 
