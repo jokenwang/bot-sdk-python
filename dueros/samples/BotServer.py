@@ -9,8 +9,8 @@
     desc:pass
 """
 #默认使用个税查询技能， 如果需要切换自己的技能  注意需要要更换成自己的Bot
-from dueros.samples.personal_income_tax.Bot import Bot
-
+# from dueros.samples.personal_income_tax.Bot import Bot
+from dueros.samples.audio_play.Bot import Bot
 def application(environ, start_response):
     try:
         request_body_size = int(environ.get('CONTENT_LENGTH', 0))

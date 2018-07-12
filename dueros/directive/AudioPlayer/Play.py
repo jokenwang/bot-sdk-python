@@ -39,6 +39,10 @@ class Play(BaseDirective):
             }
         }
 
+    def setPlayBehavior(self, playBehavior):
+        if isinstance(playBehavior, PlayBehaviorEnum):
+            self.data['playBehavior'] = playBehavior.value
+
     def setPlayerInfo(self, playerInfo):
         if isinstance(playerInfo,PlayerInfo):
             self.data['audioItem']['playerInfo'] = playerInfo.getData()

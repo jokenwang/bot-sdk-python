@@ -11,6 +11,10 @@
 from dueros.Bot import Bot
 from dueros.directive.AudioPlayer.Stop import Stop
 from dueros.directive.AudioPlayer.Play import Play
+from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
+from dueros.directive.Display.template.BodyTemplate2 import BodyTemplate2
+from dueros.directive.Display.RenderTemplate import RenderTemplate
+import json
 class Bot(Bot):
     '''
     自定义的BOT函数
@@ -19,21 +23,29 @@ class Bot(Bot):
         '''
         打开调用名
         '''
+        self.musics = json.loads(self.musicsData())
+        self.waitAnswer()
         return {
-            'outputSpeech': r'欢迎进入'
+            'directives': [self.getTemplate2(self.musics[self.curIndex])],
+            'outputSpeech': '欢迎使用音乐播放器!'
         }
 
     def audioPlay(self):
         '''
         播放指令
         '''
-        directives = []
-        directive = Play('http://m10.music.126.net/20180308193927/e9ca2860e7923536212ab420aad7b78d/ymusic/e18c/c0a0/ffef/1770e72b9dd1be8f814a566cab863c23.mp3')
-        directives.append(directive)
+        self.musics = json.loads(self.musicsData())
+
         return {
-            'directives' : directives,
+            'directives' : [self.getTemplate2(self.musics[self.curIndex]), self.getDirective("0")],
             'outputSpeech': r'正在为你播放歌曲'
         }
+
+    def getDirective(self, offset = "0"):
+        directive = Play(self.musics[self.curIndex]['url'])
+        directive.setToken(self.musics[self.curIndex]['token'])
+        directive.setOffsetInMilliSeconds(offset)
+        return directive
 
     def audioStop(self):
         '''
@@ -53,7 +65,7 @@ class Bot(Bot):
         '''
         offset = event['offsetInMilliSeconds']
         directives = []
-        directive = Play('http://m10.music.126.net/20180308193927/e9ca2860e7923536212ab420aad7b78d/ymusic/e18c/c0a0/ffef/1770e72b9dd1be8f814a566cab863c23.mp3', Play.REPLACE_ALL)
+        directive = Play('http://music.163.com/song/media/outer/url?id=554191055.mp3', PlayBehaviorEnum.ENQUEUE)
         directives.append(directive)
         return {
             'outputSpeech': r'已处理端上报事件',
@@ -69,12 +81,22 @@ class Bot(Bot):
             'outputSpeech': r'已处理端上报事件'
         }
 
+    def getTemplate2(self, music):
+        print(music)
+        bodyTemplate = BodyTemplate2()
+        bodyTemplate.setToken(music['token'])
+        bodyTemplate.setBackGroundImage(self.DEFAULT_IMAGE)
+        bodyTemplate.setTitle(music['singer'])
+        bodyTemplate.setPlainContent(music['name'])
+        renderTemplate = RenderTemplate(bodyTemplate)
+        return renderTemplate
+
+
     def __init__(self, data):
         '''
         构造函数
         '''
         super(Bot, self).__init__(data)
-
         self.addLaunchHandler(self.launchRequest)
         #给端下发指令
         self.addIntentHandler('audio_play_intent', self.audioPlay)
@@ -83,6 +105,12 @@ class Bot(Bot):
         self.addEventListener('AudioPlayer.PlaybackStarted', self.playBackStartedEvent)
         self.addEventListener('AudioPlayer.PlaybackNearlyFinished', self.playBackStartedEvent)
 
+    def musicsData(self):
+        with open("./audio_play/musics.json", 'r', encoding='utf-8') as load_f:
+            return load_f.read()
+    curIndex = 0
+    musics = []
+    DEFAULT_IMAGE = 'https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg';
 
 if __name__ == '__main__':
     pass
