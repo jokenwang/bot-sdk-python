@@ -10,7 +10,7 @@
 """
 
 
-class BaseButton:
+class BaseButton(object):
 
     def __init__(self, type, name):
         self.data = {}

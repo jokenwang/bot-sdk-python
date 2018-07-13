@@ -29,10 +29,10 @@ class Play(BaseDirective):
         '''
 
         super(Play, self).__init__('AudioPlayer.Play')
-        self.data['playBehavior'] = playBehavior.value
+        self.data['playBehavior'] = playBehavior
         self.data['audioItem'] = {
             'stream': {
-                'streamFormat': StreamFormatEnum.STREAM_FORMAT_MP3.value,
+                'streamFormat': StreamFormatEnum.STREAM_FORMAT_MP3,
                 'url': url,
                 'offsetInMilliSeconds': 0,
                 'token': self.genToken()
@@ -85,9 +85,9 @@ class Play(BaseDirective):
         :return:
         '''
         if StreamFormatEnum.inEnum(streamFormat):
-            self.data['audioItem']['stream']['streamFormat'] = streamFormat.value
+            self.data['audioItem']['stream']['streamFormat'] = streamFormat
         else:
-            self.data['audioItem']['stream']['streamFormat'] = StreamFormatEnum.STREAM_FORMAT_MP3.value
+            self.data['audioItem']['stream']['streamFormat'] = StreamFormatEnum.STREAM_FORMAT_MP3
         return self
 
 

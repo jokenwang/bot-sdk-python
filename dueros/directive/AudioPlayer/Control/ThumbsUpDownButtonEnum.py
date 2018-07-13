@@ -8,19 +8,12 @@
 """
     desc:pass
 """
-from enum import Enum, unique
+class ThumbsUpDownButtonEnum(object):
 
-
-@unique
-class ThumbsUpDownButtonEnum(Enum):
     THUMBS_UP = 'THUMBS_UP'
     THUMBS_DOWN = 'THUMBS_DOWN'
 
-    @staticmethod
-    def inEnum(thumbsUpDown):
-        return thumbsUpDown in ThumbsUpDownButtonEnum.__members__.values()
 
-    pass
 
 
 if __name__ == '__main__':

@@ -8,18 +8,15 @@
 """
     desc:pass
 """
-from enum import Enum, unique
 
-@unique
-class PlayBehaviorEnum(Enum):
+class PlayBehaviorEnum(object):
     REPLACE_ALL = 'REPLACE_ALL'
     REPLACE_ENQUEUED = 'REPLACE_ENQUEUED'
     ENQUEUE = 'ENQUEUE'
 
-
     @staticmethod
-    def inEnum(playBehavior):
-        return playBehavior in PlayBehaviorEnum.__members__.values()
+    def inEnum(position):
+        return position == PlayBehaviorEnum.REPLACE_ALL or position == PlayBehaviorEnum.REPLACE_ENQUEUED or position == PlayBehaviorEnum.ENQUEUE
 
     pass
 

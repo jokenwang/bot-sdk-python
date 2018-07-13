@@ -13,7 +13,7 @@ from dueros.directive.AudioPlayer.Control.BaseButton import BaseButton
 class RadioButton(BaseButton):
 
     def __init__(self,name, selectedValue = ''):
-        super(RadioButton, 'RADIO_BUTTON', name)
+        super(RadioButton,self).__init__('RADIO_BUTTON', name)
         self.setSelectedValue(selectedValue)
 
     def setSelectedValue(self, selectedValue):

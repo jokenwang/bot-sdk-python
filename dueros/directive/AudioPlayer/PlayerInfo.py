@@ -9,13 +9,17 @@
     desc:pass
 """
 from dueros.directive.AudioPlayer.Control.BaseButton import BaseButton
-
+from dueros.directive.AudioPlayer.PlayerInfoAudioItemEnum import PlayerInfoAudioItemEnum
 class PlayerInfo:
 
     def __init__(self):
         self.data = {}
         self.data['content']={}
-        self.data['content']['audioItemType'] = 'AUDIO_TYPE_MUSIC'
+        self.data['content']['provider'] = {}
+        self.data['content']['lyric'] = {}
+        self.data['content']['audioItemType'] = PlayerInfoAudioItemEnum.AUDIO_TYPE_MUSIC
+        self.data['controls'] = []
+        self.data['content']['provider']['logo'] = {}
 
     def setAudioItemType(self, type):
         self.data['content']['audioItemType'] = type
@@ -32,21 +36,27 @@ class PlayerInfo:
 
     def setLyric(self, url):
         self.data['content']['lyric']['url'] = url
-        self.data['content']['lyric']['format'] = 'FORMAT_LRC'
+        self.data['content']['lyric']['format'] = 'LRC'
 
     def setMediaLengthInMs(self, mediaLengthInMs):
         mediaLengthInMs = int(mediaLengthInMs)
         self.data['content']['mediaLengthInMilliseconds'] = mediaLengthInMs
 
     def setArt(self, src):
+        self.data['content']['art'] = {}
         self.data['content']['art']['src'] = src
 
     def setProvider(self, name, logo):
-        self.data['content']['provider']['name'] = name;
+        self.data['content']['provider']['name'] = name
+        self.data['content']['provider']['logo']['src'] = logo
+
+    def setProviderName(self, name):
+        self.data['content']['provider']['name'] = name
+
+    def setProviderLogo(self, logo):
         self.data['content']['provider']['logo']['src'] = logo
 
     def setControls(self, controls):
-        self.data['controls'] = []
         if isinstance(controls, BaseButton):
             self.data['controls'].append(controls.getData())
 
