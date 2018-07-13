@@ -15,7 +15,7 @@ from dueros.directive.AudioPlayer.StreamFormatEnum import StreamFormatEnum
 from dueros.directive.AudioPlayer.PlayerInfo import PlayerInfo
 from dueros.directive.AudioPlayer.Control.PlayPauseButton import PlayPauseButton
 from dueros.directive.AudioPlayer.Control.PreviousButton import PreviousButton
-from dueros.directive.AudioPlayer.Control.NextButoon import NextButoon
+from dueros.directive.AudioPlayer.Control.NextButton import NextButoon
 
 class Play(BaseDirective):
 

@@ -10,10 +10,10 @@
 """
 from dueros.directive.AudioPlayer.Control.Button import Button
 
-class NextButoon(Button):
+class NextButton(Button):
 
     def __init__(self):
-        super(NextButoon, self).__init__('NEXT')
+        super(NextButton, self).__init__('NEXT')
     pass
 
 
