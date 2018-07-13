@@ -15,7 +15,7 @@ from dueros.Utils import Utils
 class VideroPlayer(BaseDirective):
 
     def __init__(self, url, playBehavior = PlayBehaviorEnum.REPLACE_ALL):
-        super(VideroPlayer, self).__init__('VideoPlay.Play')
+        super(VideroPlayer, self).__init__('VideoPlayer.Play')
         self.data['playBehavior'] = playBehavior.value
         self.data['videoItem'] = {
             'videoItemId': self.genToken(),
@@ -55,22 +55,22 @@ class VideroPlayer(BaseDirective):
         if isinstance(reportDelayMs, str) and reportDelayMs.isdigit():
             reportDelayMs = int(reportDelayMs)
 
-        if isinstance(reportDelayMs, int):
+        if isinstance(reportDelayMs, int) or isinstance(reportDelayMs, float):
             if not Utils.checkKeyInDict(self.data['videoItem']['stream'], 'progressReport'):
                 self.data['videoItem']['stream']['progressReport'] = {}
-            self.data['videoItem']['stream']['progressReport']['progressReportDelayInMilliseconds'] = reportDelayMs
+            self.data['videoItem']['stream']['progressReport']['progressReportDelayInMilliseconds'] = int(reportDelayMs)
 
     def setReportIntervalInMs(self, intervalMs):
 
         if isinstance(intervalMs, str) and intervalMs.isdigit():
             intervalMs = int(intervalMs)
 
-        if isinstance(intervalMs, int):
+        if isinstance(intervalMs, int) or isinstance(intervalMs, float):
 
             if not Utils.checkKeyInDict(self.data['videoItem']['stream'], 'progressReport'):
                 self.data['videoItem']['stream']['progressReport'] = {}
 
-            self.data['videoItem']['stream']['progressReport']['progressReportIntervalInMilliseconds'] = intervalMs
+            self.data['videoItem']['stream']['progressReport']['progressReportIntervalInMilliseconds'] = int(intervalMs)
 
     def setExpectedPreviousToken(self, previousToken):
 
