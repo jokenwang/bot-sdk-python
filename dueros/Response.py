@@ -68,17 +68,17 @@ class Response(Base):
         if 'outputSpeech' in data:
             data['outputSpeech'] = data.get('outputSpeech')
         else:
-            data['outputSpeech'] = 'null'
+            data['outputSpeech'] = None
 
         if 'resource' in data:
             data['resource'] = data.get('resource')
         else:
-            data['resource'] = 'null'
+            data['resource'] = None
 
         if 'reprompt' in data:
             data['reprompt'] = data.get('reprompt')
         else:
-            data['reprompt'] = 'null'
+            data['reprompt'] = None
 
     def build(self, data):
         '''
@@ -126,7 +126,7 @@ class Response(Base):
             "response": {
                 "directives":  directives,
                 "shouldEndSession": self.shouldEndSession,
-                "card": data['card'].getData() if data['card'] else 'null',
+                "card": data['card'].getData() if data['card'] else None,
                 "resource": data['resource'],
                 "outputSpeech": self.formatSpeech(data['outputSpeech']),
                 "reprompt": {
@@ -152,7 +152,7 @@ class Response(Base):
         :return:
         '''
         if not mix or mix == 'null' or mix == '':
-            return 'null'
+            return None
 
         if re.search(r'<speak>', mix):
             result = {
