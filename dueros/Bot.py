@@ -33,22 +33,22 @@ class Bot(Base):
         self.nlu = self.request.getNlu()
         self.response = Response(self.request, self.session, self.nlu)
         self.handler = []
-        # self.botMonitor = BotMonitor(postdata)
+        self.botMonitor = BotMonitor(postdata)
         self.intercept = []
         self.certificate = None
         self.callBackFunc = None
-        self.cakkBackData = None
+        self.callBackData = None
         self.event = {}
         logging.info('Bot init')
 
-    def initCertificate(self, environ):
+    def initCertificate(self, environ, privateKey=''):
         '''
         创建Certificate
         :param environ:
         :return:
         '''
 
-        self.certificate = Certificate(environ, self.postData)
+        self.certificate = Certificate(environ, self.postData, privateKey)
         return self
 
     def enableVerifyRequestSign(self):
@@ -69,6 +69,11 @@ class Bot(Base):
 
         if self.certificate:
             self.certificate.disableVerifyRequestSign()
+        return self
+
+    def setPrivateKey(self, privateKey):
+
+        self.botMonitor.setEnvironmentInfo(privateKey, 0)
         return self
 
     def addLaunchHandler(self, func):
@@ -272,39 +277,40 @@ class Bot(Base):
             return self.response.defaultResult()
 
         ret = {}
-        # for intercept in self.intercept:
-            # self.botMonitor.setPreEventStart()
-            # ret = intercept.preprocess(self)
-            # self.botMonitor.setPreEventEnd()
-            # if(ret):
-            #     return
 
-        if eventHandler:
-            # self.botMonitor.setDeviceEventStart()
-            event = self.request.getEventData()
-            ret = self.__callFunc(eventHandler, event)
-            # self.botMonitor.setDeviceEventEnd()
+        if self.intercept:
+            for intercept in self.intercept:
+                self.botMonitor.setPreEventStart()
+                ret = intercept.preprocess(self)
+                self.botMonitor.setPreEventEnd()
+                if(ret):
+                    return
+
+        if not ret:
+            if eventHandler:
+                self.botMonitor.setDeviceEventStart()
+                event = self.request.getEventData()
+                ret = self.__callFunc(eventHandler, event)
+                self.botMonitor.setDeviceEventEnd()
+            else:
+                self.botMonitor.setEventStart()
+                ret = self.__dispatch()
+                self.botMonitor.setEventEnd()
         else:
-            # self.botMonitor.setEventStart()
-            ret = self.__dispatch()
-            # self.botMonitor.setEventEnd()
+            for intercept in self.intercept:
+                self.botMonitor.setPostEventStart()
+                ret = intercept.postprocess(self, ret)
+                self.botMonitor.setPostEventEnd()
 
-        # for intercept in self.intercept:
-            # self.botMonitor.setPostEventStart()
-            # ret = intercept.postprocess(self, ret)
-            # self.botMonitor.setPostEventEnd()
+        res = self.response.build(ret)
+        self.botMonitor.setResponseData(res)
+        self.botMonitor.updateData()
+
+        if self.callBackData:
+            return json.dumps(ret)
 
         if not build:
-            if self.cakkBackData:
-                return json.dumps(self.cakkBackData)
-            else:
-                return json.dumps(ret)
-        if not ret:
-            ret = {}
-        res = self.response.build(ret)
-        print(json.dumps(res))
-        if self.cakkBackData:
-            return json.dumps(self.cakkBackData)
+            return json.dumps(ret)
         else:
             return json.dumps(res)
     
@@ -330,7 +336,7 @@ class Bot(Base):
                     if ret:
                         return ret
         #调用回调
-        self.unMatchHandler(self.cakkBackData)
+        self.unMatchHandler(self.callBackData)
 
 
     def __getRegisterEventHandler(self):
@@ -400,17 +406,17 @@ class Bot(Base):
 
         if re.match(rg['requestType'], handler):
             if self.request.getType() == handler:
-                self.cakkBackData = None
+                self.callBackData = None
                 return True
             else:
                 self.unMatchHandler({'type': 'requestType', 'message': u'未匹配到:' + self.request.getType()})
 
         if re.match(rg['intent'], handler):
             if ('#' + self.getIntentName()) == handler:
-                self.cakkBackData = None
+                self.callBackData = None
                 return True
             else:
-                self.cakkBackData = {'type': 'intent', 'message': u'handler未匹配到:' + self.getIntentName()}
+                self.callBackData = {'type': 'intent', 'message': u'handler未匹配到:' + self.getIntentName()}
 
         if handler == 'true' or handler == True:
             return True

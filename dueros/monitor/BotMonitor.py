@@ -20,7 +20,7 @@ import threading
 class BotMonitor:
 
     def __init__(self, postData):
-        if isinstance(postData, str):
+        if not isinstance(postData, dict):
             postData = json.loads(postData)
         self.data = postData
         self.requestStartTime = self.getMillisecond()
@@ -158,7 +158,7 @@ class BotMonitor:
         signData = "%s%s%s%s" % (base64Data, botId, timestamp, pkversion)
         print('signData = %s' % signData)
         signature = self.certificate.getSign(signData)
-        print('signature = %s' % (str(signature, 'utf-8')))
+        print('signature = %s' % (str(signature)))
 
         if not signature or len(pkversion) == 0:
             return
@@ -232,7 +232,7 @@ class BotMonitor:
         orginData = json.dumps(retData)
         print('orginData = %s' % orginData)
 
-        base64Data = str(base64.b64encode(orginData.encode('utf-8')), 'utf-8')
+        base64Data = str(base64.b64encode(orginData.encode('utf-8')))
         print(base64Data)
         pkversion = None
         if self.environment == 0:
