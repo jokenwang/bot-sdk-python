@@ -283,7 +283,7 @@ class Bot(Base):
                 self.botMonitor.setPreEventStart()
                 ret = intercept.preprocess(self)
                 self.botMonitor.setPreEventEnd()
-                if(ret):
+                if ret :
                     return
 
         if not ret:
@@ -301,7 +301,7 @@ class Bot(Base):
                 self.botMonitor.setPostEventStart()
                 ret = intercept.postprocess(self, ret)
                 self.botMonitor.setPostEventEnd()
-
+        print(ret)
         res = self.response.build(ret)
         self.botMonitor.setResponseData(res)
         self.botMonitor.updateData()

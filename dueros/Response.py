@@ -74,7 +74,7 @@ class Response(Base):
         if 'card' in data:
             data['card'] = data.get('card')
         else:
-            data['card'] = 'null'
+            data['card'] = None
 
         if 'outputSpeech' in data:
             data['outputSpeech'] = data.get('outputSpeech')
@@ -122,7 +122,7 @@ class Response(Base):
             "response": {
                 "directives":  directives,
                 "shouldEndSession": self.shouldEndSession,
-                "card": data['card'].getData() if data['card'] else 'null',
+                "card": data['card'].getData() if data['card'] else None,
                 "resource": data['resource'],
                 "outputSpeech": self.formatSpeech(data['outputSpeech']),
                 "reprompt": {
