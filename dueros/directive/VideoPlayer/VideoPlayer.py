@@ -12,10 +12,10 @@ from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
 from dueros.Utils import Utils
 
-class VideroPlayer(BaseDirective):
+class VideoPlayer(BaseDirective):
 
     def __init__(self, url, playBehavior = PlayBehaviorEnum.REPLACE_ALL):
-        super(VideroPlayer, self).__init__('VideoPlayer.Play')
+        super(VideoPlayer, self).__init__('VideoPlayer.Play')
         self.data['playBehavior'] = playBehavior.value
         self.data['videoItem'] = {
             'videoItemId': self.genToken(),
