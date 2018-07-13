@@ -44,13 +44,18 @@ class Session(Base):
             'attributes': self.data
         }
 
-    def getData(self, field, default):
-        if field in self.data:
+    def getData(self, field, default=''):
+
+        if field and field in self.data:
             return self.data[field]
+        else:
+            return default
 
-    def setData(self, field, value, default):
-
-        self.data[field] = value
+    def setData(self, field, value, default=''):
+        if value:
+            self.data[field] = value
+        else:
+            self.data[field] = default
 
 
 if __name__ == '__main__':
