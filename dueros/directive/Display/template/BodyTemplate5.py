@@ -15,7 +15,7 @@ class BodyTemplate5(BaseTemplate):
 
     def __init__(self):
         super(BodyTemplate5, self).__init__(['token','title', 'type'])
-        self.setType('BaseTemplate')
+        self.setType('BodyTemplate5')
         self.data['images'] = []
 
     def addImages(self, url, widthPixels = '', heightPixel = ''):
