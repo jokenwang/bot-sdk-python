@@ -13,7 +13,9 @@ class ThumbsUpDownButtonEnum(object):
     THUMBS_UP = 'THUMBS_UP'
     THUMBS_DOWN = 'THUMBS_DOWN'
 
-
+    @staticmethod
+    def inEnum(position):
+        return position == ThumbsUpDownButtonEnum.THUMBS_UP or position == ThumbsUpDownButtonEnum.THUMBS_DOWN
 
 
 if __name__ == '__main__':

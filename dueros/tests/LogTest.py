@@ -16,4 +16,7 @@ class LogTest:
 
 if __name__ == '__main__':
 
+    a = 10.234234
+    print(int(a))
+    print(isinstance(a, float))
     pass
