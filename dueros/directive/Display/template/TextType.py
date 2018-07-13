@@ -13,8 +13,8 @@ from enum import Enum, unique
 
 @unique
 class TextType(Enum):
-    PLAIN_TEXT = 'PLAIN_TEXT'
-    RICH_TEXT = 'RICH_TEXT'
+    PLAIN_TEXT = 'PlainText'
+    RICH_TEXT = 'RichText'
 
     @staticmethod
     def inEnum(position):

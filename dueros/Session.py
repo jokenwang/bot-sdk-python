@@ -15,7 +15,10 @@ class Session(Base):
 
         self.data = {}
 
-        if 'attributes' in data:
+        if 'attributes' in data and isinstance(data['attributes'], list) and len(data['attributes']) > 0:
+            self.data = data['attributes']
+
+        if 'attributes' in data and isinstance(data['attributes'], dict):
             self.data = data['attributes']
 
         if 'sessionId' in data:

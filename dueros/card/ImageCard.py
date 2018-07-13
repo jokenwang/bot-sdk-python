@@ -14,7 +14,7 @@ class ImageCard(BaseCard):
         super(ImageCard, self).__init__()
         self.data['type'] = 'image'
 
-    def addItem(self, src, thumbnail = ''):
+    def addItem(self, src, thumbnail=''):
         '''
         添加
         :param src:
