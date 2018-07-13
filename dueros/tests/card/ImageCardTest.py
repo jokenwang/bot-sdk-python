@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+# -*- encoding=utf-8 -*-
+
+# description:
+# author:jack
+# create_time: 2018/7/13
+
+"""
+    desc:pass
+"""
+import unittest
+from dueros.card.ImageCard import ImageCard
+
+class ImageCardTest(unittest.TestCase):
+
+    '''
+    图片卡片测试
+    '''
+
+    def setUp(self):
+        self.card = ImageCard()
+
+    def testAddItem(self):
+        '''
+        测试addItem方法
+        :return:
+        '''
+
+        self.card.addItem('www.png')
+        card = {
+            'type': 'image',
+            'list': [
+                {'src':'www.png'}
+            ]
+        }
+        self.assertEquals(self.card.getData(), card)
+        self.card.addItem('www.png', 'www.thumbnail');
+        card = {
+            'type': 'image',
+            'list': [
+                {'src': 'www.png'},
+                {'src': 'www.png', 'thumbnail': 'www.thumbnail'}
+            ]
+        }
+        self.assertEquals(self.card.getData(), card)
+
+if __name__ == '__main__':
+    pass
