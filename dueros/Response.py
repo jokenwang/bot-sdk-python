@@ -79,17 +79,17 @@ class Response(Base):
         if 'outputSpeech' in data:
             data['outputSpeech'] = data.get('outputSpeech')
         else:
-            data['outputSpeech'] = 'null'
+            data['outputSpeech'] = None
 
         if 'resource' in data:
             data['resource'] = data.get('resource')
         else:
-            data['resource'] = 'null'
+            data['resource'] = None
 
         if 'reprompt' in data:
             data['reprompt'] = data.get('reprompt')
         else:
-            data['reprompt'] = 'null'
+            data['reprompt'] = None
 
         if 'directives' in data:
             directives = data.get('directives')
@@ -148,7 +148,7 @@ class Response(Base):
         :return:
         '''
         if not mix or mix == 'null' or mix == '':
-            return 'null'
+            return None
 
         result = {}
         if re.search(r'<speak>', mix):
