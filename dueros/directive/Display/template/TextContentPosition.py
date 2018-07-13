@@ -9,9 +9,9 @@
     desc:pass
 """
 class TextContentPosition(object):
-    TOP_LEFT = 'TOP_LEFT'
+    TOP_LEFT = 'TOP-LEFT'
     CENTER = 'CENTER'
-    BOTTOM_LEFT = 'BOTTOM_LEFT'
+    BOTTOM_LEFT = 'BOTTOM-LEFT'
 
     @staticmethod
     def inEnum(position):

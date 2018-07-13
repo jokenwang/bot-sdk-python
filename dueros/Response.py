@@ -28,9 +28,9 @@ class Response(Base):
         self.nlu = nlu
         self.sourceType = self.request.getBotId()
         self.shouldEndSession = True
-        self.needDetermine = False
-        self.expectSpeech = False
-        self.fallBack = False
+        self.needDetermine = None
+        self.expectSpeech = None
+        self.fallBack = None
 
     def setShouldEndSession(self, val):
         '''
@@ -74,22 +74,22 @@ class Response(Base):
         if 'card' in data:
             data['card'] = data.get('card')
         else:
-            data['card'] = None
+            data['card'] = 'null'
 
         if 'outputSpeech' in data:
             data['outputSpeech'] = data.get('outputSpeech')
         else:
-            data['outputSpeech'] = None
+            data['outputSpeech'] = 'null'
 
         if 'resource' in data:
             data['resource'] = data.get('resource')
         else:
-            data['resource'] = None
+            data['resource'] = 'null'
 
         if 'reprompt' in data:
             data['reprompt'] = data.get('reprompt')
         else:
-            data['reprompt'] = None
+            data['reprompt'] = 'null'
 
         if 'directives' in data:
             directives = data.get('directives')
@@ -122,7 +122,7 @@ class Response(Base):
             "response": {
                 "directives":  directives,
                 "shouldEndSession": self.shouldEndSession,
-                "card": data['card'].getData() if data['card'] else None,
+                "card": data['card'].getData() if data['card'] else 'null',
                 "resource": data['resource'],
                 "outputSpeech": self.formatSpeech(data['outputSpeech']),
                 "reprompt": {
@@ -131,13 +131,13 @@ class Response(Base):
             }
         }
 
-        if self.needDetermine:
+        if isinstance(self.needDetermine, bool):
             ret['response']['needDetermine'] = self.needDetermine
 
-        if self.expectSpeech:
+        if isinstance(self.expectSpeech, bool):
             ret['response']['expectSpeech'] = self.expectSpeech
 
-        if self.fallBack:
+        if isinstance(self.fallBack, bool):
             ret['response']['fallBack'] = self.fallBack
         return ret
 
@@ -148,7 +148,7 @@ class Response(Base):
         :return:
         '''
         if not mix or mix == 'null' or mix == '':
-            return None
+            return 'null'
 
         result = {}
         if re.search(r'<speak>', mix):
@@ -181,8 +181,8 @@ class Response(Base):
         :param expectSpeech:
         :return:
         '''
-
-        self.expectSpeech = expectSpeech
+        if isinstance(expectSpeech, bool):
+            self.expectSpeech = expectSpeech
 
     def setFallBack(self):
         '''
