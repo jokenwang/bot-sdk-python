@@ -10,6 +10,7 @@
 """
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
+from dueros.Utils import Utils
 
 class VideroPlayer(BaseDirective):
 
@@ -17,11 +18,11 @@ class VideroPlayer(BaseDirective):
         super(VideroPlayer, self).__init__('VideoPlay.Play')
         self.data['playBehavior'] = playBehavior.value
         self.data['videoItem'] = {
-            'videoItemId': self.getToken(),
+            'videoItemId': self.genToken(),
             'stream':{
                 'url': url,
                 'offsetInMilliseconds': 0,
-                'token': self.getToken()
+                'token': self.genToken()
             }
         }
 
@@ -40,20 +41,39 @@ class VideroPlayer(BaseDirective):
 
     def setOffsetInMilliseconds(self, milliseconds):
 
-        if milliseconds.isdigit():
+        if isinstance(milliseconds, str) and milliseconds.isdigit():
             milliseconds = int(milliseconds)
+
+        if isinstance(milliseconds, int):
             self.data['videoItem']['stream']['offsetInMilliseconds'] = milliseconds
 
     def setExpiryTime(self, expiryTime):
         self.data['videoItem']['stream']['expiryTime'] = expiryTime
 
     def setReportDelayInMs(self, reportDelayMs):
-        self.data['videoItem']['stream']['progressReport']['progressReportDelayInMilliseconds'] = int(reportDelayMs)
+
+        if isinstance(reportDelayMs, str) and reportDelayMs.isdigit():
+            reportDelayMs = int(reportDelayMs)
+
+        if isinstance(reportDelayMs, int):
+            if not Utils.checkKeyInDict(self.data['videoItem']['stream'], 'progressReport'):
+                self.data['videoItem']['stream']['progressReport'] = {}
+            self.data['videoItem']['stream']['progressReport']['progressReportDelayInMilliseconds'] = reportDelayMs
 
     def setReportIntervalInMs(self, intervalMs):
-        self.data['videoItem']['stream']['progressReport']['progressReportIntervalInMilliseconds'] = int(intervalMs)
+
+        if isinstance(intervalMs, str) and intervalMs.isdigit():
+            intervalMs = int(intervalMs)
+
+        if isinstance(intervalMs, int):
+
+            if not Utils.checkKeyInDict(self.data['videoItem']['stream'], 'progressReport'):
+                self.data['videoItem']['stream']['progressReport'] = {}
+
+            self.data['videoItem']['stream']['progressReport']['progressReportIntervalInMilliseconds'] = intervalMs
 
     def setExpectedPreviousToken(self, previousToken):
+
         self.data['videoItem']['stream']['expectedPreviousToken'] = previousToken
 
 
