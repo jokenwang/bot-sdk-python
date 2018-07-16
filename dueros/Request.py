@@ -22,8 +22,10 @@ class Request(Base):
         :param data:  请求数据
         '''
         super(Request, self).__init__()
-
-        self.data = json.loads(data)
+        if not isinstance(data, dict):
+            self.data = json.loads(data)
+        else:
+            self.data = data
         self.requestType = self.data['request']['type']
         self.session = Session(self.data['session'])
         self.nlu = None
@@ -66,37 +68,42 @@ class Request(Base):
         获取设备Id
         :return:
         '''
-
-        return self.data['context']['System']['device']['deviceId']
+        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'device', 'deviceId'])
 
     def getOriginalDeviceId(self):
         '''
         获取来自端上报的原始设备Id
         :return:
         '''
-        return self.data['context']['System']['device']['originalDeviceId']
+
+        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'device', 'originalDeviceId'])
 
     def getAudioPlayerContext(self):
         '''
         获取设备音频播放状态
         :return:
         '''
-        return self.data['context']['AudioPlayer']
+        return Utils.getDictDataByKeys(self.data, ['context', 'AudioPlayer'])
 
     def getVideoPlayerContext(self):
 
-        return self.data['context']['VideoPlayer']
+        return Utils.getDictDataByKeys(self.data, ['context', 'VideoPlayer'])
 
     def getScreenContext(self):
-        return self.data['context']['Screen']
+
+        return Utils.getDictDataByKeys(self.data, ['context', 'Screen'])
 
     def getScreenTokenFromContext(self):
-        return self.data['context']['Screen']['token']
+
+        return Utils.getDictDataByKeys(self.data, ['context', 'Screen', 'token'])
 
     def getScreenTokenFromContext(self):
-        return self.data['context']['Screen']['token']
+
+        return Utils.getDictDataByKeys(self.data, ['context', 'Screen', 'token'])
+
     def getScreenCardFromContext(self):
-        return self.data['context']['Screen']['card']
+
+        return Utils.getDictDataByKeys(self.data, ['context', 'Screen', 'card'])
 
 
     def getAppLauncherContext(self):
@@ -105,7 +112,7 @@ class Request(Base):
         :return:
         '''
 
-        return self.data['context']['AppLauncher']
+        return Utils.getDictDataByKeys(self.data, ['context', 'AppLauncher'])
 
     def getEventData(self):
         '''
@@ -124,7 +131,7 @@ class Request(Base):
         :return:
         '''
 
-        return self.data['context']['System']['user']['userInfo']
+        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'user', 'userInfo'])
 
     def getBaiduUid(self):
         '''
@@ -132,7 +139,8 @@ class Request(Base):
         :return:
         '''
 
-        return self.data['context']['System']['user']['userInfo']['account']['baidu']['baiduUid']
+        return Utils.getDictDataByKeys(self.data,
+                                       ['context', 'System', 'user', 'userInfo', 'account', 'baidu', 'baiduUid'])
 
     def getType(self):
         '''
@@ -146,7 +154,7 @@ class Request(Base):
         获取用户ID
         :return:
         '''
-        return self.data['context']['System']['user']['userId']
+        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'user', 'userId'])
 
     def getAccessToken(self):
 
@@ -158,7 +166,7 @@ class Request(Base):
 
     def __getSystemUser(self):
 
-        return self.data['context']['System']['user']
+        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'user'])
 
     def getExternalAccessTokens(self):
         '''
@@ -178,7 +186,7 @@ class Request(Base):
         '''
 
         if self.requestType == 'IntentRequest' and self.data['request']['query']['original']:
-            return self.data['request']['query']['original']
+            return Utils.getDictDataByKeys(self.data, ['request', 'query', 'original'])
         else:
             return ''
 
@@ -193,7 +201,7 @@ class Request(Base):
     def isDetermined(self):
 
         if self.requestType == 'IntentRequest' and self.data['request']['determined']:
-            return self.data['request']['determined']
+            return Utils.getDictDataByKeys(self.data, ['request', 'determined'])
         else:
             return False
 
@@ -216,18 +224,15 @@ class Request(Base):
 
     def getTimestamp(self):
 
-        if self.data['request']['timestamp']:
-            return self.data['request']['timestamp']
+        return Utils.getDictDataByKeys(self.data, ['request', 'timestamp'])
 
     def getLogId(self):
 
-        if self.data['request']['requestId']:
-            return self.data['request']['requestId']
+        return Utils.getDictDataByKeys(self.data, ['request', 'requestId'])
 
     def getBotId(self):
 
-        if self.data['context']['System']['application']['applicationId']:
-            return self.data['context']['System']['application']['applicationId']
+        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'application', 'applicationId'])
 
     def isDialogStateCompleted(self):
         '''
@@ -242,8 +247,7 @@ class Request(Base):
         获取最原始的请求内容
         :return:
         '''
-        if Utils.checkKeyInDict(self.data['request'], ['query']):
-            return self.data['request']['query']['original']
+        return Utils.getDictDataByKeys(self.data, ['request', 'query', 'original'])
 
 
 
