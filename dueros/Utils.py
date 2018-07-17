@@ -8,7 +8,7 @@
 """
     desc:pass
 """
-
+import json
 
 class Utils:
 
@@ -27,9 +27,14 @@ class Utils:
     @staticmethod
     def checkKeysInDict(dicts, keys):
 
+        if isinstance(dicts, str):
+            dicts = json.loads(dicts)
+        lastKey = keys[len(keys) - 1]
         for key in keys:
             if key in dicts:
                 dicts = dicts[key]
+                if lastKey == key:
+                    return True
                 continue
             return False
 
@@ -58,6 +63,23 @@ class Utils:
                     elif isinstance(v, str):
                         return v
 
+    @staticmethod
+    def getDictDataByKeyss(dicts, keys):
+        if isinstance(dicts, str):
+            dicts = json.loads(dicts)
+        lastKey = keys[len(keys) - 1]
+        for key in keys:
+            if key in dicts:
+                dicts = dicts[key]
+                if lastKey == key:
+                    return dicts
+                continue
+            return None
+
+
+
 
 if __name__ == '__main__':
+
+
     pass

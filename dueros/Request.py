@@ -68,15 +68,14 @@ class Request(Base):
         获取设备Id
         :return:
         '''
-
-        return self.data['context']['System']['device']['deviceId']
+        return Utils.getDictDataByKeyss(self.data,['context', 'System', 'device', 'deviceId'])
 
     def getOriginalDeviceId(self):
         '''
         获取来自端上报的原始设备Id
         :return:
         '''
-        return self.data['context']['System']['device']['originalDeviceId']
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'device', 'originalDeviceId'])
 
     def getAudioPlayerContext(self):
         '''
@@ -93,12 +92,10 @@ class Request(Base):
         return self.data['context']['Screen']
 
     def getScreenTokenFromContext(self):
-        return self.data['context']['Screen']['token']
+        return Utils.getDictDataByKeyss(self.data, ['context', 'Screen', 'token'])
 
-    def getScreenTokenFromContext(self):
-        return self.data['context']['Screen']['token']
     def getScreenCardFromContext(self):
-        return self.data['context']['Screen']['card']
+        return Utils.getDictDataByKeyss(self.data, ['context', 'Screen', 'card'])
 
 
     def getAppLauncherContext(self):
@@ -126,15 +123,14 @@ class Request(Base):
         :return:
         '''
 
-        return self.data['context']['System']['user']['userInfo']
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'user', 'userInfo'])
 
     def getBaiduUid(self):
         '''
         获取百度Id
         :return:
         '''
-
-        return self.data['context']['System']['user']['userInfo']['account']['baidu']['baiduUid']
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'user', 'userInfo', 'account', 'baidu', 'baiduUid'])
 
     def getType(self):
         '''
@@ -148,7 +144,7 @@ class Request(Base):
         获取用户ID
         :return:
         '''
-        return self.data['context']['System']['user']['userId']
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'user', 'userId'])
 
     def getAccessToken(self):
 
@@ -160,7 +156,7 @@ class Request(Base):
 
     def __getSystemUser(self):
 
-        return self.data['context']['System']['user']
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'user'])
 
     def getExternalAccessTokens(self):
         '''
@@ -180,7 +176,7 @@ class Request(Base):
         '''
 
         if self.requestType == 'IntentRequest' and self.data['request']['query']['original']:
-            return self.data['request']['query']['original']
+            Utils.getDictDataByKeyss(self.data, ['request']['query']['original'])
         else:
             return ''
 
@@ -218,18 +214,15 @@ class Request(Base):
 
     def getTimestamp(self):
 
-        if self.data['request']['timestamp']:
-            return self.data['request']['timestamp']
+        return Utils.getDictDataByKeyss(self.data, ['request', 'timestamp'])
 
     def getLogId(self):
 
-        if self.data['request']['requestId']:
-            return self.data['request']['requestId']
+        return Utils.getDictDataByKeyss(self.data, ['request', 'requestId'])
 
     def getBotId(self):
 
-        if self.data['context']['System']['application']['applicationId']:
-            return self.data['context']['System']['application']['applicationId']
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'application', 'applicationId'])
 
     def isDialogStateCompleted(self):
         '''
