@@ -19,7 +19,7 @@ class SessionTest(unittest.TestCase):
     '''
 
     def setUp(self):
-        with open('../json/intent_request.json', encoding='utf-8') as f:
+        with open('../json/intent_request.json') as f:
             self.data = f.read()
         self.session = Session(json.loads(self.data)['session'])
 

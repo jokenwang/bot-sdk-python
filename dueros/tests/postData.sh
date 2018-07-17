@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 #记得根据自己的服务切换IP和端口
 cd $(dirname $0)
 dir=$(pwd)
