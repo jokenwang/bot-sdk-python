@@ -9,6 +9,7 @@
     desc:pass
 """
 
+
 class StreamFormatEnum(object):
 
     STREAM_FORMAT_MP3 = 'AUDIO_MP3'

@@ -9,6 +9,7 @@
     desc:pass
 """
 
+
 class RepeatButtonEnum(object):
     REPEAT_ONE = 'REPEAT_ONE'
     REPEAT_ALL = 'REPEAT_ALL'

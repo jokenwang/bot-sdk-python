@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# -*- coding=utf-8 -*-
+# -*- encoding=utf-8 -*-
 
 # description:
 # author:jack
@@ -16,6 +16,7 @@ from dueros.Request import Request
 from dueros.Response import Response
 from dueros.Base import Base
 
+
 class Bot(Base):
     '''
     Bot入口
@@ -29,82 +30,82 @@ class Bot(Base):
         super(Bot, self).__init__()
         self.postData = postdata
         self.request = Request(postdata)
-        self.session = self.request.getSession()
-        self.nlu = self.request.getNlu()
+        self.session = self.request.get_session()
+        self.nlu = self.request.get_nlu()
         self.response = Response(self.request, self.session, self.nlu)
         self.handler = []
         self.botMonitor = BotMonitor(postdata)
         self.intercept = []
         self.certificate = None
-        self.callBackFunc = None
-        self.callBackData = None
+        self.callback_func = None
+        self.callback_data = None
         self.event = {}
         logging.info('Bot init')
 
-    def initCertificate(self, environ, privateKey=''):
+    def init_certificate(self, environ, private_key=''):
         '''
         创建Certificate
         :param environ:
         :return:
         '''
 
-        self.certificate = Certificate(environ, self.postData, privateKey)
+        self.certificate = Certificate(environ, self.postData, private_key)
         return self
 
-    def enableVerifyRequestSign(self):
+    def enable_verify_request_sign(self):
         '''
         开启签名验证
         :return:
         '''
 
         if self.certificate:
-            self.certificate.enableVerifyRequestSign()
+            self.certificate.enable_verify_request_sign()
         return self
 
-    def disableVerifyRequestSign(self):
+    def disable_verify_request_sign(self):
         '''
         关闭签名验证
         :return:
         '''
 
         if self.certificate:
-            self.certificate.disableVerifyRequestSign()
+            self.certificate.disable_verify_request_sign()
         return self
 
-    def setPrivateKey(self, privateKey):
+    def set_private_key(self, private_key):
 
-        self.botMonitor.setEnvironmentInfo(privateKey, 0)
+        self.botMonitor.set_environment_info(private_key, 0)
         return self
 
-    def addLaunchHandler(self, func):
+    def add_launch_handler(self, func):
         '''
         添加对LaunchRequest的处理函数
         :param func:    回调方法
         :return:
         '''
 
-        return self.__addHandler('LaunchRequest', func)
+        return self.__add_handler('LaunchRequest', func)
 
-    def addSessionEndedHandler(self, func):
+    def add_session_ended_handler(self, func):
         '''
         添加对SessionEndedRequest的处理函数
         :param func:    回调方法
         :return:
         '''
 
-        return self.__addHandler('SessionEndedRequest', func)
+        return self.__add_handler('SessionEndedRequest', func)
 
-    def addIntentHandler(self, intentName, func):
+    def add_intent_handler(self, intent_name, func):
         '''
         添加对特定意图的处理函数
-        :param intentName:  意图英文标识名
+        :param intent_name:  意图英文标识名
         :param func:    回调方法
         :return:
         '''
 
-        return self.__addHandler('#' + intentName, func)
+        return self.__add_handler('#' + intent_name, func)
 
-    def __addHandler(self, mix, func):
+    def __add_handler(self, mix, func):
         '''
         私有方法
         添加Handler，条件处理顺序相关，优先匹配先添加的条件
@@ -133,7 +134,7 @@ class Bot(Base):
             })
         return self
 
-    def addIntercept(self, intercept):
+    def add_intercept(self, intercept):
         '''
         添加拦截器
         :param intercept:
@@ -143,7 +144,7 @@ class Bot(Base):
         if isinstance(intercept, Intercept):
             self.intercept.append(intercept)
 
-    def addEventListener(self, event, func):
+    def add_event_listener(self, event, func):
         '''
         绑定一个事件的处理回调
         @link http://developer.dueros.baidu.com/doc/dueros-conversational-service/device-interface/audio-player_markdown 具体事件参考
@@ -164,7 +165,7 @@ class Bot(Base):
         if event and func:
             self.event[event] = func
 
-    def addDefaultEventListener(self, func):
+    def add_default_event_listener(self, func):
         '''
         默认兜底事件的处理函数
         :param event:
@@ -174,16 +175,16 @@ class Bot(Base):
         if hasattr(func, '__call__'):
             self.event['__default__'] = func
 
-    def getIntentName(self):
+    def get_intent_name(self):
         '''
         获取第一个Intent的名字
         :return:
         '''
 
         if self.nlu:
-            return self.nlu.getIntentName()
+            return self.nlu.get_intent_name()
 
-    def getSessionAttribute(self, field, default):
+    def get_session_attribute(self, field, default):
         '''
         获取session某个字段值
         :param field:
@@ -191,9 +192,9 @@ class Bot(Base):
         :return:
         '''
 
-        return self.session.getData(field, default)
+        return self.session.get_data(field, default)
 
-    def setSessionAttribute(self, field, value, default):
+    def set_session_attribute(self, field, value, default):
         '''
         设置session某个字段值
         :param field:
@@ -202,9 +203,9 @@ class Bot(Base):
         :return:
         '''
 
-        self.session.setData(field, value, default)
+        self.session.set_data(field, value, default)
 
-    def clearSessionAttribute(self):
+    def clear_session_attribute(self):
         '''
         清空session
         :return:
@@ -212,7 +213,7 @@ class Bot(Base):
 
         self.session.clear()
 
-    def getSlots(self, field, index = 0):
+    def get_slots(self, field, index=0):
         '''
         获取槽位值
         :param field:
@@ -221,9 +222,9 @@ class Bot(Base):
         '''
 
         if self.nlu:
-            return self.nlu.getSlot(field, index)
+            return self.nlu.get_slot(field, index)
 
-    def setSlots(self, field, value, index = 0):
+    def set_slots(self, field, value, index=0):
         '''
         设置槽位值
         :param field:
@@ -233,34 +234,34 @@ class Bot(Base):
         '''
 
         if self.nlu:
-            self.nlu.setSlot(field, value, index)
+            self.nlu.set_slot(field, value, index)
 
-    def waitAnswer(self):
+    def wait_answer(self):
         '''
         告诉DuerOS, 在多轮对话中，等待用户回答
         :return:
         '''
 
         if self.response:
-            self.response.setShouldEndSession(False)
+            self.response.set_should_end_session(False)
 
-    def endDialog(self):
+    def end_dialog(self):
         '''
         告诉DuerOS 需要结束对话
         :return:
         '''
 
         if self.response:
-            self.response.setShouldEndSession(True)
+            self.response.set_should_end_session(True)
 
-    def endSession(self):
+    def end_session(self):
         '''
         告诉DuerOS 需要结束对话
         :return:
         '''
-        self.endDialog()
+        self.end_dialog()
 
-    def run(self, build = True):
+    def run(self, build=True):
         '''
         事件路由添加后，需要执行此函数，对添加的条件、事件进行判断
         将第一个return 非null的结果作为此次的response
@@ -268,52 +269,52 @@ class Bot(Base):
         :return:
         '''
 
-        if self.certificate and not self.certificate.verifyRequest():
-            return self.response.illegalRequest()
+        if self.certificate and not self.certificate.verify_request():
+            return self.response.illegal_request()
 
-        eventHandler = self.__getRegisterEventHandler()
+        event_handler = self.__get_register_event_handler()
 
-        if self.request.getType() == 'IntentRequest' and not self.nlu and not eventHandler:
-            return self.response.defaultResult()
+        if self.request.get_type() == 'IntentRequest' and not self.nlu and not event_handler:
+            return self.response.default_result()
 
         ret = {}
 
         if self.intercept:
             for intercept in self.intercept:
-                self.botMonitor.setPreEventStart()
+                self.botMonitor.set_pre_event_start()
                 ret = intercept.preprocess(self)
-                self.botMonitor.setPreEventEnd()
-                if ret :
+                self.botMonitor.set_pre_event_end()
+                if ret:
                     return
 
         if not ret:
-            if eventHandler:
-                self.botMonitor.setDeviceEventStart()
-                event = self.request.getEventData()
-                ret = self.__callFunc(eventHandler, event)
-                self.botMonitor.setDeviceEventEnd()
+            if event_handler:
+                self.botMonitor.set_device_event_start()
+                event = self.request.get_event_data()
+                ret = self.__call_func(event_handler, event)
+                self.botMonitor.set_device_event_end()
             else:
-                self.botMonitor.setEventStart()
+                self.botMonitor.set_event_start()
                 ret = self.__dispatch()
-                self.botMonitor.setEventEnd()
+                self.botMonitor.set_event_end()
         else:
             for intercept in self.intercept:
-                self.botMonitor.setPostEventStart()
+                self.botMonitor.set_post_event_start()
                 ret = intercept.postprocess(self, ret)
-                self.botMonitor.setPostEventEnd()
+                self.botMonitor.set_post_event_end()
         print(ret)
         res = self.response.build(ret)
-        self.botMonitor.setResponseData(res)
-        self.botMonitor.updateData()
+        self.botMonitor.set_response_data(res)
+        self.botMonitor.update_data()
 
-        if self.callBackData:
+        if self.callback_data:
             return json.dumps(ret)
 
         if not build:
             return json.dumps(ret)
         else:
             return json.dumps(res)
-    
+
     def __dispatch(self):
         '''
         分发请求并调用回调方法
@@ -323,33 +324,32 @@ class Bot(Base):
         if not self.handler:
             return
 
-        #循环遍历handler 通过正则判断调用哪个handler
+        # 循环遍历handler 通过正则判断调用哪个handler
         for item in self.handler:
             if item:
-                #获取rule(其实是自己的技能意图的英文标识)
+                # 获取rule(其实是自己的技能意图的英文标识)
                 rule = item['rule']
-                #校验handler
-                if self.__checkHandler(rule):
-                    #匹配到handler获取对应的回调方法并立即执行
+                # 校验handler
+                if self.__check_handler(rule):
+                    # 匹配到handler获取对应的回调方法并立即执行
                     func = item['func']
-                    ret = self.__callFunc(func, None)
+                    ret = self.__call_func(func, None)
                     if ret:
                         return ret
-        #调用回调
-        self.unMatchHandler(self.callBackData)
+        # 调用回调
+        self.un_match_handler(self.call_backdata)
 
+    def __get_register_event_handler(self):
 
-    def __getRegisterEventHandler(self):
-
-        eventData = self.request.getEventData()
-        if eventData and eventData['type']:
-            key = eventData['type']
+        event_data = self.request.get_event_data()
+        if event_data and event_data['type']:
+            key = event_data['type']
             if self.event[key]:
                 return self.event[key]
             elif self.event['__default__']:
                 return self.event['__default__']
 
-    def __callFunc(self, func, arg):
+    def __call_func(self, func, arg):
         '''
         自定义方法调用
         :param func:    可以为方法、字符串，如果是字符串默认调用Bot的方法
@@ -359,7 +359,7 @@ class Bot(Base):
 
         ret = ''
         if hasattr(func, '__call__'):
-            if(arg == None):
+            if arg is None:
                 ret = func()
             else:
                 ret = func(arg)
@@ -369,7 +369,7 @@ class Bot(Base):
                 ret = directive_func(arg)
         return ret
 
-    def getToken(self, rule):
+    def get_token(self, rule):
         '''
 
         :param rule:
@@ -377,10 +377,10 @@ class Bot(Base):
         '''
 
         token = {}
-        return self.getSlots(token, rule)
+        return self.get_slots(token, rule)
         pass
 
-    def __getToke(self, token, rule):
+    def __get_toke(self, token, rule):
         '''
 
         :param token:
@@ -392,7 +392,7 @@ class Bot(Base):
             return token
         pass
 
-    def __checkHandler(self, handler):
+    def __check_handler(self, handler):
         '''
         根据意图标识英文名 和 请求类型判断是否是此handler
         :param handler:
@@ -405,44 +405,44 @@ class Bot(Base):
         }
 
         if re.match(rg['requestType'], handler):
-            if self.request.getType() == handler:
-                self.callBackData = None
+            if self.request.get_type() == handler:
+                self.callback_data = None
                 return True
             else:
-                self.unMatchHandler({'type': 'requestType', 'message': u'未匹配到:' + self.request.getType()})
+                self.un_match_handler({'type': 'requestType', 'message': u'未匹配到:' + self.request.get_type()})
 
         if re.match(rg['intent'], handler):
-            if ('#' + self.getIntentName()) == handler:
-                self.callBackData = None
+            if ('#' + self.get_intent_name()) == handler:
+                self.callback_data = None
                 return True
             else:
-                self.callBackData = {'type': 'intent', 'message': u'handler未匹配到:' + self.getIntentName()}
+                self.callback_data = {'type': 'intent', 'message': u'handler未匹配到:' + self.get_intent_name()}
 
-        if handler == 'true' or handler == True:
+        if handler == 'true' or handler is True:
             return True
 
         return False
 
-    def setCallBack(self, func):
+    def set_callback(self, func):
         '''
         设置回调方法
         :param func:
         :return:
         '''
         if hasattr(func, '__call__'):
-            self.callBackFunc = func
+            self.callback_func = func
 
-    def unMatchHandler(self, data):
+    def un_match_handler(self, data):
         '''
         未匹配到Handler回调
         :param func:
         :return:
         '''
-        if self.callBackFunc and data:
-            self.callBackFunc(data)
+        if self.callback_func and data:
+            self.callback_func(data)
 
-    #TODO
-    def tokenValue(self, str):
+    # TODO
+    def token_value(self, str):
         '''
 
         :param str:
@@ -450,28 +450,28 @@ class Bot(Base):
         '''
         pass
 
-    def declareEffect(self):
-        self.response.setNeedDetermine()
+    def declare_effect(self):
+        self.response.set_need_determine()
 
-    def effectConfirmed(self):
-        self.request.isDetermined()
+    def effect_confirmed(self):
+        self.request.is_determined()
 
-    def setExpectSpeech(self, expectSpeech):
+    def set_expect_speech(self, expect_speech):
         '''
         通过控制expectSpeech来控制麦克风开
-        :param expectSpeech:
+        :param expect_speech:
         :return:
         '''
 
-        self.response.setExpectSpeech(expectSpeech)
+        self.response.set_expect_speech(expect_speech)
 
-    def setFallBack(self):
+    def set_fallback(self):
         '''
         标识本次返回的结果是兜底结果
         :return:
         '''
 
-        self.response.setFallBack()
+        self.response.set_fallback()
 
     def ask(self, slot):
         if self.nlu:

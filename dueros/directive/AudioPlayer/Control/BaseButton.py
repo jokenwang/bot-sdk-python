@@ -12,15 +12,13 @@
 
 class BaseButton(object):
 
-    def __init__(self, type, name):
+    def __init__(self, button_type, name):
         self.data = {}
-        self.data['type'] = type
+        self.data['type'] = button_type
         self.data['name'] = name
 
-    def getData(self):
+    def get_data(self):
         return self.data
-
-    pass
 
 
 if __name__ == '__main__':

@@ -9,24 +9,25 @@
     desc:pass
 """
 
+
 class ImageStructure(object):
 
     def __init__(self):
         self.data = {}
 
-    def setUrl(self, url):
+    def set_url(self, url):
         if url:
             self.data['url'] = url
 
-    def setWidthPixels(self, width):
+    def set_width_pixels(self, width):
         if width:
             self.data['widthPixels'] = width
 
-    def setHeightPixels(self, height):
+    def set_height_pixels(self, height):
         if height:
             self.data['heightPixels'] = height
 
-    def getData(self):
+    def get_data(self):
         return self.data
 
 if __name__ == '__main__':

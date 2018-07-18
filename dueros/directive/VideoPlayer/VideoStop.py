@@ -13,6 +13,7 @@ from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
 from dueros.Utils import Utils
 
+
 class VideoStop(BaseDirective):
 
     def __init__(self):

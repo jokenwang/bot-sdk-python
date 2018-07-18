@@ -11,6 +11,7 @@
 from dueros.directive.AudioPlayer.Control.RadioButton import RadioButton
 from dueros.directive.AudioPlayer.Control.RepeatButtonEnum import RepeatButtonEnum
 
+
 class RepeatButton(RadioButton):
 
     def __init__(self, selectedValue = RepeatButtonEnum.REPEAT_ONE):

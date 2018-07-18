@@ -8,36 +8,39 @@
 """
     desc:pass
 """
-
+import json
 from dueros.monitor.Utils import Utils
+
 
 class Request:
 
     def __init__(self, data):
+        if not isinstance(data, dict):
+            data = json.loads(data)
         self.data = data
         self.requestType = data['request']['type']
 
-    def getData(self):
+    def get_data(self):
         '''
         返回request请求头
         :return:
         '''
         return self.data
 
-    def getDeviceData(self):
+    def get_device_data(self):
         '''
 
         :return:
         '''
         return self.deviceData
 
-    def getDeviceId(self):
+    def get_device_id(self):
 
         if Utils.checkKeysInDict(self.data,['context','System','device','deviceId']):
             return self.data['context']['System']['device']['deviceId']
         return None
 
-    def getAudioPlayerContext(self):
+    def get_audio_player_context(self):
         '''
         获取设备音频播放的状态
         :return:
@@ -46,7 +49,7 @@ class Request:
             return self.data['context']['AudioPlayer']
         return None
 
-    def getAppLauncherContext(self):
+    def get_app_launcher_context(self):
         '''
         获取设备app安装列表
         :return:
@@ -55,7 +58,7 @@ class Request:
             return self.data['context']['AppLauncher']
         return None
 
-    def getEventData(self):
+    def get_event_data(self):
         '''
         获取event请求
         :return:
@@ -65,7 +68,7 @@ class Request:
         else:
             return self.data['request']
 
-    def getUserInfo(self):
+    def get_user_info(self):
         '''
 
         :return:
@@ -74,24 +77,24 @@ class Request:
             return self.data['user_info']
         return None
 
-    def getType(self):
+    def get_type(self):
         '''
         获取request类型
         :return:
         '''
         return self.requestType
 
-    def getUserId(self):
+    def get_user_id(self):
 
         if Utils.checkKeysInDict(self.data, ['context', 'System', 'user', 'userId']):
             return self.data['context']['System']['user']['userId']
         return None
 
-    def getCuid(self):
+    def get_cuid(self):
 
         return self.data['cuid']
 
-    def getQuery(self):
+    def get_query(self):
         '''
         获取query
         :return:
@@ -100,40 +103,40 @@ class Request:
             return self.data['request']['query']['original']
         return None
 
-    def getLocation(self):
+    def get_location(self):
         if Utils.checkKeysInDict(self.data, ['context','System','user', 'userInfo','location','geo']):
             return self.data['context']['System']['user']['userInfo']['location']['geo']
         return None
 
-    def getTimestamp(self):
+    def get_timestamp(self):
 
         if Utils.checkKeysInDict(self.data, ['request','timestamp']):
             return self.data['request']['timestamp']
         return None
 
-    def getLogId(self):
+    def get_log_id(self):
 
         return self.data['log_id']
 
-    def getBotId(self):
+    def get_botid(self):
         if Utils.checkKeysInDict(self.data,['context','System','application','applicationId']):
             return self.data['context']['System']['application']['applicationId']
         return None
 
-    def getRequestId(self):
+    def get_request_id(self):
 
         if Utils.checkKeysInDict(self.data,['request','requestId']):
             return self.data['request']['requestId']
 
         return None
 
-    def getReson(self):
+    def get_reson(self):
 
         if Utils.checkKeysInDict(self.data, ['request','reason']):
             return self.data['request']['reason']
         return None
 
-    def getIntentName(self):
+    def get_intent_name(self):
 
         if self.data['request'] and 'intents' in self.data['request'] and self.data['request']['intents'] and self.data['request']['intents'][0]:
             return self.data['request']['intents'][0]['name']
@@ -141,13 +144,13 @@ class Request:
         return None
 
 
-    def getSessionId(self):
+    def get_session_id(self):
 
         if Utils.checkKeysInDict(self.data,['session', 'sessionId']):
             return self.data['session']['sessionId']
         return None
 
-    def isDialogStateCompleted(self):
+    def is_dialog_state_completed(self):
         if Utils.checkKeysInDict(self.data, ['request', 'dialogState']):
             return self.data['request']['dialogState'] == 'COMPLETED'
         return False

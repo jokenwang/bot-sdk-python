@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# -*- coding: UTF-8 -*-
+# -*- encoding: UTF-8 -*-
 
 # description:
 # author:jack
@@ -26,13 +26,13 @@ class Response(Base):
         self.request = request
         self.session = session
         self.nlu = nlu
-        self.sourceType = self.request.getBotId()
+        self.sourceType = self.request.get_botid()
         self.shouldEndSession = True
         self.needDetermine = None
         self.expectSpeech = None
         self.fallBack = None
 
-    def setShouldEndSession(self, val):
+    def set_should_end_session(self, val):
         '''
         设置对话结束
         :param val:
@@ -43,7 +43,7 @@ class Response(Base):
         else:
             self.shouldEndSession = False
 
-    def defaultResult(self):
+    def default_result(self):
 
         return {
             'status': 0,
@@ -63,7 +63,7 @@ class Response(Base):
         :return:
         '''
 
-        if self.nlu and self.nlu.hasAsked():
+        if self.nlu and self.nlu.has_asked():
             self.shouldEndSession = False
 
         if 'directives' in data:
@@ -100,7 +100,7 @@ class Response(Base):
             directives = list(map(lambda value: value.getData(), list(filter(lambda value: isinstance(value, BaseDirective), directives))))
 
         if self.nlu:
-            arr = self.nlu.toDirective()
+            arr = self.nlu.to_directive()
             if(arr):
                 directives.append(arr)
 
@@ -108,8 +108,8 @@ class Response(Base):
             data['outputSpeech'] = data['card'].getData()['content']
 
         if self.nlu:
-            if self.nlu.toUpdateIntent():
-                context = self.nlu.toUpdateIntent()
+            if self.nlu.to_update_intent():
+                context = self.nlu.to_update_intent()
             else:
                 context = {}
         else:
@@ -118,15 +118,15 @@ class Response(Base):
         ret = {
             "version": "2.0",
             "context": context,
-            "session": self.session.toResponse(),
+            "session": self.session.to_response(),
             "response": {
                 "directives":  directives,
                 "shouldEndSession": self.shouldEndSession,
                 "card": data['card'].getData() if data['card'] else None,
                 "resource": data['resource'],
-                "outputSpeech": self.formatSpeech(data['outputSpeech']),
+                "outputSpeech": self.format_speech(data['outputSpeech']),
                 "reprompt": {
-			        "outputSpeech": self.formatSpeech(data['reprompt']),
+			        "outputSpeech": self.format_speech(data['reprompt']),
 		        }
             }
         }
@@ -141,7 +141,7 @@ class Response(Base):
             ret['response']['fallBack'] = self.fallBack
         return ret
 
-    def formatSpeech(self, mix):
+    def format_speech(self, mix):
         '''
         通过正则 判断是纯文本还是ssml
         :param mix:
@@ -164,18 +164,18 @@ class Response(Base):
         return result
 
 
-    def illegalRequest(self):
+    def illegal_request(self):
 
         return {
             'status': 1,
             'msg': '非法请求'
         }
 
-    def setNeedDetermine(self):
+    def set_need_determine(self):
 
         self.needDetermine = True
 
-    def setExpectSpeech(self, expectSpeech):
+    def set_expect_speech(self, expectSpeech):
         '''
         通过控制expectSpeech来控制麦克风开关
         :param expectSpeech:
@@ -184,7 +184,7 @@ class Response(Base):
         if isinstance(expectSpeech, bool):
             self.expectSpeech = expectSpeech
 
-    def setFallBack(self):
+    def set_fallback(self):
         '''
         表示本次返回的结果为兜底结果
         :return:

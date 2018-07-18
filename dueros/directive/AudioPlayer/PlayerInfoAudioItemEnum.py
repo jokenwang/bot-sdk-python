@@ -14,7 +14,7 @@ class PlayerInfoAudioItemEnum(object):
 
     AUDIO_TYPE_MUSIC = 'AUDIO_TYPE_MUSIC'
 
-    FORMAT_LRC = 'FORMAT_LRC'
+    FORMAT_LRC = 'LRC'
 
 
 if __name__ == '__main__':

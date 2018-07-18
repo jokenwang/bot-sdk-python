@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# -*- coding=utf-8 -*-
+# -*- encoding=utf-8 -*-
 
 # description:
 # author:jack
@@ -11,14 +11,13 @@ Session相关 暂未搞
 
 from dueros.Base import Base
 
+
 class Session(Base):
 
     def __init__(self, data):
 
-        super(Session,self).__init__()
-
+        super(Session, self).__init__()
         self.data = {}
-
         if 'attributes' in data and isinstance(data['attributes'], list) and len(data['attributes']) > 0:
             self.data = data['attributes']
 
@@ -38,20 +37,20 @@ class Session(Base):
     def clear(self):
         self.data = {}
 
-    def toResponse(self):
+    def to_response(self):
 
         return {
             'attributes': self.data
         }
 
-    def getData(self, field, default=''):
+    def get_data(self, field, default=''):
 
         if field and field in self.data:
             return self.data[field]
         else:
             return default
 
-    def setData(self, field, value, default=''):
+    def set_data(self, field, value, default=''):
         if value:
             self.data[field] = value
         else:

@@ -11,24 +11,25 @@
 from dueros.monitor.Utils import Utils
 import json
 
+
 class Response:
 
-    def __init__(self, responseData):
-        if isinstance(responseData, str):
-            responseData = json.loads(responseData)
-        self.data = responseData
+    def __init__(self, response_data):
+        if not isinstance(response_data, dict):
+            response_data = json.loads(response_data)
+        self.data = response_data
 
-    def getOutputSpeech(self):
+    def get_output_speech(self):
         if Utils.checkKeysInDict(self.data, ['response', 'outputSpeech']):
             return self.data['response']['outputSpeech']
 
-    def getShouldEndSession(self):
+    def get_should_end_session(self):
         if Utils.checkKeysInDict(self.data, ['response', 'shouldEndSession']):
             return self.data['response']['shouldEndSession']
         pass
 
 
-    def getSlotName(self):
+    def get_slot_name(self):
 
         if Utils.checkKeysInDict(self.data, ['response', 'directives']):
             directive = self.data['response']['directives']
@@ -37,7 +38,7 @@ class Response:
         return None
 
 
-    def getReprompt(self):
+    def get_reprompt(self):
 
         if Utils.checkKeysInDict(self.data, ['response', 'reprompt', 'outputSpeech']):
             return self.data['response']['reprompt']['outputSpeech']

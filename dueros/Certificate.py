@@ -19,30 +19,31 @@ from Crypto.Hash import SHA
 from base64 import b64encode, b64decode
 from dueros.Base import Base
 
+
 class Certificate(Base):
 
-    def __init__(self, environ, requestBody, privateKeyContent = ""):
+    def __init__(self, environ, request_body, privatekey_content=""):
         '''
         私钥内容,使用统计功能必须要提供
         :param environ: 环境上下文
-        :param requestBody:
-        :param privateKeyContent:
+        :param request_body:
+        :param privatekey_content:
         '''
 
         super(Certificate, self).__init__()
 
         self.environ = environ
-        self.data = requestBody
-        self.privateKey = privateKeyContent
-        self.verifyRequestSign = False
+        self.data = request_body
+        self.privatekey = privatekey_content
+        self.verify_request_sign = False
 
-    def enableVerifyRequestSign(self):
-        self.verifyRequestSign = True
+    def enable_verify_request_sign(self):
+        self.verify_request_sign = True
 
-    def disableVerifyRequestSign(self):
-        self.verifyRequestSign = False
+    def disable_verify_request_sign(self):
+        self.verify_request_sign = False
 
-    def getRequestPublicKey(self):
+    def get_request_publickey(self):
 
         filename = self.environ['HTTP_SIGNATURECERTURL']
         if not filename:
@@ -62,39 +63,39 @@ class Certificate(Base):
         content = self.getFileContentSafety(cache)
         return self.getPublicKeyFromX509(content)
 
-    def verifyRequest(self):
+    def verify_request(self):
         '''
         数据验证
         :return:
         '''
-        if not self.verifyRequestSign:
+        if not self.verify_request_sign:
             return True
 
-        publicKey = self.getRequestPublicKey()
+        publickey = self.get_request_publickey()
 
-        if not publicKey or not self.data:
+        if not publickey or not self.data:
             return False
 
-        key = RSA.importKey(publicKey)
+        key = RSA.importKey(publickey)
         if key:
             digest = SHA.new()
             digest.update(self.data)
             verifier = PKCS1_v1_5.new(key)
-            if verifier.verify(digest, b64decode(self.getRequestSign())):
+            if verifier.verify(digest, b64decode(self.get_request_sign())):
                 return True
             return False
         return False
 
-    def getSign(self, content):
+    def get_sign(self, content):
         '''
         生成签名
         :param content: 待签名内容
         :return:
         '''
-        if not self.privateKey or not content:
+        if not self.privatekey or not content:
             return False
 
-        rsakey = RSA.importKey(self.privateKey)
+        rsakey = RSA.importKey(self.privatekey)
         if rsakey:
             digest = SHA.new()
             digest.update(content)
@@ -104,10 +105,10 @@ class Certificate(Base):
         else:
             return False
 
-    def getRequestSign(self):
+    def get_request_sign(self):
         return self.environ['HTTP_SIGNATURE']
     
-    def getPublicKeyFromX509(self, content):
+    def get_publickey_fromX509(self, content):
         '''
         获取publicKey
         :param X509 content
@@ -115,10 +116,10 @@ class Certificate(Base):
         '''
         x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, content)
         pk = x509.get_pubkey()
-        publicKey = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
-        return publicKey
+        publickey = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
+        return publickey
 
-    def getFileContentSafety(self, filename):
+    def get_file_content_safety(self, filename):
         '''
         获取文件内容
         :param filename
@@ -158,7 +159,7 @@ IYdYV3QpYohFszH3wQIDAQAB
     def sign(data):
         key = RSA.importKey(priKey)
         digest = SHA.new()
-        digest.update(data.encode('utf-8'))
+        digest.update(data)
         signer = PKCS1_v1_5.new(key)
         signature = signer.sign(digest)
         return b64encode(signature)
@@ -167,7 +168,7 @@ IYdYV3QpYohFszH3wQIDAQAB
     def verify(data, signature):
         key = RSA.importKey(pubKey)
         digest = SHA.new()
-        digest.update(data.encode('utf-8'))
+        digest.update(data)
         verifier = PKCS1_v1_5.new(key)
         if verifier.verify(digest, b64decode(signature)):
             return True

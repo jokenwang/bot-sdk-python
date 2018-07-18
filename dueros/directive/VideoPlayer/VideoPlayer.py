@@ -12,34 +12,36 @@ from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
 from dueros.Utils import Utils
 
+
 class VideoPlayer(BaseDirective):
 
-    def __init__(self, url, playBehavior = PlayBehaviorEnum.REPLACE_ALL):
+    def __init__(self, url, play_behavior=PlayBehaviorEnum.REPLACE_ALL):
+
         super(VideoPlayer, self).__init__('VideoPlayer.Play')
-        self.data['playBehavior'] = playBehavior.value
+        self.data['playBehavior'] = play_behavior
         self.data['videoItem'] = {
-            'videoItemId': self.genToken(),
+            'videoItemId': self.gen_token(),
             'stream':{
                 'url': url,
                 'offsetInMilliseconds': 0,
-                'token': self.genToken()
+                'token': self.gen_token()
             }
         }
 
-    def setToken(self, token):
+    def set_token(self, token):
         if token:
             self.data['videoItem']['stream']['token'] = token
 
-    def getToken(self):
+    def get_token(self):
 
         return self.data['videoItem']['stream']['token']
 
-    def setUrl(self, url):
+    def set_url(self, url):
 
         if url:
             self.data['videoItem']['stream']['url'] = url
 
-    def setOffsetInMilliseconds(self, milliseconds):
+    def set_offset_in_milliseconds(self, milliseconds):
 
         if isinstance(milliseconds, str) and milliseconds.isdigit():
             milliseconds = int(milliseconds)
@@ -47,34 +49,34 @@ class VideoPlayer(BaseDirective):
         if isinstance(milliseconds, int):
             self.data['videoItem']['stream']['offsetInMilliseconds'] = milliseconds
 
-    def setExpiryTime(self, expiryTime):
-        self.data['videoItem']['stream']['expiryTime'] = expiryTime
+    def set_expiry_time(self, expiry_time):
+        self.data['videoItem']['stream']['expiryTime'] = expiry_time
 
-    def setReportDelayInMs(self, reportDelayMs):
+    def set_report_delay_in_ms(self, report_delay_in_ms):
 
-        if isinstance(reportDelayMs, str) and reportDelayMs.isdigit():
-            reportDelayMs = int(reportDelayMs)
+        if isinstance(report_delay_in_ms, str) and report_delay_in_ms.isdigit():
+            report_delay_in_ms = int(report_delay_in_ms)
 
-        if isinstance(reportDelayMs, int) or isinstance(reportDelayMs, float):
+        if isinstance(report_delay_in_ms, int) or isinstance(report_delay_in_ms, float):
             if not Utils.checkKeyInDict(self.data['videoItem']['stream'], 'progressReport'):
                 self.data['videoItem']['stream']['progressReport'] = {}
-            self.data['videoItem']['stream']['progressReport']['progressReportDelayInMilliseconds'] = int(reportDelayMs)
+            self.data['videoItem']['stream']['progressReport']['progressReportDelayInMilliseconds'] = int(report_delay_in_ms)
 
-    def setReportIntervalInMs(self, intervalMs):
+    def set_report_interval_in_ms(self, interval_ms):
 
-        if isinstance(intervalMs, str) and intervalMs.isdigit():
-            intervalMs = int(intervalMs)
+        if isinstance(interval_ms, str) and interval_ms.isdigit():
+            interval_ms = int(interval_ms)
 
-        if isinstance(intervalMs, int) or isinstance(intervalMs, float):
+        if isinstance(interval_ms, int) or isinstance(interval_ms, float):
 
             if not Utils.checkKeyInDict(self.data['videoItem']['stream'], 'progressReport'):
                 self.data['videoItem']['stream']['progressReport'] = {}
 
-            self.data['videoItem']['stream']['progressReport']['progressReportIntervalInMilliseconds'] = int(intervalMs)
+            self.data['videoItem']['stream']['progressReport']['progressReportIntervalInMilliseconds'] = int(interval_ms)
 
-    def setExpectedPreviousToken(self, previousToken):
+    def set_expected_previous_token(self, previous_token):
 
-        self.data['videoItem']['stream']['expectedPreviousToken'] = previousToken
+        self.data['videoItem']['stream']['expectedPreviousToken'] = previous_token
 
 
 if __name__ == '__main__':

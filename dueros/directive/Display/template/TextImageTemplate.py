@@ -11,22 +11,35 @@
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
 from dueros.directive.Display.template.TextType import TextType
 
+
 class TextImageTemplate(BaseTemplate):
 
-    def __init__(self, type):
-        super(TextImageTemplate, self).__init__(['token','title', 'type'])
-        self.setType(type)
+    def __init__(self, text_type):
+        super(TextImageTemplate, self).__init__(['token', 'title', 'type'])
+        self.set_type(text_type)
 
-    def setImage(self, url, widthPixels = '', heightPixels = ''):
+    def set_image(self, url, width_pixels='', height_pixels=''):
+        """
+        添加imageStructure
+        :param url:
+        :param width_pixels:
+        :param height_pixels:
+        :return:
+        """
 
-        imageStructure = self.createImageStructure(url, widthPixels, heightPixels)
-        if imageStructure:
-            self.data['image'] = imageStructure.getData()
+        image_structure = self.create_imagestructure(url, width_pixels, height_pixels)
+        if image_structure:
+            self.data['image'] = image_structure.get_data()
 
-    def setPlainContent(self, text):
-        textStructure = self.createTextStructure(text, TextType.PLAIN_TEXT)
-        if textStructure:
-            self.data['content'] = textStructure.getData()
+    def set_plain_content(self, text):
+        """
+        设置文本显示
+        :param text:
+        :return:
+        """
+        text_structure = self.create_textstructure(text, TextType.PLAIN_TEXT)
+        if text_structure:
+            self.data['content'] = text_structure.get_data()
         pass
 
 

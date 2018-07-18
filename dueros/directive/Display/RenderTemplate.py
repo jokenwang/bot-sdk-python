@@ -18,18 +18,19 @@ class RenderTemplate(BaseDirective):
         super(RenderTemplate, self).__init__('Display.RenderTemplate')
 
     def __init__(self, baseTemplate):
-        super(RenderTemplate, self).__init__('Display.RenderTemplate')
-        self.setTemplate(baseTemplate)
 
-    def setTemplate(self, template):
+        super(RenderTemplate, self).__init__('Display.RenderTemplate')
+        self.set_template(baseTemplate)
+
+    def set_template(self, template):
         '''
         设置模板
         :param template:
         :return:
         '''
         if isinstance(template, BaseTemplate):
-            self.data['template'] = template.getData()
-
+            self.data['template'] = template.get_data()
+        print(self.data)
 
 if __name__ == '__main__':
     pass

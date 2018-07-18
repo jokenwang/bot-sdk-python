@@ -11,6 +11,7 @@
 
 from dueros.directive.AudioPlayer.Control.Button import Button
 
+
 class ShowFavoriteListButton(Button):
 
     def __init__(self):

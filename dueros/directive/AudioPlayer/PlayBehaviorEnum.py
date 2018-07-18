@@ -9,6 +9,7 @@
     desc:pass
 """
 
+
 class PlayBehaviorEnum(object):
     REPLACE_ALL = 'REPLACE_ALL'
     REPLACE_ENQUEUED = 'REPLACE_ENQUEUED'

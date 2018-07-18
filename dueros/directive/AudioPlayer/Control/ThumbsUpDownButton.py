@@ -11,6 +11,7 @@
 from dueros.directive.AudioPlayer.Control.RadioButton import RadioButton
 from dueros.directive.AudioPlayer.Control.ThumbsUpDownButtonEnum import ThumbsUpDownButtonEnum
 
+
 class ThumbsUpDownButton(RadioButton):
 
     def __init__(self, selectedValue=ThumbsUpDownButtonEnum.THUMBS_UP):
