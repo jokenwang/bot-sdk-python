@@ -14,9 +14,6 @@ from dueros.directive.Display.template.BaseTemplate import BaseTemplate
 
 class RenderTemplate(BaseDirective):
 
-    def __init__(self):
-        super(RenderTemplate, self).__init__('Display.RenderTemplate')
-
     def __init__(self, baseTemplate):
 
         super(RenderTemplate, self).__init__('Display.RenderTemplate')
@@ -30,7 +27,6 @@ class RenderTemplate(BaseDirective):
         '''
         if isinstance(template, BaseTemplate):
             self.data['template'] = template.get_data()
-        print(self.data)
 
 if __name__ == '__main__':
     pass
