@@ -14,8 +14,8 @@ from dueros.Constants import constants
 class Base:
 
     def __init__(self):
-        Log.init_log(constants.LOG_PATH)
-
+        # Log.init_log(constants.LOG_PATH)
+        pass
 
 if __name__ == '__main__':
     pass
