@@ -30,6 +30,7 @@ git clone https://github.com/jokenwang/bot-sdk-python.git
 
 * 通过Pypi获取最新发布版本源码
     
+    * dueros-bot-1.1.0 (大版本更新) [Pypi地址](https://pypi.org/project/dueros-bot-python2/1.1.0)
     * dueros-bot-0.2.4 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.4)
     * dueros-bot-0.2.3 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.3)
     * dueros-bot-0.2.2 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.2)
