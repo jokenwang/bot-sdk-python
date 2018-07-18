@@ -18,27 +18,29 @@ class DuerSessionIntercept(Intercept):
         self.threshold = threshold
 
     def preprocess(self, bot):
-        if(not self.threshold):
+
+        if not self.threshold:
             return
 
         #NLU尝试slot提取，异常次数
-        daException = bot.getSlots('da_system_not_understand')
+        da_exception = bot.get_slots('da_system_not_understand')
         #bot 自身slot检查，不合法次数
-        botException = bot.getSlots('bot_not_understand')
+        bot_exception = bot.get_slots('bot_not_understand')
         count = 0
-        if(daException):
-            count = count + daException
+        if da_exception:
+            count = count + da_exception
 
-        if(botException):
-            count = count + botException
+        if bot_exception:
+            count = count + bot_exception
 
-        if(count >= self.threshold):
-            bot.clearSessionAttribute()
-            bot.endDialog()
+        if count >= self.threshold:
+            bot.clear_session_attribute()
+            bot.end_eialog()
             card = TextCard(self.tip)
             return {
                 'card': card
             }
+
 
 if __name__ == '__main__':
     pass
