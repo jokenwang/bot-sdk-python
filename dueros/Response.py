@@ -97,7 +97,7 @@ class Response(Base):
             directives = []
 
         if len(directives) > 0:
-            directives = list(map(lambda value: value.getData(), list(filter(lambda value: isinstance(value, BaseDirective), directives))))
+            directives = list(map(lambda value: value.get_data(), list(filter(lambda value: isinstance(value, BaseDirective), directives))))
 
         if self.nlu:
             arr = self.nlu.to_directive()
@@ -105,7 +105,7 @@ class Response(Base):
                 directives.append(arr)
 
         if not data['outputSpeech'] and data['card'] and isinstance(data['card'], TextCard):
-            data['outputSpeech'] = data['card'].getData()['content']
+            data['outputSpeech'] = data['card'].get_data()['content']
 
         if self.nlu:
             if self.nlu.to_update_intent():
@@ -122,7 +122,7 @@ class Response(Base):
             "response": {
                 "directives":  directives,
                 "shouldEndSession": self.shouldEndSession,
-                "card": data['card'].getData() if data['card'] else None,
+                "card": data['card'].get_data() if data['card'] else None,
                 "resource": data['resource'],
                 "outputSpeech": self.format_speech(data['outputSpeech']),
                 "reprompt": {
