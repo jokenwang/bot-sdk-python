@@ -35,7 +35,6 @@ class Request(Base):
         self.deviceData = None
         self.arrUserProfile = None
 
-
     def get_data(self):
         '''
         返回request 请求体
@@ -97,7 +96,6 @@ class Request(Base):
 
     def get_screen_card_from_context(self):
         return Utils.getDictDataByKeyss(self.data, ['context', 'Screen', 'card'])
-
 
     def get_app_launcher_context(self):
         '''
@@ -211,6 +209,7 @@ class Request(Base):
         return self.data['request']['type'] == 'SessionEndedRequest'
 
     def is_session_ended_request(self):
+
         return self.is_session_end_request()
 
     def get_timestamp(self):
@@ -240,9 +239,6 @@ class Request(Base):
         '''
         if Utils.checkKeyInDict(self.data['request'], ['query']):
             return self.data['request']['query']['original']
-
-
-
 
 if __name__ == '__main__':
     pass

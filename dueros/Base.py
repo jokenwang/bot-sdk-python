@@ -12,10 +12,12 @@ import dueros.Log as Log
 from dueros.Constants import constants
 import logging
 
+
 class Base(object):
 
     def __init__(self):
-        Log.init_log(constants.LOG_PATH)
+        # Log.init_log(constants.LOG_PATH)
+        pass
 
 
 if __name__ == '__main__':

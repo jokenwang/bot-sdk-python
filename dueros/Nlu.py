@@ -7,10 +7,8 @@
 
 from dueros.Base import Base
 
-class Nlu(Base):
-    '''
 
-    '''
+class Nlu(Base):
 
     def __init__(self, data):
         super(Nlu, self).__init__()
