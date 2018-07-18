@@ -20,10 +20,10 @@ class LaunchAppTest(unittest.TestCase):
     def setUp(self):
         self.launchApp = LaunchApp('appName', 'packageName', 'deepLink')
 
-        self.launchApp.setAppName('appName by set')
-        self.launchApp.setDeepLink('deepLink by set')
-        self.launchApp.setPackageName('packageName by set')
-        self.launchApp.setToken('token by set')
+        self.launchApp.set_app_name('appName by set')
+        self.launchApp.set_deep_link('deepLink by set')
+        self.launchApp.set_package_name('packageName by set')
+        self.launchApp.set_token('token by set')
 
     def testGetData(self):
         '''
@@ -38,9 +38,9 @@ class LaunchAppTest(unittest.TestCase):
             'token': 'token by set'
         }
 
-        data = self.launchApp.getData()
-
+        data = self.launchApp.get_data()
         self.assertEqual(data, ret)
+
 
 if __name__ == '__main__':
     pass

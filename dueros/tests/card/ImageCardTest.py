@@ -11,6 +11,7 @@
 import unittest
 from dueros.card.ImageCard import ImageCard
 
+
 class ImageCardTest(unittest.TestCase):
 
     '''
@@ -26,15 +27,15 @@ class ImageCardTest(unittest.TestCase):
         :return:
         '''
 
-        self.card.addItem('www.png')
+        self.card.add_item('www.png')
         card = {
             'type': 'image',
             'list': [
                 {'src':'www.png'}
             ]
         }
-        self.assertEquals(self.card.getData(), card)
-        self.card.addItem('www.png', 'www.thumbnail');
+        self.assertEquals(self.card.get_data(), card)
+        self.card.add_item('www.png', 'www.thumbnail');
         card = {
             'type': 'image',
             'list': [
@@ -42,7 +43,7 @@ class ImageCardTest(unittest.TestCase):
                 {'src': 'www.png', 'thumbnail': 'www.thumbnail'}
             ]
         }
-        self.assertEquals(self.card.getData(), card)
+        self.assertEquals(self.card.get_data(), card)
 
 if __name__ == '__main__':
     pass

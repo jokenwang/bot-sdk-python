@@ -12,6 +12,7 @@
 import unittest
 from dueros.directive.AudioPlayer.Control.FavoriteButton import FavoriteButton
 
+
 class FavoriteButtonTest(unittest.TestCase):
     '''
 
@@ -19,8 +20,8 @@ class FavoriteButtonTest(unittest.TestCase):
 
     def setUp(self):
         self.favoriteButton = FavoriteButton()
-        self.favoriteButton.setEnabled(False)
-        self.favoriteButton.setSelected(True)
+        self.favoriteButton.set_enabled(False)
+        self.favoriteButton.set_selected(True)
 
     def testGetData(self):
 
@@ -31,7 +32,7 @@ class FavoriteButtonTest(unittest.TestCase):
             'selected': True
         }
 
-        self.assertEqual(self.favoriteButton.getData(), ret)
+        self.assertEqual(self.favoriteButton.get_data(), ret)
 
     pass
 

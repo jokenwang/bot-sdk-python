@@ -11,8 +11,12 @@
 
 import unittest
 import json
+import sys
 from dueros.Request import Request
 from dueros.Nlu import Nlu
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 class IntentRequestTest(unittest.TestCase):
 
     def setUp(self):
@@ -27,7 +31,7 @@ class IntentRequestTest(unittest.TestCase):
         测试getData方法
         :return:
         '''
-        self.assertEqual(self.request.getData(), self.data)
+        self.assertEqual(self.request.get_data(), self.data)
 
     def testGetNlu(self):
         '''
@@ -35,7 +39,7 @@ class IntentRequestTest(unittest.TestCase):
         :return:
         '''
         nlu = Nlu(self.data['request']['intents'])
-        self.assertEqual(self.request.getNlu(), nlu)
+        self.assertEqual(self.request.get_nlu().to_directive(), nlu.to_directive())
 
 
     def testGetAudioPlayerContext(self):
@@ -51,7 +55,7 @@ class IntentRequestTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEqual(self.requestgetType(), 'IntentRequest')
+        self.assertEqual(self.request.get_type(), 'IntentRequest')
 
     def testGetUserId(self):
         '''
@@ -59,7 +63,7 @@ class IntentRequestTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEqual(self.requestgetUserId(), 'userId')
+        self.assertEqual(self.request.get_userid(), 'userId')
 
     def testGetQuery(self):
         '''
@@ -67,7 +71,7 @@ class IntentRequestTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEqual(self.request.getQuery(), '所得税查询')
+        self.assertEqual(self.request.get_query(), '所得税查询')
 
     def testIsLaunchRequest(self):
         '''
@@ -75,7 +79,7 @@ class IntentRequestTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertFalse(self.request.isLaunchRequest())
+        self.assertFalse(self.request.is_launch_request())
 
     def testIsSessionEndRequest(self):
         '''
@@ -83,7 +87,7 @@ class IntentRequestTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertFalse(self.request.isSessionEndRequest())
+        self.assertFalse(self.request.is_session_end_request())
 
     def testIsSessionEndedRequest(self):
         '''
@@ -91,7 +95,7 @@ class IntentRequestTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertFalse(self.request.isSessionEndedRequest())
+        self.assertFalse(self.request.is_session_ended_request())
 
 
     def testGetBotId(self):
@@ -100,14 +104,14 @@ class IntentRequestTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEquals(self.request.getBotId(), 'botId')
+        self.assertEquals(self.request.get_botid(), 'botId')
 
     def testIsDialogStateCompleted(self):
         '''
         测试isDialogStateCompleted方法
         :return:
         '''
-        self.assertFalse(self.request.isDialogStateCompleted())
+        self.assertFalse(self.request.is_dialog_state_completed())
 
 
     pass

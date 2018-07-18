@@ -12,6 +12,7 @@ import unittest
 from dueros.directive.Display.RenderTemplate import RenderTemplate
 from dueros.directive.Display.template.BodyTemplate2 import BodyTemplate2
 
+
 class RenderTemplateTest(unittest.TestCase):
     '''
     测试卡片
@@ -19,14 +20,14 @@ class RenderTemplateTest(unittest.TestCase):
 
     def setUp(self):
         self.template = BodyTemplate2()
-        self.template.setPlainContent('plain context by set')
-        self.template.setImage('http://image-uri.com', '123', '234')
+        self.template.set_plain_content('plain context by set')
+        self.template.set_image('http://image-uri.com', '123', '234')
         self.renderTemplate = RenderTemplate(self.template)
 
     def testGetData(self):
 
-        data = self.renderTemplate.getData()
-
+        data = self.renderTemplate.get_data()
+        print(type(data))
         data['template']['token'] = 'token'
         print(data)
         ret = {

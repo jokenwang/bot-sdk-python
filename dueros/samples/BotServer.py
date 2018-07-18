@@ -30,8 +30,8 @@ def application(environ, start_response):
 
     #验证签名enableVerifyRequestSign  disableVerifyRequestSign 关闭验证签名
     # bot.initCertificate(environ).enableVerifyRequestSign()
-    bot.initCertificate(environ).disableVerifyRequestSign()
-    bot.setPrivateKey(priKey)
+    bot.init_certificate(environ).disable_verify_request_sign()
+    bot.set_private_key(priKey)
 
     body_str = bot.run()
     print(body_str)

@@ -20,11 +20,11 @@ class BodyTemplate5Test(unittest.TestCase):
 
     def setUp(self):
         self.template = BodyTemplate5()
-        self.template.setBackGroundImage('http://www.baidu.com')
-        self.template.setToken('0c71de96-15d2-4e79-b97e-e52cec25c254')
-        self.template.addImages('http://uri-img1.com', '1332', '123')
-        self.template.addImages('http://uri-img1.com',)
-        self.template.addImages('http://uri-img1.com', '32', '123')
+        self.template.set_background_image('http://www.baidu.com')
+        self.template.set_token('0c71de96-15d2-4e79-b97e-e52cec25c254')
+        self.template.add_images('http://uri-img1.com', '1332', '123')
+        self.template.add_images('http://uri-img1.com',)
+        self.template.add_images('http://uri-img1.com', '32', '123')
 
     def testGetData(self):
         '''
@@ -32,7 +32,7 @@ class BodyTemplate5Test(unittest.TestCase):
         :return:
         '''
 
-        data = self.template.getData()
+        data = self.template.get_data()
         print(data)
         ret = {
             'type': 'BodyTemplate5',

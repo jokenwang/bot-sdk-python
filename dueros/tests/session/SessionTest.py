@@ -23,20 +23,20 @@ class SessionTest(unittest.TestCase):
             self.data = f.read()
         self.session = Session(json.loads(self.data)['session'])
 
-    def testSetData(self):
+    def test_set_data(self):
 
-        self.session.setData('status', '1')
+        self.session.set_data('status', '1')
         ret = {
             'attributes':{
                 'status': '1'
             }
         }
 
-        self.assertEquals(self.session.toResponse(), ret)
+        self.assertEquals(self.session.to_response(), ret)
 
-    def testGetData(self):
-        self.session.setData('status', '1')
-        self.assertEquals(self.session.getData('status'), '1')
+    def test_get_data(self):
+        self.session.set_data('status', '1')
+        self.assertEquals(self.session.get_data('status'), '1')
         # self.assertEquals(self.session.getData('status'), '2')
         pass
 

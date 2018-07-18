@@ -12,12 +12,13 @@
 import unittest
 from dueros.directive.AudioPlayer.Control.LyricButton import LyricButton
 
+
 class LyricButtonTest(unittest.TestCase):
 
     def setUp(self):
         self.lyricButton = LyricButton()
-        self.lyricButton.setEnabled(False)
-        self.lyricButton.setSelected(True)
+        self.lyricButton.set_enabled(False)
+        self.lyricButton.set_selected(True)
 
     def testGetData(self):
 
@@ -28,7 +29,7 @@ class LyricButtonTest(unittest.TestCase):
             'selected': True
         }
 
-        self.assertEqual(self.lyricButton.getData(), ret)
+        self.assertEqual(self.lyricButton.get_data(), ret)
     pass
 
 

@@ -75,13 +75,13 @@ class Bot(Bot):
         '''
         super(Bot, self).__init__(data)
 
-        self.addLaunchHandler(self.launchRequest)
+        self.add_launch_handler(self.launchRequest)
         #给端下发指令
-        self.addIntentHandler('audio_play_intent', self.audioPlay)
-        self.addIntentHandler('audio_stop_intent', self.audioStop)
+        self.add_intent_handler('audio_play_intent', self.audioPlay)
+        self.add_intent_handler('audio_stop_intent', self.audioStop)
         #处理端上报事件
-        self.addEventListener('AudioPlayer.PlaybackStarted', self.playBackStartedEvent)
-        self.addEventListener('AudioPlayer.PlaybackNearlyFinished', self.playBackStartedEvent)
+        self.add_event_listener('AudioPlayer.PlaybackStarted', self.playBackStartedEvent)
+        self.add_event_listener('AudioPlayer.PlaybackNearlyFinished', self.playBackStartedEvent)
 
 
 if __name__ == '__main__':

@@ -12,12 +12,13 @@
 import unittest
 from dueros.directive.AudioPlayer.Control.RecommendButton import RecommendButton
 
+
 class RecommendButtonTest(unittest.TestCase):
 
     def setUp(self):
         self.recommendButton = RecommendButton()
-        self.recommendButton.setEnabled(False)
-        self.recommendButton.setSelected(True)
+        self.recommendButton.set_enabled(False)
+        self.recommendButton.set_selected(True)
 
     def testGetData(self):
 
@@ -29,7 +30,7 @@ class RecommendButtonTest(unittest.TestCase):
 
         }
 
-        self.assertEqual(self.recommendButton.getData(), ret)
+        self.assertEqual(self.recommendButton.get_data(), ret)
     pass
 
 

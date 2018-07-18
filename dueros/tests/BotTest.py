@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# -*- coding: UTF-8 -*-
+# -*- encoding: UTF-8 -*-
 
 # description:
 # author:jack

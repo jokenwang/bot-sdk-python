@@ -12,11 +12,13 @@
 import unittest
 from dueros.directive.AudioPlayer.Control.RepeatButton import RepeatButton
 from dueros.directive.AudioPlayer.Control.RepeatButtonEnum import RepeatButtonEnum
+
+
 class RepeatButtonTest(unittest.TestCase):
 
     def setUp(self):
         self.repeatButton = RepeatButton()
-        self.repeatButton.setSelectedValue(RepeatButtonEnum.REPEAT_ONE)
+        self.repeatButton.set_selected_value(RepeatButtonEnum.REPEAT_ONE)
 
     def testGetData(self):
 
@@ -27,7 +29,7 @@ class RepeatButtonTest(unittest.TestCase):
 
         }
 
-        self.assertEqual(self.repeatButton.getData(), ret)
+        self.assertEqual(self.repeatButton.get_data(), ret)
     pass
 
 

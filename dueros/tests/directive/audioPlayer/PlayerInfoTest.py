@@ -21,29 +21,29 @@ class PlayerInfoTest(unittest.TestCase):
     def setUp(self):
 
         self.playerInfo = PlayerInfo()
-        self.playerInfo.setProvider('yly', 'http://uri-logo.com')
-        self.playerInfo.setProviderName('yyy-second');
+        self.playerInfo.set_provider('yly', 'http://uri-logo.com')
+        self.playerInfo.set_provider_name('yyy-second');
 
-        self.playerInfo.setLyric('http://uri-lrc.com')
-        self.playerInfo.setArt('art')
-        self.playerInfo.setTitle('title')
-        self.playerInfo.setTitleSubtext1('sub text1')
-        self.playerInfo.setTitleSubtext2('sub text2')
-        self.playerInfo.setAudioItemType(PlayerInfoAudioItemEnum.FORMAT_LRC)
-        self.playerInfo.setMediaLengthInMs(12321.232)
+        self.playerInfo.set_lyric('http://uri-lrc.com')
+        self.playerInfo.set_art('art')
+        self.playerInfo.set_title('title')
+        self.playerInfo.set_title_subtext1('sub text1')
+        self.playerInfo.set_title_subtext2('sub text2')
+        self.playerInfo.set_audio_item_type(PlayerInfoAudioItemEnum.FORMAT_LRC)
+        self.playerInfo.set_media_length_in_ms(12321.232)
 
         favoriteButton = FavoriteButton()
         favoriteButton.setEnabled(False)
-        self.playerInfo.addControl(favoriteButton)
+        self.playerInfo.add_control(favoriteButton)
 
 
         showPlayListButton = ShowPlayListButton()
         showPlayListButton.setSelected(True)
-        self.playerInfo.setControls(showPlayListButton)
+        self.playerInfo.set_controls(showPlayListButton)
 
         showFavoriteListButton = ShowFavoriteListButton()
         repeatButton = RepeatButton(RepeatButtonEnum.REPEAT_ONE)
-        self.playerInfo.setControls([showFavoriteListButton, repeatButton])
+        self.playerInfo.set_controls([showFavoriteListButton, repeatButton])
 
     def testGetData(self):
 
@@ -95,7 +95,7 @@ class PlayerInfoTest(unittest.TestCase):
             ]
         }
 
-        data = self.playerInfo.getData()
+        data = self.playerInfo.get_data()
         self.assertEqual(data, ret)
     pass
 

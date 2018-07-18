@@ -19,26 +19,26 @@ class PlayTest(unittest.TestCase):
 
     def setUp(self):
         self.play1 = VideoPlayer(self.url, PlayBehaviorEnum.REPLACE_ENQUEUED)
-        self.play1.setOffsetInMilliseconds(121321)
-        self.play1.setExpiryTime('123213223')
-        self.play1.setExpectedPreviousToken('asdsd-1233-dsew-39FG')
-        self.play1.setReportDelayInMs(1234.12212)
-        self.play1.setReportIntervalInMs(123)
-        self.play1.setToken('AGDG-SAHSHD_ASDS_123')
-        self.play1.setUrl('http://set-url.com')
+        self.play1.set_offset_in_milliseconds(121321)
+        self.play1.set_expiry_time('123213223')
+        self.play1.set_expected_previous_token('asdsd-1233-dsew-39FG')
+        self.play1.set_report_delay_in_ms(1234.12212)
+        self.play1.set_report_interval_in_ms(123)
+        self.play1.set_token('AGDG-SAHSHD_ASDS_123')
+        self.play1.set_url('http://set-url.com')
 
     def testGetToken(self):
 
-        self.assertEqual(self.play1.getToken(), 'AGDG-SAHSHD_ASDS_123')
+        self.assertEqual(self.play1.get_token(), 'AGDG-SAHSHD_ASDS_123')
 
     def testGetData(self):
 
-        data = self.play1.getData()
+        data = self.play1.get_data()
         data['videoItem']['videoItemId'] = 'AGDG-SAHSHD_ASDS_123'
         print(data)
         ret = {
             'type': 'VideoPlayer.Play',
-            'playBehavior': PlayBehaviorEnum.REPLACE_ENQUEUED.value,
+            'playBehavior': PlayBehaviorEnum.REPLACE_ENQUEUED,
             'videoItem': {
                 'videoItemId': 'AGDG-SAHSHD_ASDS_123',
                 'stream': {

@@ -12,11 +12,13 @@
 import unittest
 from dueros.directive.AudioPlayer.Control.ThumbsUpDownButton import ThumbsUpDownButton
 from dueros.directive.AudioPlayer.Control.ThumbsUpDownButtonEnum import ThumbsUpDownButtonEnum
+
+
 class ShowFavoriteListButtonTest(unittest.TestCase):
 
     def setUp(self):
         self.thumbsUpDownButton = ThumbsUpDownButton()
-        self.thumbsUpDownButton.setSelectedValue(ThumbsUpDownButtonEnum.THUMBS_UP)
+        self.thumbsUpDownButton.set_selected_value(ThumbsUpDownButtonEnum.THUMBS_UP)
 
     def testGetData(self):
 
@@ -27,7 +29,7 @@ class ShowFavoriteListButtonTest(unittest.TestCase):
 
         }
 
-        self.assertEqual(self.thumbsUpDownButton.getData(), ret)
+        self.assertEqual(self.thumbsUpDownButton.get_data(), ret)
     pass
 
 

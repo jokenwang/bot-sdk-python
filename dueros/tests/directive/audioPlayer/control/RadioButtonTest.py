@@ -12,11 +12,12 @@
 import unittest
 from dueros.directive.AudioPlayer.Control.RadioButton import RadioButton
 
+
 class PlayPauseButtonTest(unittest.TestCase):
 
     def setUp(self):
         self.radioButton = RadioButton('radio')
-        self.radioButton.setSelectedValue('selected value')
+        self.radioButton.set_selected_value('selected value')
 
     def testGetData(self):
 
@@ -26,7 +27,7 @@ class PlayPauseButtonTest(unittest.TestCase):
             'selectedValue': 'selected value'
         }
 
-        self.assertEqual(self.radioButton.getData(), ret)
+        self.assertEqual(self.radioButton.get_data(), ret)
     pass
 
 

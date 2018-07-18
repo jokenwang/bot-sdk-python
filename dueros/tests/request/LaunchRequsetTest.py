@@ -32,12 +32,12 @@ class LaunchRequsetTest(unittest.TestCase):
         测试getData方法
         :return:
         '''
-        self.assertEqual(self.request.getData(), self.data)
+        self.assertEqual(self.request.get_data(), self.data)
 
     def testGetSession(self):
 
         session = Session(self.data['session'])
-        self.assertEqual(self.request.getSession().toResponse(), session.toResponse())
+        self.assertEqual(self.request.get_session().to_response(), session.to_response())
 
     def testGetDeviceId(self):
         '''
@@ -45,7 +45,7 @@ class LaunchRequsetTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEqual(self.request.getDeviceId(), 'deviceId')
+        self.assertEqual(self.request.get_deviceid(), 'deviceId')
 
     def testGetUserInfo(self):
         '''
@@ -76,7 +76,7 @@ class LaunchRequsetTest(unittest.TestCase):
                 }
             }
         }
-        self.assertEqual(self.request.getUserInfo(), userInfo)
+        self.assertEqual(self.request.get_user_info(), userInfo)
 
 
     def testGetBaiduUid(self):
@@ -85,7 +85,7 @@ class LaunchRequsetTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEqual(self.request.getBaiduUid(), 'baiduUid')
+        self.assertEqual(self.request.get_baidu_uid(), 'baiduUid')
 
     def testGetType(self):
         '''
@@ -93,7 +93,7 @@ class LaunchRequsetTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEquals(self.request.getType(), 'LaunchRequest');
+        self.assertEquals(self.request.get_type(), 'LaunchRequest');
 
     def testGetUserId(self):
         '''
@@ -101,21 +101,21 @@ class LaunchRequsetTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEqual(self.request.getUserId(), 'userId')
+        self.assertEqual(self.request.get_userid(), 'userId')
 
     def testGetCuid(self):
         '''
         测试getCuid方法
         :return:
         '''
-        self.assertEqual(self.request.getCuid(), 'cuid')
+        self.assertEqual(self.request.get_cuid(), 'cuid')
 
     def testGetAccessToken(self):
         '''
 
         :return:
         '''
-        self.assertEqual(self.request.getAccessToken(), 'access_token')
+        self.assertEqual(self.request.get_accesstoken(), 'access_token')
     pass
 
 

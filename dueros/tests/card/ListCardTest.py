@@ -12,6 +12,7 @@ import unittest
 from dueros.card.ListCardItem import ListCardItem
 from dueros.card.ListCard import ListCard
 
+
 class ListCardTest(unittest.TestCase):
     '''
 
@@ -27,17 +28,17 @@ class ListCardTest(unittest.TestCase):
         :return:
         '''
         item = ListCardItem()
-        item.setTitle('title1')
-        item.setContent('这是ListCardItem1')
-        item.setUrl('http://www.baidu.com')
-        item.setImage('www.png1')
+        item.set_title('title1')
+        item.set_content('这是ListCardItem1')
+        item.set_url('http://www.baidu.com')
+        item.set_image('www.png1')
         item1 = ListCardItem()
-        item1.setTitle('title2')
-        item1.setContent('这是ListCardItem2')
-        item1.setUrl('http://www.baidu.com')
-        item1.setImage('www.png2')
-        self.listCard.addItem(item)
-        self.listCard.addItem(item1)
+        item1.set_title('title2')
+        item1.set_content('这是ListCardItem2')
+        item1.set_url('http://www.baidu.com')
+        item1.set_image('www.png2')
+        self.listCard.add_item(item)
+        self.listCard.add_item(item1)
         card = {
             'type': 'list',
             'list': [
@@ -55,7 +56,7 @@ class ListCardTest(unittest.TestCase):
                 }
             ]
         }
-        self.assertEquals(self.listCard.getData(), card)
+        self.assertEquals(self.listCard.get_data(), card)
 
 if __name__ == '__main__':
     pass

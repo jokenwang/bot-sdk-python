@@ -11,6 +11,7 @@
 import unittest
 from dueros.card.StandardCard import StandardCard
 
+
 class StandardCardTest(unittest.TestCase):
     '''
     标准卡片测试
@@ -25,16 +26,16 @@ class StandardCardTest(unittest.TestCase):
         :return:
         '''
 
-        self.card.setTitle('title')
-        self.card.setContent('这是StandardCard')
-        self.card.setImage('www.png')
+        self.card.set_title('title')
+        self.card.set_content('这是StandardCard')
+        self.card.set_image('www.png')
         card = {
             'type': 'standard',
             'title': 'title',
             'content': '这是StandardCard',
             'image': 'www.png'
         }
-        self.assertEquals(self.card.getData(), card)
+        self.assertEquals(self.card.get_data(), card)
     pass
 
 

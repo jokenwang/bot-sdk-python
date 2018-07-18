@@ -12,12 +12,13 @@
 import unittest
 from dueros.directive.AudioPlayer.Control.PreviousButton import PreviousButton
 
+
 class PlayPauseButtonTest(unittest.TestCase):
 
     def setUp(self):
         self.previousButton = PreviousButton()
-        self.previousButton.setEnabled(False)
-        self.previousButton.setSelected(True)
+        self.previousButton.set_enabled(False)
+        self.previousButton.set_selected(True)
 
     def testGetData(self):
 
@@ -28,7 +29,7 @@ class PlayPauseButtonTest(unittest.TestCase):
             'selected': True
         }
 
-        self.assertEqual(self.previousButton.getData(), ret)
+        self.assertEqual(self.previousButton.get_data(), ret)
     pass
 
 

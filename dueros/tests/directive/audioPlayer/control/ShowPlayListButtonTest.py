@@ -11,12 +11,14 @@
 
 import unittest
 from dueros.directive.AudioPlayer.Control.ShowPlayListButton import ShowPlayListButton
+
+
 class ShowFavoriteListButtonTest(unittest.TestCase):
 
     def setUp(self):
         self.showPlayListButton = ShowPlayListButton()
-        self.showPlayListButton.setEnabled(False)
-        self.showPlayListButton.setSelected(True)
+        self.showPlayListButton.set_enabled(False)
+        self.showPlayListButton.set_selected(True)
 
     def testGetData(self):
 
@@ -28,7 +30,7 @@ class ShowFavoriteListButtonTest(unittest.TestCase):
 
         }
 
-        self.assertEqual(self.showPlayListButton.getData(), ret)
+        self.assertEqual(self.showPlayListButton.get_data(), ret)
     pass
 
 

@@ -26,53 +26,53 @@ class NluTest(unittest.TestCase):
         self.nlu = Nlu(self.data)
 
         self.updateIntent = {
-            'name': self.nlu.getIntentName(),
+            'name': self.nlu.get_intent_name(),
             'slots': self.data[0]['slots']
         }
 
-    def testGetSlot(self):
+    def test_getslot(self):
         '''
         测试getSlot方法
         :return:
         '''
-        self.assertEqual(self.nlu.getSlot('city'), '北京')
+        self.assertEqual(self.nlu.get_slot('city'), '北京')
 
 
-    def testGetSlotConfirmationStatus(self):
+    def test_getslotconfirmationstatus(self):
         '''
         测试getSlotConfirmationStatus方法
         :return:
         '''
-        self.assertEqual(self.nlu.getSlotConfirmationStatus('city'), 'NONE')
+        self.assertEqual(self.nlu.get_slot_confirmation_status('city'), 'NONE')
 
-    def testGetIntentConfirmationStatus(self):
+    def test_getintentconfirmationstatus(self):
         '''
         测试getIntentConfirmationStatus方法
         :return:
         '''
-        self.assertEqual(self.nlu.getIntentConfirmationStatus(), 'NONE')
+        self.assertEqual(self.nlu.get_intent_confirmation_status(), 'NONE')
 
 
-    def testGetIntentName(self):
+    def test_getintentname(self):
         '''
         测试getIntentName方法
         :return:
         '''
-        self.assertEqual(self.nlu.getIntentName(), 'intentName')
+        self.assertEqual(self.nlu.get_intent_name(), 'intentName')
 
 
-    def testGetUpdateIntent(self):
+    def test_getupdateintent(self):
         '''
         测试getUpdateIntent方法
         :return:
         '''
         updateIntent = {
-            'name': self.nlu.getIntentName(),
+            'name': self.nlu.get_intent_name(),
             'slots': self.data[0]['slots']
         }
         self.assertEqual(self.updateIntent, updateIntent)
 
-    def testAsk(self):
+    def test_ask(self):
         '''
         测试ask方法
         :return:
@@ -83,43 +83,43 @@ class NluTest(unittest.TestCase):
             'slotToElicit': 'location',
             'updatedIntent': self.updateIntent
         }
-        self.assertEqual(self.nlu.toDirective(), directive)
+        self.assertEqual(self.nlu.to_directive(), directive)
 
 
-    def testSetSlot(self):
+    def test_setslot(self):
         '''
         测试setSlot方法
         :return:
         '''
-        self.nlu.setSlot('monthsalary', 1212)
-        self.assertEqual(self.nlu.getSlot('monthsalary'), 1212)
+        self.nlu.set_slot('monthsalary', 1212)
+        self.assertEqual(self.nlu.get_slot('monthsalary'), 1212)
 
-    def testSetDelegate(self):
+    def test_setdelegate(self):
         '''
         测试setDelegate方法
         :return:
         '''
-        self.nlu.setDelegate()
+        self.nlu.set_delegate()
         directive = {
             'type': 'Dialog.Delegate',
             'updatedIntent': self.updateIntent
         }
-        self.assertEqual(self.nlu.toDirective(), directive)
+        self.assertEqual(self.nlu.to_directive(), directive)
 
 
 
-    def testSetConfirmSlot(self):
+    def test_setconfirmslot(self):
         '''
         测试setConfirmSlot方法
         :return:
         '''
-        self.nlu.setConfirmSlot('city')
+        self.nlu.set_confirm_slot('city')
         directive = {
             'type': 'Dialog.ConfirmSlot',
             'slotToConfirm': 'city',
             'updatedIntent': self.updateIntent
         }
-        self.assertEqual(self.nlu.toDirective(), directive)
+        self.assertEqual(self.nlu.to_directive(), directive)
 
 
     def testSetConfirmIntent(self):
@@ -128,12 +128,12 @@ class NluTest(unittest.TestCase):
         :return:
         '''
 
-        self.nlu.setConfirmIntent()
+        self.nlu.set_confirm_intent()
         directive = {
             'type': 'Dialog.ConfirmIntent',
             'updatedIntent': self.updateIntent
         }
-        self.assertEqual(self.nlu.toDirective(), directive)
+        self.assertEqual(self.nlu.to_directive(), directive)
 
 
 

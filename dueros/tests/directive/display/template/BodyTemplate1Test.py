@@ -20,9 +20,9 @@ class BodyTemplate1Test(unittest.TestCase):
 
     def setUp(self):
         self.template = BodyTemplate1()
-        self.template.setPlainTextContent('test')
-        self.template.setBackGroundImage('http://www.baidu.com')
-        self.template.setToken('0c71de96-15d2-4e79-b97e-e52cec25c254')
+        self.template.set_plaintext_content('test')
+        self.template.set_background_image('http://www.baidu.com')
+        self.template.set_token('0c71de96-15d2-4e79-b97e-e52cec25c254')
 
     def testGetData(self):
         '''
@@ -30,7 +30,7 @@ class BodyTemplate1Test(unittest.TestCase):
         :return:
         '''
 
-        data = self.template.getData()
+        data = self.template.get_data()
         ret = {
             'type': 'BodyTemplate1',
             'token': '0c71de96-15d2-4e79-b97e-e52cec25c254',

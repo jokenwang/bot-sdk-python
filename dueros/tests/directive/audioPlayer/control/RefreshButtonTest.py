@@ -12,12 +12,13 @@
 import unittest
 from dueros.directive.AudioPlayer.Control.RefreshButton import RefreshButton
 
+
 class RefreshButtonTest(unittest.TestCase):
 
     def setUp(self):
         self.refreshButton = RefreshButton()
-        self.refreshButton.setEnabled(False)
-        self.refreshButton.setSelected(True)
+        self.refreshButton.set_enabled(False)
+        self.refreshButton.set_selected(True)
 
     def testGetData(self):
 
@@ -29,7 +30,7 @@ class RefreshButtonTest(unittest.TestCase):
 
         }
 
-        self.assertEqual(self.refreshButton.getData(), ret)
+        self.assertEqual(self.refreshButton.get_data(), ret)
     pass
 
 
