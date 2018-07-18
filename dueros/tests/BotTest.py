@@ -39,14 +39,14 @@ class BotTest(Bot):
 
         # renderTemplate = RenderTemplate()
         bodyTemplate = BodyTemplate1()
-        bodyTemplate.setToken('token')
-        bodyTemplate.setTitle('托尔斯泰的格言')
-        bodyTemplate.setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
-        bodyTemplate.setPlainTextContent('拖尔斯泰-理想的书籍是智慧的钥匙')
+        bodyTemplate.set_token('token')
+        bodyTemplate.set_title('托尔斯泰的格言')
+        bodyTemplate.set_background_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+        bodyTemplate.set_plaintext_content('拖尔斯泰-理想的书籍是智慧的钥匙')
         renderTemplate = RenderTemplate(bodyTemplate)
 
         # renderTemplate.setTemplate(bodyTemplate)
-        renderTemplate.setToken("renderTemplate")
+        renderTemplate.set_token("renderTemplate")
         return {
             'directives': [renderTemplate],
             'outputSpeech': '<speak>您要查找什么智能设备呢? 比如"查找我的空调"</speak>'
@@ -70,11 +70,11 @@ class BotTest(Bot):
     def __init__(self, data):
         super(BotTest, self).__init__(data)
 
-        self.addLaunchHandler(self.launchRequest)
+        self.add_launch_handler(self.launchRequest)
 
-        self.addIntentHandler('dueros.device_interface.smart_device.control', self.controlRequest)
+        self.add_intent_handler('dueros.device_interface.smart_device.control', self.controlRequest)
 
-        self.addIntentHandler('dueros.device_interface.smart_device.search', self.searchRequest)
+        self.add_intent_handler('dueros.device_interface.smart_device.search', self.searchRequest)
         # self.addIntentHandler('inquiry', self.inquiry)
     pass
 
