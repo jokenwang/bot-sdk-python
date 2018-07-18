@@ -11,9 +11,10 @@
 from dueros.Intercept import Intercept
 from dueros.card.TextCard import TextCard
 
+
 class DuerSessionIntercept(Intercept):
 
-    def __init__(self, tip = "非常抱歉，不明白你说的意思，已经取消了本次服务", threshold=2):
+    def __init__(self, tip="非常抱歉，不明白你说的意思，已经取消了本次服务", threshold=2):
         self.tip = tip
         self.threshold = threshold
 
