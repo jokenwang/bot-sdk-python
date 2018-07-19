@@ -134,7 +134,7 @@ class Response(Base):
         if isinstance(self.need_determine, bool):
             ret['response']['needDetermine'] = self.need_determine
 
-        if isinstance(self.expectSpeech, bool):
+        if isinstance(self.expect_speech, bool):
             ret['response']['expectSpeech'] = self.expect_speech
 
         if isinstance(self.fallback, bool):

@@ -57,7 +57,6 @@ class BotMonitor:
         :param enabled:
         :return:
         '''
-        print('setMonitorEnable = %s' % enabled)
         self.enabled = enabled
 
     def set_response_data(self, response_data):
@@ -159,9 +158,7 @@ class BotMonitor:
         timestamp = tup[1]
         pk_version = tup[2]
         sign_data = "%s%s%s%s" % (base64data, botId, timestamp, pk_version)
-        print('signData = %s' % sign_data)
         signature = self.certificate.get_sign(sign_data)
-        print('signature = %s' % (str(signature)))
 
         if not signature or len(pk_version) == 0:
             return
@@ -233,10 +230,8 @@ class BotMonitor:
         }
 
         orgin_data = json.dumps(ret_data)
-        print('orginData = %s' % orgin_data)
 
         base64data = str(base64.b64encode(orgin_data.encode('utf-8')))
-        print(base64data)
         if self.environment == 0:
             pk_version = 'debug'
         else:
