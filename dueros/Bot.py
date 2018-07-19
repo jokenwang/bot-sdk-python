@@ -278,7 +278,6 @@ class Bot(Base):
             return self.response.default_result()
 
         ret = {}
-
         if self.intercept:
             for intercept in self.intercept:
                 self.botMonitor.set_pre_event_start()
@@ -302,7 +301,7 @@ class Bot(Base):
                 self.botMonitor.set_post_event_start()
                 ret = intercept.postprocess(self, ret)
                 self.botMonitor.set_post_event_end()
-        print(ret)
+
         res = self.response.build(ret)
         self.botMonitor.set_response_data(res)
         self.botMonitor.update_data()

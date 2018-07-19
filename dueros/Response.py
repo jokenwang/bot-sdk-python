@@ -66,6 +66,9 @@ class Response(Base):
         if self.nlu and self.nlu.has_asked():
             self.should_end_session = False
 
+        if data is None:
+            data = {}
+
         if 'directives' in data:
             data['directives'] = data.get('directives')
         else:
