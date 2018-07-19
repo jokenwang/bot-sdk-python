@@ -278,13 +278,12 @@ class Bot(Base):
             return self.response.default_result()
 
         ret = {}
-        if self.intercept:
-            for intercept in self.intercept:
-                self.botMonitor.set_pre_event_start()
-                ret = intercept.preprocess(self)
-                self.botMonitor.set_pre_event_end()
-                if ret:
-                    return
+        for intercept in self.intercept:
+            self.botMonitor.set_pre_event_start()
+            ret = intercept.preprocess(self)
+            self.botMonitor.set_pre_event_end()
+            if ret:
+                return
 
         if not ret:
             if event_handler:
@@ -296,11 +295,11 @@ class Bot(Base):
                 self.botMonitor.set_event_start()
                 ret = self.__dispatch()
                 self.botMonitor.set_event_end()
-        else:
-            for intercept in self.intercept:
-                self.botMonitor.set_post_event_start()
-                ret = intercept.postprocess(self, ret)
-                self.botMonitor.set_post_event_end()
+
+        for intercept in self.intercept:
+            self.botMonitor.set_post_event_start()
+            ret = intercept.postprocess(self, ret)
+            self.botMonitor.set_post_event_end()
 
         res = self.response.build(ret)
         self.botMonitor.set_response_data(res)
