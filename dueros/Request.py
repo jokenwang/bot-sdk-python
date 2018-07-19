@@ -5,6 +5,9 @@
 # author:jack
 # create_time: 2017/12/30
 
+"""
+    DuerOS对Bot的请求封装
+"""
 import json
 from dueros.Nlu import Nlu
 from dueros.Session import Session
@@ -13,15 +16,12 @@ from dueros.Utils import Utils
 
 
 class Request(Base):
-    '''
-        DuerOS对Bot的请求封装
-    '''
 
     def __init__(self, data):
-        '''
-
+        """
         :param data:  请求数据
-        '''
+        """
+
         super(Request, self).__init__()
         if not isinstance(data, dict):
             self.data = json.loads(data)
@@ -50,38 +50,38 @@ class Request(Base):
         return self.session
 
     def get_nlu(self):
-        '''
+        """
         获取nlu实例
         :return:
-        '''
+        """
         return self.nlu
 
     def get_devicedata(self):
-        '''
+        """
         返回设备信息
         :return:
-        '''
+        """
         return self.deviceData
 
     def get_deviceid(self):
-        '''
+        """
         获取设备Id
         :return:
-        '''
+        """
         return Utils.getDictDataByKeyss(self.data,['context', 'System', 'device', 'deviceId'])
 
     def get_original_deviceid(self):
-        '''
+        """
         获取来自端上报的原始设备Id
         :return:
-        '''
+        """
         return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'device', 'originalDeviceId'])
 
     def get_audioplayer_context(self):
-        '''
+        """
         获取设备音频播放状态
         :return:
-        '''
+        """
         return self.data['context']['AudioPlayer']
 
     def get_videoplayer_context(self):
@@ -98,18 +98,18 @@ class Request(Base):
         return Utils.getDictDataByKeyss(self.data, ['context', 'Screen', 'card'])
 
     def get_app_launcher_context(self):
-        '''
+        """
         获取设备app安装列表
         :return:
-        '''
+        """
 
         return self.data['context']['AppLauncher']
 
     def get_event_data(self):
-        '''
+        """
         获取event请求
         :return:
-        '''
+        """
 
         if self.request_type == 'IntentRequest' or self.is_session_ended_request() or self.is_launch_request():
             return
@@ -117,40 +117,38 @@ class Request(Base):
             return self.data['request']
 
     def get_user_info(self):
-        '''
+        """
         获取用户信息
         :return:
-        '''
-
+        """
         return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'user', 'userInfo'])
 
     def get_baidu_uid(self):
-        '''
+        """
         获取百度Id
         :return:
-        '''
+        """
         return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'user', 'userInfo', 'account', 'baidu', 'baiduUid'])
 
     def get_type(self):
-        '''
+        """
         获取Request类型
         :return:
-        '''
+        """
         return self.request_type
 
     def get_userid(self):
-        '''
+        """
         获取用户ID
         :return:
-        '''
+        """
         return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'user', 'userId'])
 
     def get_accesstoken(self):
-
-        '''
+        """
         获取accessToken
         :return:
-        '''
+        """
         return self.__get_system_user()['accessToken']
 
     def __get_system_user(self):
@@ -158,10 +156,10 @@ class Request(Base):
         return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'user'])
 
     def get_external_access_tokens(self):
-        '''
+        """
         获取
         :return:
-        '''
+        """
 
         return self.__get_system_user()['externalAccessTokens']
 
@@ -169,10 +167,10 @@ class Request(Base):
         return self.data['cuid']
 
     def get_query(self):
-        '''
+        """
         获取请求的Query
         :return:
-        '''
+        """
 
         if self.request_type == 'IntentRequest' and self.data['request']['query']['original']:
             return Utils.getDictDataByKeyss(self.data, ['request','query','original'])
@@ -180,10 +178,10 @@ class Request(Base):
             return ''
 
     def get_location(self):
-        '''
+        """
         获取设备位置信息
         :return:
-        '''
+        """
         if self.__get_system_user()['userInfo']['location']:
             return self.__get_system_user()['userInfo']['location']
 
@@ -195,17 +193,17 @@ class Request(Base):
             return False
 
     def is_launch_request(self):
-        '''
+        """
         是否为调起bot请求
         :return:
-        '''
+        """
         return self.data['request']['type'] == 'LaunchRequest'
 
     def is_session_end_request(self):
-        '''
+        """
         是否关闭bot请求
         :return:
-        '''
+        """
         return self.data['request']['type'] == 'SessionEndedRequest'
 
     def is_session_ended_request(self):
@@ -225,18 +223,18 @@ class Request(Base):
         return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'application', 'applicationId'])
 
     def is_dialog_state_completed(self):
-        '''
+        """
         槽位是否填完
 
         :return:
-        '''
+        """
         return self.data['request']['dialogState'] == 'COMPLETED'
 
     def get_request_query_original(self):
-        '''
+        """
         获取最原始的请求内容
         :return:
-        '''
+        """
         if Utils.checkKeyInDict(self.data['request'], ['query']):
             return self.data['request']['query']['original']
 
