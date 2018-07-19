@@ -28,15 +28,13 @@ class Response:
             return self.data['response']['shouldEndSession']
         pass
 
-
     def get_slot_name(self):
 
         if Utils.checkKeysInDict(self.data, ['response', 'directives']):
             directive = self.data['response']['directives']
-            if directive and directive[0]['slotToElicit']:
+            if directive and Utils.checkKeysInDict(directive[0], ['slotToElicit']):
                 return directive[0]['slotToElicit']
         return None
-
 
     def get_reprompt(self):
 
