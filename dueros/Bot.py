@@ -408,14 +408,14 @@ class Bot(Base):
                 self.callback_data = None
                 return True
             else:
-                self.un_match_handler({'type': 'requestType', 'message': u'未匹配到:' + self.request.get_type()})
+                self.un_match_handler({'type': 'requestType', 'message': u'未匹配到:%s' %  self.request.get_type()})
 
         if re.match(rg['intent'], handler):
-            if ('#' + self.get_intent_name()) == handler:
+            if ('#%s' % self.get_intent_name()) == handler:
                 self.callback_data = None
                 return True
             else:
-                self.callback_data = {'type': 'intent', 'message': u'handler未匹配到:' + self.get_intent_name()}
+                self.callback_data = {'type': 'intent', 'message': u'handler未匹配到:%s' % self.get_intent_name()}
 
         if handler == 'true' or handler is True:
             return True
