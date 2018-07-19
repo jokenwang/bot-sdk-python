@@ -176,13 +176,12 @@ class Bot(Base):
             self.event['__default__'] = func
 
     def get_intent_name(self):
-        '''
+        """
         获取第一个Intent的名字
         :return:
-        '''
+        """
 
-        if self.nlu:
-            return self.nlu.get_intent_name()
+        return self.nlu.get_intent_name() if self.nlu else ''
 
     def get_session_attribute(self, field, default):
         '''

@@ -27,26 +27,26 @@ class Request(Base):
             self.data = json.loads(data)
         else:
             self.data = data
-        self.requestType = self.data['request']['type']
+        self.request_type = self.data['request']['type']
         self.session = Session(self.data['session'])
         self.nlu = None
-        if self.requestType == 'IntentRequest':
+        if self.request_type == 'IntentRequest':
             self.nlu = Nlu(self.data['request']['intents'])
         self.deviceData = None
         self.arrUserProfile = None
 
     def get_data(self):
-        '''
+        """
         返回request 请求体
         :return:
-        '''
+        """
         return self.data
 
     def get_session(self):
-        '''
+        """
         返回Session实例
         :return:
-        '''
+        """
         return self.session
 
     def get_nlu(self):
@@ -111,7 +111,7 @@ class Request(Base):
         :return:
         '''
 
-        if self.requestType == 'IntentRequest' or self.is_session_ended_request() or self.is_launch_request():
+        if self.request_type == 'IntentRequest' or self.is_session_ended_request() or self.is_launch_request():
             return
         else:
             return self.data['request']
@@ -136,7 +136,7 @@ class Request(Base):
         获取Request类型
         :return:
         '''
-        return self.requestType
+        return self.request_type
 
     def get_userid(self):
         '''
@@ -174,7 +174,7 @@ class Request(Base):
         :return:
         '''
 
-        if self.requestType == 'IntentRequest' and self.data['request']['query']['original']:
+        if self.request_type == 'IntentRequest' and self.data['request']['query']['original']:
             return Utils.getDictDataByKeyss(self.data, ['request','query','original'])
         else:
             return ''
@@ -189,7 +189,7 @@ class Request(Base):
 
     def is_determined(self):
 
-        if self.requestType == 'IntentRequest' and self.data['request']['determined']:
+        if self.request_type == 'IntentRequest' and self.data['request']['determined']:
             return self.data['request']['determined']
         else:
             return False
