@@ -14,7 +14,7 @@ from setuptools import find_packages
 
 setup(
     name='dueros-bot-python2',
-    version='1.1.9',
+    version='1.2.0',
     author='jack',
     author_email='mupdf@sina.com',
     description='Third party DuerOS Bot Python SDK ',

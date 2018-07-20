@@ -10,6 +10,7 @@
 """
 import json
 
+
 class Utils:
 
     @staticmethod
@@ -76,10 +77,14 @@ class Utils:
                 continue
             return None
 
-
+    @staticmethod
+    def is_numeric(value):
+        if isinstance(value, str):
+            return type(eval(value)) == int or type(eval(value)) == float
+        else:
+            return isinstance(value, int) or isinstance(value, float)
 
 
 if __name__ == '__main__':
-
 
     pass
