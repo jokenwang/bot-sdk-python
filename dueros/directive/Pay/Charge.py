@@ -6,10 +6,9 @@
 # create_time: 2018/7/20
 
 """
-    desc:pass
+DuerOS 支付协议
+详见：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-pay/pay_markdown
 """
-
-
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.Utils import Utils
 
