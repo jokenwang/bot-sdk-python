@@ -6,10 +6,11 @@
 # create_time: 2018/1/2
 
 """
-    desc:pass
+
 """
 
 from dueros.card.BaseCard import BaseCard
+
 
 class StandardCard(BaseCard):
 

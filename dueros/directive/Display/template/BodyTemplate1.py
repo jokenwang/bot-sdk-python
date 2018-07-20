@@ -13,39 +13,39 @@ from dueros.directive.Display.template.BaseTemplate import BaseTemplate
 from dueros.directive.Display.template.TextType import TextType
 from dueros.directive.Display.template.TextContentPosition import TextContentPosition
 
+
 class BodyTemplate1(BaseTemplate):
 
     def __init__(self):
-        super(BodyTemplate1, self).__init__(['token','title','type'])
-        self.setType('BodyTemplate1')
+        super(BodyTemplate1, self).__init__(['token', 'title', 'type'])
+        self.set_type('BodyTemplate1')
         pass
 
-    def setPlainTextContent(self, text, position=TextContentPosition.BOTTOM_LEFT ):
-        '''
-
+    def set_plain_text_content(self, text, position=TextContentPosition.BOTTOM_LEFT):
+        """
         :param text:
         :param position:
         :return:
-        '''
-        textStructure = self.createTextStructure(text, TextType.PLAIN_TEXT)
+        """
+        text_structure = self.create_text_structure(text, TextType.PLAIN_TEXT)
 
-        if textStructure:
-            if not 'textContent' in self.data.keys():
+        if text_structure:
+            if 'textContent' not in self.data.keys():
                 self.data['textContent'] = {}
-            self.data['textContent']['text'] = textStructure.getData()
+            self.data['textContent']['text'] = text_structure.get_data()
             if TextContentPosition.inEnum(position):
                 self.data['textContent']['position'] = position.value
             else:
-                self.data['textContent']['position'] = TextContentPosition.BOTTOM_LEFT
+                self.data['textContent']['position'] = TextContentPosition.BOTTOM_LEFT.value
 
             return self
 
 if __name__ == '__main__':
 
     bodytemplate = BodyTemplate1()
-    bodytemplate.setTitle('呵呵')
-    bodytemplate.setToken("tttt")
-    bodytemplate.setBackGroundImage('htt[://///')
-    bodytemplate.setPlainTextContent('bodyTemplate')
-    print(bodytemplate.getData())
+    bodytemplate.set_title('呵呵')
+    bodytemplate.set_token("tttt")
+    bodytemplate.set_background_image('htt[://///')
+    bodytemplate.set_plain_text_content('bodyTemplate')
+    print(bodytemplate.get_data())
     pass

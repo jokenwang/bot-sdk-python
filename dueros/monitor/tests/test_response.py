@@ -27,9 +27,9 @@ if __name__ == '__main__':
 
     response = Response(json.loads(responseData))
 
-    print(response.getSlotName())
-    print(response.getShouldEndSession())
-    print(response.getOutputSpeech())
-    print(response.getReprompt())
+    print(response.get_slot_name())
+    print(response.get_should_end_session())
+    print(response.get_output_speech())
+    print(response.get_reprompt())
 
     pass

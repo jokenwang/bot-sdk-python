@@ -11,122 +11,121 @@
 
 from dueros.monitor.Utils import Utils
 
+
 class Request:
 
     def __init__(self, data):
         self.data = data
-        self.requestType = data['request']['type']
+        self.request_type = data['request']['type']
 
-    def getData(self):
+    def get_data(self):
         '''
         返回request请求头
         :return:
         '''
         return self.data
 
-    def getDeviceData(self):
+    def get_device_data(self):
         '''
 
         :return:
         '''
-        return self.deviceData
+        return self.device_data
 
-    def getDeviceId(self):
+    def get_device_id(self):
 
-        return Utils.getDictDataByKeys(self.data,['context','System','device','deviceId'])
+        return Utils.get_dict_data_by_keys(self.data, ['context', 'System', 'device', 'deviceId'])
 
-    def getAudioPlayerContext(self):
+    def get_audio_player_context(self):
         '''
         获取设备音频播放的状态
         :return:
         '''
-        return Utils.getDictDataByKeys(self.data,['context','AudioPlayer'])
+        return Utils.get_dict_data_by_keys(self.data, ['context', 'AudioPlayer'])
 
-    def getAppLauncherContext(self):
+    def get_app_launcher_context(self):
         '''
         获取设备app安装列表
         :return:
         '''
-        return Utils.getDictDataByKeys(self.data,['context','AppLauncher'])
+        return Utils.get_dict_data_by_keys(self.data, ['context', 'AppLauncher'])
 
-    def getEventData(self):
+    def get_event_data(self):
         '''
         获取event请求
         :return:
         '''
-        if self.requestType == 'IntentRequest' or self.isLaunchRequest():
+        if self.requestType == 'IntentRequest' or self.is_launch_request():
             return None
         else:
             return self.data['request']
 
-    def getUserInfo(self):
+    def get_user_info(self):
         '''
 
         :return:
         '''
-        if Utils.checkKeysInDict(self.data, ['user_info']):
-            return self.data['user_info']
-        return None
+        return Utils.get_dict_data_by_keys(self.data, ['user_info'])
 
-    def getType(self):
+    def get_type(self):
         '''
         获取request类型
         :return:
         '''
-        return self.requestType
+        return self.request_type
 
-    def getUserId(self):
+    def get_user_id(self):
 
-        return Utils.getDictDataByKeys(self.data,['context', 'System', 'user', 'userId'])
+        return Utils.get_dict_data_by_keys(self.data, ['context', 'System', 'user', 'userId'])
 
-    def getCuid(self):
+    def get_cuid(self):
 
         return self.data['cuid']
 
-    def getQuery(self):
+    def get_query(self):
         '''
         获取query
         :return:
         '''
-        if self.requestType == 'IntentRequest':
+        if self.request_type == 'IntentRequest':
             return self.data['request']['query']['original']
         return None
 
-    def getLocation(self):
-        return Utils.getDictDataByKeys(self.data,['context','System','user', 'userInfo','location','geo'])
+    def get_location(self):
+        return Utils.get_dict_data_by_keys(self.data, ['context', 'System', 'user', 'userInfo', 'location', 'geo'])
 
-    def getTimestamp(self):
+    def get_timestamp(self):
 
-        return Utils.getDictDataByKeys(self.data,['request','timestamp'])
+        return Utils.get_dict_data_by_keys(self.data, ['request', 'timestamp'])
 
-    def getLogId(self):
+    def get_log_id(self):
 
         return self.data['log_id']
 
-    def getBotId(self):
-        return Utils.getDictDataByKeys(self.data,['context','System','application','applicationId'])
+    def get_bot_id(self):
+        return Utils.get_dict_data_by_keys(self.data, ['context', 'System', 'application', 'applicationId'])
 
-    def getRequestId(self):
+    def get_request_id(self):
 
-        return Utils.getDictDataByKeys(self.data,['request','requestId'])
+        return Utils.get_dict_data_by_keys(self.data, ['request', 'requestId'])
 
-    def getReson(self):
+    def get_reson(self):
 
-        return Utils.getDictDataByKeys(self.data,['request','reason'])
+        return Utils.get_dict_data_by_keys(self.data, ['request', 'reason'])
 
-    def getIntentName(self):
+    def get_intent_name(self):
 
         if self.data['request'] and 'intents' in self.data['request'] and self.data['request']['intents'] and self.data['request']['intents'][0]:
             return self.data['request']['intents'][0]['name']
 
         return None
 
+    def get_session_id(self):
 
-    def getSessionId(self):
+        return Utils.get_dict_data_by_keys(self.data, ['session', 'sessionId'])
 
-        return Utils.getDictDataByKeys(self.data,['session', 'sessionId'])
+    def is_dialog_state_completed(self):
 
-    def isDialogStateCompleted(self):
         if Utils.checkKeysInDict(self.data, ['request', 'dialogState']):
             return self.data['request']['dialogState'] == 'COMPLETED'
         return False

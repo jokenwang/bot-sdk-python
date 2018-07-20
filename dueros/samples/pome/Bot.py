@@ -24,10 +24,10 @@ class Bot(Bot):
         self.ask('deviceName')
 
         card = TextCard('您要查找什么智能设备呢? 比如"查找我的空调"')
-        card.addCueWords("百度")
-        card.addCueWords("百度")
-        card.addCueWords("百度")
-        card.setAnchor("http://www.baidu.com", "百度")
+        card.add_cue_words("百度")
+        card.add_cue_words("百度")
+        card.add_cue_words("百度")
+        card.set_anchor("http://www.baidu.com", "百度")
         return {
             'card': card,
             'outputSpeech': '<speak>您要查找什么智能设备呢? 比如"查找我的空调"</speak>'
@@ -45,11 +45,11 @@ class Bot(Bot):
     def __init__(self, data):
         super(Bot, self).__init__(data)
 
-        self.addLaunchHandler(self.launchRequest)
+        self.add_launch_handler(self.launchRequest)
 
-        self.addIntentHandler('ai.dueros.common.default_intent', self.controlRequest)
+        self.add_intent_handler('ai.dueros.common.default_intent', self.controlRequest)
 
-        self.addIntentHandler('dueros.device_interface.smart_device.search', self.intentRequest)
+        self.add_intent_handler('dueros.device_interface.smart_device.search', self.intentRequest)
     pass
 
 

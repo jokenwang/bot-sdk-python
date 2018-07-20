@@ -21,42 +21,43 @@ from dueros.Base import Base
 import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
+
 class Certificate(Base):
 
-    def __init__(self, environ, requestBody, privateKeyContent = ""):
-        '''
+    def __init__(self, environ, request_body, private_key_content=''):
+        """
         私钥内容,使用统计功能必须要提供
         :param environ: 环境上下文
         :param requestBody: 请求数据
         :param privateKeyContent:
-        '''
+        """
 
         super(Certificate, self).__init__()
 
         self.environ = environ
-        self.data = requestBody
-        self.privateKey = privateKeyContent
-        self.verifyRequestSign = False
+        self.data = request_body
+        self.private_key = private_key_content
+        self.verify_request_sign = False
 
-    def enableVerifyRequestSign(self):
-        '''
+    def enable_verify_request_sign(self):
+        """
         校验请求合法性
         :return:
-        '''
-        self.verifyRequestSign = True
+        """
+        self.verify_request_sign = True
 
-    def disableVerifyRequestSign(self):
-        '''
+    def disable_verify_request_sign(self):
+        """
         不校验请求合法性
         :return:
-        '''
-        self.verifyRequestSign = False
+        """
+        self.verify_request_sign = False
 
-    def getRequestPublicKey(self):
-        '''
+    def get_request_public_key(self):
+        """
         获取Dueros发送过来的公钥(此公钥信息是在技能参数配置中设置的)
         :return:
-        '''
+        """
         filename = self.environ['HTTP_SIGNATURECERTURL']
         if not filename:
             return
@@ -71,42 +72,42 @@ class Certificate(Base):
                 fcntl.flock(f, fcntl.LOCK_EX)
                 f.write(content.decode('utf-8'))
                 fcntl.flock(f, fcntl.LOCK_UN)
-        content = self.getFileContentSafety(cache)
-        return self.getPublicKeyFromX509(content)
+        content = self.get_file_content_safety(cache)
+        return self.get_public_key_fromX509(content)
 
-    def verifyRequest(self):
-        '''
+    def verify_request(self):
+        """
         数据验证
         :return:
-        '''
-        if not self.verifyRequestSign:
+        """
+        if not self.verify_request_sign:
             return True
 
-        publicKey = self.getRequestPublicKey()
+        public_key = self.get_request_public_key()
 
-        if not publicKey or not self.data:
+        if not public_key or not self.data:
             return False
 
-        key = RSA.importKey(publicKey)
+        key = RSA.importKey(public_key)
         if key:
             digest = SHA.new()
             digest.update(self.data.encode('utf-8'))
             verifier = PKCS1_v1_5.new(key)
-            if verifier.verify(digest, b64decode(self.getRequestSign())):
+            if verifier.verify(digest, b64decode(self.get_request_sign())):
                 return True
             return False
         return False
 
-    def getSign(self, content):
-        '''
+    def get_sign(self, content):
+        """
         生成签名
         :param content: 待签名内容
         :return:
-        '''
-        if not self.privateKey or not content:
+        """
+        if not self.private_key or not content:
             return False
 
-        rsakey = RSA.importKey(self.privateKey)
+        rsakey = RSA.importKey(self.private_key)
         if rsakey:
             digest = SHA.new()
             digest.update(content.encode('utf8'))
@@ -116,26 +117,26 @@ class Certificate(Base):
         else:
             return False
 
-    def getRequestSign(self):
+    def get_request_sign(self):
         return self.environ['HTTP_SIGNATURE']
     
-    def getPublicKeyFromX509(self, content):
-        '''
+    def get_public_key_fromX509(self, content):
+        """
         获取publicKey
-        :param X509 content
+        :param  content
         :return publicKey
-        '''
+        """
         x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, content)
         pk = x509.get_pubkey()
-        publicKey = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
-        return publicKey
+        public_key = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
+        return public_key
 
-    def getFileContentSafety(self, filename):
-        '''
+    def get_file_content_safety(self, filename):
+        """
         获取文件内容
         :param filename
         :return content
-        '''
+        """
         with open(filename, 'r') as f:
             fcntl.flock(f,fcntl.LOCK_SH)
             content = f.read()

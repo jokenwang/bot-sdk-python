@@ -13,62 +13,63 @@ from dueros.directive.Display.template.TextStructure import TextStructure
 from dueros.directive.Display.template.ImageStructure import ImageStructure
 from dueros.directive.Display.template.TextType import TextType
 
+
 class BaseTemplate:
 
     def __init__(self, field):
         super(BaseTemplate, self).__init__()
         self.data = {}
-        self.supportSetField = field
+        self.support_set_field = field
 
-    def setBackGroundImage(self, url, widthPixels='', heightPixels = ''):
-        '''
-
+    def set_background_image(self, url, width_pixels='', height_pixels=''):
+        """
         :param url:
-        :param widthPixels:
-        :param heightPixels:
+        :param width_pixels:
+        :param height_pixels:
         :return:
-        '''
+        """
+
         if url:
-            image = self.createImageStructure(url, widthPixels, heightPixels)
+            image = self.create_image_structure(url, width_pixels, height_pixels)
             if image:
-                self.data['backgroundImage'] = image.getData()
+                self.data['backgroundImage'] = image.get_data()
 
-    def createImageStructure(self, url, widthPixels, heightPixels):
-        '''
-
+    def create_image_structure(self, url, width_pixels, height_pixels):
+        """
         :param url:
-        :param widthPixels:
-        :param heightPixels:
+        :param width_pixels:
+        :param height_pixels:
         :return:
-        '''
+        """
+
         if url:
             image = ImageStructure()
-            image.setUrl(url)
-            if widthPixels:
-                image.setWidthPixels(widthPixels)
+            image.set_url(url)
+            if width_pixels and width_pixels != '':
+                image.set_width_pixels(width_pixels)
 
-            if heightPixels:
-                image.setHeightPixels(heightPixels)
+            if height_pixels and height_pixels != '':
+                image.set_height_pixels(height_pixels)
             return image
 
-    def createTextStructure(self, content, type=TextType.PLAIN_TEXT):
-        '''
-
+    def create_text_structure(self, content, structure_type=TextType.PLAIN_TEXT):
+        """
         :param content:
-        :param type:
+        :param structure_type:
         :return:
-        '''
+        """
+
         if content:
-            textStructure = TextStructure()
-            textStructure.setText(content)
-            if TextType.inEnum(type):
-                textStructure.setType(type.value)
+            text_structure = TextStructure()
+            text_structure.set_text(content)
+            if TextType.inEnum(structure_type):
+                text_structure.set_type(structure_type.value)
             else:
-                textStructure.setType(TextType.PLAIN_TEXT)
+                text_structure.set_type(TextType.PLAIN_TEXT.value)
 
-            return textStructure
+            return text_structure
 
-    def getData(self):
+    def get_data(self):
 
         return self.data
 
@@ -81,8 +82,8 @@ class BaseTemplate:
         # 获取操作类型 set
         operation = item[0:3]
         # 获取被操作的属性
-        field = item[3:]
-        if (operation == 'set' and field and (field.lower() in self.supportSetField)):
+        field = item[4:]
+        if operation == 'set' and field and (field.lower() in self.support_set_field):
             def function(*args):
                 self.data[field.lower()] = args[0]
 
@@ -96,7 +97,7 @@ class BaseTemplate:
 if __name__ == '__main__':
 
     bodytemplate = BaseTemplate(['token'])
-    bodytemplate.setToken('a')
-    bodytemplate.setBackGroundImage('aaaa')
-    print(bodytemplate.getData())
+    bodytemplate.set_token('a')
+    bodytemplate.set_background_image('aaaa')
+    print(bodytemplate.get_data())
     pass

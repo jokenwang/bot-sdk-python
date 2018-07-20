@@ -18,11 +18,12 @@ class BodyTemplate2(TextImageTemplate):
         super(BodyTemplate2, self).__init__('BodyTemplate2')
         pass
 
+
 if __name__ == '__main__':
     bodytemplate = BodyTemplate2()
-    bodytemplate.setTitle('呵呵')
-    bodytemplate.setToken("tttt")
-    bodytemplate.setBackGroundImage('http://adfasdf')
-    bodytemplate.setPlainContent('bodyTemplate')
-    print(bodytemplate.getData())
+    bodytemplate.set_title('呵呵')
+    bodytemplate.set_token("tttt")
+    bodytemplate.set_background_image('http://adfasdf')
+    bodytemplate.set_plain_content('bodyTemplate')
+    print(bodytemplate.get_data())
     pass

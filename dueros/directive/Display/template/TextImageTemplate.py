@@ -11,22 +11,24 @@
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
 from dueros.directive.Display.template.TextType import TextType
 
+
 class TextImageTemplate(BaseTemplate):
 
     def __init__(self, type):
-        super(TextImageTemplate, self).__init__(['token','title', 'type'])
-        self.setType(type)
+        super(TextImageTemplate, self).__init__(['token', 'title', 'type'])
+        self.set_type(type)
 
-    def setImage(self, url, widthPixels = '', heightPixels = ''):
+    def set_image(self, url, width_pixels='', height_pixels=''):
 
-        imageStructure = self.createImageStructure(url, widthPixels, heightPixels)
-        if imageStructure:
-            self.data['image'] = imageStructure.getData()
+        image_structure = self.create_image_structure(url, width_pixels, height_pixels)
+        if image_structure:
+            self.data['image'] = image_structure.get_data()
 
-    def setPlainContent(self, text):
-        textStructure = self.createTextStructure(text, TextType.PLAIN_TEXT)
-        if textStructure:
-            self.data['content'] = textStructure.getData()
+    def set_plain_content(self, text):
+
+        text_structure = self.create_text_structure(text, TextType.PLAIN_TEXT)
+        if text_structure:
+            self.data['content'] = text_structure.get_data()
         pass
 
 

@@ -51,5 +51,39 @@ class Utils:
                         return v
 
 
+    @staticmethod
+    def get_dict_data_by_keys(dicts, keys):
+        if isinstance(dicts, str):
+            dicts = json.loads(dicts)
+        last_key = keys[len(keys) - 1]
+        for key in keys:
+            if key in dicts:
+                dicts = dicts[key]
+                if last_key == key:
+                    return dicts
+                continue
+            return None
+
+
+    @staticmethod
+    def is_numeric(value):
+        if isinstance(value, str):
+            return type(eval(value)) == int or type(eval(value)) == float
+        else:
+            return isinstance(value, int) or isinstance(value, float)
+
+    @staticmethod
+    def convert_number(value):
+        if Utils.is_numeric(value):
+
+            if isinstance(value, str):
+                if type(eval(value)) == int:
+                    return int(value)
+                if type(eval(value)) == float:
+                    return int(float(value))
+
+            if isinstance(value, int) or isinstance(value, float):
+                return int(value)
+
 if __name__ == '__main__':
     pass

@@ -44,6 +44,10 @@ def init_log(log_path, level=logging.INFO, when="D", backup=7,
         OSError: fail to create log directories
         IOError: fail to open log file
     """
+
+    if os.path.exists(log_path + ".log"):
+        return
+
     formatter = logging.Formatter(format, datefmt)
     logger = logging.getLogger()
     logger.setLevel(level)

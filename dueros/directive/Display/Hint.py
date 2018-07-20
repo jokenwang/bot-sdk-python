@@ -10,6 +10,7 @@
 """
 from dueros.directive.BaseDirective import BaseDirective
 
+
 class Hint(BaseDirective):
 
     def __init__(self, text):
@@ -25,8 +26,9 @@ class Hint(BaseDirective):
                 item['text'] = value
                 self.data['hints'].append(item)
 
+
 if __name__ == '__main__':
 
     hint = Hint('aaa')
-    print(hint.getData())
+    print(hint.get_data())
     pass

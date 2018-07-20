@@ -14,19 +14,20 @@ class TextStructure:
     def __init__(self):
         super(TextStructure, self).__init__()
         self.data = {}
-        self.setType('PlainText')
+        self.set_type('PlainText')
 
-    def setType(self, type):
+    def set_type(self, structure_type):
 
         if type:
-            self.data['type'] = type
+            self.data['type'] = structure_type
 
-    def setText(self, text):
+    def set_text(self, text):
 
         if text:
             self.data['text'] = text
 
-    def getData(self):
+    def get_data(self):
+
         return self.data
     pass
 

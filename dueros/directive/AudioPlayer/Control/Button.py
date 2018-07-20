@@ -10,6 +10,7 @@
 """
 from dueros.directive.AudioPlayer.Control.BaseButton import BaseButton
 
+
 class Button(BaseButton):
 
     def __init__(self, name):
@@ -17,11 +18,13 @@ class Button(BaseButton):
         self.data['enabled'] = True
         self.data['selected'] = False
 
-    def setEnabled(self, bool):
-        self.data['enabled'] = bool
+    def set_enabled(self, enabled):
 
-    def setSelected(self, bool):
-        self.data['selected'] = bool
+        self.data['enabled'] = enabled
+
+    def set_selected(self, selected):
+
+        self.data['selected'] = selected
 
     pass
 

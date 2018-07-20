@@ -10,6 +10,7 @@
 """
 from dueros.directive.AudioPlayer.Control.Button import Button
 
+
 class RecommendButton(Button):
 
     def __init__(self):

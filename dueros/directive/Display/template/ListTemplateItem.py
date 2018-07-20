@@ -12,55 +12,56 @@
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
 from dueros.directive.Display.template.TextType import TextType
 
+
 class ListTemplateItem(BaseTemplate):
 
     def __init__(self):
         super(ListTemplateItem, self).__init__(['token', 'image'])
         self.data['textContent'] = {}
 
-    def setPlainPrimaryText(self, primaryText):
-        '''
+    def set_plain_primary_text(self, primary_text):
+        """
         设置一级标题
-        :param primaryText:
+        :param primary_text:
         :return:
-        '''
-        primaryTextStructure = self.createTextStructure(primaryText, TextType.PLAIN_TEXT)
-        if primaryTextStructure:
-           self.data['textContent']['primaryText'] = primaryTextStructure.getData()
+        """
+        primary_text_structure = self.create_text_structure(primary_text, TextType.PLAIN_TEXT)
+        if primary_text_structure:
+           self.data['textContent']['primaryText'] = primary_text_structure.get_data()
 
-    def setPlainSecondaryText(self, secondaryText):
-        '''
+    def set_plain_secondary_text(self, secondary_text):
+        """
         设置二级标题
-        :param secondaryText:
+        :param secondary_text:
         :return:
-        '''
-        secondaryTextStructure = self.createTextStructure(secondaryText, TextType.PLAIN_TEXT)
-        if secondaryTextStructure:
-            self.data['textContent']['secondaryText'] = secondaryTextStructure.getData()
+        """
+        secondary_text_structure = self.create_text_structure(secondary_text, TextType.PLAIN_TEXT)
+        if secondary_text_structure:
+            self.data['textContent']['secondaryText'] = secondary_text_structure.get_data()
         pass
 
-    def setTertiaryText(self, tertiaryText):
-        '''
+    def set_tertiary_text(self, tertiary_text):
+        """
         设置三级标题
-        :param tertiaryText:
+        :param tertiary_text:
         :return:
-        '''
-        tertiaryTextStructure = self.createTextStructure(tertiaryText, TextType.PLAIN_TEXT)
-        if tertiaryTextStructure:
-            self.data['textContent']['tertiaryText'] = tertiaryTextStructure.getData()
+        """
+        tertiary_text_structure = self.create_text_structure(tertiary_text, TextType.PLAIN_TEXT)
+        if tertiary_text_structure:
+            self.data['textContent']['tertiaryText'] = tertiary_text_structure.get_data()
         pass
 
-    def setImage(self, url, widthPixels='', heightPixels = ''):
-        '''
+    def set_image(self, url, width_pixels='', height_pixels=''):
+        """
         设置
         :param url:
-        :param widthPixels:
-        :param heightPixels:
+        :param width_pixels:
+        :param height_pixels:
         :return:
-        '''
-        image = self.createImageStructure(url, widthPixels, heightPixels)
+        """
+        image = self.create_image_structure(url, width_pixels, height_pixels)
         if image:
-            self.data['image'] = image.getData()
+            self.data['image'] = image.get_data()
 
 if __name__ == '__main__':
     pass

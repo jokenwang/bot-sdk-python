@@ -11,32 +11,30 @@
 from dueros.monitor.Utils import Utils
 import json
 
+
 class Response:
 
-    def __init__(self, responseData):
-        if isinstance(responseData, str):
-            responseData = json.loads(responseData)
-        self.data = responseData
+    def __init__(self, response_data):
+        if not isinstance(response_data, dict):
+            response_data = json.loads(response_data)
+        self.data = response_data
 
-    def getOutputSpeech(self):
-        return Utils.getDictDataByKeys(self.data, ['response', 'outputSpeech'])
+    def get_output_speech(self):
+        return Utils.get_dict_data_by_keys(self.data, ['response', 'outputSpeech'])
 
-    def getShouldEndSession(self):
-        return Utils.getDictDataByKeys(self.data, ['response', 'shouldEndSession'])
+    def get_should_end_session(self):
+        return Utils.get_dict_data_by_keys(self.data, ['response', 'shouldEndSession'])
 
-
-    def getSlotName(self):
-
+    def get_slot_name(self):
         if Utils.checkKeysInDict(self.data, ['response', 'directives']):
             directive = self.data['response']['directives']
-            if directive and directive[0]['slotToElicit']:
+            if directive and Utils.checkKeysInDict(directive[0],['slotToElicit']) and directive[0]['slotToElicit']:
                 return directive[0]['slotToElicit']
         return None
 
+    def get_reprompt(self):
 
-    def getReprompt(self):
-
-        return Utils.getDictDataByKeys(self.data, ['response', 'reprompt', 'outputSpeech'])
+        return Utils.get_dict_data_by_keys(self.data, ['response', 'reprompt', 'outputSpeech'])
 
 if __name__ == '__main__':
     pass

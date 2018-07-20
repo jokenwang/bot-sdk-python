@@ -60,8 +60,8 @@ class Bot(Bot):
 
     def __init__(self, data):
         super(Bot, self).__init__(data)
-        self.addLaunchHandler(self.launchRequest)
-        self.addIntentHandler('personal_income_tax.inquiry', self.getTaxSlot)
+        self.add_launch_handler(self.launchRequest)
+        self.add_intent_handler('personal_income_tax.inquiry', self.getTaxSlot)
 
 
 if __name__ == '__main__':

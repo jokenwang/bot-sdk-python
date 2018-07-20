@@ -24,7 +24,7 @@ class Bot(Bot):
         打开调用名
         '''
         self.musics = json.loads(self.musicsData())
-        self.waitAnswer()
+        self.wait_answer()
         return {
             'directives': [self.getTemplate2(self.musics[self.curIndex])],
             'outputSpeech': '欢迎使用音乐播放器!'
@@ -43,8 +43,8 @@ class Bot(Bot):
 
     def getDirective(self, offset = "0"):
         directive = Play(self.musics[self.curIndex]['url'])
-        directive.setToken(self.musics[self.curIndex]['token'])
-        directive.setOffsetInMilliSeconds(offset)
+        directive.set_token(self.musics[self.curIndex]['token'])
+        directive.set_offset_in_milliseconds(offset)
         return directive
 
     def audioStop(self):
@@ -84,10 +84,10 @@ class Bot(Bot):
     def getTemplate2(self, music):
         print(music)
         bodyTemplate = BodyTemplate2()
-        bodyTemplate.setToken(music['token'])
-        bodyTemplate.setBackGroundImage(self.DEFAULT_IMAGE)
-        bodyTemplate.setTitle(music['singer'])
-        bodyTemplate.setPlainContent(music['name'])
+        bodyTemplate.set_token(music['token'])
+        bodyTemplate.set_background_image(self.DEFAULT_IMAGE)
+        bodyTemplate.set_title(music['singer'])
+        bodyTemplate.set_plain_content(music['name'])
         renderTemplate = RenderTemplate(bodyTemplate)
         return renderTemplate
 
@@ -97,13 +97,13 @@ class Bot(Bot):
         构造函数
         '''
         super(Bot, self).__init__(data)
-        self.addLaunchHandler(self.launchRequest)
+        self.add_launch_handler(self.launchRequest)
         #给端下发指令
-        self.addIntentHandler('audio_play_intent', self.audioPlay)
-        self.addIntentHandler('audio_stop_intent', self.audioStop)
+        self.add_intent_handler('audio_play_intent', self.audioPlay)
+        self.add_intent_handler('audio_stop_intent', self.audioStop)
         #处理端上报事件
-        self.addEventListener('AudioPlayer.PlaybackStarted', self.playBackStartedEvent)
-        self.addEventListener('AudioPlayer.PlaybackNearlyFinished', self.playBackStartedEvent)
+        self.add_event_listener('AudioPlayer.PlaybackStarted', self.playBackStartedEvent)
+        self.add_event_listener('AudioPlayer.PlaybackNearlyFinished', self.playBackStartedEvent)
 
     def musicsData(self):
         with open("./audio_play/musics.json", 'r', encoding='utf-8') as load_f:

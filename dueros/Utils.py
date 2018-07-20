@@ -8,7 +8,7 @@
 """
     desc:pass
 """
-
+import json
 
 class Utils:
 
@@ -48,16 +48,18 @@ class Utils:
         pass
 
     @staticmethod
-    def getDictDataByKeys(dicts, keys):
-        if isinstance(dicts, dict):
-            for key in keys:
-                if key in dicts:
-                    v = dicts[key]
-                    if isinstance(v, dict):
-                        dicts = v
-                        continue
-                    elif isinstance(v, str):
-                        return v
+    def get_dict_data_by_keys(dicts, keys):
+        if isinstance(dicts, str):
+            dicts = json.loads(dicts)
+        last_key = keys[len(keys) - 1]
+        for key in keys:
+            if key in dicts:
+                dicts = dicts[key]
+                if last_key == key:
+                    return dicts
+                continue
+            return None
+
 
     @staticmethod
     def is_numeric(value):
@@ -66,7 +68,21 @@ class Utils:
         else:
             return isinstance(value, int) or isinstance(value, float)
 
+    @staticmethod
+    def convert_number(value):
+        if Utils.is_numeric(value):
+
+            if isinstance(value, str):
+                if type(eval(value)) == int:
+                    return int(value)
+                if type(eval(value)) == float:
+                    return int(float(value))
+
+            if isinstance(value, int) or isinstance(value, float):
+                return int(value)
 
 if __name__ == '__main__':
 
+    a =1.09
+    print(Utils.convert_number(a))
     pass

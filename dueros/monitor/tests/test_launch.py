@@ -26,9 +26,9 @@ if __name__ == '__main__':
     # print(requestData)
 
     request = Request(json.loads(requestData))
-    print(request.getType())
-    print(request.getUserId())
-    print(request.getBotId())
-    print(request.isDialogStateCompleted())
+    print(request.get_type())
+    print(request.get_user_id())
+    print(request.get_bot_id())
+    print(request.is_dialog_state_completed())
 
     pass

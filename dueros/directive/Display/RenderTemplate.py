@@ -12,23 +12,24 @@
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
 
+
 class RenderTemplate(BaseDirective):
 
     def __init__(self):
         super(RenderTemplate, self).__init__('Display.RenderTemplate')
 
-    def __init__(self, baseTemplate):
+    def __init__(self, base_template):
         super(RenderTemplate, self).__init__('Display.RenderTemplate')
-        self.setTemplate(baseTemplate)
+        self.set_template(base_template)
 
-    def setTemplate(self, template):
-        '''
+    def set_template(self, template):
+        """
         设置模板
         :param template:
         :return:
-        '''
+        """
         if isinstance(template, BaseTemplate):
-            self.data['template'] = template.getData()
+            self.data['template'] = template.get_data()
 
 
 if __name__ == '__main__':

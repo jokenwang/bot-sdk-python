@@ -25,6 +25,6 @@ class TextCard(BaseCard):
 if __name__ == '__main__':
 
     textCard = TextCard('sdfasdfs')
-    textCard.setContent('hehe')
-    print(textCard.getData())
+    textCard.set_content('hehe')
+    print(textCard.get_data())
     pass

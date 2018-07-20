@@ -4,6 +4,9 @@
 # description:
 # author:jack
 # create_time: 2017/12/31
+"""
+
+"""
 
 from dueros.card.BaseCard import BaseCard
 
@@ -14,13 +17,13 @@ class ImageCard(BaseCard):
         super(ImageCard, self).__init__()
         self.data['type'] = 'image'
 
-    def addItem(self, src, thumbnail=''):
-        '''
+    def add_item(self, src, thumbnail=''):
+        """
         添加
         :param src:
         :param thumbnail:
         :return:
-        '''
+        """
 
         if not src:
             return self

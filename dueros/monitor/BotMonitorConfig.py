@@ -17,23 +17,23 @@ class BotMonitorConfig:
         return 'dueros-api.baidu.com'
 
     @staticmethod
-    def getUploadUrl():
+    def get_upload_url():
         return 'https://dueros-api.baidu.com/uploadmonitordata'
 
     @staticmethod
-    def getSdkVersion():
+    def get_sdk_version():
         return '1.0.0'
 
     @staticmethod
-    def getSdkType():
+    def get_sdk_type():
         return 'python'
 
     @staticmethod
-    def getUploadPort():
+    def get_upload_port():
         return 443
 
     @staticmethod
-    def getUploadPath():
+    def get_upload_path():
         return '/uploadmonitordata'
 
 

@@ -13,16 +13,17 @@
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
 from dueros.directive.Display.template.ListTemplateItem import ListTemplateItem
 
+
 class ListTemplate(BaseTemplate):
 
     def __init__(self, type):
-        super(ListTemplate, self).__init__(['token','title','type'])
-        self.setType(type)
+        super(ListTemplate, self).__init__(['token', 'title', 'type'])
+        self.set_type(type)
         self.data['listItems'] = []
 
-    def addItem(self, item):
+    def add_item(self, item):
         if isinstance(item, ListTemplateItem):
-            self.data['listItems'].append(item.getData())
+            self.data['listItems'].append(item.get_data())
         return self
 
 

@@ -10,51 +10,61 @@
 """
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
+from dueros.Utils import Utils
 
-class VideroPlayer(BaseDirective):
 
-    def __init__(self, url, playBehavior = PlayBehaviorEnum.REPLACE_ALL):
-        super(VideroPlayer, self).__init__('VideoPlay.Play')
-        self.data['playBehavior'] = playBehavior.value
+class VideoPlayer(BaseDirective):
+
+    def __init__(self, url, play_behavior=PlayBehaviorEnum.REPLACE_ALL):
+        super(VideoPlayer, self).__init__('VideoPlayer.Play')
+        self.data['playBehavior'] = play_behavior.value
         self.data['videoItem'] = {
-            'videoItemId': self.getToken(),
+            'videoItemId': self.gen_token(),
             'stream': {
                 'url': url,
                 'offsetInMilliseconds': 0,
-                'token': self.getToken()
+                'token': self.gen_token()
             }
         }
 
-    def setToken(self, token):
+    def set_token(self, token):
         if token:
             self.data['videoItem']['stream']['token'] = token
 
-    def getToken(self):
+    def get_token(self):
 
         return self.data['videoItem']['stream']['token']
 
-    def setUrl(self, url):
+    def set_url(self, url):
 
         if url:
             self.data['videoItem']['stream']['url'] = url
 
-    def setOffsetInMilliseconds(self, milliseconds):
+    def set_offset_in_milliseconds(self, milliseconds):
 
-        if milliseconds.isdigit():
-            milliseconds = int(milliseconds)
+        milliseconds = Utils.convert_number(milliseconds)
+        if milliseconds:
             self.data['videoItem']['stream']['offsetInMilliseconds'] = milliseconds
 
-    def setExpiryTime(self, expiryTime):
-        self.data['videoItem']['stream']['expiryTime'] = expiryTime
+    def set_expiry_time(self, expiry_time):
+        if isinstance(expiry_time, str):
+            self.data['videoItem']['stream']['expiryTime'] = expiry_time
 
-    def setReportDelayInMs(self, reportDelayMs):
-        self.data['videoItem']['stream']['progressReport']['progressReportDelayInMilliseconds'] = int(reportDelayMs)
+    def set_report_delay_in_ms(self, report_delay_ms):
+        report_delay_ms = Utils.convert_number(report_delay_ms)
+        if report_delay_ms:
+            if 'progressReport' not in self.data['videoItem']['stream']:
+                self.data['videoItem']['stream']['progressReport'] = {}
 
-    def setReportIntervalInMs(self, intervalMs):
-        self.data['videoItem']['stream']['progressReport']['progressReportIntervalInMilliseconds'] = int(intervalMs)
+            self.data['videoItem']['stream']['progressReport']['progressReportDelayInMilliseconds'] = int(report_delay_ms)
 
-    def setExpectedPreviousToken(self, previousToken):
-        self.data['videoItem']['stream']['expectedPreviousToken'] = previousToken
+    def set_report_interval_in_ms(self, interval_ms):
+        interval_ms = Utils.convert_number(interval_ms)
+        if interval_ms:
+            self.data['videoItem']['stream']['progressReport']['progressReportIntervalInMilliseconds'] = int(interval_ms)
+
+    def set_expected_previous_token(self, previous_token):
+        self.data['videoItem']['stream']['expectedPreviousToken'] = previous_token
 
 
 if __name__ == '__main__':

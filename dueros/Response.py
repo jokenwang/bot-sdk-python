@@ -4,56 +4,56 @@
 # description:
 # author:jack
 # create_time: 2017/12/30
-
+"""
+处理完后构建返回数据
+详见：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/response_markdown#response
+"""
 import re
 from dueros.card.TextCard import TextCard
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.Base import Base
 
+
 class Response(Base):
-    """
-    处理完后构建返回数据
-    """
 
     def __init__(self, request, session, nlu):
-        '''
-
+        """
         :param request:
         :param session:
         :param nlu:
-        '''
+        """
         super(Response, self).__init__()
         self.request = request
         self.session = session
         self.nlu = nlu
-        self.sourceType = self.request.getBotId()
-        self.shouldEndSession = True
-        self.needDetermine = None
-        self.expectSpeech = None
-        self.fallBack = None
+        self.source_type = self.request.get_bot_id()
+        self.should_end_session = True
+        self.need_determine = None
+        self.expect_speech = None
+        self.fallback = None
 
-    def setShouldEndSession(self, val):
-        '''
+    def set_should_end_session(self, val):
+        """
         设置对话结束
         :param val:
         :return:
-        '''
+        """
         if val:
-            self.shouldEndSession = True
+            self.should_end_session = True
         else:
-            self.shouldEndSession = False
+            self.should_end_session = False
 
-    def defaultResult(self):
+    def default_result(self):
 
         return {
             'status': 0,
             'msg': ''
         }
 
-    def __preBuild(self, data):
+    def __pre_build(self, data):
 
-        if self.nlu and self.nlu.hasAsked():
-            self.shouldEndSession = False
+        if self.nlu and self.nlu.has_asked():
+            self.should_end_session = False
 
         if 'directives' in data:
             data['directives'] = data.get('directives')
@@ -81,7 +81,7 @@ class Response(Base):
             data['reprompt'] = None
 
     def build(self, data):
-        '''
+        """
         构造response 返回结果
         :param data:
         data = {
@@ -91,9 +91,12 @@ class Response(Base):
             'reprompt': string
         }
         :return:
-        '''
+        """
 
-        self.__preBuild(data)
+        if data is None:
+            data = {}
+
+        self.__pre_build(data)
 
         if 'directives' in data:
             directives = data.get('directives')
@@ -101,19 +104,19 @@ class Response(Base):
             directives = []
 
         if len(directives) > 0:
-            directives = list(map(lambda value: value.getData(), list(filter(lambda value: isinstance(value, BaseDirective), directives))))
+            directives = list(map(lambda value: value.get_data(), list(filter(lambda value: isinstance(value, BaseDirective), directives))))
 
         if self.nlu:
-            arr = self.nlu.toDirective()
+            arr = self.nlu.to_directive()
             if arr:
                 directives.append(arr)
 
         if not data['outputSpeech'] and data['card'] and isinstance(data['card'], TextCard):
-            data['outputSpeech'] = data['card'].getData()['content']
+            data['outputSpeech'] = data['card'].get_data()['content']
 
         if self.nlu:
-            if self.nlu.toUpdateIntent():
-                context = self.nlu.toUpdateIntent()
+            if self.nlu.to_update_intent():
+                context = self.nlu.to_update_intent()
             else:
                 context = {}
         else:
@@ -122,35 +125,33 @@ class Response(Base):
         ret = {
             "version": "2.0",
             "context": context,
-            "session": self.session.toResponse(),
+            "session": self.session.to_response(),
             "response": {
                 "directives":  directives,
-                "shouldEndSession": self.shouldEndSession,
-                "card": data['card'].getData() if data['card'] else None,
+                "shouldEndSession": self.should_end_session,
+                "card": data['card'].get_data() if data['card'] else None,
                 "resource": data['resource'],
-                "outputSpeech": self.formatSpeech(data['outputSpeech']),
-                "reprompt": {
-			        "outputSpeech": self.formatSpeech(data['reprompt'])
-		        }
+                "outputSpeech": self.format_speech(data['outputSpeech']),
+                "reprompt": {"outputSpeech": self.format_speech(data['reprompt'])}
             }
         }
 
-        if isinstance(self.needDetermine, bool):
-            ret['response']['needDetermine'] = self.needDetermine
+        if isinstance(self.need_determine, bool):
+            ret['response']['needDetermine'] = self.need_determine
 
-        if isinstance(self.expectSpeech, bool):
-            ret['response']['expectSpeech'] = self.expectSpeech
+        if isinstance(self.expect_speech, bool):
+            ret['response']['expectSpeech'] = self.expect_speech
 
-        if isinstance(self.fallBack, bool):
-            ret['response']['fallBack'] = self.fallBack
+        if isinstance(self.fallback, bool):
+            ret['response']['fallBack'] = self.fallback
         return ret
 
-    def formatSpeech(self, mix):
-        '''
+    def format_speech(self, mix):
+        """
         通过正则 判断是纯文本还是ssml
         :param mix:
         :return:
-        '''
+        """
         if not mix or mix == 'null' or mix == '':
             return None
 
@@ -167,33 +168,35 @@ class Response(Base):
         return result
 
 
-    def illegalRequest(self):
+    def illegal_request(self):
 
         return {
             'status': 1,
             'msg': '非法请求'
         }
 
-    def setNeedDetermine(self):
+    def set_need_determine(self):
 
-        self.needDetermine = True
+        self.need_determine = True
 
-    def setExpectSpeech(self, expectSpeech=False):
-        '''
-        通过控制expectSpeech来控制麦克风开关
-        :param expectSpeech:
+    def set_expect_speech(self, expect_speech=False):
+        """
+        通过控制expect_speech来控制麦克风开关
+        :param expect_speech:
         :return:
-        '''
-        if isinstance(expectSpeech, bool):
-            self.expectSpeech = expectSpeech
+        """
+        if isinstance(expect_speech, bool):
+            self.expect_speech = expect_speech
 
-    def setFallBack(self):
-        '''
+    def set_fallback(self):
+        """
         表示本次返回的结果为兜底结果
         :return:
-        '''
+        """
 
-        self.fallBack = True
+        self.fallback = True
+
 
 if __name__ == '__main__':
+
     pass
