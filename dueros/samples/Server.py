@@ -16,6 +16,6 @@ from wsgiref.simple_server import make_server
 from dueros.samples.BotServer import application
 # 创建一个服务器，IP地址为空，端口是8000，处理函数是application:
 httpd = make_server('', 8010, application)
-print('Serving HTTP on port 8000...')
+print('Serving HTTP on port 8010...')
 # 开始监听HTTP请求:
 httpd.serve_forever()

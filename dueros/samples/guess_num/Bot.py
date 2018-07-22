@@ -16,6 +16,7 @@ class Bot(Bot):
         '''
         打开调用名
         '''
+        self.wait_answer()
         card = TextCard('欢迎来到猜数字游戏')
         return {
             'card' : card,
@@ -26,14 +27,17 @@ class Bot(Bot):
         '''
         获取数字槽位值处理
         '''
+        print('================')
         rightNum = 10
-        num = self.getSlots('sys.number');
+        num = self.get_slots('sys.number')
         num = int(num)
         if num > rightNum:
+            self.ask('sys.number')
             return {
                 'outputSpeech' :'您所猜的数字大了'
             }
         elif num < rightNum:
+            self.ask('sys.number')
             return {
                 'outputSpeech' :'您所猜的数字小了'
             }
@@ -42,11 +46,15 @@ class Bot(Bot):
                 'outputSpeech' :'恭喜您猜对了'
             }
 
+    def ended(self):
+        return {
+            'outputSpeech': '欢迎再来'
+        }
     def __init__(self, data):
         super(Bot, self).__init__(data)
         self.add_launch_handler(self.launchRequest)
         self.add_intent_handler('guess_number', self.compareNum)
-
+        self.add_session_ended_handler(self.ended)
 
 if __name__ == '__main__':
     pass
