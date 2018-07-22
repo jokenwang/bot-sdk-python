@@ -84,6 +84,18 @@ class Utils:
         else:
             return isinstance(value, int) or isinstance(value, float)
 
+    @staticmethod
+    def convert_number(value):
+        if Utils.is_numeric(value):
+
+            if isinstance(value, str):
+                if type(eval(value)) == int:
+                    return int(value)
+                if type(eval(value)) == float:
+                    return int(float(value))
+
+            if isinstance(value, int) or isinstance(value, float):
+                return int(value)
 
 if __name__ == '__main__':
 

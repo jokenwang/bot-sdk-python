@@ -16,6 +16,8 @@ from dueros.directive.AudioPlayer.Control.ShowFavoriteListButton import ShowFavo
 from dueros.directive.AudioPlayer.Control.RepeatButton import RepeatButton
 from dueros.directive.AudioPlayer.Control.RepeatButtonEnum import RepeatButtonEnum
 from dueros.directive.AudioPlayer.PlayerInfoAudioItemEnum import PlayerInfoAudioItemEnum
+
+
 class PlayerInfoTest(unittest.TestCase):
 
     def setUp(self):
@@ -33,12 +35,12 @@ class PlayerInfoTest(unittest.TestCase):
         self.playerInfo.set_media_length_in_ms(12321.232)
 
         favoriteButton = FavoriteButton()
-        favoriteButton.setEnabled(False)
+        favoriteButton.set_enabled(False)
         self.playerInfo.add_control(favoriteButton)
 
 
         showPlayListButton = ShowPlayListButton()
-        showPlayListButton.setSelected(True)
+        showPlayListButton.set_selected(True)
         self.playerInfo.set_controls(showPlayListButton)
 
         showFavoriteListButton = ShowFavoriteListButton()

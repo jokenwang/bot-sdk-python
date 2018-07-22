@@ -16,11 +16,11 @@ from dueros.directive.AudioPlayer.PlayerInfo import PlayerInfo
 from dueros.directive.AudioPlayer.Control.PlayPauseButton import PlayPauseButton
 from dueros.directive.AudioPlayer.Control.PreviousButton import PreviousButton
 from dueros.directive.AudioPlayer.Control.NextButton import NextButton
-
+from dueros.Utils import Utils
 
 class Play(BaseDirective):
 
-    def __init__(self, url, playBehavior=PlayBehaviorEnum.REPLACE_ALL):
+    def __init__(self, url, play_behavior=PlayBehaviorEnum.REPLACE_ALL):
         '''
 
         :param url:     音频播放地址
@@ -30,7 +30,7 @@ class Play(BaseDirective):
         '''
 
         super(Play, self).__init__('AudioPlayer.Play')
-        self.data['playBehavior'] = playBehavior
+        self.data['playBehavior'] = play_behavior
         self.data['audioItem'] = {
             'stream': {
                 'streamFormat': StreamFormatEnum.STREAM_FORMAT_MP3,
@@ -60,29 +60,29 @@ class Play(BaseDirective):
     def set_offset_in_milliSeconds(self, milliseconds):
         '''
         设置directive的属性。从指定的offset开始进行播放
-        :param milliSeconds:    毫秒数。比如5分钟的歌曲，播放的长度是5*60*1000毫秒，选择起始的播放位置
+        :param milliseconds:    毫秒数。比如5分钟的歌曲，播放的长度是5*60*1000毫秒，选择起始的播放位置
         :return:
         '''
-        if milliseconds.isdigit():
-            milliseconds = int(milliseconds)
+        milliseconds = Utils.convert_number(milliseconds)
+        if milliseconds:
             self.data['audioItem']['stream']['offsetInMilliSeconds'] = milliseconds
         return self
 
     def set_progress_report_interval_ms(self, interval_ms):
         '''
         设置directive的属性。定时上报事件的间隔时间
-        :param intervalMs:  毫秒数。
+        :param interval_ms:  毫秒数。
         :return:
         '''
-        if interval_ms.isdigit():
-            interval_ms = int(interval_ms)
+        interval_ms = Utils.convert_number(interval_ms)
+        if interval_ms:
             self.data['audioItem']['stream']['progressReportIntervalMs'] = interval_ms
         return self
 
     def set_stream_format(self, stream_format=StreamFormatEnum.STREAM_FORMAT_MP3):
         '''
         设置directive的属性。音频流格式，streamFormat 默认STREAM_FORMAT_MP3
-        :param streamFormat:    取值: STREAM_FORMAT_MP3、STREAM_FORMAT_M3U8、STREAM_FORMAT_M4A
+        :param stream_format:    取值: STREAM_FORMAT_MP3、STREAM_FORMAT_M3U8、STREAM_FORMAT_M4A
         :return:
         '''
         if StreamFormatEnum.inEnum(stream_format):

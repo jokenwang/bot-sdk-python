@@ -21,7 +21,7 @@ class VideoPlayer(BaseDirective):
         self.data['playBehavior'] = play_behavior
         self.data['videoItem'] = {
             'videoItemId': self.gen_token(),
-            'stream':{
+            'stream': {
                 'url': url,
                 'offsetInMilliseconds': 0,
                 'token': self.gen_token()
