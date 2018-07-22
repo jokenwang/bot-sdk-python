@@ -51,7 +51,7 @@ class Session(Base):
             return default
 
     def set_data(self, field, value, default=''):
-        if value is None:
+        if value is not None:
             self.data[field] = value
         else:
             self.data[field] = default
