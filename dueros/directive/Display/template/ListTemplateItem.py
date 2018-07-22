@@ -6,8 +6,10 @@
 # create_time: 2018/5/26
 
 """
-    desc:pass
+ListItem
+详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/display-template_markdown#ListItem
 """
+
 
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
 from dueros.directive.Display.template.TextType import TextType

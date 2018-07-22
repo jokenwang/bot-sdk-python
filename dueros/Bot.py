@@ -190,7 +190,7 @@ class Bot(Base):
         :param default: 未获取 返回默认值
         :return:
         """
-        if field and isinstance(field, str):
+        if field is not None and isinstance(field, str):
             return self.session.get_data(field, default)
         else:
             return default
@@ -203,7 +203,7 @@ class Bot(Base):
         :param default:     默认值
         :return:
         """
-        if field and isinstance(field, str):
+        if field is not None and isinstance(field, str):
             self.session.set_data(field, value)
 
     def clear_session_attribute(self):
