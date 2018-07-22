@@ -5,7 +5,8 @@
 # author:jack
 # create_time: 2017/12/31
 """
-
+图片卡片
+详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/cards_markdown#%E5%9B%BE%E7%89%87%E5%8D%A1%E7%89%87
 """
 
 from dueros.card.BaseCard import BaseCard

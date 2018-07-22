@@ -6,9 +6,9 @@
 # create_time: 2018/5/26
 
 """
-    desc:pass
+ListTemplate2模板
+详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/display-template_markdown#ListTemplate2
 """
-
 
 from dueros.directive.Display.template.ListTemplate import ListTemplate
 from dueros.directive.Display.template.ListTemplateItem import ListTemplateItem

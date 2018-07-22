@@ -4,9 +4,12 @@
 # description:
 # author:jack
 # create_time: 2017/12/31
-"""
 
 """
+标准列表卡片
+详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/cards_markdown#%E6%A0%87%E5%87%86%E5%88%97%E8%A1%A8%E5%8D%A1%E7%89%87
+"""
+
 import json
 from dueros.card.BaseCard import BaseCard
 from dueros.card.ListCardItem import ListCardItem

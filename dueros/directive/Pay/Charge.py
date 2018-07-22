@@ -6,9 +6,8 @@
 # create_time: 2018/7/20
 
 """
-    desc:pass
+详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-pay/pay_markdown#Charge%E6%8C%87%E4%BB%A4
 """
-
 
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.Utils import Utils

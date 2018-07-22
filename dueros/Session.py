@@ -64,7 +64,7 @@ class Session(Base):
         :param value:  session value
         :return:
         """
-        if value:
+        if value is not None:
             self.data[field] = value
 
 

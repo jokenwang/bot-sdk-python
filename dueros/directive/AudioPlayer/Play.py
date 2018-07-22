@@ -6,7 +6,8 @@
 # create_time: 2017/12/31
 
 """
-    用于生成Play指令的类
+用于生成Play指令的类
+详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/audioplayer_markdown#AudioPlayer.Play%E6%8C%87%E4%BB%A4
 """
 
 from dueros.directive.BaseDirective import BaseDirective
