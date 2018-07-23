@@ -13,7 +13,7 @@
 * directive目录生成指令相关比如：浏览器指令、音频指令
 * tests 目录存放本地测试代码
 * samples 示例demo，其中包括guess_num、audio_play、personal_income_tax
-* <font color=#8B0000>附件cfc.zip是个税查询demo ,可直接部署到百度CFC Python环境</font>
+* <font color=#8B0000>__附件cfc.zip是个税查询demo ,可直接部署到百度CFC Python环境__</font>
 ### 安装、使用BOT SDK进行开发
 
 1、 通过pip进行安装   
