@@ -1,257 +1,242 @@
 #!/usr/bin/env python2
-# -*- coding=utf-8 -*-
+# -*- encoding=utf-8 -*-
 
 # description:
 # author:jack
 # create_time: 2017/12/30
 
+"""
+    DuerOS对Bot的请求封装
+"""
 import json
 from dueros.Nlu import Nlu
 from dueros.Session import Session
 from dueros.Base import Base
 from dueros.Utils import Utils
 
+
 class Request(Base):
-    '''
-        DuerOS对Bot的请求封装
-    '''
 
     def __init__(self, data):
-        '''
-
+        """
         :param data:  请求数据
-        '''
+        """
+
         super(Request, self).__init__()
-
-        if isinstance(data, dict):
-            self.data = data
-        else:
+        if not isinstance(data, dict):
             self.data = json.loads(data)
-
-        self.requestType = self.data['request']['type']
+        else:
+            self.data = data
+        self.request_type = self.data['request']['type']
         self.session = Session(self.data['session'])
         self.nlu = None
-        if self.requestType == 'IntentRequest':
+        if self.request_type == 'IntentRequest':
             self.nlu = Nlu(self.data['request']['intents'])
         self.deviceData = None
         self.arrUserProfile = None
 
-
-    def getData(self):
-        '''
+    def get_data(self):
+        """
         返回request 请求体
         :return:
-        '''
+        """
         return self.data
 
-    def getSession(self):
-        '''
+    def get_session(self):
+        """
         返回Session实例
         :return:
-        '''
+        """
         return self.session
 
-    def getNlu(self):
-        '''
+    def get_nlu(self):
+        """
         获取nlu实例
         :return:
-        '''
+        """
         return self.nlu
 
-    def getDeviceData(self):
-        '''
+    def get_device_data(self):
+        """
         返回设备信息
         :return:
-        '''
+        """
         return self.deviceData
 
-    def getDeviceId(self):
-        '''
+    def get_device_id(self):
+        """
         获取设备Id
         :return:
-        '''
+        """
+        return Utils.getDictDataByKeyss(self.data,['context', 'System', 'device', 'deviceId'])
 
-        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'device', 'deviceId', ])
-
-    def getOriginalDeviceId(self):
-        '''
+    def get_original_device_id(self):
+        """
         获取来自端上报的原始设备Id
         :return:
-        '''
-        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'device', 'originalDeviceId', ])
+        """
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'device', 'originalDeviceId'])
 
-    def getAudioPlayerContext(self):
-        '''
+    def get_audio_player_context(self):
+        """
         获取设备音频播放状态
         :return:
-        '''
-        return Utils.getDictDataByKeys(self.data, ['context', 'AudioPlayer' ])
+        """
+        return self.data['context']['AudioPlayer']
 
-    def getVideoPlayerContext(self):
+    def get_video_player_context(self):
 
-        return Utils.getDictDataByKeys(self.data, ['context', 'VideoPlayer'])
+        return self.data['context']['VideoPlayer']
 
-    def getScreenContext(self):
+    def get_screen_context(self):
+        return self.data['context']['Screen']
 
-        return Utils.getDictDataByKeys(self.data, ['context', 'Screen'])
+    def get_screen_token_from_context(self):
+        return Utils.getDictDataByKeyss(self.data, ['context', 'Screen', 'token'])
 
-    def getScreenTokenFromContext(self):
+    def get_screen_card_from_context(self):
+        return Utils.getDictDataByKeyss(self.data, ['context', 'Screen', 'card'])
 
-        return Utils.getDictDataByKeys(self.data, ['context', 'Screen', 'token'])
-
-    def getScreenTokenFromContext(self):
-        return Utils.getDictDataByKeys(self.data, ['context', 'Screen', 'token'])
-
-    def getScreenCardFromContext(self):
-        return Utils.getDictDataByKeys(self.data, ['context', 'Screen', 'card'])
-
-    def getAppLauncherContext(self):
-        '''
+    def get_app_launcher_context(self):
+        """
         获取设备app安装列表
         :return:
-        '''
+        """
 
-        return Utils.getDictDataByKeys(self.data, ['context', 'AppLauncher'])
+        return self.data['context']['AppLauncher']
 
-    def getEventData(self):
-        '''
+    def get_event_data(self):
+        """
         获取event请求
         :return:
-        '''
+        """
 
-        if self.requestType == 'IntentRequest' or self.isSessionEndedRequest() or self.isLaunchRequest():
+        if self.request_type == 'IntentRequest' or self.is_session_ended_request() or self.is_launch_request():
             return
         else:
             return self.data['request']
 
-    def getUserInfo(self):
-        '''
+    def get_user_info(self):
+        """
         获取用户信息
         :return:
-        '''
+        """
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'user', 'userInfo'])
 
-        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'user', 'userInfo'])
-
-    def getBaiduUid(self):
-        '''
+    def get_baidu_uid(self):
+        """
         获取百度Id
         :return:
-        '''
+        """
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'user', 'userInfo', 'account', 'baidu', 'baiduUid'])
 
-        return Utils.getDictDataByKeys(self.data,
-                                       ['context', 'System', 'user', 'userInfo', 'account', 'baidu', 'baiduUid'])
-    def getType(self):
-        '''
+    def get_type(self):
+        """
         获取Request类型
         :return:
-        '''
-        return self.requestType
+        """
+        return self.request_type
 
-    def getUserId(self):
-        '''
+    def get_user_id(self):
+        """
         获取用户ID
         :return:
-        '''
-        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'user', 'userId'])
+        """
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'user', 'userId'])
 
-    def getAccessToken(self):
-
-        '''
+    def get_access_token(self):
+        """
         获取accessToken
         :return:
-        '''
-        return self.__getSystemUser()['accessToken']
+        """
+        return self.__get_system_user()['accessToken']
 
-    def __getSystemUser(self):
+    def __get_system_user(self):
 
-        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'user'])
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'user'])
 
-    def getExternalAccessTokens(self):
-        '''
+    def get_external_access_tokens(self):
+        """
         获取
         :return:
-        '''
+        """
 
-        return self.__getSystemUser()['externalAccessTokens']
+        return self.__get_system_user()['externalAccessTokens']
 
-    def getCuid(self):
+    def get_cu_id(self):
         return self.data['cuid']
 
-    def getQuery(self):
-        '''
+    def get_query(self):
+        """
         获取请求的Query
         :return:
-        '''
+        """
 
-        if self.requestType == 'IntentRequest' and self.data['request']['query']['original']:
-            return self.data['request']['query']['original']
+        if self.request_type == 'IntentRequest' and self.data['request']['query']['original']:
+            return Utils.getDictDataByKeyss(self.data, ['request','query','original'])
         else:
             return ''
 
-    def getLocation(self):
-        '''
+    def get_location(self):
+        """
         获取设备位置信息
         :return:
-        '''
-        if self.__getSystemUser()['userInfo']['location']:
-            return self.__getSystemUser()['userInfo']['location']
+        """
+        if self.__get_system_user()['userInfo']['location']:
+            return self.__get_system_user()['userInfo']['location']
 
-    def isDetermined(self):
+    def is_determined(self):
 
-        if self.requestType == 'IntentRequest' and self.data['request']['determined']:
+        if self.request_type == 'IntentRequest' and self.data['request']['determined']:
             return self.data['request']['determined']
         else:
             return False
 
-    def isLaunchRequest(self):
-        '''
+    def is_launch_request(self):
+        """
         是否为调起bot请求
         :return:
-        '''
+        """
         return self.data['request']['type'] == 'LaunchRequest'
 
-    def isSessionEndRequest(self):
-        '''
+    def is_session_end_request(self):
+        """
         是否关闭bot请求
         :return:
-        '''
+        """
         return self.data['request']['type'] == 'SessionEndedRequest'
 
-    def isSessionEndedRequest(self):
-        return self.isSessionEndRequest()
+    def is_session_ended_request(self):
 
-    def getTimestamp(self):
+        return self.is_session_end_request()
 
-        return Utils.getDictDataByKeys(self.data, ['request', 'timestamp'])
+    def get_timestamp(self):
 
-    def getLogId(self):
+        return Utils.getDictDataByKeyss(self.data, ['request', 'timestamp'])
 
-        return Utils.getDictDataByKeys(self.data, ['request', 'requestId'])
+    def get_log_id(self):
 
+        return Utils.getDictDataByKeyss(self.data, ['request', 'requestId'])
 
-    def getBotId(self):
+    def get_bot_id(self):
 
-        return Utils.getDictDataByKeys(self.data, ['context', 'System', 'application', 'applicationId'])
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'application', 'applicationId'])
 
-
-    def isDialogStateCompleted(self):
-        '''
+    def is_dialog_state_completed(self):
+        """
         槽位是否填完
 
         :return:
-        '''
+        """
         return self.data['request']['dialogState'] == 'COMPLETED'
 
-    def getRequestQueryOriginal(self):
-        '''
+    def get_request_query_original(self):
+        """
         获取最原始的请求内容
         :return:
-        '''
+        """
         if Utils.checkKeyInDict(self.data['request'], ['query']):
             return self.data['request']['query']['original']
-
-
-
 
 if __name__ == '__main__':
     pass

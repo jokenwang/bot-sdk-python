@@ -50,11 +50,11 @@ if __name__ == '__main__':
     -----END PUBLIC KEY-----'''
 
     def requestData():
-        with open("../data/intent_request_tax.json", 'r', encoding='utf-8') as load_f:
+        with open("../data/intent_request_tax.json") as load_f:
             return load_f.read()
 
     def responseData():
-        with open("../data/test_response_tax.json", 'r', encoding='utf-8') as load_f:
+        with open("../data/test_response_tax.json") as load_f:
             return load_f.read()
 
     requestData = requestData()
@@ -63,23 +63,23 @@ if __name__ == '__main__':
 
     botmonitor = BotMonitor(json.loads(requestData))
 
-    botmonitor.setEnvironmentInfo(privatePemContent, 0)
+    botmonitor.set_environment_info(privatePemContent, 0)
 
-    botmonitor.setOprationTic('aa1')
-    botmonitor.setOprationToc('aa1')
-    botmonitor.setOprationToc('aa2')
-    botmonitor.setOprationToc('aa2')
-    botmonitor.setOprationToc('aa3')
-    botmonitor.setEventStart()
-    botmonitor.setEventEnd()
-    botmonitor.setDeviceEventStart()
-    botmonitor.setDeviceEventEnd()
-    botmonitor.setAppName('baidu')
-    botmonitor.setAudioUrl('baidu')
-    botmonitor.setDeepLink('baidu')
-    botmonitor.setDeepLink('baidu')
-    botmonitor.setResponseData(responseData)
-    botmonitor.updateData()
+    botmonitor.set_opration_tic('aa1')
+    botmonitor.set_opration_toc('aa1')
+    botmonitor.set_opration_toc('aa2')
+    botmonitor.set_opration_toc('aa2')
+    botmonitor.set_opration_toc('aa3')
+    botmonitor.set_event_start()
+    botmonitor.set_event_end()
+    botmonitor.set_device_event_start()
+    botmonitor.set_device_event_end()
+    botmonitor.set_app_name('baidu')
+    botmonitor.set_audio_url('baidu')
+    botmonitor.set_deep_link('baidu')
+    botmonitor.set_deep_link('baidu')
+    botmonitor.set_response_data(responseData)
+    botmonitor.update_data()
 
 
 

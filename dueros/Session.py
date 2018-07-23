@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# -*- coding=utf-8 -*-
+# -*- encoding=utf-8 -*-
 
 # description:
 # author:jack
@@ -11,15 +11,17 @@ Session相关 暂未搞
 
 from dueros.Base import Base
 
+
 class Session(Base):
 
     def __init__(self, data):
 
-        super(Session,self).__init__()
-
+        super(Session, self).__init__()
         self.data = {}
+        if 'attributes' in data and isinstance(data['attributes'], list) and len(data['attributes']) > 0:
+            self.data = data['attributes']
 
-        if 'attributes' in data:
+        if 'attributes' in data and isinstance(data['attributes'], dict):
             self.data = data['attributes']
 
         if 'sessionId' in data:
@@ -35,18 +37,35 @@ class Session(Base):
     def clear(self):
         self.data = {}
 
-    def toResponse(self):
+    def to_response(self):
 
         return {
             'attributes': self.data
         }
 
-    def getData(self, field, default):
-        return self.data[field] if field in self.data else default
+    def get_data(self, field, default=''):
+        """
 
-    def setData(self, field, value, default):
+        :param field:
+        :param default:
+        :return:
+        """
+        if field is not None and str(field) in self.data:
+            field = str(field)
+            return self.data[field]
+        else:
+            return default
 
-        if value:
+    def set_data(self, field, value, default=''):
+        """
+
+        :param field:
+        :param value:
+        :param default:
+        :return:
+        """
+        if field is not None and value is not None:
+            field = str(field)
             self.data[field] = value
         else:
             self.data[field] = default

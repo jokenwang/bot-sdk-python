@@ -11,6 +11,7 @@
 
 from dueros.card.BaseCard import BaseCard
 
+
 class ListCardItem(BaseCard):
 
     def __init__(self):

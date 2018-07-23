@@ -17,7 +17,7 @@ class Bot(Bot):
         '''
         打开调用名
         '''
-        self.waitAnswer()
+        self.wait_answer()
         return {
             'outputSpeech': r'欢迎进入'
         }
@@ -26,8 +26,8 @@ class Bot(Bot):
         '''
         获取槽位及逻辑处理
         '''
-        num = self.getSlots('sys.number')
-        city = self.getSlots('sys.city')
+        num = self.get_slots('sys.number')
+        city = self.get_slots('sys.city')
         if num and not city:
             self.nlu.ask('sys.city')
             return {
@@ -42,7 +42,7 @@ class Bot(Bot):
                 'outputSpeech': r'你的税前工资是多少呢'
             }
          
-        computeType = self.getSlots('compute_type')
+        computeType = self.get_slots('compute_type')
         if not computeType:
             self.nlu.ask('compute_type')
             return {
@@ -63,8 +63,8 @@ class Bot(Bot):
 
     def __init__(self, data):
         super(Bot, self).__init__(data)
-        self.addLaunchHandler(self.launchRequest)
-        self.addIntentHandler('personal_income_tax.inquiry', self.getTaxSlot)
+        self.add_launch_handler(self.launchRequest)
+        self.add_intent_handler('personal_income_tax.inquiry', self.getTaxSlot)
 
 
 if __name__ == '__main__':

@@ -10,8 +10,8 @@
 """
 
 class TextType(object):
-    PLAIN_TEXT = 'PLAIN_TEXT'
-    RICH_TEXT = 'RICH_TEXT'
+    PLAIN_TEXT = 'PlainText'
+    RICH_TEXT = 'RichText'
 
     @staticmethod
     def inEnum(position):

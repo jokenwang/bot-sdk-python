@@ -44,8 +44,8 @@ class Bot(Bot):
 
     def __init__(self, data):
         super(Bot, self).__init__(data)
-        self.addLaunchHandler(self.launchRequest)
-        self.addIntentHandler('guess_number', self.compareNum)
+        self.add_launch_handler(self.launchRequest)
+        self.add_intent_handler('guess_number', self.compareNum)
 
 
 if __name__ == '__main__':

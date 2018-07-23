@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# -*- coding=utf-8 -*-
+# -*- encoding=utf-8 -*-
 
 # description:
 # author:jack
@@ -16,38 +16,38 @@ class ListCard(BaseCard):
         super(ListCard, self).__init__()
         self.data['type'] = 'list'
 
-    def addItem(self, listCardIetm):
+    def add_item(self, card_ietm):
 
-        if isinstance(listCardIetm, ListCardItem):
+        if isinstance(card_ietm, ListCardItem):
 
             if not 'list' in self.data:
                 self.data['list'] = []
-            self.data['list'].append(listCardIetm.getData())
+            self.data['list'].append(card_ietm.get_data())
         return self
 
 
 if __name__ == '__main__':
 
     listCardItem1 = ListCardItem()
-    listCardItem1.setTitle('baidu')
-    listCardItem1.setUrl("http://www.baidu.com")
-    listCardItem1.setImage("http://www.baidu.com")
-    listCardItem1.setContent("http://www.baidu.com")
+    listCardItem1.set_title('baidu')
+    listCardItem1.set_url("http://www.baidu.com")
+    listCardItem1.set_image("http://www.baidu.com")
+    listCardItem1.set_content("http://www.baidu.com")
 
     print(id(listCardItem1))
     listCardItem2 = ListCardItem()
-    listCardItem2.setTitle("百度2")
+    listCardItem2.set_title("百度2")
     print(id(listCardItem2))
 
     listCardItem3 = ListCardItem()
-    listCardItem3.setTitle("百度3")
+    listCardItem3.set_title("百度3")
     print(id(listCardItem3))
 
     listCard = ListCard()
-    listCard.addItem(listCardItem1)
-    listCard.addItem(listCardItem2)
-    listCard.addItem(listCardItem3)
+    listCard.add_item(listCardItem1)
+    listCard.add_item(listCardItem2)
+    listCard.add_item(listCardItem3)
 
-    print(json.dumps(listCard.getData()))
+    print(json.dumps(listCard.get_data()))
 
     pass

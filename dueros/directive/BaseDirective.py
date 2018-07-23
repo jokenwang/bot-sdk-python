@@ -6,6 +6,7 @@
 # create_time: 2017/12/30
 
 """
+指令基类
 """
 
 import time
@@ -14,15 +15,12 @@ import hashlib
 
 
 class BaseDirective(object):
-    '''
-    指令基类
-    '''
 
     def __init__(self, type):
         self.data = {}
         self.data['type'] = type
 
-    def genToken(self):
+    def gen_token(self):
         '''
         生成Token md5(9位随机数+时间戳) 再截取md5后的字符串
         :return: uuid
@@ -41,15 +39,17 @@ class BaseDirective(object):
         uuid = uuid + token[20:]
         return uuid
 
-    def getData(self):
+    def get_data(self):
+
         return self.data
 
-    def setToken(self, token):
-        if(token):
+    def set_token(self, token):
+        if token:
             self.data['token'] = token
         return self
 
-    def getToken(self):
+    def get_token(self):
+
         return self.data['token']
 
 

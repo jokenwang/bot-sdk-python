@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# -*- coding=utf-8 -*-
+# -*- encoding=utf-8 -*-
 
 # description:
 # author:jack
@@ -14,7 +14,7 @@ class ImageCard(BaseCard):
         super(ImageCard, self).__init__()
         self.data['type'] = 'image'
 
-    def addItem(self, src, thumbnail = ''):
+    def add_item(self, src, thumbnail=''):
         '''
         添加
         :param src:

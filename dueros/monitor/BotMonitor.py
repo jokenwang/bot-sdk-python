@@ -14,169 +14,169 @@ from dueros.Certificate import Certificate
 import json
 import base64
 import time
-# import requests
+import requests
 import threading
+
 
 class BotMonitor:
 
-    def __init__(self, postData):
-        if isinstance(postData, str):
-            postData = json.loads(postData)
-        self.data = postData
-        self.requestStartTime = self.getMillisecond()
-        self.requestEndTime = 0
-        self.request = Request(postData)
-        self.audioUrl = None
-        self.appName = None
-        self.packageName = None
-        self.deepLink = None
-        self.eventStartTime = 0
-        self.eventCostTime = 0
-        self.deviceEventStartTime = 0
-        self.deviceEventCostTime = 0
-        self.userEventList = {}
-        self.isEventMakePair = {}
+    def __init__(self, post_data):
+        if not isinstance(post_data, dict):
+            self.data = json.loads(post_data)
+        else:
+            self.data = post_data
+        self.request_start_time = self.get_millisecond()
+        self.request_end_time = 0
+        self.request = Request(post_data)
+        self.audio_url = None
+        self.app_name = None
+        self.package_name = None
+        self.deep_link = None
+        self.event_start_time = 0
+        self.event_cost_time = 0
+        self.device_event_start_time = 0
+        self.device_event_cost_time = 0
+        self.user_event_list = {}
+        self.is_event_make_pair = {}
         self.config = BotMonitorConfig()
-        self.privateKey = None
+        self.private_key = None
         self.environment = 0
         self.enabled = True
         self.certificate = None
         self.response = None
 
-    def setEnvironmentInfo(self, privateKey, environment):
+    def set_environment_info(self, private_key, environment):
 
-        self.privateKey = privateKey
+        self.private_key = private_key
         self.environment = environment
-        self.certificate = Certificate(None, self.data, privateKey)
+        self.certificate = Certificate(None, self.data, private_key)
 
-    def setMonitorEnabled(self, enabled):
+    def set_monitor_enabled(self, enabled):
         '''
         设置是否可用
         :param enabled:
         :return:
         '''
-        print('setMonitorEnable = %s' % enabled)
         self.enabled = enabled
 
-    def setResponseData(self, responseData):
+    def set_response_data(self, response_data):
 
-        if self.isShouldDisable():
+        if self.is_should_disable():
             return
-        self.requestEndTime = self.getMillisecond()
-        self.response = Response(responseData)
+        self.request_end_time = self.get_millisecond()
+        self.response = Response(response_data)
 
-    def setEventStart(self):
+    def set_event_start(self):
 
-        if self.isShouldDisable():
+        if self.is_should_disable():
             return
-        self.eventStartTime = self.getMillisecond()
+        self.event_start_time = self.get_millisecond()
 
-    def setEventEnd(self):
+    def set_event_end(self):
 
-        if self.isShouldDisable():
+        if self.is_should_disable():
             return
-        self.eventCostTime = self.getMillisecond() - self.eventStartTime
+        self.event_cost_time = self.get_millisecond() - self.event_start_time
 
-    def setDeviceEventStart(self):
+    def set_device_event_start(self):
 
-        if self.isShouldDisable():
+        if self.is_should_disable():
             return
-        self.deviceEventStartTime = self.getMillisecond()
+        self.device_event_start_time = self.get_millisecond()
 
-    def setDeviceEventEnd(self):
+    def set_device_event_end(self):
 
-        if self.isShouldDisable():
+        if self.is_should_disable():
             return
-        self.deviceEventCostTime = self.getMillisecond() - self.deviceEventStartTime
+        self.device_event_cost_time = self.get_millisecond() - self.device_event_start_time
 
-    def setOprationTic(self, taskName):
+    def set_opration_tic(self, task_name):
 
-        if self.isShouldDisable():
+        if self.is_should_disable():
             return
-        if taskName:
-            self.userEventList[taskName] = self.getMillisecond()
-            self.isEventMakePair[taskName] = False
+        if task_name:
+            self.user_event_list[task_name] = self.get_millisecond()
+            self.is_event_make_pair[task_name] = False
 
-    def setOprationToc(self, taskName):
+    def set_opration_toc(self, task_name):
 
-        if self.isShouldDisable():
+        if self.is_should_disable():
             return
-        if taskName:
+        if task_name:
 
-            if taskName in self.userEventList:
-                oldTime = self.userEventList[taskName]
-            oldTime = None
-            currTime = self.getMillisecond()
-            costTime = 0
+            if task_name in self.user_event_list:
+                old_time = self.user_event_list[task_name]
+            else:
+                old_time = None
+            curr_time = self.get_millisecond()
+            cost_time = 0
 
-            if oldTime:
-                costTime = currTime = oldTime
+            if old_time:
+                cost_time = curr_time = old_time
 
-            self.userEventList[taskName] = costTime
-            self.isEventMakePair[taskName] = True
+            self.user_event_list[task_name] = cost_time
+            self.is_event_make_pair[task_name] = True
 
-    def setAppName(self, appName):
+    def set_app_name(self, app_name):
 
-        if self.isShouldDisable():
+        if self.is_should_disable():
             return
-        if appName:
-            self.appName = appName
+        if app_name:
+            self.app_name = app_name
 
-    def setPackageName(self, packageName):
+    def set_package_name(self, package_name):
 
-        if self.isShouldDisable():
+        if self.is_should_disable():
             return
-        if packageName:
-            self.packageName = packageName
+        if package_name:
+            self.package_name = package_name
 
-    def setDeepLink(self, deepLink):
+    def set_deep_link(self, deep_link):
 
-        if self.isShouldDisable():
+        if self.is_should_disable():
             return
-        if deepLink:
-            self.deepLink = deepLink
+        if deep_link:
+            self.deep_link = deep_link
 
-    def setAudioUrl(self, audioUrl):
+    def set_audio_url(self, audio_url):
 
-        if self.isShouldDisable():
+        if self.is_should_disable():
             return
-        if audioUrl:
-            self.audioUrl = audioUrl
+        if audio_url:
+            self.audio_url = audio_url
 
-    def updateData(self):
+    def update_data(self):
         print('botMonitor updata')
-        if self.isShouldDisable():
+        if self.is_should_disable():
             return
-        botId = self.request.getBotId()
+        botId = self.request.get_botid()
 
         #组装数据 返回元祖(base64后的data, 时间戳)
-        tup = self.__buildUploadData()
+        tup = self.__build_upload_data()
 
-        base64Data = tup[0]
+        base64data = tup[0]
         timestamp = tup[1]
-        pkversion = tup[2]
-        signData = "%s%s%s%s" % (base64Data, botId, timestamp, pkversion)
-        print('signData = %s' % signData)
-        signature = self.certificate.getSign(signData)
-        print('signature = %s' % (str(signature, 'utf-8')))
+        pk_version = tup[2]
+        sign_data = "%s%s%s%s" % (base64data, botId, timestamp, pk_version)
+        signature = self.certificate.get_sign(sign_data)
 
-        if not signature or len(pkversion) == 0:
+        if not signature or len(pk_version) == 0:
             return
 
-        print('content-length=%s, signature=%s, botId=%s, timestamp=%s' % (str(len(base64Data)),signature,str(botId), str(timestamp)))
+        print('content-length=%s, signature=%s, botId=%s, timestamp=%s' % (str(len(base64data)), signature, str(botId), str(timestamp)))
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
-            'Content-Length': str(len(base64Data)),
+            'Content-Length': str(len(base64data)),
             'SIGNATURE': signature,
             'botId': str(botId),
             'timestamp': str(timestamp),
-            'pkversion': str(pkversion)
+            'pkversion': str(pk_version)
         }
 
-        thread = threading.Thread(target=self.__uploadData, args=(base64Data, headers))
+        thread = threading.Thread(target=self.__upload_data, args=(base64data, headers))
         thread.start()
 
-    def __uploadData(self, data, headers):
+    def __upload_data(self, data, headers):
         '''
         发送请求
         :param url:
@@ -184,73 +184,69 @@ class BotMonitor:
         :param headers:
         :return:
         '''
-        # response = requests.post(self.config.getUploadUrl(), data=data, headers=headers)
-        # print(response)
-        pass
+        response = requests.post(self.config.get_upload_url(), data=data, headers=headers)
+        print(response)
 
-    def __buildUploadData(self):
+    def __build_upload_data(self):
 
-        sysEvent = {
+        sys_event = {
             'preEventList': {},
             'postEventList': {},
-            'eventCostTime': self.eventCostTime,
-            'deviceEventCostTime': self.deviceEventCostTime
+            'eventCostTime': self.event_cost_time,
+            'deviceEventCostTime': self.device_event_cost_time
         }
 
-        timestamp = self.getMillisecond()
+        timestamp = self.get_millisecond()
 
-        retData = {
+        ret_data = {
             'serviceData': {
-                'sdkType': self.config.getSdkType(),
-                'sdkVersion': self.config.getSdkVersion(),
-                'requestId': self.request.getRequestId(),
-                'query': self.request.getQuery(),
-                'reason': self.request.getReson(),
-                'deviceId': self.request.getDeviceId(),
-                'requestType': self.request.getType(),
-                'userId': self.request.getUserId(),
-                'intentName': self.request.getIntentName(),
-                'sessionId': self.request.getSessionId(),
-                'location': self.request.getLocation(),
-                'slotToElicit': self.response.getSlotName(),
-                'shouldEndSession': self.response.getShouldEndSession(),
-                'outputSpeech': self.response.getOutputSpeech(),
-                'reprompt': self.response.getReprompt(),
-                'audioUrl': self.audioUrl,
+                'sdkType': self.config.get_sdk_type(),
+                'sdkVersion': self.config.get_sdk_version(),
+                'requestId': self.request.get_request_id(),
+                'query': self.request.get_query(),
+                'reason': self.request.get_reson(),
+                'deviceId': self.request.get_device_id(),
+                'requestType': self.request.get_type(),
+                'userId': self.request.get_user_id(),
+                'intentName': self.request.get_intent_name(),
+                'sessionId': self.request.get_session_id(),
+                'location': self.request.get_location(),
+                'slotToElicit': self.response.get_slot_name(),
+                'shouldEndSession': self.response.get_should_end_session(),
+                'outputSpeech': self.response.get_output_speech(),
+                'reprompt': self.response.get_reprompt(),
+                'audioUrl': self.audio_url,
                 'appInfo': {
-                    'appName': self.appName,
-                    'packageName': self.packageName,
-                    'deepLink': self.deepLink
+                    'appName': self.app_name,
+                    'packageName': self.package_name,
+                    'deepLink': self.deep_link
                 },
-                'requestStartTime': self.requestStartTime,
-                'requestEndTime': self.requestEndTime,
+                'requestStartTime': self.request_start_time,
+                'requestEndTime': self.request_end_time,
                 'timestamp': timestamp,
-                'sysEvent': sysEvent,
-                'userEvent': self.userEventList
+                'sysEvent': sys_event,
+                'userEvent': self.user_event_list
             }
         }
 
-        orginData = json.dumps(retData)
-        print('orginData = %s' % orginData)
+        orgin_data = json.dumps(ret_data)
 
-        base64Data = str(base64.b64encode(orginData.encode('utf-8')), 'utf-8')
-        print(base64Data)
-        pkversion = None
+        base64data = str(base64.b64encode(orgin_data.encode('utf-8')))
         if self.environment == 0:
-            pkversion = 'debug'
+            pk_version = 'debug'
         else:
-            pkversion = 'online'
+            pk_version = 'online'
 
-        return (base64Data, timestamp, pkversion)
+        return (base64data, timestamp, pk_version)
 
-    def isShouldDisable(self):
+    def is_should_disable(self):
 
-        if not self.privateKey or len(self.privateKey) == 0 or not self.enabled:
+        if not self.private_key or len(self.private_key) == 0 or not self.enabled:
             return True
         return False
 
 
-    def getMillisecond(self):
+    def get_millisecond(self):
 
         return int(time.time())
 

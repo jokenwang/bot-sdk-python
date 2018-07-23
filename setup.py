@@ -14,10 +14,10 @@ from setuptools import find_packages
 
 setup(
     name='dueros-bot-python2',
-    version='0.2.5',
+    version='1.2.3',
     author='jack',
     author_email='mupdf@sina.com',
-    description='Third party DuerOS Bot Python SDK',
+    description='Third party DuerOS Bot Python SDK ',
     keywords='DuerOS Bot',
     url='https://github.com/jokenwang/bot-sdk-python',
     packages=find_packages(),

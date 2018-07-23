@@ -8,26 +8,28 @@
 """
     desc:pass
 """
-
-
 from dueros.directive.Display.template.ListTemplate import ListTemplate
 from dueros.directive.Display.template.ListTemplateItem import ListTemplateItem
+
+
 class ListTemplate1(ListTemplate):
 
     def __init__(self):
         super(ListTemplate1, self).__init__('ListTemplate1')
 
+
 if __name__ == '__main__':
+
     listTemplate = ListTemplate1()
-    listTemplate.setToken('4234234')
-    listTemplate.setBackGroundImage('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
-    listTemplate.setTitle('托尔斯泰')
+    listTemplate.set_token('4234234')
+    listTemplate.set_background_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+    listTemplate.set_title('托尔斯泰')
 
     item = ListTemplateItem()
-    item.setToken('1')
-    item.setPlainPrimaryText('p')
-    item.setPlainSecondaryText('s')
-    item.setImage('asfasdf')
-    listTemplate.addItem(item)
-    print(listTemplate.getData())
+    item.set_token('1')
+    item.set_plain_primary_text('p')
+    item.set_plain_secondary_text('s')
+    item.set_image('asfasdf')
+    listTemplate.add_item(item)
+    print(listTemplate.get_data())
     pass

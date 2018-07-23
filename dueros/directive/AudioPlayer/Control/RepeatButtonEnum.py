@@ -9,17 +9,15 @@
     desc:pass
 """
 
-from enum import Enum, unique
 
-@unique
-class RepeatButtonEnum(Enum):
+class RepeatButtonEnum(object):
     REPEAT_ONE = 'REPEAT_ONE'
     REPEAT_ALL = 'REPEAT_ALL'
     REPEAT_SHUFFLE = 'SHUFFLE'
 
     @staticmethod
-    def inEnum(repeatButton):
-        return repeatButton in RepeatButtonEnum.__members__.values()
+    def inEnum(position):
+        return position == RepeatButtonEnum.REPEAT_ONE or position == RepeatButtonEnum.REPEAT_ALL or position == RepeatButtonEnum.REPEAT_SHUFFLE
 
     pass
 
