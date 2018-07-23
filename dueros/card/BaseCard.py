@@ -16,7 +16,7 @@ class BaseCard(object):
         self.data = {}
         self.support_set_field = field
 
-    def add_cuewords(self, arr):
+    def add_cue_words(self, arr):
         """
 		为卡片添加cue words 提示用户输入
 		:param arr:

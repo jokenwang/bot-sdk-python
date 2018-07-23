@@ -56,35 +56,35 @@ class Request(Base):
         """
         return self.nlu
 
-    def get_devicedata(self):
+    def get_device_data(self):
         """
         返回设备信息
         :return:
         """
         return self.deviceData
 
-    def get_deviceid(self):
+    def get_device_id(self):
         """
         获取设备Id
         :return:
         """
         return Utils.getDictDataByKeyss(self.data,['context', 'System', 'device', 'deviceId'])
 
-    def get_original_deviceid(self):
+    def get_original_device_id(self):
         """
         获取来自端上报的原始设备Id
         :return:
         """
         return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'device', 'originalDeviceId'])
 
-    def get_audioplayer_context(self):
+    def get_audio_player_context(self):
         """
         获取设备音频播放状态
         :return:
         """
         return self.data['context']['AudioPlayer']
 
-    def get_videoplayer_context(self):
+    def get_video_player_context(self):
 
         return self.data['context']['VideoPlayer']
 
@@ -137,14 +137,14 @@ class Request(Base):
         """
         return self.request_type
 
-    def get_userid(self):
+    def get_user_id(self):
         """
         获取用户ID
         :return:
         """
         return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'user', 'userId'])
 
-    def get_accesstoken(self):
+    def get_access_token(self):
         """
         获取accessToken
         :return:
@@ -163,7 +163,7 @@ class Request(Base):
 
         return self.__get_system_user()['externalAccessTokens']
 
-    def get_cuid(self):
+    def get_cu_id(self):
         return self.data['cuid']
 
     def get_query(self):
@@ -214,11 +214,11 @@ class Request(Base):
 
         return Utils.getDictDataByKeyss(self.data, ['request', 'timestamp'])
 
-    def get_logid(self):
+    def get_log_id(self):
 
         return Utils.getDictDataByKeyss(self.data, ['request', 'requestId'])
 
-    def get_botid(self):
+    def get_bot_id(self):
 
         return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'application', 'applicationId'])
 

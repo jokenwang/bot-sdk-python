@@ -73,7 +73,7 @@ card = TextCard()
 //设置链接
 card.set_anchor('http://www.baidu.com');
 //设置cueWords
-card.add_cueWords('hint1');
+card.add_cue_Words('hint1');
 ```
 * 标准卡片 StandardCard
 ```python

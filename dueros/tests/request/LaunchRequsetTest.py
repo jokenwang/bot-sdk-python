@@ -45,7 +45,7 @@ class LaunchRequsetTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEqual(self.request.get_deviceid(), 'deviceId')
+        self.assertEqual(self.request.get_device_id(), 'deviceId')
 
     def testGetUserInfo(self):
         '''
@@ -101,21 +101,21 @@ class LaunchRequsetTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEqual(self.request.get_userid(), 'userId')
+        self.assertEqual(self.request.get_user_id(), 'userId')
 
     def testGetCuid(self):
         '''
         测试getCuid方法
         :return:
         '''
-        self.assertEqual(self.request.get_cuid(), 'cuid')
+        self.assertEqual(self.request.get_cu_id(), 'cuid')
 
     def testGetAccessToken(self):
         '''
 
         :return:
         '''
-        self.assertEqual(self.request.get_accesstoken(), 'access_token')
+        self.assertEqual(self.request.get_access_token(), 'access_token')
     pass
 
 

@@ -26,7 +26,7 @@ class Response(Base):
         self.request = request
         self.session = session
         self.nlu = nlu
-        self.source_type = self.request.get_botid()
+        self.source_type = self.request.get_bot_id()
         self.should_end_session = True
         self.need_determine = None
         self.expect_speech = None

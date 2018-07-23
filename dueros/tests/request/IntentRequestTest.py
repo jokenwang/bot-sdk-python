@@ -63,7 +63,7 @@ class IntentRequestTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEqual(self.request.get_userid(), 'userId')
+        self.assertEqual(self.request.get_user_id(), 'userId')
 
     def testGetQuery(self):
         '''
@@ -104,7 +104,7 @@ class IntentRequestTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEquals(self.request.get_botid(), 'botId')
+        self.assertEquals(self.request.get_bot_id(), 'botId')
 
     def testIsDialogStateCompleted(self):
         '''

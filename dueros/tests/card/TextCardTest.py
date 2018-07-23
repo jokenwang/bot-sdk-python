@@ -24,7 +24,7 @@ class TextCardTest(unittest.TestCase):
         测试添加关键字
         :return:
         '''
-        self.card.add_cuewords(['cuewords1', 'cuewords2'])
+        self.card.add_cue_words(['cuewords1', 'cuewords2'])
         card = {
             'type': 'txt',
             'content': '这是TextCard',

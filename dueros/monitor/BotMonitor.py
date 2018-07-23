@@ -20,14 +20,14 @@ import threading
 
 class BotMonitor:
 
-    def __init__(self, postdata):
-        if not isinstance(postdata, dict):
-            self.data = json.loads(postdata)
+    def __init__(self, post_data):
+        if not isinstance(post_data, dict):
+            self.data = json.loads(post_data)
         else:
-            self.data = postdata
+            self.data = post_data
         self.request_start_time = self.get_millisecond()
         self.request_end_time = 0
-        self.request = Request(postdata)
+        self.request = Request(post_data)
         self.audio_url = None
         self.app_name = None
         self.package_name = None

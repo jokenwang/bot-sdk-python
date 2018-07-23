@@ -202,7 +202,6 @@ class Bot(Base):
         :param default:
         :return:
         """
-
         self.session.set_data(field, value, default)
 
     def clear_session_attribute(self):
@@ -221,7 +220,7 @@ class Bot(Base):
         :return:
         """
 
-        if self.nlu:
+        if self.nlu and field is not None:
             return self.nlu.get_slot(field, index)
 
     def set_slots(self, field, value, index=0):
@@ -233,7 +232,7 @@ class Bot(Base):
         :return:
         """
 
-        if self.nlu:
+        if self.nlu and field is not None:
             self.nlu.set_slot(field, value, index)
 
     def wait_answer(self):

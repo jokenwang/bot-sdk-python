@@ -44,14 +44,28 @@ class Session(Base):
         }
 
     def get_data(self, field, default=''):
+        """
 
-        if field and field in self.data:
+        :param field:
+        :param default:
+        :return:
+        """
+        if field is not None and str(field) in self.data:
+            field = str(field)
             return self.data[field]
         else:
             return default
 
     def set_data(self, field, value, default=''):
-        if value is not None:
+        """
+
+        :param field:
+        :param value:
+        :param default:
+        :return:
+        """
+        if field is not None and value is not None:
+            field = str(field)
             self.data[field] = value
         else:
             self.data[field] = default
