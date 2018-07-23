@@ -76,14 +76,6 @@ class Certificate(Base):
         if not publickey or not self.data:
             return False
 
-        key = RSA.importKey(publickey)
-        if key:
-            digest = SHA.new()
-            digest.update(self.data)
-            verifier = PKCS1_v1_5.new(key)
-            if verifier.verify(digest, b64decode(self.get_request_sign())):
-                return True
-            return False
         # key = RSA.importKey(publicKey)
         # if key:
         #     digest = SHA.new()
@@ -103,15 +95,6 @@ class Certificate(Base):
         if not self.privatekey or not content:
             return False
 
-        rsakey = RSA.importKey(self.privatekey)
-        if rsakey:
-            digest = SHA.new()
-            digest.update(content)
-            signer = PKCS1_v1_5.new(rsakey)
-            signature = signer.sign(digest)
-            return b64encode(signature)
-        else:
-            return False
         # rsakey = RSA.importKey(self.privateKey)
         # if rsakey:
         #     digest = SHA.new()
@@ -126,17 +109,11 @@ class Certificate(Base):
         return self.environ['HTTP_SIGNATURE']
     
     def get_publickey_fromX509(self, content):
-
-    def getPublicKeyFromX509(self, content):
         '''
         获取publicKey
         :param X509 content
         :return publicKey
         '''
-        x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, content)
-        pk = x509.get_pubkey()
-        publickey = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
-        return publickey
         # x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, content)
         # pk = x509.get_pubkey()
         # publicKey = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
@@ -180,25 +157,25 @@ IYdYV3QpYohFszH3wQIDAQAB
 -----END PUBLIC KEY-----'''
 
     data = 'partner="2088701924089318"&seller="774653@qq.com"&out_trade_no="123000"&subject="123456"&body="2010新款NIKE 耐克902第三代板鞋 耐克男女鞋 386201 白红"&total_fee="0.01"¬ify_url="http://notify.java.jpxx.org/index.jsp'
-    def sign(data):
-        key = RSA.importKey(priKey)
-        digest = SHA.new()
-        digest.update(data)
-        signer = PKCS1_v1_5.new(key)
-        signature = signer.sign(digest)
-        return b64encode(signature)
+    # def sign(data):
+    #     key = RSA.importKey(priKey)
+    #     digest = SHA.new()
+    #     digest.update(data)
+    #     signer = PKCS1_v1_5.new(key)
+    #     signature = signer.sign(digest)
+    #     return b64encode(signature)
+    #
+    #
+    # def verify(data, signature):
+    #     key = RSA.importKey(pubKey)
+    #     digest = SHA.new()
+    #     digest.update(data)
+    #     verifier = PKCS1_v1_5.new(key)
+    #     if verifier.verify(digest, b64decode(signature)):
+    #         return True
+    #     return False
 
-
-    def verify(data, signature):
-        key = RSA.importKey(pubKey)
-        digest = SHA.new()
-        digest.update(data)
-        verifier = PKCS1_v1_5.new(key)
-        if verifier.verify(digest, b64decode(signature)):
-            return True
-        return False
-
-    signData = sign(data)
-    print(sign(data))
-    print(verify(data, signData))
+    # signData = sign(data)
+    # print(sign(data))
+    # print(verify(data, signData))
     pass

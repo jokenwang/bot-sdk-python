@@ -31,11 +31,11 @@ class BaseTemplate(object):
         """
 
         if url:
-            image = self.create_imagestructure(url, width_pixels, height_pixels)
+            image = self.create_image_structure(url, width_pixels, height_pixels)
             if image:
                 self.data['backgroundImage'] = image.get_data()
 
-    def create_imagestructure(self, url, width_pixels, height_pixels):
+    def create_image_structure(self, url, width_pixels, height_pixels):
 
         """
         创建imageStructure
@@ -55,7 +55,7 @@ class BaseTemplate(object):
                 image.set_height_pixels(height_pixels)
             return image
 
-    def create_textstructure(self, content, text_type=TextType.PLAIN_TEXT):
+    def create_text_structure(self, content, text_type=TextType.PLAIN_TEXT):
         """
         创建TextStructure
         :type content: object

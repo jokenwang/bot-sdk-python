@@ -9,7 +9,7 @@ import json
 import re
 import logging
 
-from dueros.monitor.BotMonitor import BotMonitor
+# from dueros.monitor.BotMonitor import BotMonitor
 from dueros.Certificate import Certificate
 from dueros.Intercept import Intercept
 from dueros.Request import Request
@@ -33,7 +33,7 @@ class Bot(Base):
         self.nlu = self.request.get_nlu()
         self.response = Response(self.request, self.session, self.nlu)
         self.handler = []
-        self.botMonitor = BotMonitor(post_data)
+        # self.botMonitor = BotMonitor(post_data)
         self.intercept = []
         self.certificate = None
         self.callback_func = None
@@ -276,32 +276,32 @@ class Bot(Base):
             return self.response.default_result()
 
         ret = {}
-        for intercept in self.intercept:
-            self.botMonitor.set_pre_event_start()
-            ret = intercept.preprocess(self)
-            self.botMonitor.set_pre_event_end()
-            if ret:
-                return
+        # for intercept in self.intercept:
+        # self.botMonitor.setPreEventStart()
+        # ret = intercept.preprocess(self)
+        # self.botMonitor.setPreEventEnd()
+        # if(ret):
+        #     return
 
         if not ret:
             if event_handler:
-                self.botMonitor.set_device_event_start()
-                event = self.request.get_event_data()
+                # self.botMonitor.set_device_event_start()
+                # event = self.request.get_event_data()
                 ret = self.__call_func(event_handler, event)
-                self.botMonitor.set_device_event_end()
+                # self.botMonitor.set_device_event_end()
             else:
-                self.botMonitor.set_event_start()
+                # self.botMonitor.set_event_start()
                 ret = self.__dispatch()
-                self.botMonitor.set_event_end()
+                # self.botMonitor.set_event_end()
 
-        for intercept in self.intercept:
-            self.botMonitor.set_post_event_start()
-            ret = intercept.postprocess(self, ret)
-            self.botMonitor.set_post_event_end()
+        # for intercept in self.intercept:
+        #     self.botMonitor.set_post_event_start()
+        #     ret = intercept.postprocess(self, ret)
+        #     self.botMonitor.set_post_event_end()
 
         res = self.response.build(ret)
-        self.botMonitor.set_response_data(res)
-        self.botMonitor.update_data()
+        # self.botMonitor.set_response_data(res)
+        # self.botMonitor.update_data()
 
         if self.callback_data:
             return json.dumps(ret)

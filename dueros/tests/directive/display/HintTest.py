@@ -35,7 +35,7 @@ class HintTest(unittest.TestCase):
             ]
         }
 
-        self.assertEqual(self.hint1.getData(), data1)
+        self.assertEqual(self.hint1.get_data(), data1)
 
         data2 = {
             'type': 'Hint',
@@ -49,7 +49,7 @@ class HintTest(unittest.TestCase):
                 }
             ]
         }
-        self.assertEqual(self.hint2.getData(), data2)
+        self.assertEqual(self.hint2.get_data(), data2)
 
     pass
 

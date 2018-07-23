@@ -20,7 +20,7 @@ class BodyTemplate1Test(unittest.TestCase):
 
     def setUp(self):
         self.template = BodyTemplate1()
-        self.template.set_plaintext_content('test')
+        self.template.set_plain_text_content('test')
         self.template.set_background_image('http://www.baidu.com')
         self.template.set_token('0c71de96-15d2-4e79-b97e-e52cec25c254')
 

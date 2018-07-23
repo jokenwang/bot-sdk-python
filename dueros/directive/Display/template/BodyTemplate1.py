@@ -21,14 +21,14 @@ class BodyTemplate1(BaseTemplate):
         self.set_type('BodyTemplate1')
         pass
 
-    def set_plaintext_content(self, text, position=TextContentPosition.BOTTOM_LEFT ):
+    def set_plain_text_content(self, text, position=TextContentPosition.BOTTOM_LEFT ):
         '''
 
         :param text:
         :param position:
         :return:
         '''
-        text_structure = self.create_textstructure(text, TextType.PLAIN_TEXT)
+        text_structure = self.create_text_structure(text, TextType.PLAIN_TEXT)
 
         if text_structure:
             if 'textContent' not in self.data.keys():

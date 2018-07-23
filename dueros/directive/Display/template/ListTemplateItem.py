@@ -25,7 +25,7 @@ class ListTemplateItem(BaseTemplate):
         :param primary_text:
         :return:
         """
-        primary_text_structure = self.create_textstructure(primary_text, TextType.PLAIN_TEXT)
+        primary_text_structure = self.create_text_structure(primary_text, TextType.PLAIN_TEXT)
         if primary_text_structure:
            self.data['textContent']['primaryText'] = primary_text_structure.get_data()
 
@@ -35,7 +35,7 @@ class ListTemplateItem(BaseTemplate):
         :param secondary_text:
         :return:
         """
-        secondary_text_structure = self.create_textstructure(secondary_text, TextType.PLAIN_TEXT)
+        secondary_text_structure = self.create_text_structure(secondary_text, TextType.PLAIN_TEXT)
         if secondary_text_structure:
             self.data['textContent']['secondaryText'] = secondary_text_structure.get_data()
 
@@ -45,7 +45,7 @@ class ListTemplateItem(BaseTemplate):
         :param tertiary_text:
         :return:
         """
-        tertiary_text_structure = self.create_textstructure(tertiary_text, TextType.PLAIN_TEXT)
+        tertiary_text_structure = self.create_text_structure(tertiary_text, TextType.PLAIN_TEXT)
         if tertiary_text_structure:
             self.data['textContent']['tertiaryText'] = tertiary_text_structure.get_data()
 
@@ -57,7 +57,7 @@ class ListTemplateItem(BaseTemplate):
         :param height_pixels:
         :return:
         """
-        image = self.create_imagestructure(url, width_pixels, height_pixels)
+        image = self.create_image_structure(url, width_pixels, height_pixels)
         if image:
             self.data['image'] = image.get_data()
 

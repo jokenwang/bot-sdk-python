@@ -13,6 +13,7 @@
 * directive目录生成指令相关比如：浏览器指令、音频指令
 * tests 目录存放本地测试代码
 * samples 示例demo，其中包括guess_num、audio_play、personal_income_tax
+* <font color=#8B0000>附件cfc.zip是个税查询demo ,可直接部署到百度CFC Python环境</font>
 ### 安装、使用BOT SDK进行开发
 
 1、 通过pip进行安装   
@@ -30,11 +31,8 @@ git clone https://github.com/jokenwang/bot-sdk-python.git
 
 * 通过Pypi获取最新发布版本源码
     
-    * dueros-bot-1.1.0 (大版本更新) [Pypi地址](https://pypi.org/project/dueros-bot-python2/1.1.0)
-    * dueros-bot-0.2.4 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.4)
-    * dueros-bot-0.2.3 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.3)
-    * dueros-bot-0.2.2 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.2)
-
+    * dueros-bot-python_cfc 1.0 (大版本更新) [Pypi地址](https://pypi.org/project/dueros-bot-python_cfc/1.0)
+    
 下载bot-sdk代码后，可以使用如下命令安装:
 ```python
 python setup.py install
@@ -110,7 +108,7 @@ bodyTemplate.set_background_image('https://skillstore.cdn.bcebos.com/icon/100/c7
 #设置模版标题
 bodyTemplate.set_title('托尔斯泰的格言')
 #设置模版plain类型的文本
-bodyTemplate.set_plaintext_content('拖尔斯泰-理想的书籍是智慧的钥匙') 
+bodyTemplate.set_plain_text_content('拖尔斯泰-理想的书籍是智慧的钥匙') 
 #定义RenderTemplate指令
 directive = RenderTemplate(bodyTemplate)
 return {

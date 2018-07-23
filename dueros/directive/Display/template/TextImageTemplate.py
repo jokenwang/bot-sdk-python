@@ -27,7 +27,7 @@ class TextImageTemplate(BaseTemplate):
         :return:
         """
 
-        image_structure = self.create_imagestructure(url, width_pixels, height_pixels)
+        image_structure = self.create_image_structure(url, width_pixels, height_pixels)
         if image_structure:
             self.data['image'] = image_structure.get_data()
 
@@ -37,7 +37,7 @@ class TextImageTemplate(BaseTemplate):
         :param text:
         :return:
         """
-        text_structure = self.create_textstructure(text, TextType.PLAIN_TEXT)
+        text_structure = self.create_text_structure(text, TextType.PLAIN_TEXT)
         if text_structure:
             self.data['content'] = text_structure.get_data()
         pass

@@ -21,7 +21,7 @@ class BodyTemplate5(BaseTemplate):
 
     def add_images(self, url, width_pixels='', height_pixel=''):
 
-        image_structure = self.create_imagestructure(url, width_pixels, height_pixel)
+        image_structure = self.create_image_structure(url, width_pixels, height_pixel)
         if image_structure:
             self.data['images'].append(image_structure.get_data())
         return self
