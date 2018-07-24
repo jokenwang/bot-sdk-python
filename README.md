@@ -472,6 +472,8 @@ pip install -r requirements.txt
 ### 鸣谢
 [@gongqingliang821](https://github.com/gongqingliang821)
 
+[@imzeali](https://github.com/imzeali)
+
 ### 免责声明
 
 * 此SDK非官网提供，纯属个人学习研究，如因使用此SDK导致的任何损失，本人概不负责
