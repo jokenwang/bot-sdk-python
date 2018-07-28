@@ -42,7 +42,7 @@ class Play(BaseDirective):
 
     def set_player_info(self, player_info):
         if isinstance(player_info,PlayerInfo):
-            self.data['audioItem']['playerInfo'] = playerInfo.get_data()
+            self.data['audioItem']['playerInfo'] = player_info.get_data()
 
     def set_token(self, token):
         if token:
