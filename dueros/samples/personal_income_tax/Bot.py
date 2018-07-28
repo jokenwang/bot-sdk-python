@@ -23,8 +23,8 @@ class Bot(Bot):
         '''
         获取槽位及逻辑处理
         '''
-        num = self.getSlots('sys.number')
-        city = self.getSlots('sys.city')
+        num = self.get_slots('sys.number')
+        city = self.get_slots('sys.city')
         if num and not city:
             self.nlu.ask('sys.city')
             return {
@@ -39,7 +39,7 @@ class Bot(Bot):
                 'outputSpeech': r'你的税前工资是多少呢'
             }
          
-        computeType = self.getSlots('compute_type')
+        computeType = self.get_slots('compute_type')
         if not computeType:
             self.nlu.ask('compute_type')
             return {
