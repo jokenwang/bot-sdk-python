@@ -27,7 +27,7 @@ class Bot(Bot):
         获取数字槽位值处理
         '''
         rightNum = 10
-        num = self.getSlots('sys.number');
+        num = self.get_slots('sys.number');
         num = int(num)
         if num > rightNum:
             return {
