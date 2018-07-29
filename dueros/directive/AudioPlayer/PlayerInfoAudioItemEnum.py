@@ -12,7 +12,7 @@
 
 class PlayerInfoAudioItemEnum(object):
 
-    AUDIO_TYPE_MUSIC = 'AUDIO_TYPE_MUSIC'
+    AUDIO_TYPE_MUSIC = 'MUSIC'
 
     FORMAT_LRC = 'LRC'
 

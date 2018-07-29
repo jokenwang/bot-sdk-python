@@ -18,6 +18,7 @@ from dueros.directive.AudioPlayer.Control.PreviousButton import PreviousButton
 from dueros.directive.AudioPlayer.Control.NextButton import NextButton
 from dueros.Utils import Utils
 
+
 class Play(BaseDirective):
 
     def __init__(self, url, play_behavior=PlayBehaviorEnum.REPLACE_ALL):
@@ -41,7 +42,7 @@ class Play(BaseDirective):
         }
 
     def set_player_info(self, player_info):
-        if isinstance(player_info,PlayerInfo):
+        if isinstance(player_info, PlayerInfo):
             self.data['audioItem']['playerInfo'] = player_info.get_data()
 
     def set_token(self, token):
@@ -57,7 +58,7 @@ class Play(BaseDirective):
             self.data['audioItem']['stream']['url'] = url
         return self
 
-    def set_offset_in_milliSeconds(self, milliseconds):
+    def set_offset_in_milliseconds(self, milliseconds):
         '''
         设置directive的属性。从指定的offset开始进行播放
         :param milliseconds:    毫秒数。比如5分钟的歌曲，播放的长度是5*60*1000毫秒，选择起始的播放位置
