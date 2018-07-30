@@ -340,8 +340,6 @@ class Bot(Base):
         event_data = self.request.get_event_data()
         if event_data and event_data['type']:
             key = event_data['type']
-            if '#' in key:
-                key = key.split('#', 1)
             if self.event[key]:
                 return self.event[key]
             elif self.event['__default__']:
