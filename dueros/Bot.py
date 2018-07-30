@@ -342,8 +342,11 @@ class Bot(Base):
             key = event_data['type']
             if key is not None and Utils.checkKeysInDict(self.event, key):
                 return self.event[key]
-            elif self.event['__default__']:
+            elif Utils.checkKeysInDict(self.event, '__default__'):
                 return self.event['__default__']
+            else:
+                print('request type = %s 未匹配到任何处理事件' % key)
+                return None
 
     def __call_func(self, func, arg):
         """
