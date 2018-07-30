@@ -238,5 +238,9 @@ class Request(Base):
         if Utils.checkKeyInDict(self.data['request'], ['query']):
             return self.data['request']['query']['original']
 
+    def get_supported_interfaces(self):
+
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'device', 'supportedInterfaces'])
+
 if __name__ == '__main__':
     pass

@@ -16,6 +16,7 @@ from dueros.Request import Request
 from dueros.Nlu import Nlu
 reload(sys)
 sys.setdefaultencoding('utf-8')
+from dueros.Utils import Utils
 
 class IntentRequestTest(unittest.TestCase):
 
@@ -113,7 +114,43 @@ class IntentRequestTest(unittest.TestCase):
         '''
         self.assertFalse(self.request.is_dialog_state_completed())
 
+    def testGetSupportedInterface(self):
 
+        print(self.request.get_supported_interfaces())
+
+        print(self.is_support_interface('VideoPlayer'))
+
+    def testIsSupportVideoPlayer(self):
+        result = self.is_support_interface('VideoPlayer')
+        self.assertTrue(result, '不支持VideoPlayer')
+
+    def testIsSupportDisplay(self):
+        """
+        判断设备是否支持Display
+        :return:
+        """
+        result = self.is_support_interface('Display')
+        self.assertTrue(result, '不支持Display')
+
+    def testsSupportAudioPlayer(self):
+        """
+        检测AudioPlayer对象是否存在
+        :return:
+        """
+        result = self.is_support_interface('AudioPlayer')
+        self.assertTrue(result, '不支持AudioPlayer')
+
+    def is_support_interface(self, support_func):
+        """
+        校验是否支持
+        :param support_func:
+        :return:
+        """
+        supported_interfaces = self.request.get_supported_interfaces()
+        if supported_interfaces and isinstance(supported_interfaces, dict):
+            return Utils.checkKeyInDict(supported_interfaces, support_func)
+        else:
+            return False
     pass
 
 

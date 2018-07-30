@@ -14,14 +14,14 @@
         "applicationId": "botId"
       },
       "device": {
-          "deviceId": "39c5c984ba571afa023bb9161e46c9c7",
-          "supportedInterfaces": {
-              "VoiceInput": [],
-              "VoiceOutput": [],
-              "AudioPlayer": [],
-              "VideoPlayer": [],
-              "Display": []
-          }
+        "deviceId": "39c5c984ba571afa023bb9161e46c9c7",
+        "supportedInterfaces": {
+          "VoiceInput": [],
+          "VoiceOutput": [],
+          "AudioPlayer": [],
+          "VideoPlayer": [],
+          "Display": []
+        }
       }
     }
   },
@@ -38,7 +38,7 @@
         "name": "intentName",
         "score": 100,
         "confirmationStatus": "NONE",
-        "slots":{
+        "slots": {
           "city": {
             "name": "city",
             "value": "北京",
@@ -52,3 +52,4 @@
     "requestId": "1e335011-80cf-49cc-93c8-dc689826bb46",
     "timestamp": "1504359342"
   }
+}

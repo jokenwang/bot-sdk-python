@@ -14,13 +14,13 @@ from dueros.directive.AudioPlayer.Control.RepeatButtonEnum import RepeatButtonEn
 
 class RepeatButton(RadioButton):
 
-    def __init__(self, selectedValue = RepeatButtonEnum.REPEAT_ONE):
-        super(RepeatButton, self).__init__('REPEAT', selectedValue)
+    def __init__(self, selected_value=RepeatButtonEnum.REPEAT_ONE):
+        super(RepeatButton, self).__init__('REPEAT', selected_value)
 
-    def setSelectedValue(self, selectedValue = RepeatButtonEnum.REPEAT_ONE):
+    def set_selected_value(self, selected_value=RepeatButtonEnum.REPEAT_ONE):
 
-        if RepeatButtonEnum.inEnum(selectedValue):
-            self.data['selectedValue'] = selectedValue
+        if RepeatButtonEnum.inEnum(selected_value):
+            self.data['selectedValue'] = selected_value
         else:
             self.data['selectedValue'] = RepeatButtonEnum.REPEAT_ONE
 
