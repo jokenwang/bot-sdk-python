@@ -16,7 +16,7 @@ from dueros.Intercept import Intercept
 from dueros.Request import Request
 from dueros.Response import Response
 from dueros.Base import Base
-
+from dueros.Utils import Utils
 
 class Bot(Base):
 
@@ -498,6 +498,38 @@ class Bot(Base):
         if self.nlu and slot:
             self.nlu.ask(slot)
 
+    def is_support_display(self):
+        """
+        判断设备是否支持Display
+        :return:
+        """
+        return self.__is_support_interface('Display')
+
+    def is_support_audio_player(self):
+        """
+        检测AudioPlayer对象是否存在
+        :return:
+        """
+        return self.__is_support_interface('AudioPlayer')
+
+    def is_support_video_player(self):
+        """
+        检测VideoPlayer对象是否存在
+        :return:
+        """
+        return self.__is_support_interface('VideoPlayer')
+
+    def __is_support_interface(self, support_func):
+        """
+        校验是否支持
+        :param support_func:
+        :return:
+        """
+        supported_interfaces = self.request.get_supported_interfaces()
+        if supported_interfaces and isinstance(supported_interfaces, dict):
+            return Utils.checkKeyInDict(supported_interfaces, support_func)
+        else:
+            return False
 
 if __name__ == '__main__':
     pass

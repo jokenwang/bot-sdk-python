@@ -240,6 +240,9 @@ class Request(Base):
         """
         return self.data['request']['dialogState'] == 'COMPLETED'
 
+    def get_supported_interfaces(self):
+
+        return Utils.get_dict_data_by_keys(self.data, ['context', 'System', 'device', 'supportedInterfaces'])
 
 
 if __name__ == '__main__':
