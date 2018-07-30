@@ -15,8 +15,7 @@ from dueros.directive.AudioPlayer.AudioItemTypeEnum import AudioItemTypeEnum
 class PlayerInfo:
 
     def __init__(self):
-        self.data = {}
-        self.data['content']={}
+        self.data = {'content': {}}
         self.data['content']['audioItemType'] = AudioItemTypeEnum.AUDIO_TYPE_MUSIC.value
 
     def set_audio_item_type(self, audio_item_type):
