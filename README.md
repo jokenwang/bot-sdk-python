@@ -64,6 +64,23 @@ def createRemind(self):
         }
 ```
 第一个参数代表意图名称，第二个参数代表意图命中后的回调函数，这里addHandler可以用来建立intent和handler的映射，第一个参数意图名称是条件，如果满足则执行对应的回调函数(第二个参数)。 其中回调函数中，self指向当前的Bot，getSlots继承自父类Bot，通过slot名字来获取对应的槽位值。回调函数返回值是一个字典，可以包含多个字段，比如：card、directives、outputSpeech、reprompt等,下面会一一给出示例。
+
+### 设备相关(Bot方法)
+* 客户端是否支持屏幕展示
+```python
+    bot.is_support_display()
+```
+
+* 客户端是否支持音频播放
+```python
+    bot.is_support_audio_player()
+```
+
+* 客户端是否支持视频播放
+```python
+    bot.is_support_audio_player()
+```
+
 ### card展示卡片
 * 文本卡片:TextCard
 ```python
@@ -71,31 +88,31 @@ card = TextCard('content')
 or 
 card = TextCard()
 //设置链接
-card.set_anchor('http://www.baidu.com');
+card.set_anchor('http://www.baidu.com')
 //设置cueWords
-card.add_cue_words('hint1');
+card.add_cue_words('hint1')
 ```
 * 标准卡片 StandardCard
 ```python
 card = StandardCard()
-card.set_title('title');
-card.set_content('content');
-card.set_image('http://www...');
-card.set_anchor('http://www.baidu.com');
+card.set_title('title')
+card.set_content('content')
+card.set_image('http://www...')
+card.set_anchor('http://www.baidu.com')
 ```
 * 列表卡片ListCard
 ```python
-card = new ListCard();
-item = new ListCardItem();
+card = new ListCard()
+item = new ListCardItem()
 item.set_title('title')
 item.set_content('content')
 item.set_url('http://www')
-item.set_image('http://www.png');
-card.add_item(item);
+item.set_image('http://www.png')
+card.add_item(item)
 ```
 * 图片卡片ImageCard
 ```python
-card = ImageCard();
+card = ImageCard()
 card.add_item('http://src.image', 'http://thumbnail.image');
 ```
 
