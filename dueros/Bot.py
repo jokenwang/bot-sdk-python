@@ -17,16 +17,14 @@ from dueros.Response import Response
 from dueros.Base import Base
 from dueros.Utils import Utils
 
+
 class Bot(Base):
-    '''
-    Bot入口
-    '''
 
     def __init__(self, post_data):
-        '''
+        """
         构造方法
         :param post_data:
-        '''
+        """
         super(Bot, self).__init__()
         self.postData = post_data
         self.request = Request(post_data)
@@ -163,16 +161,16 @@ class Bot(Base):
         :return:
         """
 
-        if event and func:
+        if event is None and isinstance(event, str) and func and hasattr(func, '__call__'):
             self.event[event] = func
 
     def add_default_event_listener(self, func):
         """
         默认兜底事件的处理函数
-        :param event:
         :param func:
         :return:
         """
+
         if hasattr(func, '__call__'):
             self.event['__default__'] = func
 
@@ -317,6 +315,7 @@ class Bot(Base):
         分发请求并调用回调方法
         :return:
         """
+
         if not self.handler:
             return
 
@@ -336,7 +335,10 @@ class Bot(Base):
         self.un_match_handler(self.callback_data)
 
     def __get_register_event_handler(self):
-
+        """
+        根据request数据获取指定事件的处理函数
+        :return: Func/None
+        """
         event_data = self.request.get_event_data()
         if event_data and event_data['type']:
             key = event_data['type']
@@ -345,7 +347,7 @@ class Bot(Base):
             elif Utils.checkKeyInDict(self.event, '__default__'):
                 return self.event['__default__']
             else:
-                print('request type = %s 未匹配到任何处理事件' % key)
+                logging.warning('request type = %s 未匹配到任何处理事件' % key)
                 return None
 
     def __call_func(self, func, arg):
@@ -436,6 +438,7 @@ class Bot(Base):
         :param data:
         :return:
         """
+
         if self.callback_func and data:
             self.callback_func(data)
 
@@ -449,19 +452,23 @@ class Bot(Base):
         pass
 
     def declare_effect(self):
+
         self.response.set_need_determine()
 
     def effect_confirmed(self):
+
         self.request.is_determined()
 
     def set_expect_speech(self, expect_speech):
         """
         通过控制expectSpeech来控制麦克风开
-        :param expect_speech:
+        :param expect_speech: True/False
         :return:
         """
 
-        self.response.set_expect_speech(expect_speech)
+        if isinstance(expect_speech, bool):
+            self.response.set_expect_speech(expect_speech)
+        return self
 
     def set_fallback(self):
         """
@@ -472,36 +479,45 @@ class Bot(Base):
         self.response.set_fallback()
 
     def ask(self, slot):
+        """
+        询问指定的槽位
+        :param slot:
+        :return:
+        """
         if self.nlu:
             self.nlu.ask(slot)
 
     def is_support_display(self):
         """
         判断设备是否支持Display
-        :return:
+        :return: True/False
         """
+
         return self.__is_support_interface('Display')
 
     def is_support_audio_player(self):
         """
         检测AudioPlayer对象是否存在
-        :return:
+        :return: True/False
         """
+
         return self.__is_support_interface('AudioPlayer')
 
     def is_support_video_player(self):
         """
         检测VideoPlayer对象是否存在
-        :return:
+        :return: True/False
         """
+
         return self.__is_support_interface('VideoPlayer')
 
     def __is_support_interface(self, support_func):
         """
-        校验是否支持
-        :param support_func:
-        :return:
+        校验客户端是否支持某些特性
+        :param support_func:  Display、AudioPlayer、VideoPlayer
+        :return: True:支持; False:不支持
         """
+
         supported_interfaces = self.request.get_supported_interfaces()
         if supported_interfaces and isinstance(supported_interfaces, dict):
             return Utils.checkKeyInDict(supported_interfaces, support_func)

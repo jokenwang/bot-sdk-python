@@ -11,8 +11,9 @@
 import os
 import fcntl
 import hashlib
-# import OpenSSL
+import OpenSSL
 import urllib2
+import logging
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from Crypto.Hash import SHA
@@ -23,27 +24,38 @@ from dueros.Base import Base
 class Certificate(Base):
 
     def __init__(self, environ, request_body, privatekey_content=""):
-        '''
+        """
         私钥内容,使用统计功能必须要提供
         :param environ: 环境上下文
         :param request_body:
         :param privatekey_content:
-        '''
+        """
 
         super(Certificate, self).__init__()
 
         self.environ = environ
         self.data = request_body
-        self.privatekey = privatekey_content
+        self.private_key = privatekey_content
         self.verify_request_sign = False
 
     def enable_verify_request_sign(self):
+        """
+        开启数据校验
+        :return:
+        """
+
+        logging.info('开启数据校验')
         self.verify_request_sign = True
 
     def disable_verify_request_sign(self):
+        """
+        关闭数据校验
+        :return:
+        """
+        logging.info('关闭数据校验')
         self.verify_request_sign = False
 
-    def get_request_publickey(self):
+    def get_request_public_key(self):
 
         filename = self.environ['HTTP_SIGNATURECERTURL']
         if not filename:
@@ -60,23 +72,24 @@ class Certificate(Base):
                 fcntl.flock(f, fcntl.LOCK_EX)
                 f.write(content)
                 fcntl.flock(f, fcntl.LOCK_UN)
-        content = self.getFileContentSafety(cache)
-        return self.getPublicKeyFromX509(content)
+        content = self.get_file_content_safety(cache)
+        return self.get_publickey_fromX509(content)
 
     def verify_request(self):
-        '''
+        """
         数据验证
         :return:
-        '''
+        """
+
         if not self.verify_request_sign:
             return True
 
-        publickey = self.get_request_publickey()
+        public_key = self.get_request_public_key()
 
-        if not publickey or not self.data:
+        if not public_key or not self.data:
             return False
 
-        key = RSA.importKey(publickey)
+        key = RSA.importKey(public_key)
         if key:
             digest = SHA.new()
             digest.update(self.data)
@@ -87,19 +100,20 @@ class Certificate(Base):
         return False
 
     def get_sign(self, content):
-        '''
+        """
         生成签名
         :param content: 待签名内容
         :return:
-        '''
-        if not self.privatekey or not content:
+        """
+
+        if not self.private_key or not content:
             return False
 
-        rsakey = RSA.importKey(self.privatekey)
-        if rsakey:
+        rsa_key = RSA.importKey(self.private_key)
+        if rsa_key:
             digest = SHA.new()
             digest.update(content)
-            signer = PKCS1_v1_5.new(rsakey)
+            signer = PKCS1_v1_5.new(rsa_key)
             signature = signer.sign(digest)
             return b64encode(signature)
         else:
@@ -109,27 +123,28 @@ class Certificate(Base):
         return self.environ['HTTP_SIGNATURE']
     
     def get_publickey_fromX509(self, content):
-        '''
+        """
         获取publicKey
-        :param X509 content
-        :return publicKey
-        '''
+        :param content
+        """
+
         x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, content)
         pk = x509.get_pubkey()
-        publickey = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
-        return publickey
+        public_key = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
+        return public_key
 
     def get_file_content_safety(self, filename):
-        '''
+        """
         获取文件内容
         :param filename
         :return content
-        '''
+        """
+
         with open(filename, 'r') as f:
-            fcntl.flock(f,fcntl.LOCK_SH)
+            fcntl.flock(f, fcntl.LOCK_SH)
             content = f.read()
             return content
-            fcntl.flock(f,fcntl.LOCK_UN)
+            fcntl.flock(f, fcntl.LOCK_UN)
 
 if __name__ == '__main__':
 
