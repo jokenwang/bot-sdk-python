@@ -14,12 +14,12 @@ from setuptools import find_packages
 
 setup(
     name='dueros-bot-python_cfc',
-    version='1.0',
+    version='1.1',
     author='jack',
     author_email='mupdf@sina.com',
     description='Third party DuerOS Bot Python SDK ',
     keywords='DuerOS Bot',
-    url='https://github.com/jokenwang/bot-sdk-python',
+    url='https://github.com/jokenwang/bot-sdk-python/tree/python2.7_cfc',
     packages=find_packages(),
     install_requires=[
         'pycrypto>=2.6.1',

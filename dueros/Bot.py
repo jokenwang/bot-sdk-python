@@ -284,7 +284,7 @@ class Bot(Base):
         if not ret:
             if event_handler:
                 # self.botMonitor.set_device_event_start()
-                # event = self.request.get_event_data()
+                event = self.request.get_event_data()
                 ret = self.__call_func(event_handler, event)
                 # self.botMonitor.set_device_event_end()
             else:
