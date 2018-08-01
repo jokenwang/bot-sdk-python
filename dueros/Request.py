@@ -27,11 +27,11 @@ class Request(Base):
             self.data = json.loads(data)
         else:
             self.data = data
-        self.request_type = self.data['request']['type']
+        self.request_type = Utils.getDictDataByKeyss(self.data, ['request', 'type'])
         self.session = Session(self.data['session'])
         self.nlu = None
         if self.request_type == 'IntentRequest':
-            self.nlu = Nlu(self.data['request']['intents'])
+            self.nlu = Nlu(Utils.getDictDataByKeyss(self.data, ['request', 'intents']))
         self.deviceData = None
         self.arrUserProfile = None
 
@@ -68,7 +68,7 @@ class Request(Base):
         获取设备Id
         :return:
         """
-        return Utils.getDictDataByKeyss(self.data,['context', 'System', 'device', 'deviceId'])
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'device', 'deviceId'])
 
     def get_original_device_id(self):
         """
@@ -197,6 +197,7 @@ class Request(Base):
         是否为调起bot请求
         :return:
         """
+
         return self.data['request']['type'] == 'LaunchRequest'
 
     def is_session_end_request(self):
@@ -204,6 +205,7 @@ class Request(Base):
         是否关闭bot请求
         :return:
         """
+
         return self.data['request']['type'] == 'SessionEndedRequest'
 
     def is_session_ended_request(self):
@@ -228,6 +230,7 @@ class Request(Base):
 
         :return:
         """
+
         return self.data['request']['dialogState'] == 'COMPLETED'
 
     def get_request_query_original(self):
@@ -235,8 +238,14 @@ class Request(Base):
         获取最原始的请求内容
         :return:
         """
+
         if Utils.checkKeyInDict(self.data['request'], ['query']):
             return self.data['request']['query']['original']
+
+    def get_supported_interfaces(self):
+
+        return Utils.getDictDataByKeyss(self.data, ['context', 'System', 'device', 'supportedInterfaces'])
+
 
 if __name__ == '__main__':
     pass

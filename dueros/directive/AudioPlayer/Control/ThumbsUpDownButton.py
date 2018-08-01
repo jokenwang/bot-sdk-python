@@ -14,12 +14,12 @@ from dueros.directive.AudioPlayer.Control.ThumbsUpDownButtonEnum import ThumbsUp
 
 class ThumbsUpDownButton(RadioButton):
 
-    def __init__(self, selectedValue=ThumbsUpDownButtonEnum.THUMBS_UP):
-        super(ThumbsUpDownButton, self).__init__('THUMBS_UP_DOWN', selectedValue)
+    def __init__(self, selected_value=ThumbsUpDownButtonEnum.THUMBS_UP):
+        super(ThumbsUpDownButton, self).__init__('THUMBS_UP_DOWN', selected_value)
 
-    def setSelectedValue(self, selectedValue=ThumbsUpDownButtonEnum.THUMBS_UP):
-        if ThumbsUpDownButtonEnum.inEnum(selectedValue):
-            self.data['selectedValue'] = selectedValue
+    def set_selected_value(self, selected_value=ThumbsUpDownButtonEnum.THUMBS_UP):
+        if ThumbsUpDownButtonEnum.inEnum(selected_value):
+            self.data['selectedValue'] = selected_value
         else:
             self.data['selectedValue'] = ThumbsUpDownButtonEnum.THUMBS_UP
 
