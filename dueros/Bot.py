@@ -161,7 +161,7 @@ class Bot(Base):
         :return:
         """
 
-        if event is None and isinstance(event, str) and func and hasattr(func, '__call__'):
+        if event is not None and isinstance(event, str) and func and hasattr(func, '__call__'):
             self.event[event] = func
 
     def add_default_event_listener(self, func):
