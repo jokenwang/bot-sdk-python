@@ -22,7 +22,7 @@ setup(
     url='https://github.com/jokenwang/bot-sdk-python',
     packages=find_packages(),
     install_requires=[
-        'pycrypto>=2.6.1',
+        'pycryptodome>=3.6.5'
         'requests',
 	    'pyOpenSSL'
     ]
