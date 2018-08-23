@@ -116,6 +116,11 @@ card = ImageCard()
 card.add_item('http://src.image', 'http://thumbnail.image');
 ```
 
+* 用户授权LinkAccountCard
+```python
+card = LinkAccountCard()
+```
+
 ### 文本展现模板
 * BodyTemplate1
 ```python
@@ -423,6 +428,32 @@ if money and phone:
         'outputSpeech': '你确认充话费：' + money + '，充值手机：' + phone,
     }
 ```
+
+### 第三方授权(有屏设备)
+当需要第三方资源,比如访问新浪微博资源时，需要用户授权才能访问第三方资源，此时就需要
+用户授权此应用可以访问自己在新浪微博上的资源。
+**注意注意：debug模式下，在第三方配置的回调地址要写成:https://xiaodu-dbp.baidu.com/saiya/auth/xxxx**
+```python
+card = LinkAccountCard()
+return {
+    'card': card
+}
+
+```
+
+返回card后会在屏幕展示一张二维码，通过手机扫码即可完成授权。有屏设备再完成授权后会发送授权事件:Connections.Response
+数据格式如下：
+```
+{
+    'dialogRequestId': '',
+    'name': 'LinkAccountSucceeded', 
+    'timestamp': 'xxxx',
+    'token': 'xxxx', //第三方授权成功返回的token
+    'requestId': 'xxxx',
+    'type': 'Connections.Response'
+}
+```
+
 ### 插件
 
 可以使用如下命令安装:你还可以写插件(拦截器Intercept),干预对话流程、干预返回结果。比如，用户没有通过百度帐号登录，bot直接让用户去登录，不响应意图，可以使用LoginIntercept:
