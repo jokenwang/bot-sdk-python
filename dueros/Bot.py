@@ -534,5 +534,75 @@ class Bot(Base):
         else:
             return False
 
+    def add_common_default_intent_handler(self, func):
+        """
+        在无法识别用户需求的场景下，则直接将用户请求发给技能
+        :param func:
+        :return:
+        """
+        self.add_intent_handler('ai.dueros.common.default_intent', func)
+
+    def add_common_stop_intent_handler(self, func):
+        """
+        停止的意图用于用户表达停止内容资源(音乐、视频、有声)等场景。
+        已经为你富集好了用户表达确认的多样化表达，可直接引用停止的意图。
+        :param func:
+        :return:
+        """
+        self.add_intent_handler('ai.dueros.common.stop_intent', func)
+
+    def add_common_next_intent_handler(self, func):
+        """
+        下一个的意图用于用户表达下一个内容资源(音乐、视频、有声)等场景。
+        已经为你富集好了用户表达确认的多样化表达，可直接引用下一个的意图。
+        :param func:
+        :return:
+        """
+        self.add_intent_handler('ai.dueros.common.next_intent', func)
+
+    def add_common_cancel_intent_handler(self, func):
+        """
+        取消的意图用于用户中断对话任务的场景。已经为你富集好了用户表达确认的多样化表达，可直接引用取消的意图
+        :param func:
+        :return:
+        """
+        self.add_intent_handler('ai.dueros.common.cancel_intent', func)
+
+    def add_common_confirm_intent_handler(self, func):
+        """
+        确认的意图用于用户确认对话任务的场景。已经为你 富集好了用户表达确认的多样化表达，可直接引用确认的意图。
+        :param func:
+        :return:
+        """
+        self.add_intent_handler('ai.dueros.common.confirm_intent', func)
+
+    def add_common_pause_intent_handler(self, func):
+        """
+        暂停的意图用于用户表达暂停内容资源(音乐、视频、有声)等场景。
+        已经为你富集好了用户表达确认的多样化表达，可直接引用暂停的意图。
+        :param func:
+        :return:
+        """
+        self.add_intent_handler('ai.dueros.common.pause_intent', func)
+
+    def add_common_continue_intent_handler(self, func):
+        """
+        继续的意图用于用户表达继续内容资源(音乐、视频、有声)等场景。
+        已经为你富集好了用户表达确认的多样化表达，可直接引用暂停的意图。
+        :param func:
+        :return:
+        """
+        self.add_intent_handler('ai.dueros.common.continue_intent', func)
+
+    def add_common_previous_intent_handler(self, func):
+        """
+        上一个的意图用于用户表达上一个内容资源(音乐、视频、有声)等场景。
+        已经为你富集好了用户表达确认的多样化表达，可直接引用上一个的意图。
+        :param func:
+        :return:
+        """
+        self.add_intent_handler('ai.dueros.common.previous_intent', func)
+
+
 if __name__ == '__main__':
     pass
