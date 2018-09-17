@@ -356,15 +356,29 @@ def getRemindSlot(self):
     }
 self.add_launch_handler(self.getRemindSlot)
 ```
-### 监听events
+
+### 事件Events
+* Display.ElementSelected  展示列表的item被选中会触发此事件，端点会上送此事件
+
+* Display.ButtonClicked    展示类型的Button被点击,端点会上送此事件
+
+* Form.ButtonClicked       音频或视频播放页面按钮被点击(上一个、下一个、重复、收藏、收藏列表、播放列表)，端点会上送此事件
+
+* AudioPlayer 、VideoPlayer 播放也有对应事件，详看官方文档
+
+### 监听Events
 ```python
-def dealAlertEvent(self):
+def dealAlertEvent(self, event):
     card = TextCard('闹钟创建成功')
     return {
         'card': card,
     }
 self.add_event_listener('Alerts.SetAlertSucceeded', self.dealAlertEvent)
 ```
+event就是上送给技能的事件，里面包含事件类型、token等信息,可以通过event数据来做对应的业务。
+
+Bot-sdk会根据通过add_event_listener添加的event handler来匹配对应的事件类型。
+
 Bot-sdk会根据通过add_intent_handler添加handler的顺序来遍历所有的检查条件，寻找条件满足的handler来执行回调，并且当回调函数返回值不是None时结束遍历，将这个不为None的值返回。
 
 NLU会维护slot的值，merge每次对话解析出的slot，你可以不用自己来处理，DuerOS每次请求Bot时会将merge的slot都下发。session内的数据完全由你来维护，你可以用来存储一些状态，比如打车Bot会用来存储当前的订单状态。你可以通过如下接口来使用slot和session：
