@@ -38,7 +38,7 @@ class RenderVideoPlayerInfoTest(unittest.TestCase):
         self.renderVideoPlayerInfo.set_token('test_token')
         self.renderVideoPlayerInfo.set_content(content)
         self.renderVideoPlayerInfo.set_controls(controls);
-        self.assertEqual(self.renderVideoPlayerInfo.get_data(), self.data);
+        self.assertEqual(self.renderVideoPlayerInfo.get_data(), self.data)
     pass
 
 

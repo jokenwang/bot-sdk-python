@@ -29,11 +29,11 @@ class AudioPlayerInfoContent(BasePlayerInfoContent):
         if isinstance(title, str):
             self.data['title'] = title
 
-    def set_title_sub_text1(self, title_sub_text1):
+    def set_title_subtext1(self, title_sub_text1):
         if isinstance(title_sub_text1, str):
             self.data['titleSubtext1'] = title_sub_text1
 
-    def set_title_sub_text2(self, title_sub_text2):
+    def set_title_subtext2(self, title_sub_text2):
         if isinstance(title_sub_text2, str):
             self.data['titleSubtext2'] = title_sub_text2
 

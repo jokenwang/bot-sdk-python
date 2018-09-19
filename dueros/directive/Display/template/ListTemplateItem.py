@@ -90,7 +90,7 @@ class ListTemplateItem(BaseTemplate):
             self.data['image']['tags'] = get_image_tag_data(self.image_tags)
         if key:
             return self.data[key]
-        return self.data;
+        return self.data
 
 
 def get_image_tag_data(tags):
