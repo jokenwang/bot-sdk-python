@@ -8,13 +8,17 @@
 """
     desc:pass
 """
-from dueros.directive.AudioPlayer.Control.BaseButton import BaseButton
 from dueros.Utils import Utils
 from dueros.directive.AudioPlayer.AudioItemTypeEnum import AudioItemTypeEnum
+from dueros.directive.Base.TraitPlayerInfo import TraitPlayerInfo
 
-class PlayerInfo:
 
-    def __init__(self):
+class PlayerInfo(TraitPlayerInfo):
+
+    def __init__(self, content, controls=[]):
+        super(PlayerInfo, self).__init__()
+        self.set_content(content)
+        self.set_controls(controls)
         self.data = {'content': {}}
         self.data['content']['audioItemType'] = AudioItemTypeEnum.AUDIO_TYPE_MUSIC.value
 
@@ -62,29 +66,6 @@ class PlayerInfo:
             self.data['content']['provider']['logo'] = {}
         self.data['content']['provider']['logo']['src'] = logo
 
-    def set_controls(self, controls):
-
-        if not Utils.checkKeyInDict(self.data, 'controls'):
-            self.data['controls'] = []
-
-        if isinstance(controls, BaseButton):
-            self.data['controls'].append(controls.get_data())
-
-        if type(controls) == list:
-            for control in controls:
-                self.data['controls'].append(control.get_data())
-
-    def add_control(self, control):
-
-        if not Utils.checkKeyInDict(self.data, 'controls'):
-            self.data['controls'] = []
-
-        if isinstance(control, BaseButton):
-            self.data['controls'].append(control.get_data())
-
-    def get_data(self):
-
-        return self.data
     pass
 
 
