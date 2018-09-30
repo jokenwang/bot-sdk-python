@@ -18,6 +18,7 @@ class Nlu(Base):
         self.data = data
         self.ask_slot = None
         self.directive = None
+        self.afterSearchScore = None
 
     def get_intent_name(self, index=0):
         """
@@ -172,15 +173,14 @@ class Nlu(Base):
         在Response 中被调用
         :return:
         """
+        return self.data[0] if self.data[0] else None
 
-        if self.data[0]:
-            return {
-                'intent': self.data[0]
-            }
-        else:
-            return {
-                'intent': {}
-            }
+    def get_after_search_score(self):
+        return self.afterSearchScore
+
+    def set_after_search_score(self, after_search_score):
+        if after_search_score and isinstance(after_search_score, float):
+            self.afterSearchScore = after_search_score
 
     def set_delegate(self):
         """

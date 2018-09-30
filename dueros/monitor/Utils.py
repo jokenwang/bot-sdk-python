@@ -59,6 +59,8 @@ class Utils:
         for key in keys:
             if key in dicts:
                 dicts = dicts[key]
+                if dicts is None:
+                    return None
                 if last_key == key:
                     return dicts
                 continue

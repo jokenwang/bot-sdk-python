@@ -12,6 +12,7 @@ import re
 from dueros.card.TextCard import TextCard
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.Base import Base
+from dueros.Utils import Utils
 
 
 class Response(Base):
@@ -31,6 +32,7 @@ class Response(Base):
         self.need_determine = None
         self.expect_speech = None
         self.fallback = None
+        self.expectResponse = None
 
     def set_should_end_session(self, val):
         """
@@ -111,28 +113,26 @@ class Response(Base):
             if arr:
                 directives.append(arr)
 
-        if not data['outputSpeech'] and data['card'] and isinstance(data['card'], TextCard):
-            data['outputSpeech'] = data['card'].get_data()['content']
+        auto_complete_speech = True
+        if Utils.checkKeyInDict(data, 'autoCompleteSpeech') and isinstance(
+                Utils.checkKeyInDict(data, 'autoCompleteSpeech'), bool):
+            auto_complete_speech = data['autoCompleteSpeech']
 
-        if self.nlu:
-            if self.nlu.to_update_intent():
-                context = self.nlu.to_update_intent()
-            else:
-                context = {}
-        else:
-            context = {}
+
+        if auto_complete_speech and not data['outputSpeech'] and data['card'] and isinstance(data['card'], TextCard):
+            data['outputSpeech'] = data['card'].get_data()['content']
 
         ret = {
             "version": "2.0",
-            "context": context,
+            "context": self.__build_context(),
             "session": self.session.to_response(),
             "response": {
                 "directives":  directives,
                 "shouldEndSession": self.should_end_session,
                 "card": data['card'].get_data() if data['card'] else None,
                 "resource": data['resource'],
-                "outputSpeech": self.format_speech(data['outputSpeech']),
-                "reprompt": {"outputSpeech": self.format_speech(data['reprompt'])}
+                "outputSpeech": self.format_speech(data['outputSpeech']) if data['outputSpeech'] else None,
+                "reprompt": {"outputSpeech": self.format_speech(data['reprompt'])} if data['reprompt'] else None
             }
         }
 
@@ -167,7 +167,6 @@ class Response(Base):
             }
         return result
 
-
     def illegal_request(self):
 
         return {
@@ -195,6 +194,48 @@ class Response(Base):
         """
 
         self.fallback = True
+
+    def add_expect_text_response(self, text):
+        """
+        技能所期待的用户回复，技能将该信息反馈给DuerOS，有助于DuerOS在语音识别以及识别纠错时向该信息提权
+        :param text:
+        :return:
+        """
+        if text and isinstance(text, str):
+            self.expectResponse = {
+                'type': 'PlainText',
+                'text': text
+            }
+
+    def add_expect_slot_response(self, slot):
+        """
+        技能所期待的用户回复，技能将该信息反馈给DuerOS，有助于DuerOS在语音识别以及识别纠错时向该信息提权。
+        :param slot:
+        :return:
+        """
+        if slot and isinstance(slot, str):
+            self.expectResponse = {
+                'type': 'Slot',
+                'slot': slot
+            }
+
+    def __build_context(self):
+        context = {}
+        if self.nlu and self.nlu.to_update_intent():
+            context['intent'] = self.nlu.to_update_intent()
+
+        if self.expectResponse:
+            context['expectResponse'] = self.expectResponse
+
+        if self.nlu:
+            after_search_score = self.nlu.get_after_search_score()
+            if after_search_score and isinstance(after_search_score, float):
+                context['afterSearchScore'] = after_search_score
+
+        if not context:
+            context = {}
+
+        return context
 
 
 if __name__ == '__main__':
