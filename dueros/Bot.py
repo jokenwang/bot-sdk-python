@@ -18,6 +18,7 @@ from dueros.Response import Response
 from dueros.Base import Base
 from dueros.Utils import Utils
 
+
 class Bot(Base):
 
     def __init__(self, request_data, private_key= ''):
@@ -307,7 +308,7 @@ class Bot(Base):
             ret = intercept.postprocess(self, ret)
             self.botMonitor.setPost_event_end()
         res = self.response.build(ret)
-        print(json.dumps(res))
+        print('response = ', json.dumps(res))
         self.botMonitor.set_response_data(res)
         self.botMonitor.update_data()
 
@@ -533,6 +534,28 @@ class Bot(Base):
             return Utils.checkKeyInDict(supported_interfaces, support_func)
         else:
             return False
+
+    def default_event(self):
+        """
+        默认事件处理"""
+        self.wait_answer()
+        self.set_expect_speech(False)
+
+    def add_expect_text_response(self, text):
+        """
+        技能所期待的用户回复，技能将该信息反馈给DuerOS，有助于DuerOS在语音识别以及识别纠错时向该信息提权。
+        :param text:
+        :return:
+        """
+        self.response.add_expect_text_response(text)
+
+    def add_expect_slot_response(self, slot):
+        """
+        技能所期待的用户回复，技能将该信息反馈给DuerOS，有助于DuerOS在语音识别以及识别纠错时向该信息提权。
+        :param slot:
+        :return:
+        """
+        self.response.add_expect_slot_response(slot)
 
     def add_common_default_intent_handler(self, func):
         """

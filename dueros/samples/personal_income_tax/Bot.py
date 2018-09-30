@@ -14,7 +14,7 @@ class Bot(Bot):
         '''
         打开调用名
         '''
-        self.waitAnswer()
+        self.wait_answer()
         return {
             'outputSpeech': r'欢迎进入'
         }
