@@ -15,6 +15,7 @@ import hashlib
 
 import json
 
+
 class Utils:
 
     @staticmethod

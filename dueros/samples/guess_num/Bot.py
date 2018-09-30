@@ -18,6 +18,7 @@ class Bot(Bot):
         '''
         self.wait_answer()
         card = TextCard('欢迎来到猜数字游戏')
+        self.add_expect_text_response('我猜4')
         return {
             'card' : card,
             'outputSpeech': r'欢迎来到猜数字游戏'
@@ -33,6 +34,8 @@ class Bot(Bot):
         num = int(num)
         if num > rightNum:
             self.ask('sys.number')
+            self.add_expect_slot_response('sys.number')
+            self.add_expect_text_response('我猜6')
             return {
                 'outputSpeech' :'您所猜的数字大了'
             }

@@ -557,6 +557,9 @@ class Bot(Base):
         """
         self.response.add_expect_slot_response(slot)
 
+    def add_expect_slot_and_text_response(self, slot, text):
+        self.add_expect_slot_and_text_response(slot, text)
+
     def add_common_default_intent_handler(self, func):
         """
         在无法识别用户需求的场景下，则直接将用户请求发给技能

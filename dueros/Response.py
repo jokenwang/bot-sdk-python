@@ -202,10 +202,12 @@ class Response(Base):
         :return:
         """
         if text and isinstance(text, str):
-            self.expectResponse = {
+            if not self.expectResponse:
+                self.expectResponse = []
+            self.expectResponse.append({
                 'type': 'PlainText',
                 'text': text
-            }
+            })
 
     def add_expect_slot_response(self, slot):
         """
@@ -214,10 +216,16 @@ class Response(Base):
         :return:
         """
         if slot and isinstance(slot, str):
-            self.expectResponse = {
+            if not self.expectResponse:
+                self.expectResponse = []
+            self.expectResponse.append({
                 'type': 'Slot',
                 'slot': slot
-            }
+            })
+
+    def add_expect_slot_text_response(self, slot, text):
+        self.add_expect_slot_response(slot)
+        self.add_expect_text_response(text)
 
     def __build_context(self):
         context = {}
