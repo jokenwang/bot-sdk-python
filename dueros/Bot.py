@@ -68,15 +68,36 @@ class Bot(Base):
         关闭签名验证
         :return:
         """
-
         if self.certificate:
             self.certificate.disable_verify_request_sign()
         return self
 
-    def set_private_key(self, private_key):
+    def set_monitor_enabled(self, enable=True):
+        """
+        设置是否开启Monitor 默认开启
+        :param enable:
+        :return:
+        """
+        if isinstance(enable, bool):
+            self.botMonitor.set_monitor_enabled(enable)
 
+    def set_private_key(self, private_key):
+        """
+        Deprecated
+        :param private_key:
+        :return:
+        """
         self.botMonitor.set_environment_info(private_key, 0)
         return self
+
+    def set_environment_info(self, private_key, environment=0):
+        """
+        设置私钥和环境模式 默认debug
+        :param private_key: 私钥
+        :param environment: 0代表你的Bot在DBP平台debug环境，1或者其他整数代表online环境
+        :return:
+        """
+        self.botMonitor.set_environment_info(private_key, environment)
 
     def add_launch_handler(self, func):
         """

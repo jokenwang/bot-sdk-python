@@ -138,9 +138,9 @@ class Certificate(Base):
         :return content
         """
         with open(filename, 'r') as f:
-            fcntl.flock(f,fcntl.LOCK_SH)
+            fcntl.flock(f, fcntl.LOCK_SH)
             content = f.read()
-            fcntl.flock(f,fcntl.LOCK_UN)
+            fcntl.flock(f, fcntl.LOCK_UN)
             return content
 
 
