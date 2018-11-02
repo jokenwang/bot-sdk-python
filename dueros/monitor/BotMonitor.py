@@ -16,11 +16,11 @@ import base64
 import time
 import requests
 import threading
-
+import logging
 
 class BotMonitor:
 
-    def __init__(self, post_data, private_key=''):
+    def __init__(self, post_data, private_key=None):
         if not isinstance(post_data, dict):
             post_data = json.loads(post_data)
         self.data = post_data
@@ -40,12 +40,11 @@ class BotMonitor:
         self.config = BotMonitorConfig()
         self.private_key = private_key
         self.environment = 0
-        self.enabled = True
+        self.enabled = False
         self.certificate = None
         self.response = None
 
     def set_environment_info(self, private_key, environment):
-        print(private_key)
         self.private_key = private_key
         self.environment = environment
         self.certificate = Certificate(None, self.data, private_key)
@@ -242,10 +241,14 @@ class BotMonitor:
         判断Monitor是否可用
         :return:
         '''
-
-        if not self.private_key or len(self.private_key) == 0 or not self.enabled:
+        if not self.enabled:
+            logging.warning('未开启数据统计功能, 如果使用统计功能需要调用set_monitor_enabled(True)')
             return True
-        return False
+        if self.enabled:
+            if not self.private_key or len(self.private_key) == 0:
+                logging.warning('未配置私钥, 请调用set_environment_info(prikey)')
+                return True
+            return False
 
 
     def get_millisecond(self):

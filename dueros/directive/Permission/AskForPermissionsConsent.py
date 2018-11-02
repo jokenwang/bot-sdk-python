@@ -26,8 +26,6 @@ class AskForPermissionsConsent(BaseDirective):
     def add_permission(self, name):
 
         if name and PermissionEnum.inEnum(name):
-            # if not Utils.checkKeyInDict(self.data, 'permissions'):
-            #     self.data['permissions'] = []
             self.data['permissions'] = [name]
     pass
 
