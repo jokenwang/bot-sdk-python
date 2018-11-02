@@ -10,6 +10,7 @@ Bot入口, 实现自己的技能需要继承此类。并在构造方法内添加
 
 import json
 import re
+import logging
 from dueros.monitor.BotMonitor import BotMonitor
 from dueros.Certificate import Certificate
 from dueros.Intercept import Intercept
@@ -72,7 +73,7 @@ class Bot(Base):
             self.certificate.disable_verify_request_sign()
         return self
 
-    def set_monitor_enabled(self, enable=True):
+    def set_monitor_enabled(self, enable=False):
         """
         设置是否开启Monitor 默认开启
         :param enable:
@@ -80,6 +81,7 @@ class Bot(Base):
         """
         if isinstance(enable, bool):
             self.botMonitor.set_monitor_enabled(enable)
+        return self
 
     def set_private_key(self, private_key):
         """
@@ -329,7 +331,7 @@ class Bot(Base):
             ret = intercept.postprocess(self, ret)
             self.botMonitor.setPost_event_end()
         res = self.response.build(ret)
-        print('response = ', json.dumps(res))
+        logging.info('Bot Response Data: ', json.dumps(res))
         self.botMonitor.set_response_data(res)
         self.botMonitor.update_data()
 

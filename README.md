@@ -491,6 +491,24 @@ class YourIntercept(Intercept):
 ```
 intercept可以定义多个，执行顺序，以调用addIntercept的顺序来执行
 
+### 技能数据验证
+Bot技能支持数据验证(默认数据验证是关闭的)，确保数据的来源的可靠性。(确保已经在技能平台配置了公钥)
+* 开启数据验证
+```python
+enable_verify_request_sign()
+```
+
+### 技能数据统计
+Bot默认未开启技能数据统计功能，需要手动开启。(确保已经在技能平台配置了公钥)
+```python
+self.set_monitor_enabled(True)
+
+```
+之后设置自己的私钥和环境(0:Debug模式, 1:online模式)
+```python
+self.set_environment_info(private_key, environment=0)
+```
+
 ### <span id = "question">常见问题</span>
 * 运行sh start.sh 出现 ImportError: No module named OpenSSL
 执行下面命令
