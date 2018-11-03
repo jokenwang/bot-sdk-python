@@ -226,6 +226,22 @@ return {
 }
 ```
 
+### 上图下文模版类
+```python
+bodyTemplate = BodyTemplate6()
+bodyTemplate.set_token('token')
+bodyTemplate.set_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+bodyTemplate.set_background_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+bodyTemplate.set_title('托尔斯泰的格言')
+bodyTemplate.set_plain_content('拖尔斯泰-理想的书籍是智慧的钥匙')
+#定义RenderTemplate指令
+directive = RenderTemplate(bodyTemplate)
+return {
+    'directives': [directive],
+    'outputSpeech': '这是BodyTemplate6模板'
+}
+```
+
 ### 横向列表模板
 * ListTemplate1
 ```python
@@ -278,10 +294,78 @@ listTemplate.add_item(listTemplateItem)
 directive = RenderTemplate(listTemplate)
 return {
     'directives': [directive],
-    'outputSpeech': '这是ListTemplate1模板'
+    'outputSpeech': '这是ListTemplate2模板'
 }
 ```
 
+### 横向列表
+*ListTemplate3
+```python
+listTemplate = ListTemplate3()
+#设置模板token
+listTemplate.set_token('token')
+#设置模板背景图
+listTemplate.set_background_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版标题
+listTemplate.set_title('托尔斯泰的格言')
+
+#设置模版列表数组listItems其中一项，即列表的一个元素
+listTemplateItem = ListTemplateItem()
+listTemplateItem.set_token('token')
+listTemplateItem.set_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+listTemplateItem.set_plain_primary_text('一级标题')
+listTemplateItem.set_plain_secondary_text('二级标题')
+
+#把listTemplateItem添加到模版listItems
+listTemplate.add_item(listTemplateItem)
+#定义RenderTemplate指令
+directive = RenderTemplate(listTemplate)
+return {
+    'directives': [directive],
+    'outputSpeech': '这是ListTemplate3模板'
+}
+```
+
+### 纵向列表
+*ListTemplate4
+```python
+listTemplate = ListTemplate4()
+#设置模板token
+listTemplate.set_token('token')
+#设置模板背景图
+listTemplate.set_background_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版标题
+listTemplate.set_title('托尔斯泰的格言')
+
+#设置模版列表数组listItems其中一项，即列表的一个元素
+listTemplateItem = ListTemplateItem()
+listTemplateItem.set_token('token')
+listTemplateItem.set_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+listTemplateItem.set_plain_primary_text('一级标题')
+listTemplateItem.set_plain_secondary_text('二级标题')
+
+#把listTemplateItem添加到模版listItems
+listTemplate.add_item(listTemplateItem)
+#定义RenderTemplate指令
+directive = RenderTemplate(listTemplate)
+return {
+    'directives': [directive],
+    'outputSpeech': '这是ListTemplate4模板'
+}
+```
+
+### Tag标签
+*[Tag](https://github.com/jokenwang/bot-sdk-python/tree/master_alpha/dueros/directive/Display/tag) 标签用在List模板的每个Item上(显示在每个item的右下角)，比如:付费、免费、最新、VIP、限时、已购、最热以及自定义标签内容等
+PayTag、FreeTag、NewTag、HotTag、VipTag、TimeTag、PurchasedTag、HotTag、CustomTag、AmountTag、AuditionTag
+
+###音频播放列表
+* RenderAudioList 用于渲染音频播放列表。当在播放页面，点击播放列表按钮,可返回RenderAudioList用于渲染UI
+
+###视频播放列表
+* RenderVideoList 用于渲染视频播放列表。当在播放页面，点击播放列表按钮,可返回RenderAudioList用于渲染UI
+
+### 权限申请
+* AskForPermission 当技能需要获取用户权限:用户信息、位置信息等, 需要向用户进行权限申请。目前只支持用户权限的申请
 
 ### directive指令
 * 播放指令 AudioPlayer.Play
