@@ -358,10 +358,51 @@ return {
 *[Tag](https://github.com/jokenwang/bot-sdk-python/tree/master_alpha/dueros/directive/Display/tag) 标签用在List模板的每个Item上(显示在每个item的右下角)，比如:付费、免费、最新、VIP、限时、已购、最热以及自定义标签内容等
 PayTag、FreeTag、NewTag、HotTag、VipTag、TimeTag、PurchasedTag、HotTag、CustomTag、AmountTag、AuditionTag
 
-###音频播放列表
+### 音频播放
+* 音频播放 
+```python
+directive = Play('http://www.baidu.com')
+#设置音频格式
+directive.set_stream_format('AUDIO_M3U8')
+#上一首
+previous = PreviousButton()
+previous.set_selected(True)
+# 创建暂停按钮
+playpause = PlayPauseButton()
+#下一首
+next = NextButton()
+#可以添加多个button  比如:收藏、喜欢、播放列表等
+controls = [previous, playpause, NextButton()]
+playerInfo = PlayerInfo('周杰伦 七里香', controls)
+playerInfo.set_title('周杰伦')
+playerInfo.set_title_subtext1('七里香')
+playerInfo.set_art('http://adfadfa')
+# 设置Play指令的PlayerInfo
+directive.set_player_info(playerInfo)
+return{
+    'directives': [directive]
+}
+```
+
+* 视频播放
+```python
+directive = VideoPlayer('video_url', PlayBehaviorEnum.REPLACE_ENQUEUED)
+directive.set_offset_in_milliseconds(121321)
+directive.set_expiry_time('123213223')
+directive.set_expected_previous_token('asdsd-1233-dsew-39FG')
+directive.set_report_delay_in_ms(1234.12212)
+directive.set_report_interval_in_ms(123)
+directive.set_token('AGDG-SAHSHD_ASDS_123')
+directive.set_url('http://set-url.com')
+return{
+    'directives': [directive]
+}
+```
+
+### 音频、视频播放列表
+
 * RenderAudioList 用于渲染音频播放列表。当在播放页面，点击播放列表按钮,可返回RenderAudioList用于渲染UI
 
-###视频播放列表
 * RenderVideoList 用于渲染视频播放列表。当在播放页面，点击播放列表按钮,可返回RenderAudioList用于渲染UI
 
 ### 权限申请
