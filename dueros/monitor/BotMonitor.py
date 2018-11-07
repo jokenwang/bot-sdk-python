@@ -180,7 +180,7 @@ class BotMonitor:
         :return:
         '''
         response = requests.post(self.config.get_upload_url(), data=data, headers=headers)
-        print('回调结果:%s' % response.text)
+        logging.info('数据统计回调结果' + response.text)
 
     def __build_upload_data(self):
 
@@ -225,10 +225,11 @@ class BotMonitor:
         }
 
         orginData = json.dumps(retData)
-        print('orginData = %s' % orginData)
+        logging.info('数据统计原始数据:' + orginData)
 
         base64Data = str(base64.b64encode(orginData.encode('utf-8')), 'utf-8')
-        print(base64Data)
+        logging.info('数据统计加密数据:' + base64Data)
+
         if self.environment == 0:
             pkversion = 'debug'
         else:

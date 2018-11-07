@@ -7,7 +7,7 @@
 """
 卡片基类
 """
-
+import logging
 
 class BaseCard(object):
 
@@ -56,12 +56,10 @@ class BaseCard(object):
 		:param item:
 		:return:
 		'''
-        print(item)
         # 获取操作类型 set
         operation = item[0:3]
         # 获取被操作的属性
         field = item[4:]
-        print(field)
         if operation == 'set' and field and (field.lower() in self.support_set_field):
             def function(*args):
                 self.data[field.lower()] = args[0]
@@ -69,7 +67,7 @@ class BaseCard(object):
             return function
         else:
             def function(*args):
-                print('不支持', operation, field)
+                logging.info('不支持', operation, field)
 
             return function
 

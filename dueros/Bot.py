@@ -331,7 +331,7 @@ class Bot(Base):
             ret = intercept.postprocess(self, ret)
             self.botMonitor.setPost_event_end()
         res = self.response.build(ret)
-        logging.info('Bot Response Data: ', json.dumps(res))
+        logging.info('Bot Response Data: ' + json.dumps(res))
         self.botMonitor.set_response_data(res)
         self.botMonitor.update_data()
 
@@ -383,7 +383,7 @@ class Bot(Base):
             elif Utils.checkKeyInDict(self.event, '__default__'):
                 return self.event['__default__']
             else:
-                print('request type = %s 未匹配到任何处理事件' % key)
+                logging.info('request type = %s 未匹配到任何处理事件' % key)
                 return None
 
     def __call_func(self, func, arg):
