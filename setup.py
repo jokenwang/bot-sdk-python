@@ -14,7 +14,7 @@ from setuptools import find_packages
 
 setup(
     name='dueros-bot',
-    version='1.2.3',
+    version='2.0.0',
     author='jack',
     author_email='mupdf@sina.com',
     description='Third party DuerOS Bot Python SDK',
@@ -22,7 +22,7 @@ setup(
     url='https://github.com/jokenwang/bot-sdk-python',
     packages=find_packages(),
     install_requires=[
-        'pycryptodome ~> 3.6.6',
+        'pycryptodome >= 3.6.6',
         'requests',
 	    'pyOpenSSL'
     ]
