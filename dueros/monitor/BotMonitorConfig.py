@@ -22,7 +22,7 @@ class BotMonitorConfig:
 
     @staticmethod
     def get_sdk_version():
-        return '1.0.0'
+        return '2.0.0'
 
     @staticmethod
     def get_sdk_type():
