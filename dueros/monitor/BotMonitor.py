@@ -265,7 +265,6 @@ def upload_data(**kwargs):
     }
     logging.info('准备统计数据上送到百度')
     response = requests.post(url, data=data, headers=headers)
-    print('数据统计回调结果' + response.text)
     logging.info('数据统计回调结果' + response.text)
 
 
