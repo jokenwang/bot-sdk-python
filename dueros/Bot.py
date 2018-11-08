@@ -31,6 +31,7 @@ class Bot(Base):
 
         super(Bot, self).__init__()
         self.request_data = request_data
+        logging.info('技能收到的请求数据:' + str(request_data))
         self.request = Request(request_data)
         self.session = self.request.get_session()
         self.nlu = self.request.get_nlu()
@@ -331,7 +332,7 @@ class Bot(Base):
             ret = intercept.postprocess(self, ret)
             self.botMonitor.setPost_event_end()
         res = self.response.build(ret)
-        logging.info('Bot Response Data: ' + json.dumps(res))
+        logging.info('技能返回数据: ' + json.dumps(res))
         self.botMonitor.set_response_data(res)
         self.botMonitor.update_data()
 

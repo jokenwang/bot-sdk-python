@@ -9,6 +9,8 @@
     desc:pass
 """
 import json
+import time
+
 
 class Utils:
 
@@ -86,6 +88,16 @@ class Utils:
 
             if isinstance(value, int) or isinstance(value, float):
                 return int(value)
+
+    @staticmethod
+    def get_millisecond():
+        '''
+        获取当前时间
+        :return:
+        '''
+
+        return int(time.time())
+
 
 if __name__ == '__main__':
     pass
