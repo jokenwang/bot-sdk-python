@@ -9,22 +9,27 @@
 """
 from dueros.monitor.model.Request import Request
 from dueros.monitor.model.Response import Response
+from dueros.monitor.Utils import Utils
 from dueros.monitor.BotMonitorConfig import BotMonitorConfig
 from dueros.Certificate import Certificate
 import json
 import base64
-import time
 import requests
-import threading
 import logging
+from concurrent.futures import ThreadPoolExecutor
+from multiprocessing import cpu_count
+
 
 class BotMonitor:
+
+    # process_executor = ProcessPoolExecutor(max_workers=1)
+    thread_executor = ThreadPoolExecutor(max_workers=cpu_count())
 
     def __init__(self, post_data, private_key=None):
         if not isinstance(post_data, dict):
             post_data = json.loads(post_data)
         self.data = post_data
-        self.request_start_time = self.get_millisecond()
+        self.request_start_time = Utils.get_millisecond()
         self.request_end_time = 0
         self.request = Request(post_data)
         self.audio_url = None
@@ -61,39 +66,39 @@ class BotMonitor:
 
         if self.is_should_disable():
             return
-        self.request_end_time = self.get_millisecond()
+        self.request_end_time = Utils.get_millisecond()
         self.response = Response(response_data)
 
     def set_event_start(self):
 
         if self.is_should_disable():
             return
-        self.event_start_time = self.get_millisecond()
+        self.event_start_time = Utils.get_millisecond()
 
     def set_event_end(self):
 
         if self.is_should_disable():
             return
-        self.event_cost_time = self.get_millisecond() - self.event_start_time
+        self.event_cost_time = Utils.get_millisecond() - self.event_start_time
 
     def set_device_event_start(self):
 
         if self.is_should_disable():
             return
-        self.device_event_start_time = self.get_millisecond()
+        self.device_event_start_time = Utils.get_millisecond()
 
     def set_device_event_end(self):
 
         if self.is_should_disable():
             return
-        self.device_event_cost_time = self.get_millisecond() - self.device_event_start_time
+        self.device_event_cost_time = Utils.get_millisecond() - self.device_event_start_time
 
     def set_opration_tic(self, task_name):
 
         if self.is_should_disable():
             return
         if task_name:
-            self.user_event_list[task_name] = self.get_millisecond()
+            self.user_event_list[task_name] = Utils.get_millisecond()
             self.is_event_make_pair[task_name] = False
 
     def set_opration_toc(self, task_name):
@@ -109,7 +114,7 @@ class BotMonitor:
             cost_time = 0
 
             if old_time:
-                curr_time = self.get_millisecond()
+                curr_time = Utils.get_millisecond()
                 cost_time = curr_time - old_time
 
             self.user_event_list[task_name] = cost_time
@@ -146,6 +151,7 @@ class BotMonitor:
     def update_data(self):
         if self.is_should_disable():
             return
+        logging.info('准备上传技能统计数据')
         bot_id = self.request.get_bot_id()
 
         #组装数据 返回元祖(base64后的data, 时间戳)
@@ -159,31 +165,12 @@ class BotMonitor:
         if not signature or len(pkversion) == 0:
             return
 
-        headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Content-Length': str(len(base64Data)),
-            'SIGNATURE': signature,
-            'botId': str(bot_id),
-            'timestamp': str(timestamp),
-            'pkversion': str(pkversion)
-        }
-
-        thread = threading.Thread(target=self.__upload_data, args=(base64Data, headers))
-        thread.start()
-
-    def __upload_data(self, data, headers):
-        '''
-        发送请求
-        :param url:
-        :param data:
-        :param headers:
-        :return:
-        '''
-        response = requests.post(self.config.get_upload_url(), data=data, headers=headers)
-        logging.info('数据统计回调结果' + response.text)
+        logging.info('上传技能统计数据已放到线程池内')
+        BotMonitor.thread_executor.submit(upload_data, url=self.config.get_upload_url(), data=base64Data,
+                                   signature=str(signature, encoding='utf-8'), bot_id=str(bot_id),
+                                   timestamp=str(timestamp), pkversion=str(pkversion))
 
     def __build_upload_data(self):
-
         sysEvent = {
             'preEventList': {},
             'postEventList': {},
@@ -191,7 +178,7 @@ class BotMonitor:
             'deviceEventCostTime': self.device_event_cost_time
         }
 
-        timestamp = self.get_millisecond()
+        timestamp = Utils.get_millisecond()
 
         retData = {
             'serviceData': {
@@ -252,13 +239,35 @@ class BotMonitor:
             return False
 
 
-    def get_millisecond(self):
-        '''
-        获取当前时间
-        :return:
-        '''
+def upload_data(**kwargs):
+    """
+    发送请求
+    :param url:
+    :param data:
+    :param headers:
+    :return:
+    """
 
-        return int(time.time())
+    url = kwargs['url']
+    data = kwargs['data']
+    signature = kwargs['signature']
+    bot_id = kwargs['bot_id']
+    timestamp = kwargs['timestamp']
+    pkversion = kwargs['pkversion']
+
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': str(len(data)),
+        'SIGNATURE': signature,
+        'botId': str(bot_id),
+        'timestamp': str(timestamp),
+        'pkversion': str(pkversion)
+    }
+    logging.info('准备统计数据上送到百度')
+    response = requests.post(url, data=data, headers=headers)
+    print('数据统计回调结果' + response.text)
+    logging.info('数据统计回调结果' + response.text)
+
 
 if __name__ == '__main__':
 
