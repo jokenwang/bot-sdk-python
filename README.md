@@ -406,7 +406,45 @@ return{
 * RenderVideoList 用于渲染视频播放列表。当在播放页面，点击播放列表按钮,可返回RenderAudioList用于渲染UI
 
 ### 权限申请
-* AskForPermission 当技能需要获取用户权限:用户信息、位置信息等, 需要向用户进行权限申请。目前只支持用户权限的申请
+1、AskForPermission 当技能需要获取用户权限:用户信息、位置信息等, 需要向用户进行权限申请。目前只支持用户权限的申请
+2、 比如获取用户信息权限如下
+```python
+directive = AskForPermissionsConsent()
+directive.add_permission(PermissionEnum.PERMISSION_USER_INFO)
+
+```
+3、 添加事件回调处理
+```python
+#用户允许授权 回调
+self.add_permission_granted_event(func)
+#表示用户拒绝授权
+self.add_permission_rejected_event(func)
+#表示用户同意授权，但是由于其他原因导致授权失败
+self.add_permission_grant_failed_event(func)
+```
+4、获取用户信息, 如果用户允许获取权限那么可以在回调方法中去获取用户的信息  
+```python
+curl -X GET \
+  https://xiaodu.baidu.com/saiya/v1/user/profile \
+  -H 'authorization: bearer {apiAccessToken}'
+```
+或通过urlib发起GET请求发送数据, 将authorization字段放到请求的header中   
+注意:apiAccessToken从Launchrequest请求中获取   
+如果返回成功，会获得用户的信息   
+```python
+{
+	"status": 0,
+	"msg": "ok",
+	"data": {
+		"nickname": "",
+		"phone": "xxxx",
+		"email": "xxx",
+		"portrait": "xxx"
+	},
+	"logId": "xxxx"
+}
+```
+status 字段详见[Dueros文档](https://developer.dueros.baidu.com/doc/dueros-bot-platform/dbp-user-info/request-customer-information-api_markdown)
 
 ### directive指令
 * 播放指令 AudioPlayer.Play

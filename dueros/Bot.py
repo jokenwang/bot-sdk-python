@@ -559,6 +559,13 @@ class Bot(Base):
         else:
             return False
 
+    def get_api_access_token(self):
+        """
+        获取LaunchRequest 中的apiAccessToken
+        :return:
+        """
+        return self.request.get_api_access_token()
+
     def default_event(self):
         """
         默认事件处理"""
@@ -580,6 +587,8 @@ class Bot(Base):
         :return:
         """
         self.response.add_expect_slot_response(slot)
+
+    """==================================Dueros通用意图=================================="""
 
     def add_common_default_intent_handler(self, func):
         """
@@ -649,6 +658,35 @@ class Bot(Base):
         :return:
         """
         self.add_intent_handler('ai.dueros.common.previous_intent', func)
+
+    """==================================Dueros授权事件=================================="""
+
+    def add_permission_granted_event(self, func):
+        """
+        授权成功事件
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('Permission.Granted', func)
+
+    def add_permission_rejected_event(self, func):
+        """
+        表示用户拒绝授权
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('Permission.Rejected', func)
+
+    def add_permission_grant_failed_event(self, func):
+        """
+        表示用户同意授权，但是由于其他原因导致授权失败
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('Permission.GrantFailed', func)
 
 
 if __name__ == '__main__':
