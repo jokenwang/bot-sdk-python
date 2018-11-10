@@ -10,6 +10,7 @@
 """
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.Permission.PermissionEnum import PermissionEnum
+from dueros.Utils import Utils
 
 
 class AskForPermissionsConsent(BaseDirective):
@@ -24,11 +25,13 @@ class AskForPermissionsConsent(BaseDirective):
             self.data['token'] = token
 
     def add_permission(self, name):
-
         if name and PermissionEnum.inEnum(name):
-            self.data['permissions'] = [name]
-    pass
+            if not Utils.checkKeyInDict(self.data, 'permissions'):
+                self.data['permissions'] = []
+            self.data['permissions'].append({'name': name.value})
 
 
 if __name__ == '__main__':
+
+
     pass
