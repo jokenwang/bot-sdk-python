@@ -244,6 +244,12 @@ class Request(Base):
 
         return Utils.get_dict_data_by_keys(self.data, ['context', 'System', 'device', 'supportedInterfaces'])
 
+    def get_api_access_token(self):
+        """
+        获取ApiAccessToken  申请授权的时候使用
+        :return:
+        """
+        return Utils.get_dict_data_by_keys(self.data, ['context', 'System', 'apiAccessToken'])
 
 if __name__ == '__main__':
     pass
