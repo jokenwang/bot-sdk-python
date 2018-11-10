@@ -429,7 +429,10 @@ curl -X GET \
   -H 'authorization: bearer {apiAccessToken}'
 ```
 或通过urlib发起GET请求发送数据, 将authorization字段放到请求的header中   
-注意:apiAccessToken从Launchrequest请求中获取   
+注意:apiAccessToken从Launchrequest请求中获取, 通过下面方式可获取到   
+```python
+self.get_api_access_token()
+```
 如果返回成功，会获得用户的信息   
 ```python
 {
