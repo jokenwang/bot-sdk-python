@@ -30,6 +30,7 @@ git clone https://github.com/jokenwang/bot-sdk-python.git
 
 * 通过Pypi获取最新发布版本源码
 
+    * dueros-bot-2.1.2 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/2.1.2)
     * dueros-bot-2.0.0 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/2.0.0)
     * dueros-bot-1.1.0 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/1.1)
     * dueros-bot-0.2.4 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.4)
@@ -404,7 +405,7 @@ return{
 
 * RenderAudioList 用于渲染音频播放列表。当在播放页面，点击播放列表按钮,可返回RenderAudioList用于渲染UI
 
-* RenderVideoList 用于渲染视频播放列表。当在播放页面，点击播放列表按钮,可返回RenderAudioList用于渲染UI
+* RenderVideoList 用于渲染视频播放列表。当在播放页面，点击播放列表按钮,可返回RenderVideoList用于渲染UI
 
 ### 权限申请
 1、AskForPermission 当技能需要获取用户权限:用户信息、位置信息等, 需要向用户进行权限申请。目前只支持用户权限的申请
@@ -660,10 +661,15 @@ intercept可以定义多个，执行顺序，以调用addIntercept的顺序来�
 
 ### 技能数据验证
 Bot技能支持数据验证(默认数据验证是关闭的)，确保数据的来源的可靠性。(确保已经在技能平台配置了公钥)
+* 初始化数据校验
+```python
+self.init_certificate(environ, private_key='')
+```
 * 开启数据验证
 ```python
-enable_verify_request_sign()
+self.enable_verify_request_sign()
 ```
+详见文档[通信认证](https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-deploy/authentication.md)
 
 ### 技能数据统计
 Bot默认未开启技能数据统计功能，需要手动开启。(确保已经在技能平台配置了公钥)
@@ -702,6 +708,8 @@ pip install -r requirements.txt
 为了避免每次调试都要部署到服务器可以使用[ngrok](https://ngrok.com/)将请求数据转发到自己的机器上(注意:ngrok访问比较慢,有时会链接超时)
 
 # 完成过程记录
+
+* 版本变更详见变更记录 CHANGELOG.md
 
 2018-06-19 
 * 添加屏幕支持
