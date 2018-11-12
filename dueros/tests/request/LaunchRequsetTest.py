@@ -113,8 +113,9 @@ class LaunchRequsetTest(unittest.TestCase):
         :return:
         '''
         self.assertEqual(self.request.get_access_token(), 'access_token')
-    pass
 
+    def testGetApiAccessToken(self):
+        self.assertEqual(self.request.get_api_access_token(), 'api_access_token')
 
 if __name__ == '__main__':
     pass
