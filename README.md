@@ -415,7 +415,7 @@ return{
 ```python
     pushStack = PushStack()
     return{
-    'directives':[xxx, pushStack]
+    'directives':[自己用来渲染页面的directive, pushStack]
     }
 
 ```
