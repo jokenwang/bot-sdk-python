@@ -712,11 +712,11 @@ pip install -r requirements.txt
 * 版本变更详见变更记录 CHANGELOG.md
 
 
-### 鸣谢
-[@gongqingliang821](https://github.com/gongqingliang821)
-
-### Known Users
+# Known Users
 按照登记顺序排序，更多接入技能，欢迎在 https://github.com/jokenwang/bot-sdk-python/issues/16 登记（仅供用户参考）
+
+## 鸣谢
+[@gongqingliang821](https://github.com/gongqingliang821)
 
 ### 免责声明
 
