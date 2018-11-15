@@ -733,6 +733,9 @@ pip install -r requirements.txt
 ### 鸣谢
 [@gongqingliang821](https://github.com/gongqingliang821)
 
+### Known Users
+按照登记顺序排序，更多接入技能，欢迎在 https://github.com/jokenwang/bot-sdk-python/issues/16 登记（仅供用户参考）
+
 ### 免责声明
 
 * 此SDK非官网提供，纯属个人学习研究，如因使用此SDK导致的任何损失，本人概不负责
