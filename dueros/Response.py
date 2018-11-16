@@ -207,9 +207,9 @@ class Response(Base):
         :return:
         """
         if text and isinstance(text, str):
-            if not self.expectResponse:
-                self.expectResponse = []
-            self.expectResponse.append({
+            if not self.expect_response:
+                self.expect_response = []
+            self.expect_response.append({
                 'type': 'PlainText',
                 'text': text
             })
@@ -221,9 +221,9 @@ class Response(Base):
         :return:
         """
         if slot and isinstance(slot, str):
-            if not self.expectResponse:
-                self.expectResponse = []
-            self.expectResponse.append({
+            if not self.expect_response:
+                self.expect_response = []
+            self.expect_response.append({
                 'type': 'Slot',
                 'slot': slot
             })
@@ -263,6 +263,8 @@ class Response(Base):
         :return:
         """
         self.directives_arrangement = 'STRICT'
+
+
 if __name__ == '__main__':
 
     pass
