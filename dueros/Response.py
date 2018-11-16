@@ -32,7 +32,8 @@ class Response(Base):
         self.need_determine = None
         self.expect_speech = None
         self.fallback = None
-        self.expectResponse = None
+        self.expect_response = None
+        self.directives_arrangement = None
 
     def set_should_end_session(self, val):
         """
@@ -144,6 +145,10 @@ class Response(Base):
 
         if isinstance(self.fallback, bool):
             ret['response']['fallBack'] = self.fallback
+
+        if self.directives_arrangement:
+            ret['response']['directivesArrangement'] = self.directives_arrangement
+
         return ret
 
     def format_speech(self, mix):
@@ -245,7 +250,19 @@ class Response(Base):
 
         return context
 
+    def set_auto_directives_arrangement(self):
+        """
+        表示directives中指令顺序随机
+        :return:
+        """
+        self.directives_arrangement = 'AUTO'
 
+    def set_strict_directives_arrangement(self):
+        """
+        表示directives中指令保持相对顺序不变 (directives中指令可能会被过滤)
+        :return:
+        """
+        self.directives_arrangement = 'STRICT'
 if __name__ == '__main__':
 
     pass

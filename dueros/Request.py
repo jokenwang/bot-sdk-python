@@ -251,5 +251,18 @@ class Request(Base):
         """
         return Utils.get_dict_data_by_keys(self.data, ['context', 'System', 'apiAccessToken'])
 
+    def get_support_video_player(self):
+        interfaces = self.get_supported_interfaces()
+        return Utils.getDictDataByKey(interfaces, 'VideoPlayer')
+
+    def get_support_video_player_prefered_bitrate(self):
+        video_player = self.get_support_video_player()
+        if video_player:
+            if 'preferedBitrate' in video_player:
+                return video_player['preferedBitrate']
+        else:
+            return ''
+
+
 if __name__ == '__main__':
     pass

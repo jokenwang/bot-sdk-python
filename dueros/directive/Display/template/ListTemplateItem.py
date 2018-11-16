@@ -92,6 +92,9 @@ class ListTemplateItem(BaseTemplate):
             return self.data[key]
         return self.data
 
+    def set_anchor_word(self, anchor_word):
+        if anchor_word and isinstance(anchor_word, str):
+            self.data['anchorWord'] = anchor_word
 
 def get_image_tag_data(tags):
     if not tags or not isinstance(tags, list):
