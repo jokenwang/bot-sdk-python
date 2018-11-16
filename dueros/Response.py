@@ -237,8 +237,8 @@ class Response(Base):
         if self.nlu and self.nlu.to_update_intent():
             context['intent'] = self.nlu.to_update_intent()
 
-        if self.expectResponse:
-            context['expectResponse'] = self.expectResponse
+        if self.expect_response:
+            context['expectResponse'] = self.expect_response
 
         if self.nlu:
             after_search_score = self.nlu.get_after_search_score()
