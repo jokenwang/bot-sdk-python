@@ -117,8 +117,12 @@ class Bot(Base):
         :param func:    回调方法
         :return:
         """
-
-        return self.__add_handler('SessionEndedRequest', func)
+        if hasattr(func, '__call__'):
+            arg_count = func.__code__.co_argcount
+            if arg_count == 1:
+                return self.__add_handler('SessionEndedRequest', func)
+            else:
+                return self.add_event_listener('SessionEndedRequest', func)
 
     def add_intent_handler(self, intent_name, func):
         """
