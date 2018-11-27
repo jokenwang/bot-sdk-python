@@ -215,7 +215,7 @@ class BotMonitor:
         logging.info('数据统计原始数据:' + orginData)
 
         base64Data = str(base64.b64encode(orginData.encode('utf-8')), 'utf-8')
-        logging.info('数据统计加密数据:' + base64Data)
+        # logging.info('数据统计加密数据:' + base64Data)
 
         if self.environment == 0:
             pkversion = 'debug'

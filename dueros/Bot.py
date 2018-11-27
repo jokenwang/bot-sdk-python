@@ -239,6 +239,9 @@ class Bot(Base):
 
         self.session.clear()
 
+    def clear_session_field(self, field):
+        self.session.clear_session_field(field)
+
     def get_slots(self, field, index=0):
         """
         获取槽位值
@@ -566,6 +569,13 @@ class Bot(Base):
         """
         return self.request.get_api_access_token()
 
+    def get_device_id(self):
+        """
+        获取设备Id
+        :return:
+        """
+        return self.request.get_device_id()
+
     def default_event(self):
         """
         默认事件处理"""
@@ -687,6 +697,44 @@ class Bot(Base):
         """
         if hasattr(func, '__call__'):
             self.add_event_listener('Permission.GrantFailed', func)
+
+    def add_display_element_selected(self, func):
+        """
+        添加屏幕选择事件
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('Display.ElementSelected', func)
+
+    def add_form_button_clicked(self, func):
+        """
+
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('Form.ButtonClicked', func)
+
+    def add_video_playback_started(self, func):
+        if hasattr(func, '__call__'):
+            self.add_event_listener('VideoPlayer.PlaybackStarted', func)
+
+    def add_video_playback_stopped(self, func):
+        if hasattr(func, '__call__'):
+            self.add_event_listener('VideoPlayer.PlaybackStopped', func)
+
+    def add_video_playback_paused(self, func):
+        if hasattr(func, '__call__'):
+            self.add_event_listener('VideoPlayer.PlaybackPaused', func)
+
+    def add_video_playback_finished(self, func):
+        if hasattr(func, '__call__'):
+            self.add_event_listener('VideoPlayer.PlaybackFinished', func)
+
+    def add_video_playback_nearly_finished(self, func):
+        if hasattr(func, '__call__'):
+            self.add_event_listener('VideoPlayer.PlaybackNearlyFinished', func)
 
 
 if __name__ == '__main__':

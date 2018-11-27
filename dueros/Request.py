@@ -118,7 +118,7 @@ class Request(Base):
         :return:
         """
 
-        if self.request_type == 'IntentRequest' or self.is_launch_request():
+        if self.request_type == 'IntentRequest' or self.is_session_end_request() or self.is_launch_request():
             return
         else:
             return self.data['request']

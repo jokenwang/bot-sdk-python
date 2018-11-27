@@ -13,6 +13,7 @@ import time
 import random
 import hashlib
 import json
+import hashlib
 
 
 class Utils:
@@ -106,8 +107,14 @@ class Utils:
         uuid = uuid + token[20:]
         return uuid
 
-if __name__ == '__main__':
+    @staticmethod
+    def hash_str(key):
+        sha1 = hashlib.sha1()
+        sha1.update(key.encode('utf-8'))
+        return sha1.hexdigest()
 
-    a =1.09
-    print(Utils.convert_number(a))
+if __name__ == '__main__':
+    sha1 = hashlib.sha1()
+    sha1.update('http://vt1.doubanio.com/201811172131/16f6bbfeaaf6bbe6acba4c04fac2712d/view/movie/M/402380330.mp4'.encode('utf-8'))
+    print(sha1.hexdigest())
     pass

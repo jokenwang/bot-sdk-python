@@ -67,6 +67,9 @@ class Session(Base):
         if value is not None:
             self.data[field] = value
 
+    def clear_session_field(self, field):
+        if field and isinstance(field, str) and field in self.data:
+            value = self.data.pop(field)
 
 if __name__ == '__main__':
 
