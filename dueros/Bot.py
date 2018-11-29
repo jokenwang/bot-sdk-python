@@ -113,12 +113,27 @@ class Bot(Base):
 
     def add_session_ended_handler(self, func):
         """
-        添加对SessionEndedRequest的处理函数
+        添加对SessionEndedRequest的处理函数, 如果想要获取结束原因
+        func方法需要接收event  方法应定义为 func(event), 否则不会传递event到func
         :param func:    回调方法
         :return:
         """
+        if hasattr(func, '__call__'):
+            argcount = func.__code__.co_argcount
+            if argcount == 1:
+                def innerfunc(event):
+                    return func()
+                return self.add_session_ended_event_listener(innerfunc)
+            elif argcount == 2:
+                return self.add_session_ended_event_listener(func)
 
-        return self.__add_handler('SessionEndedRequest', func)
+    def add_session_ended_event_listener(self, func):
+        """
+        添加对SessionEndedRequest的处理函数,可以获取到终止原因, function(event), event为事件数据
+        :param func:
+        :return:
+        """
+        self.add_event_listener('SessionEndedRequest', func)
 
     def add_intent_handler(self, intent_name, func):
         """
@@ -566,6 +581,13 @@ class Bot(Base):
         """
         return self.request.get_api_access_token()
 
+    def get_device_id(self):
+        """
+        获取设备ID
+        :return:
+        """
+        return self.request.get_device_id()
+
     def default_event(self):
         """
         默认事件处理"""
@@ -688,6 +710,22 @@ class Bot(Base):
         if hasattr(func, '__call__'):
             self.add_event_listener('Permission.GrantFailed', func)
 
+    def add_display_element_selected(self, func):
+        """
+        选择事件回调
+        :param func:
+        :return:
+        """
+
+        self.add_event_listener('Display.ElementSelected', func)
+
+    def add_form_button_clicked(self, func):
+        """
+        屏幕点击事件回调
+        :param func:
+        :return:
+        """
+        self.add_event_listener('Form.ButtonClicked', func)
 
 if __name__ == '__main__':
     pass
