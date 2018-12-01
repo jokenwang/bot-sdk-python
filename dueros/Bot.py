@@ -76,7 +76,7 @@ class Bot(Base):
 
     def set_monitor_enabled(self, enable=False):
         """
-        设置是否开启Monitor 默认开启
+        设置是否开启Monitor 默认未开启
         :param enable:
         :return:
         """
@@ -108,21 +108,32 @@ class Bot(Base):
         :param func:    回调方法
         :return:
         """
-
-        return self.__add_handler('LaunchRequest', func)
+        if hasattr(func, '__call__'):
+            self.__add_handler('LaunchRequest', func)
 
     def add_session_ended_handler(self, func):
         """
-        添加对SessionEndedRequest的处理函数
+        添加对SessionEndedRequest的处理函数, 如果想要获取结束原因
+        func方法需要接收event  方法应定义为 func(event), 否则不会传递event到func
         :param func:    回调方法
         :return:
         """
         if hasattr(func, '__call__'):
-            arg_count = func.__code__.co_argcount
-            if arg_count == 1:
-                return self.__add_handler('SessionEndedRequest', func)
-            else:
-                return self.add_event_listener('SessionEndedRequest', func)
+            argcount = func.__code__.co_argcount
+            if argcount == 1:
+                def innerfunc(event):
+                    return func()
+                return self.add_session_ended_event_listener(innerfunc)
+            elif argcount == 2:
+                return self.add_session_ended_event_listener(func)
+
+    def add_session_ended_event_listener(self, func):
+        """
+        添加对SessionEndedRequest的处理函数,可以获取到终止原因, function(event), event为事件数据
+        :param func:
+        :return:
+        """
+        self.add_event_listener('SessionEndedRequest', func)
 
     def add_intent_handler(self, intent_name, func):
         """
@@ -234,6 +245,8 @@ class Bot(Base):
         """
         if field is not None and isinstance(field, str):
             self.session.set_data(field, value)
+        else:
+            self.session.set_data(field, default)
 
     def clear_session_attribute(self):
         """
@@ -295,7 +308,7 @@ class Bot(Base):
         self.__end_dialog()
 
     def run(self, build=True):
-        '''
+        """
         Bot SDK 主要逻辑在这里
         1、判断是否校验请求数据的合法性
         2、获取事件的处理器Handler(通过addEventListener添加事件处理器)
@@ -305,7 +318,7 @@ class Bot(Base):
         将第一个return 非null的结果作为此次的response
         :param build: False:不进行response封装，直接返回handler的result
         :return:
-        '''
+        """
 
         if self.certificate and not self.certificate.verify_request():
             return self.response.illegal_request()
@@ -350,7 +363,7 @@ class Bot(Base):
             return json.dumps(ret)
         else:
             return json.dumps(res)
-    
+
     def __dispatch(self):
         """
         分发请求并调用回调方法
@@ -575,7 +588,7 @@ class Bot(Base):
 
     def get_device_id(self):
         """
-        获取设备Id
+        获取设备ID
         :return:
         """
         return self.request.get_device_id()
@@ -673,6 +686,177 @@ class Bot(Base):
         """
         self.add_intent_handler('ai.dueros.common.previous_intent', func)
 
+    """==================================Dueros音频事件=================================="""
+    def add_audio_playback_started(self, func):
+        """
+        客户端开始播放的时候，需要上报此事件
+        {
+            "type": "AudioPlayer.PlaybackStarted",
+            "requestId": "{{STRING}}",
+            "timestamp": {{INT32}},
+            "token": "{{STRING}}",
+            "offsetInMilliSeconds": {{INT32}}
+        }
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('AudioPlayer.PlaybackStarted', func)
+
+    def add_audio_playback_stopped(self, func):
+        """
+        用户说"暂停播放"、 "停止播放"后，会收到Stop指令，
+        客户端执行完Stop指令后，即暂停播放后，需要上报此事件，云端会保存断点，供下一次继续播放使用
+        {
+            "type": "AudioPlayer.PlaybackStopped",
+            "requestId": "{{STRING}}",
+            "timestamp": {{INT32}},
+            "token": "{{STRING}}",
+            "offsetInMilliSeconds": {{INT32}}
+        }
+        :param func:
+        :return:
+        """
+
+        if hasattr(func, '__call__'):
+            self.add_event_listener('AudioPlayer.PlaybackStopped', func)
+
+    def add_audio_playback_nearly_finished(self, func):
+        """
+        {
+            "type": "AudioPlayer.PlaybackNearlyFinished",
+            "requestId": "{{STRING}}",
+            "timestamp": {{INT32}},
+            "token": "{{STRING}}",
+            "offsetInMilliSeconds": {{INT32}}
+        }
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('AudioPlayer.PlaybackNearlyFinished', func)
+
+    def add_audio_playback_finished(self, func):
+        """
+        当且仅当歌曲正常播放到末尾后，上报此事件。
+        注意如果被其它指令打断比如“下一首”、“上一首”导致没有播放到末尾的，不上报此事件
+        {
+            "type": "AudioPlayer.PlaybackFinished",
+            "requestId": "{{STRING}}",
+            "timestamp": {{INT32}},
+            "token": "{{STRING}}",
+            "offsetInMilliSeconds": {{INT32}}
+        }
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('AudioPlayer.PlaybackFinished', func)
+
+    """==================================Dueros视频事件=================================="""
+
+    def add_video_playback_started(self, func):
+        """
+        当视频开始播放时，DuerOS向技能上报VideoPlayer.PlaybackStarted事件,
+        文档:https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/videoplayer_markdown#VideoPlayer.PlaybackStarted%E4%BA%8B%E4%BB%B6
+        {
+            "type": "VideoPlayer.PlaybackStarted",
+            "requestId": "{{STRING}}",
+            "timestamp": {{INT32}},
+            "token": "{{STRING}}",
+            "offsetInMilliseconds": {{INT32}}
+        }
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('VideoPlayer.PlaybackStarted', func)
+
+    def add_video_playback_paused(self, func):
+        """
+        在视频播放过程中，如果发生用户与设备对话交互、闹钟提醒等优先级高的通道，则视频暂停播放，DuerOS会向技能上报此事件
+        {
+            "type": "VideoPlayer.PlaybackPaused",
+            "requestId": "{{STRING}}",
+            "timestamp": {{INT32}},
+            "token": "{{STRING}}",
+            "offsetInMilliseconds": {{INT32}}
+        }
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('VideoPlayer.PlaybackPaused', func)
+
+    def add_video_playback_resumed(self, func):
+        """
+        在视频播放过程中，如果发生用户与设备对话交互、闹钟提醒等优先级高的通道，则视频暂停播放，
+        DuerOS会向技能上报VideoPlayer.PlaybackPaused事件，如果高优先级通道结束后，
+        视频会继续播放，此时DuerOS会向技能上报PlaybackResumed事件
+        {
+            "type": "VideoPlayer.PlaybackResumed",
+            "requestId": "{{STRING}}",
+            "timestamp": {{INT32}},
+            "token": "{{STRING}}",
+            "offsetInMilliseconds": {{INT32}}
+        }
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('VideoPlayer.PlaybackResumed', func)
+
+    def add_video_playback_stopped(self, func):
+        """
+        当用户说"停止播放"后，DuerOS会向技能上报该事件，请求技能保存视频播放信息,
+        文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/videoplayer_markdown#VideoPlayer.PlaybackStopped%E4%BA%8B%E4%BB%B6
+        {
+            "type": "VideoPlayer.PlaybackStopped",
+            "requestId": "{{STRING}}",
+            "timestamp": {{INT32}},
+            "token": "{{STRING}}",
+            "offsetInMilliseconds": {{INT32}}
+        }
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('VideoPlayer.PlaybackStopped', func)
+
+    def add_video_playback_finished(self, func):
+        """
+        当前视频播放结束时，DuerOS向技能上报此事件
+        {
+            "type": "VideoPlayer.PlaybackFinished",
+            "requestId": "{{STRING}}",
+            "timestamp": {{INT32}},
+            "token": "{{STRING}}",
+            "offsetInMilliseconds": {{INT32}}
+        }
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('VideoPlayer.PlaybackFinished', func)
+
+    def add_video_playback_nearly_finished(self, func):
+        """
+        当前video item播放快要结束，准备缓冲或下载播放队列中的下一个video item时，
+        DuerOS会向技能上报此事件。技能收到该事件后可以返回VideoPlayer.Play指令，
+        将下一个video item添加到播放队列中
+        {
+            "type": "VideoPlayer.PlaybackNearlyFinished",
+            "requestId": "{{STRING}}",
+            "timestamp": {{INT32}},
+            "token": "{{STRING}}",
+            "offsetInMilliseconds": {{INT32}}
+        }
+        :param func:
+        :return:
+        """
+        if hasattr(func, '__call__'):
+            self.add_event_listener('VideoPlayer.PlaybackNearlyFinished', func)
+
     """==================================Dueros授权事件=================================="""
 
     def add_permission_granted_event(self, func):
@@ -702,9 +886,18 @@ class Bot(Base):
         if hasattr(func, '__call__'):
             self.add_event_listener('Permission.GrantFailed', func)
 
+    """==================================Dueros事件=================================="""
+
     def add_display_element_selected(self, func):
         """
-        添加屏幕选择事件
+        选择事件回调,示例:
+        'request': {
+            'type': 'Display.ElementSelected',
+            'requestId': '{{STRING}}',
+            'timestamp': '{{STRING}}',
+            'token': '{{STRING}}'
+        }
+        通过token去完成自己后续的业务逻辑
         :param func:
         :return:
         """
@@ -713,32 +906,32 @@ class Bot(Base):
 
     def add_form_button_clicked(self, func):
         """
-
+        屏幕点击事件回调, 根据event['name'] 控件名称判断
+        'request': {
+            'type': 'Form.ButtonClicked',
+            'name": "{{控件名称}}',
+            'requestId': '{{STRING}}',
+            'timestamp': '{{STRING}},
+            'token': '{{STRING}}
+        }
+        控件名称详见https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/form_markdown
         :param func:
         :return:
         """
-        if hasattr(func, '__call__'):
-            self.add_event_listener('Form.ButtonClicked', func)
+        self.add_event_listener('Form.ButtonClicked', func)
 
-    def add_video_playback_started(self, func):
-        if hasattr(func, '__call__'):
-            self.add_event_listener('VideoPlayer.PlaybackStarted', func)
-
-    def add_video_playback_stopped(self, func):
-        if hasattr(func, '__call__'):
-            self.add_event_listener('VideoPlayer.PlaybackStopped', func)
-
-    def add_video_playback_paused(self, func):
-        if hasattr(func, '__call__'):
-            self.add_event_listener('VideoPlayer.PlaybackPaused', func)
-
-    def add_video_playback_finished(self, func):
-        if hasattr(func, '__call__'):
-            self.add_event_listener('VideoPlayer.PlaybackFinished', func)
-
-    def add_video_playback_nearly_finished(self, func):
-        if hasattr(func, '__call__'):
-            self.add_event_listener('VideoPlayer.PlaybackNearlyFinished', func)
+    def add_form_radio_button_clicked(self, func):
+        """
+        屏幕RadioButton点击事件回调
+        {
+           'type': 'RADIO_BUTTON',
+            'name': '{{STRING}}',
+            'selectedValue': '{{STRING}}'
+        }
+        :param func:
+        :return:
+        """
+        self.add_event_listener('Form.RadioButtonClicked', func)
 
 
 if __name__ == '__main__':

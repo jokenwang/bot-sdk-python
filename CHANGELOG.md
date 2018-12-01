@@ -1,4 +1,11 @@
 # bot-sdk 变更记录
+* Bot.py 新增功能  
+1、新增获取SessionEndedRequest结束原因回调   
+2、新增获取设备ID, 添加屏幕选择事件回调、屏幕点击回调   
+3、方便快速开发，新增了各种通用意图的回调设置      
+4、新增权限事件回调
+
+***
 * 更新Permission
 * directives指令排序方式
 * 增加设备VideoPlayer分辨率

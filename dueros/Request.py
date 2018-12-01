@@ -103,7 +103,6 @@ class Request(Base):
 
         return Utils.get_dict_data_by_keys(self.data, ['context', 'Screen', 'card'])
 
-
     def get_app_launcher_context(self):
         """
         获取设备app安装列表
@@ -118,7 +117,7 @@ class Request(Base):
         :return:
         """
 
-        if self.request_type == 'IntentRequest' or self.is_session_end_request() or self.is_launch_request():
+        if self.request_type == 'IntentRequest' or self.is_launch_request():
             return
         else:
             return self.data['request']
