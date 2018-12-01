@@ -15,7 +15,7 @@ from dueros.card.BaseCard import BaseCard
 class ImageCard(BaseCard):
 
     def __init__(self):
-        super(ImageCard, self).__init__()
+        BaseCard.__init__(self)
         self.data['type'] = 'image'
 
     def add_item(self, src, thumbnail=''):

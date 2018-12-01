@@ -29,7 +29,7 @@ class Bot(Base):
         :param private_key  私钥 此私钥和在技能 服务配置 中配置的公钥 为一对秘钥
         """
 
-        super(Bot, self).__init__()
+        Base.__init__(self)
         self.request_data = request_data
         logging.info('技能收到的请求数据:' + str(request_data))
         self.request = Request(request_data)
@@ -76,7 +76,7 @@ class Bot(Base):
 
     def set_monitor_enabled(self, enable=False):
         """
-        设置是否开启Monitor 默认开启
+        设置是否开启Monitor 默认未开启
         :param enable:
         :return:
         """
@@ -108,8 +108,8 @@ class Bot(Base):
         :param func:    回调方法
         :return:
         """
-
-        return self.__add_handler('LaunchRequest', func)
+        if hasattr(func, '__call__'):
+            self.__add_handler('LaunchRequest', func)
 
     def add_session_ended_handler(self, func):
         """
@@ -245,6 +245,8 @@ class Bot(Base):
         """
         if field is not None and isinstance(field, str):
             self.session.set_data(field, value)
+        else:
+            self.session.set_data(field, default)
 
     def clear_session_attribute(self):
         """
@@ -303,7 +305,7 @@ class Bot(Base):
         self.__end_dialog()
 
     def run(self, build=True):
-        '''
+        """
         Bot SDK 主要逻辑在这里
         1、判断是否校验请求数据的合法性
         2、获取事件的处理器Handler(通过addEventListener添加事件处理器)
@@ -313,7 +315,7 @@ class Bot(Base):
         将第一个return 非null的结果作为此次的response
         :param build: False:不进行response封装，直接返回handler的result
         :return:
-        '''
+        """
 
         if self.certificate and not self.certificate.verify_request():
             return self.response.illegal_request()
@@ -710,9 +712,18 @@ class Bot(Base):
         if hasattr(func, '__call__'):
             self.add_event_listener('Permission.GrantFailed', func)
 
+    """==================================Dueros事件=================================="""
+
     def add_display_element_selected(self, func):
         """
-        选择事件回调
+        选择事件回调,示例:
+        'request': {
+            'type': 'Display.ElementSelected',
+            'requestId': '{{STRING}}',
+            'timestamp': '{{STRING}}',
+            'token': '{{STRING}}'
+        }
+        通过token去完成自己后续的业务逻辑
         :param func:
         :return:
         """
@@ -721,11 +732,33 @@ class Bot(Base):
 
     def add_form_button_clicked(self, func):
         """
-        屏幕点击事件回调
+        屏幕点击事件回调, 根据event['name'] 控件名称判断
+        'request': {
+            'type': 'Form.ButtonClicked',
+            'name": "{{控件名称}}',
+            'requestId': '{{STRING}}',
+            'timestamp': '{{STRING}},
+            'token': '{{STRING}}
+        }
+        控件名称详见https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/form_markdown
         :param func:
         :return:
         """
         self.add_event_listener('Form.ButtonClicked', func)
+
+    def add_form_radio_button_clicked(self, func):
+        """
+        屏幕RadioButton点击事件回调
+        {
+           'type': 'RADIO_BUTTON',
+            'name': '{{STRING}}',
+            'selectedValue': '{{STRING}}'
+        }
+        :param func:
+        :return:
+        """
+        self.add_event_listener('Form.RadioButtonClicked', func)
+
 
 if __name__ == '__main__':
     pass

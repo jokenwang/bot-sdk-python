@@ -18,7 +18,7 @@ from dueros.card.ListCardItem import ListCardItem
 class ListCard(BaseCard):
 
     def __init__(self):
-        super(ListCard, self).__init__()
+        ListCard.__init__(self)
         self.data['type'] = 'list'
 
     def add_item(self, card_ietm):

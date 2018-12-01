@@ -13,6 +13,7 @@ from enum import Enum, unique
 
 @unique
 class PermissionEnum(Enum):
+    PERMISSION_USER_INFO = 'USER_INFO'
 
     READ_USER_PROFILE = 'READ::USER:PROFILE'
     READ_DEVICE_LOCATION = 'READ::DEVICE:LOCATION'
