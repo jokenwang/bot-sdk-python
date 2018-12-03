@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -6,7 +6,7 @@
 # create_time: 2018/5/26
 
 """
-    模板展示基类
+    desc:pass
 """
 
 from dueros.directive.Display.template.TextStructure import TextStructure
@@ -14,16 +14,15 @@ from dueros.directive.Display.template.ImageStructure import ImageStructure
 from dueros.directive.Display.template.TextType import TextType
 
 
-class BaseTemplate(object):
+class BaseTemplate:
 
-    def __init__(self, field=[]):
+    def __init__(self, field):
+        super(BaseTemplate, self).__init__()
         self.data = {}
-        self.supportSetField = field
+        self.support_set_field = field
 
     def set_background_image(self, url, width_pixels='', height_pixels=''):
-
         """
-        设置背景图片
         :param url:
         :param width_pixels:
         :param height_pixels:
@@ -31,14 +30,12 @@ class BaseTemplate(object):
         """
 
         if url:
-            image = self.create_imagestructure(url, width_pixels, height_pixels)
+            image = self.create_image_structure(url, width_pixels, height_pixels)
             if image:
                 self.data['backgroundImage'] = image.get_data()
 
-    def create_imagestructure(self, url, width_pixels, height_pixels):
-
+    def create_image_structure(self, url, width_pixels, height_pixels):
         """
-        创建imageStructure
         :param url:
         :param width_pixels:
         :param height_pixels:
@@ -48,48 +45,45 @@ class BaseTemplate(object):
         if url:
             image = ImageStructure()
             image.set_url(url)
-            if width_pixels:
+            if width_pixels and width_pixels != '':
                 image.set_width_pixels(width_pixels)
 
-            if height_pixels:
+            if height_pixels and height_pixels != '':
                 image.set_height_pixels(height_pixels)
             return image
 
-    def create_textstructure(self, content, text_type=TextType.PLAIN_TEXT):
+    def create_text_structure(self, content, structure_type=TextType.PLAIN_TEXT):
         """
-        创建TextStructure
-        :type content: object
         :param content:
-        :param text_type:
+        :param structure_type:
         :return:
         """
 
         if content:
-            texture = TextStructure()
-            texture.set_text(content)
-            if TextType.inEnum(text_type):
-                texture.set_type(text_type)
+            text_structure = TextStructure()
+            text_structure.set_text(content)
+            if TextType.inEnum(structure_type):
+                text_structure.set_type(structure_type.value)
             else:
-                texture.set_type(TextType.PLAIN_TEXT)
+                text_structure.set_type(TextType.PLAIN_TEXT.value)
 
-            return texture
+            return text_structure
 
     def get_data(self):
 
         return self.data
 
     def __getattr__(self, item):
-        """
+        '''
         添加魔术方法
         :param item:
         :return:
-        """
-
+        '''
         # 获取操作类型 set
         operation = item[0:3]
         # 获取被操作的属性
         field = item[4:]
-        if operation == 'set' and field and (field.lower() in self.supportSetField):
+        if operation == 'set' and field and (field.lower() in self.support_set_field):
             def function(*args):
                 self.data[field.lower()] = args[0]
 
@@ -100,10 +94,10 @@ class BaseTemplate(object):
 
             return function
 
-
 if __name__ == '__main__':
 
     bodytemplate = BaseTemplate(['token'])
     bodytemplate.set_token('a')
     bodytemplate.set_background_image('aaaa')
     print(bodytemplate.get_data())
+    pass

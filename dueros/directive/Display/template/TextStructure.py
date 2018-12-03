@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -9,22 +9,17 @@
     desc:pass
 """
 
-
-class TextStructure(object):
+class TextStructure:
 
     def __init__(self):
-        """
-
-        :rtype:
-        """
         super(TextStructure, self).__init__()
         self.data = {}
         self.set_type('PlainText')
 
-    def set_type(self, type):
+    def set_type(self, structure_type):
 
         if type:
-            self.data['type'] = type
+            self.data['type'] = structure_type
 
     def set_text(self, text):
 
@@ -32,6 +27,7 @@ class TextStructure(object):
             self.data['text'] = text
 
     def get_data(self):
+
         return self.data
     pass
 

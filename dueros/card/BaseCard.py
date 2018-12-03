@@ -1,14 +1,13 @@
-#!/usr/bin/env python2
-# -*- encoding=utf-8 -*-
+#!/usr/bin/env python3
+# -*- coding=utf-8 -*-
 
 # description:
 # author:jack
 # create_time: 2017/12/30
-
 """
 卡片基类
 """
-
+import logging
 
 class BaseCard(object):
 
@@ -17,11 +16,11 @@ class BaseCard(object):
         self.support_set_field = field
 
     def add_cue_words(self, arr):
-        """
+        '''
 		为卡片添加cue words 提示用户输入
-		:param arr:
+		:param arr: 数组
 		:return:
-		"""
+		'''
         if arr:
             if isinstance(arr, str):
                 arr = [arr]
@@ -34,17 +33,18 @@ class BaseCard(object):
             self.data['cueWords'].extend(arr)
         return self
 
-    def set_anchor(self, url, anchor_text):
-        """
+    def set_anchor(self, url, anchorText):
+        '''
 		设置卡片链接
-		:param url: 比如:http(s)://....
-		:param anchor_text: 链接显示的文字
+		:param url:	 比如:http(s)://....
+		:param anchorText:	链接显示的文字
 		:return:
-		"""
+		'''
+
         if url:
             self.data['url'] = url
-            if (anchor_text):
-                self.data['anchorText'] = anchor_text
+            if anchorText:
+                self.data['anchorText'] = anchorText
         return self
 
     def get_data(self):
@@ -67,7 +67,7 @@ class BaseCard(object):
             return function
         else:
             def function(*args):
-                print('不支持', operation, field)
+                logging.info('不支持', operation, field)
 
             return function
 

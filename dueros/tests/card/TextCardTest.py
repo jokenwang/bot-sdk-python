@@ -3,13 +3,14 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/13
+# create_time: 2018/7/20
 
 """
     desc:pass
 """
 import unittest
 from dueros.card.TextCard import TextCard
+
 
 class TextCardTest(unittest.TestCase):
     '''
@@ -30,7 +31,7 @@ class TextCardTest(unittest.TestCase):
             'content': '这是TextCard',
             'cueWords': ['cuewords1', 'cuewords2']
         }
-        self.assertEquals(self.card.get_data(), card)
+        self.assertEqual(self.card.get_data(), card)
 
     def testSetAnchor(self):
         '''
@@ -44,7 +45,7 @@ class TextCardTest(unittest.TestCase):
             'url': 'http://www.baidu.com',
             'anchorText': '百度'
         }
-        self.assertEquals(self.card.get_data(), card)
+        self.assertEqual(self.card.get_data(), card)
 
     def testGetData(self):
         '''
@@ -55,9 +56,10 @@ class TextCardTest(unittest.TestCase):
             'type': 'txt',
             'content': '这是TextCard',
         }
-        self.assertEquals(self.card.get_data(), card)
+        self.assertEqual(self.card.get_data(), card)
 
     pass
+
 
 
 if __name__ == '__main__':

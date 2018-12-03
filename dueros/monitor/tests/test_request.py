@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -19,7 +19,7 @@ class test_request:
 if __name__ == '__main__':
 
     def requestData():
-        with open("../data/intent_request_tax.json", 'r') as load_f:
+        with open("../data/intent_request_tax.json", 'r', encoding='utf-8') as load_f:
             return load_f.read()
     requestData = requestData()
 
@@ -28,7 +28,7 @@ if __name__ == '__main__':
     print(request.get_type())
     print(request.get_user_id())
     print(request.get_query())
-    print(request.get_botid())
+    print(request.get_bot_id())
     print(request.get_request_id())
     print(request.get_reson())
     print(request.get_intent_name())

@@ -3,7 +3,7 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/13
+# create_time: 2018/7/20
 
 """
     desc:pass
@@ -31,7 +31,6 @@ class LyricButtonTest(unittest.TestCase):
 
         self.assertEqual(self.lyricButton.get_data(), ret)
     pass
-
 
 if __name__ == '__main__':
     pass

@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -9,23 +9,27 @@
 """
 from dueros.monitor.model.Request import Request
 from dueros.monitor.model.Response import Response
+from dueros.monitor.Utils import Utils
 from dueros.monitor.BotMonitorConfig import BotMonitorConfig
 from dueros.Certificate import Certificate
 import json
 import base64
-import time
 import requests
-import threading
+import logging
+from concurrent.futures import ThreadPoolExecutor
+from multiprocessing import cpu_count
 
 
 class BotMonitor:
 
-    def __init__(self, post_data):
+    # process_executor = ProcessPoolExecutor(max_workers=1)
+    thread_executor = ThreadPoolExecutor(max_workers=cpu_count())
+
+    def __init__(self, post_data, private_key=None):
         if not isinstance(post_data, dict):
-            self.data = json.loads(post_data)
-        else:
-            self.data = post_data
-        self.request_start_time = self.get_millisecond()
+            post_data = json.loads(post_data)
+        self.data = post_data
+        self.request_start_time = Utils.get_millisecond()
         self.request_end_time = 0
         self.request = Request(post_data)
         self.audio_url = None
@@ -39,14 +43,13 @@ class BotMonitor:
         self.user_event_list = {}
         self.is_event_make_pair = {}
         self.config = BotMonitorConfig()
-        self.private_key = None
+        self.private_key = private_key
         self.environment = 0
-        self.enabled = True
+        self.enabled = False
         self.certificate = None
         self.response = None
 
     def set_environment_info(self, private_key, environment):
-
         self.private_key = private_key
         self.environment = environment
         self.certificate = Certificate(None, self.data, private_key)
@@ -63,39 +66,39 @@ class BotMonitor:
 
         if self.is_should_disable():
             return
-        self.request_end_time = self.get_millisecond()
+        self.request_end_time = Utils.get_millisecond()
         self.response = Response(response_data)
 
     def set_event_start(self):
 
         if self.is_should_disable():
             return
-        self.event_start_time = self.get_millisecond()
+        self.event_start_time = Utils.get_millisecond()
 
     def set_event_end(self):
 
         if self.is_should_disable():
             return
-        self.event_cost_time = self.get_millisecond() - self.event_start_time
+        self.event_cost_time = Utils.get_millisecond() - self.event_start_time
 
     def set_device_event_start(self):
 
         if self.is_should_disable():
             return
-        self.device_event_start_time = self.get_millisecond()
+        self.device_event_start_time = Utils.get_millisecond()
 
     def set_device_event_end(self):
 
         if self.is_should_disable():
             return
-        self.device_event_cost_time = self.get_millisecond() - self.device_event_start_time
+        self.device_event_cost_time = Utils.get_millisecond() - self.device_event_start_time
 
     def set_opration_tic(self, task_name):
 
         if self.is_should_disable():
             return
         if task_name:
-            self.user_event_list[task_name] = self.get_millisecond()
+            self.user_event_list[task_name] = Utils.get_millisecond()
             self.is_event_make_pair[task_name] = False
 
     def set_opration_toc(self, task_name):
@@ -108,21 +111,21 @@ class BotMonitor:
                 old_time = self.user_event_list[task_name]
             else:
                 old_time = None
-            curr_time = self.get_millisecond()
             cost_time = 0
 
             if old_time:
-                cost_time = curr_time = old_time
+                curr_time = Utils.get_millisecond()
+                cost_time = curr_time - old_time
 
             self.user_event_list[task_name] = cost_time
             self.is_event_make_pair[task_name] = True
 
-    def set_app_name(self, app_name):
+    def set_app_name(self, app_nme):
 
         if self.is_should_disable():
             return
-        if app_name:
-            self.app_name = app_name
+        if app_nme:
+            self.app_nme = app_nme
 
     def set_package_name(self, package_name):
 
@@ -146,59 +149,38 @@ class BotMonitor:
             self.audio_url = audio_url
 
     def update_data(self):
-        print('botMonitor updata')
         if self.is_should_disable():
             return
-        botId = self.request.get_botid()
+        logging.info('准备上传技能统计数据')
+        bot_id = self.request.get_bot_id()
 
         #组装数据 返回元祖(base64后的data, 时间戳)
         tup = self.__build_upload_data()
 
-        base64data = tup[0]
+        base64Data = tup[0]
         timestamp = tup[1]
-        pk_version = tup[2]
-        sign_data = "%s%s%s%s" % (base64data, botId, timestamp, pk_version)
-        signature = self.certificate.get_sign(sign_data)
-
-        if not signature or len(pk_version) == 0:
+        pkversion = tup[2]
+        signData = "%s%s%s%s" % (base64Data, bot_id, timestamp, pkversion)
+        signature = self.certificate.get_sign(signData)
+        if not signature or len(pkversion) == 0:
             return
 
-        print('content-length=%s, signature=%s, botId=%s, timestamp=%s' % (str(len(base64data)), signature, str(botId), str(timestamp)))
-        headers = {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Content-Length': str(len(base64data)),
-            'SIGNATURE': signature,
-            'botId': str(botId),
-            'timestamp': str(timestamp),
-            'pkversion': str(pk_version)
-        }
-
-        thread = threading.Thread(target=self.__upload_data, args=(base64data, headers))
-        thread.start()
-
-    def __upload_data(self, data, headers):
-        '''
-        发送请求
-        :param url:
-        :param data:
-        :param headers:
-        :return:
-        '''
-        response = requests.post(self.config.get_upload_url(), data=data, headers=headers)
-        print(response)
+        logging.info('上传技能统计数据已放到线程池内')
+        BotMonitor.thread_executor.submit(upload_data, url=self.config.get_upload_url(), data=base64Data,
+                                   signature=str(signature, encoding='utf-8'), bot_id=str(bot_id),
+                                   timestamp=str(timestamp), pkversion=str(pkversion))
 
     def __build_upload_data(self):
-
-        sys_event = {
+        sysEvent = {
             'preEventList': {},
             'postEventList': {},
             'eventCostTime': self.event_cost_time,
             'deviceEventCostTime': self.device_event_cost_time
         }
 
-        timestamp = self.get_millisecond()
+        timestamp = Utils.get_millisecond()
 
-        ret_data = {
+        retData = {
             'serviceData': {
                 'sdkType': self.config.get_sdk_type(),
                 'sdkVersion': self.config.get_sdk_version(),
@@ -224,33 +206,68 @@ class BotMonitor:
                 'requestStartTime': self.request_start_time,
                 'requestEndTime': self.request_end_time,
                 'timestamp': timestamp,
-                'sysEvent': sys_event,
+                'sysEvent': sysEvent,
                 'userEvent': self.user_event_list
             }
         }
 
-        orgin_data = json.dumps(ret_data)
+        orginData = json.dumps(retData)
+        logging.info('数据统计原始数据:' + orginData)
 
-        base64data = str(base64.b64encode(orgin_data.encode('utf-8')))
+        base64Data = str(base64.b64encode(orginData.encode('utf-8')), 'utf-8')
+        # logging.info('数据统计加密数据:' + base64Data)
+
         if self.environment == 0:
-            pk_version = 'debug'
+            pkversion = 'debug'
         else:
-            pk_version = 'online'
+            pkversion = 'online'
 
-        return (base64data, timestamp, pk_version)
+        return (base64Data, timestamp, pkversion)
 
     def is_should_disable(self):
-
-        if not self.private_key or len(self.private_key) == 0 or not self.enabled:
+        '''
+        判断Monitor是否可用
+        :return:
+        '''
+        if not self.enabled:
+            logging.warning('未开启数据统计功能, 如果使用统计功能需要调用set_monitor_enabled(True)')
             return True
-        return False
+        if self.enabled:
+            if not self.private_key or len(self.private_key) == 0:
+                logging.warning('未配置私钥, 请调用set_environment_info(prikey)')
+                return True
+            return False
 
 
-    def get_millisecond(self):
+def upload_data(**kwargs):
+    """
+    发送请求
+    :param url:
+    :param data:
+    :param headers:
+    :return:
+    """
 
-        return int(time.time())
+    url = kwargs['url']
+    data = kwargs['data']
+    signature = kwargs['signature']
+    bot_id = kwargs['bot_id']
+    timestamp = kwargs['timestamp']
+    pkversion = kwargs['pkversion']
+
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': str(len(data)),
+        'SIGNATURE': signature,
+        'botId': str(bot_id),
+        'timestamp': str(timestamp),
+        'pkversion': str(pkversion)
+    }
+    logging.info('准备统计数据上送到百度')
+    response = requests.post(url, data=data, headers=headers)
+    logging.info('数据统计回调结果' + response.text)
+
 
 if __name__ == '__main__':
 
-    print(int(time.time()))
     pass

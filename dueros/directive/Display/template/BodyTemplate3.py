@@ -6,7 +6,8 @@
 # create_time: 2018/5/26
 
 """
-    desc:pass
+BodyTemplate3模板
+详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/display-template_markdown#BodyTemplate3
 """
 
 from dueros.directive.Display.template.TextImageTemplate import TextImageTemplate

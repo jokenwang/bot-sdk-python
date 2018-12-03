@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -13,17 +13,16 @@
 class BotMonitorConfig:
 
     @staticmethod
-    def get_host():
+    def getHost():
         return 'dueros-api.baidu.com'
 
     @staticmethod
     def get_upload_url():
         return 'https://dueros-api.baidu.com/uploadmonitordata'
-        #return 'http://127.0.0.1:8000'
 
     @staticmethod
     def get_sdk_version():
-        return '1.0.0'
+        return '2.0.0'
 
     @staticmethod
     def get_sdk_type():

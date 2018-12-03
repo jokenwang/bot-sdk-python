@@ -6,7 +6,8 @@
 # create_time: 2018/5/26
 
 """
-    desc:pass
+BodyTemplate2模板
+详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/display-template_markdown#BodyTemplate2
 """
 
 from dueros.directive.Display.template.TextImageTemplate import TextImageTemplate
@@ -17,6 +18,7 @@ class BodyTemplate2(TextImageTemplate):
     def __init__(self):
         super(BodyTemplate2, self).__init__('BodyTemplate2')
         pass
+
 
 if __name__ == '__main__':
 

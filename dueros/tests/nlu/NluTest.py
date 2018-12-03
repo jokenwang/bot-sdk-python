@@ -3,26 +3,23 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/16
+# create_time: 2018/7/20
 
 """
-    desc:pass
+Nlu单元测试
 """
 import unittest
 import json
-import sys
 from dueros.Nlu import Nlu
-reload(sys)
-sys.setdefaultencoding('utf-8')
+
 
 class NluTest(unittest.TestCase):
 
     def setUp(self):
-
-        with open('../json/intent_request.json') as f:
-            self.requestData = f.read()
-        self.requestData = json.loads(self.requestData.encode('utf-8'))
-        self.data = self.requestData['request']['intents']
+        with open('../json/intent_request.json', encoding='utf-8') as f:
+            self.request_data = f.read()
+        self.request_data = json.loads(self.request_data)
+        self.data = self.request_data['request']['intents']
         self.nlu = Nlu(self.data)
 
         self.updateIntent = {
@@ -36,7 +33,6 @@ class NluTest(unittest.TestCase):
         :return:
         '''
         self.assertEqual(self.nlu.get_slot('city'), '北京')
-
 
     def test_getslotconfirmationstatus(self):
         '''
@@ -52,14 +48,12 @@ class NluTest(unittest.TestCase):
         '''
         self.assertEqual(self.nlu.get_intent_confirmation_status(), 'NONE')
 
-
     def test_getintentname(self):
         '''
         测试getIntentName方法
         :return:
         '''
         self.assertEqual(self.nlu.get_intent_name(), 'intentName')
-
 
     def test_getupdateintent(self):
         '''
@@ -85,7 +79,6 @@ class NluTest(unittest.TestCase):
         }
         self.assertEqual(self.nlu.to_directive(), directive)
 
-
     def test_setslot(self):
         '''
         测试setSlot方法
@@ -106,8 +99,6 @@ class NluTest(unittest.TestCase):
         }
         self.assertEqual(self.nlu.to_directive(), directive)
 
-
-
     def test_setconfirmslot(self):
         '''
         测试setConfirmSlot方法
@@ -120,7 +111,6 @@ class NluTest(unittest.TestCase):
             'updatedIntent': self.updateIntent
         }
         self.assertEqual(self.nlu.to_directive(), directive)
-
 
     def testSetConfirmIntent(self):
         '''
@@ -135,13 +125,8 @@ class NluTest(unittest.TestCase):
         }
         self.assertEqual(self.nlu.to_directive(), directive)
 
-
-
     pass
-
 
 
 if __name__ == '__main__':
     pass
-
-

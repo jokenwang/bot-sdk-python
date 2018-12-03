@@ -3,7 +3,7 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/16
+# create_time: 2018/7/20
 
 """
     desc:pass
@@ -14,14 +14,12 @@ import json
 import sys
 from dueros.Request import Request
 from dueros.Nlu import Nlu
-reload(sys)
-sys.setdefaultencoding('utf-8')
 from dueros.Utils import Utils
 
 class IntentRequestTest(unittest.TestCase):
 
     def setUp(self):
-        with open('../json/intent_request.json') as f:
+        with open('../json/intent_request1.json', encoding='utf-8') as f:
 
             self.data = f.read()
         self.data = json.loads(self.data)
@@ -105,7 +103,7 @@ class IntentRequestTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEquals(self.request.get_bot_id(), 'botId')
+        self.assertEqual(self.request.get_bot_id(), 'botId')
 
     def testIsDialogStateCompleted(self):
         '''
@@ -151,7 +149,6 @@ class IntentRequestTest(unittest.TestCase):
             return Utils.checkKeyInDict(supported_interfaces, support_func)
         else:
             return False
-    pass
 
 
 if __name__ == '__main__':

@@ -24,9 +24,9 @@ class Bot(Bot):
         self.ask('deviceName')
 
         card = TextCard('您要查找什么智能设备呢? 比如"查找我的空调"')
-        card.add_cueWords("百度")
-        card.add_cueWords("百度")
-        card.add_cueWords("百度")
+        card.add_cue_words("百度")
+        card.add_cue_words("百度")
+        card.add_cue_words("百度")
         card.set_anchor("http://www.baidu.com", "百度")
         return {
             'card': card,
@@ -47,7 +47,7 @@ class Bot(Bot):
 
         self.add_launch_handler(self.launchRequest)
 
-        self.add_intent_handler('dueros.device_interface.smart_device.control', self.controlRequest)
+        self.add_intent_handler('ai.dueros.common.default_intent', self.controlRequest)
 
         self.add_intent_handler('dueros.device_interface.smart_device.search', self.intentRequest)
     pass

@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -20,27 +20,21 @@ class Response:
         self.data = response_data
 
     def get_output_speech(self):
-        if Utils.checkKeysInDict(self.data, ['response', 'outputSpeech']):
-            return self.data['response']['outputSpeech']
+        return Utils.get_dict_data_by_keys(self.data, ['response', 'outputSpeech'])
 
     def get_should_end_session(self):
-        if Utils.checkKeysInDict(self.data, ['response', 'shouldEndSession']):
-            return self.data['response']['shouldEndSession']
-        pass
+        return Utils.get_dict_data_by_keys(self.data, ['response', 'shouldEndSession'])
 
     def get_slot_name(self):
-
         if Utils.checkKeysInDict(self.data, ['response', 'directives']):
             directive = self.data['response']['directives']
-            if directive and Utils.checkKeysInDict(directive[0], ['slotToElicit']):
+            if directive and Utils.checkKeysInDict(directive[0],['slotToElicit']) and directive[0]['slotToElicit']:
                 return directive[0]['slotToElicit']
         return None
 
     def get_reprompt(self):
 
-        if Utils.checkKeysInDict(self.data, ['response', 'reprompt', 'outputSpeech']):
-            return self.data['response']['reprompt']['outputSpeech']
-        return None
+        return Utils.get_dict_data_by_keys(self.data, ['response', 'reprompt', 'outputSpeech'])
 
 if __name__ == '__main__':
     pass

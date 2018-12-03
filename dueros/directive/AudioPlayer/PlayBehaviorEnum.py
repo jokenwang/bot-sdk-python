@@ -23,4 +23,6 @@ class PlayBehaviorEnum(object):
 
 
 if __name__ == '__main__':
+
+    print(PlayBehaviorEnum.REPLACE_ALL.value)
     pass

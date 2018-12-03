@@ -29,8 +29,10 @@ git clone https://github.com/jokenwang/bot-sdk-python.git
 ```
 
 * 通过Pypi获取最新发布版本源码
-    
-    * dueros-bot-1.1.0 (大版本更新) [Pypi地址](https://pypi.org/project/dueros-bot-python2/1.1.0)
+
+    * dueros-bot-2.1.2 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/2.1.2)
+    * dueros-bot-2.0.0 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/2.0.0)
+    * dueros-bot-1.1.0 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/1.1)
     * dueros-bot-0.2.4 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.4)
     * dueros-bot-0.2.3 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.3)
     * dueros-bot-0.2.2 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.2)
@@ -54,16 +56,33 @@ sh postData.sh json/xxx.json
 为了开始使用BOT SDK，你需要先新建一个python文件，比如文件名是Bot.py,该文件需要继承sdk/Bot.py。下一步，我们处理意图，Bot-sdk提供个函数来handle这些意图,例如继承sdk/Bot.py中的add_intent_handler函数，添加一个意图处理函数，比如，为新建闹钟，创建一个handler，在构造函数中添加：
 
 ```python
-self.add_intent_handler('remind', self.create_remind)
-def create_remind(self):
-    remind_time = self.get_slots('remindTime')
-    if remind_time:
+self.add_intent_handler('remind', self.createRemind)
+def createRemind(self):
+    remindTime = self.get_slots('remindTime')
+    if remindTime:
         card = new TextCard('创建中')
         return {
             'card': card,
         }
 ```
-第一个参数代表意图名称，第二个参数代表意图命中后的回调函数，这里add_handler可以用来建立intent和handler的映射，第一个参数意图名称是条件，如果满足则执行对应的回调函数(第二个参数)。 其中回调函数中，self指向当前的Bot，get_slots继承自父类Bot，通过slot名字来获取对应的槽位值。回调函数返回值是一个字典，可以包含多个字段，比如：card、directives、outputSpeech、reprompt等,下面会一一给出示例。
+第一个参数代表意图名称，第二个参数代表意图命中后的回调函数，这里addHandler可以用来建立intent和handler的映射，第一个参数意图名称是条件，如果满足则执行对应的回调函数(第二个参数)。 其中回调函数中，self指向当前的Bot，getSlots继承自父类Bot，通过slot名字来获取对应的槽位值。回调函数返回值是一个字典，可以包含多个字段，比如：card、directives、outputSpeech、reprompt等,下面会一一给出示例。
+
+### 设备相关(Bot方法)
+* 客户端是否支持屏幕展示
+```python
+    bot.is_support_display()
+```
+
+* 客户端是否支持音频播放
+```python
+    bot.is_support_audio_player()
+```
+
+* 客户端是否支持视频播放
+```python
+    bot.is_support_audio_player()
+```
+
 ### card展示卡片
 * 文本卡片:TextCard
 ```python
@@ -73,7 +92,7 @@ card = TextCard()
 //设置链接
 card.set_anchor('http://www.baidu.com')
 //设置cueWords
-card.add_cue_Words('hint1')
+card.add_cue_words('hint1')
 ```
 * 标准卡片 StandardCard
 ```python
@@ -96,7 +115,7 @@ card.add_item(item)
 * 图片卡片ImageCard
 ```python
 card = ImageCard()
-card.add_item('http://src.image', 'http://thumbnail.image')
+card.add_item('http://src.image', 'http://thumbnail.image');
 ```
 
 * 用户授权LinkAccountCard
@@ -115,7 +134,7 @@ bodyTemplate.set_background_image('https://skillstore.cdn.bcebos.com/icon/100/c7
 #设置模版标题
 bodyTemplate.set_title('托尔斯泰的格言')
 #设置模版plain类型的文本
-bodyTemplate.set_plaintext_content('拖尔斯泰-理想的书籍是智慧的钥匙') 
+bodyTemplate.set_plain_text_content('拖尔斯泰-理想的书籍是智慧的钥匙') 
 #定义RenderTemplate指令
 directive = RenderTemplate(bodyTemplate)
 return {
@@ -209,6 +228,22 @@ return {
 }
 ```
 
+### 上图下文模版类
+```python
+bodyTemplate = BodyTemplate6()
+bodyTemplate.set_token('token')
+bodyTemplate.set_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+bodyTemplate.set_background_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+bodyTemplate.set_title('托尔斯泰的格言')
+bodyTemplate.set_plain_content('拖尔斯泰-理想的书籍是智慧的钥匙')
+#定义RenderTemplate指令
+directive = RenderTemplate(bodyTemplate)
+return {
+    'directives': [directive],
+    'outputSpeech': '这是BodyTemplate6模板'
+}
+```
+
 ### 横向列表模板
 * ListTemplate1
 ```python
@@ -224,7 +259,7 @@ listTemplate.set_title('托尔斯泰的格言')
 listTemplateItem = ListTemplateItem()
 listTemplateItem.set_token('token')
 listTemplateItem.set_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
-listTemplateItem.set_plain_primary_Text('一级标题')
+listTemplateItem.set_plain_primary_text('一级标题')
 listTemplateItem.set_plain_secondary_text('二级标题')
 
 #把listTemplateItem添加到模版listItems
@@ -261,16 +296,181 @@ listTemplate.add_item(listTemplateItem)
 directive = RenderTemplate(listTemplate)
 return {
     'directives': [directive],
-    'outputSpeech': '这是ListTemplate1模板'
+    'outputSpeech': '这是ListTemplate2模板'
 }
 ```
 
+### 横向列表
+*ListTemplate3
+```python
+listTemplate = ListTemplate3()
+#设置模板token
+listTemplate.set_token('token')
+#设置模板背景图
+listTemplate.set_background_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版标题
+listTemplate.set_title('托尔斯泰的格言')
+
+#设置模版列表数组listItems其中一项，即列表的一个元素
+listTemplateItem = ListTemplateItem()
+listTemplateItem.set_token('token')
+listTemplateItem.set_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+listTemplateItem.set_plain_primary_text('一级标题')
+listTemplateItem.set_plain_secondary_text('二级标题')
+
+#把listTemplateItem添加到模版listItems
+listTemplate.add_item(listTemplateItem)
+#定义RenderTemplate指令
+directive = RenderTemplate(listTemplate)
+return {
+    'directives': [directive],
+    'outputSpeech': '这是ListTemplate3模板'
+}
+```
+
+### 纵向列表
+*ListTemplate4
+```python
+listTemplate = ListTemplate4()
+#设置模板token
+listTemplate.set_token('token')
+#设置模板背景图
+listTemplate.set_background_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+#设置模版标题
+listTemplate.set_title('托尔斯泰的格言')
+
+#设置模版列表数组listItems其中一项，即列表的一个元素
+listTemplateItem = ListTemplateItem()
+listTemplateItem.set_token('token')
+listTemplateItem.set_image('https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg')
+listTemplateItem.set_plain_primary_text('一级标题')
+listTemplateItem.set_plain_secondary_text('二级标题')
+
+#把listTemplateItem添加到模版listItems
+listTemplate.add_item(listTemplateItem)
+#定义RenderTemplate指令
+directive = RenderTemplate(listTemplate)
+return {
+    'directives': [directive],
+    'outputSpeech': '这是ListTemplate4模板'
+}
+```
+
+### Tag标签
+*[Tag](https://github.com/jokenwang/bot-sdk-python/tree/master_alpha/dueros/directive/Display/tag) 标签用在List模板的每个Item上(显示在每个item的右下角)，比如:付费、免费、最新、VIP、限时、已购、最热以及自定义标签内容等
+PayTag、FreeTag、NewTag、HotTag、VipTag、TimeTag、PurchasedTag、HotTag、CustomTag、AmountTag、AuditionTag
+
+### 音频播放
+* 音频播放 
+```python
+directive = Play('http://www.baidu.com')
+#设置音频格式
+directive.set_stream_format('AUDIO_M3U8')
+#上一首
+previous = PreviousButton()
+previous.set_selected(True)
+# 创建暂停按钮
+playpause = PlayPauseButton()
+#下一首
+next = NextButton()
+#可以添加多个button  比如:收藏、喜欢、播放列表等
+controls = [previous, playpause, NextButton()]
+playerInfo = PlayerInfo('周杰伦 七里香', controls)
+playerInfo.set_title('周杰伦')
+playerInfo.set_title_subtext1('七里香')
+playerInfo.set_art('http://adfadfa')
+# 设置Play指令的PlayerInfo
+directive.set_player_info(playerInfo)
+return{
+    'directives': [directive]
+}
+```
+
+* 视频播放
+```python
+directive = VideoPlayer('video_url', PlayBehaviorEnum.REPLACE_ENQUEUED)
+directive.set_offset_in_milliseconds(121321)
+directive.set_expiry_time('123213223')
+directive.set_expected_previous_token('asdsd-1233-dsew-39FG')
+directive.set_report_delay_in_ms(1234.12212)
+directive.set_report_interval_in_ms(123)
+directive.set_token('AGDG-SAHSHD_ASDS_123')
+directive.set_url('http://set-url.com')
+return{
+    'directives': [directive]
+}
+```
+
+### 音频、视频播放列表
+
+* RenderAudioList 用于渲染音频播放列表。当在播放页面，点击播放列表按钮,可返回RenderAudioList用于渲染UI
+
+* RenderVideoList 用于渲染视频播放列表。当在播放页面，点击播放列表按钮,可返回RenderVideoList用于渲染UI
+
+### 页面栈 
+* PushStack 提供页面栈逻辑
+
+1、当技能开启，当前的页面为A，此时页面栈为空。   
+2、当通过语音或触控返回新的页面B,则A页面压栈，B为当前页面。    
+3、当点击屏幕返回按钮，此时B页面销毁，A页面从栈中弹出，成为当前展示页面。  
+4、以此类推，当栈中没有任何可弹出的页面时推出应用。      
+```python
+    pushStack = PushStack()
+    return{
+    'directives':[自己用来渲染页面的directive, pushStack]
+    }
+
+```
+    
+### 权限申请
+1、AskForPermission 当技能需要获取用户权限:用户信息、位置信息等, 需要向用户进行权限申请。目前只支持用户权限的申请
+2、 比如获取用户信息权限如下
+```python
+directive = AskForPermissionsConsent()
+directive.add_permission(PermissionEnum.READ_USER_PROFILE)
+
+```
+3、 添加事件回调处理
+```python
+#用户允许授权 回调
+self.add_permission_granted_event(func)
+#表示用户拒绝授权
+self.add_permission_rejected_event(func)
+#表示用户同意授权，但是由于其他原因导致授权失败
+self.add_permission_grant_failed_event(func)
+```
+4、获取用户信息, 如果用户允许获取权限那么可以在回调方法中去获取用户的信息  
+```python
+curl -X GET \
+  https://xiaodu.baidu.com/saiya/v1/user/profile \
+  -H 'authorization: bearer {apiAccessToken}'
+```
+或通过urlib发起GET请求发送数据, 将authorization字段放到请求的header中   
+注意:apiAccessToken从Launchrequest请求中获取, 通过下面方式可获取到   
+```python
+self.get_api_access_token()
+```
+如果返回成功，会获得用户的信息   
+```python
+{
+	"status": 0,
+	"msg": "ok",
+	"data": {
+		"nickname": "",
+		"phone": "xxxx",
+		"email": "xxx",
+		"portrait": "xxx"
+	},
+	"logId": "xxxx"
+}
+```
+status 字段详见[Dueros文档](https://developer.dueros.baidu.com/doc/dueros-bot-platform/dbp-user-info/request-customer-information-api_markdown)
 
 ### directive指令
 * 播放指令 AudioPlayer.Play
 ```python
 directives = []
-directive = Play('http://www.music', Play::REPLACE_ALL)
+directive = Play('http://www.music', PlayBehaviorEnum.REPLACE_ALL)
 directives.append(directive)
 return {
     'directives': directives,
@@ -310,45 +510,59 @@ return {
 * bot开始服务
 当bot被@（通过bot唤醒名打开时），DuerOS会发送LanuchRequest给bot，此时，bot可以返回欢迎语或者操作提示：
 ```python
-def launch_request(self):
+def launchRequest(self):
     return {
         'outputSpeech': r'欢迎进入'
     }
 
-self.add_launch_handler(self.launch_request)
+self.add_launch_handler(self.launchRequest)
 ```
 * bot 结束服务
 当用户表达退出bot时，DuerOS会发送SessionEndedRequest：
 ```python
-def end_request(self):
+def endRequest(self):
     ```
     清空状态，结束会话
     ```
-self.add_session_ended_handler(self.end_request)
+self.add_session_ended_handler(self.endRequest)
 ```
 ### 使多轮对话管理更加简单
 往往用户一次表达的需求，信息不一定完整，比如：'给我创建一个闹钟'，由于query中没有提醒的时间，一个好的bot实现会问用户：'我应该什么时候提醒你呢？'，这时用户说明天上午8点，这样bot就能获取设置时间，可以为用户创建一个闹钟。比如，你可以这样来实现：
 ```python
-def get_remind_slot(self):
-    remind_time = self.get_slots('remind_time');
-    if remind_time:
+def getRemindSlot(self):
+    remindTime = self.getSlots('remind_time');
+    if remindTime:
         return 返回设置闹钟指令
     self.nlu.ask('remind_time')
     return {
         'outputSpeech': r'要几点的闹钟呢?'
     }
-self.add_launch_handler(self.get_remind_slot)
+self.add_launch_handler(self.getRemindSlot)
 ```
-### 监听events
+
+### 事件Events
+* Display.ElementSelected  展示列表的item被选中会触发此事件，端点会上送此事件
+
+* Display.ButtonClicked    展示类型的Button被点击,端点会上送此事件
+
+* Form.ButtonClicked       音频或视频播放页面按钮被点击(上一个、下一个、重复、收藏、收藏列表、播放列表)，端点会上送此事件
+
+* AudioPlayer 、VideoPlayer 播放也有对应事件，详看官方文档
+
+### 监听Events
 ```python
-def deal_alert_event(self):
+def dealAlertEvent(self, event):
     card = TextCard('闹钟创建成功')
     return {
         'card': card,
     }
-self.add_event_listener('Alerts.SetAlertSucceeded', self.deal_alert_event)
+self.add_event_listener('Alerts.SetAlertSucceeded', self.dealAlertEvent)
 ```
-Bot-sdk会根据通过addIntentHandler添加handler的顺序来遍历所有的检查条件，寻找条件满足的handler来执行回调，并且当回调函数返回值不是None时结束遍历，将这个不为None的值返回。
+event就是上送给技能的事件，里面包含事件类型、token等信息,可以通过event数据来做对应的业务。
+
+Bot-sdk会根据通过add_event_listener添加的event handler来匹配对应的事件类型。
+
+Bot-sdk会根据通过add_intent_handler添加handler的顺序来遍历所有的检查条件，寻找条件满足的handler来执行回调，并且当回调函数返回值不是None时结束遍历，将这个不为None的值返回。
 
 NLU会维护slot的值，merge每次对话解析出的slot，你可以不用自己来处理，DuerOS每次请求Bot时会将merge的slot都下发。session内的数据完全由你来维护，你可以用来存储一些状态，比如打车Bot会用来存储当前的订单状态。你可以通过如下接口来使用slot和session：
 ```python
@@ -361,9 +575,9 @@ set_session_attribute('key', 'value')
 set_session_attribute('key.key1', 'value')
 get_session_attribute('key.key1')
 #清空session
-clear_session()
+clear()
 ```
-你的Bot可以订阅端上触发的事件，通过接口addEventListener实现，比如端上设置闹钟成功后，会下发SetAlertSucceeded的事件，Bot通过注册事件处理函数，进行相关的操作。
+你的Bot可以订阅端上触发的事件，通过接口add_event_listener实现，比如端上设置闹钟成功后，会下发SetAlertSucceeded的事件，Bot通过注册事件处理函数，进行相关的操作。
 
 ### NLU交互协议
 在DuerOS Bot Platform平台，可以通过nlu工具，添加了针对槽位询问的配置，包括：
@@ -442,7 +656,7 @@ return {
 可以使用如下命令安装:你还可以写插件(拦截器Intercept),干预对话流程、干预返回结果。比如，用户没有通过百度帐号登录，bot直接让用户去登录，不响应意图，可以使用LoginIntercept:
 ```python
 loginIntercept = LoginIntercept()
-self.addIntercept(loginIntercept)
+self.add_intercept(loginIntercept)
 ```
 开发自己的拦截器，继承Intercept,通过重载preprocess，能够在处理通过addHandler、addEventListener添加的回调之前，定义一些逻辑。通过重载postprocess能够对回调函数的返回值，进行统一的处理：
 ```python
@@ -459,6 +673,29 @@ class YourIntercept(Intercept):
         return result
 ```
 intercept可以定义多个，执行顺序，以调用addIntercept的顺序来执行
+
+### 技能数据验证
+Bot技能支持数据验证(默认数据验证是关闭的)，确保数据的来源的可靠性。(确保已经在技能平台配置了公钥)
+* 初始化数据校验
+```python
+self.init_certificate(environ, private_key='')
+```
+* 开启数据验证
+```python
+self.enable_verify_request_sign()
+```
+详见文档[通信认证](https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-deploy/authentication.md)
+
+### 技能数据统计
+Bot默认未开启技能数据统计功能，需要手动开启。(确保已经在技能平台配置了公钥)
+```python
+self.set_monitor_enabled(True)
+
+```
+之后设置自己的私钥和环境(0:Debug模式, 1:online模式)
+```python
+self.set_environment_info(private_key, environment=0)
+```
 
 ### <span id = "question">常见问题</span>
 * 运行sh start.sh 出现 ImportError: No module named OpenSSL
@@ -482,31 +719,22 @@ sudo pip install requests
 ```
 pip install -r requirements.txt
 ```
+# 技能调试
+为了避免每次调试都要部署到服务器可以使用[ngrok](https://ngrok.com/)将请求数据转发到自己的机器上(注意:ngrok访问比较慢,有时会链接超时)
 
-# 完成过程记录
+# 变更记录
 
-2018-01-12
-* Bot.py添加错误回调，用户可以调用setCallBack方法设置错误回调方法
-* 优化samples demo
-* 添加个税demo数据
-
-
-2018-01-06
+* 版本变更详见变更记录 CHANGELOG.md
 
 
-* 完成拦截器
-* 完成会话
-* 完成指令处理
+# Known Users
+按照登记顺序排序，更多接入技能，欢迎在 https://github.com/jokenwang/bot-sdk-python/issues/16 登记（仅供用户参考）
 
-===========================================
-
-### 鸣谢
+## 鸣谢
 [@gongqingliang821](https://github.com/gongqingliang821)
-
-[@imzeali](https://github.com/imzeali)
 
 ### 免责声明
 
-* 此SDK非官网提供，纯属个人学习研究，如因使用此SDK导致的任何损失，本人概不负责
+* 此SDK非官网提供，纯属个人学习研究，如因使用此SDK导致的任何损失，本人概不负责。
 
 

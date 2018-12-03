@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -10,10 +10,11 @@
 """
 
 
-class ImageStructure(object):
+class ImageStructure:
 
     def __init__(self):
         self.data = {}
+        super(ImageStructure, self).__init__()
 
     def set_url(self, url):
         if url:

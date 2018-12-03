@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -12,19 +12,21 @@
 import time
 import random
 import hashlib
+from dueros.Utils import Utils
 
 
 class BaseDirective(object):
 
-    def __init__(self, type):
+    def __init__(self, directive_type):
         self.data = {}
-        self.data['type'] = type
+
+        self.data['type'] = directive_type
 
     def gen_token(self):
-        '''
+        """
         生成Token md5(9位随机数+时间戳) 再截取md5后的字符串
         :return: uuid
-        '''
+        """
         #生成随机数
         rand = str(random.randint(0, 9999999999))
         t = str(round(time.time() * 1000))
@@ -50,11 +52,11 @@ class BaseDirective(object):
 
     def get_token(self):
 
-        return self.data['token']
+        return Utils.get_dict_data_by_keys(self.data, ['token'])
 
 
 if __name__ == '__main__':
 
     directive = BaseDirective('TEXT')
-    print(directive.getToken())
+    print(directive.get_token())
     pass

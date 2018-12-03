@@ -3,7 +3,7 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/13
+# create_time: 2018/7/20
 
 """
     desc:pass
@@ -33,7 +33,6 @@ class BodyTemplate5Test(unittest.TestCase):
         '''
 
         data = self.template.get_data()
-        print(data)
         ret = {
             'type': 'BodyTemplate5',
             'token': '0c71de96-15d2-4e79-b97e-e52cec25c254',

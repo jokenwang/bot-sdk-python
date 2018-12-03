@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -6,7 +6,8 @@
 # create_time: 2018/5/26
 
 """
-    desc:pass
+BodyTemplate5模板
+详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/display-template_markdown#BodyTemplate5
 """
 
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
@@ -19,9 +20,9 @@ class BodyTemplate5(BaseTemplate):
         self.set_type('BodyTemplate5')
         self.data['images'] = []
 
-    def add_images(self, url, width_pixels='', height_pixel=''):
+    def add_images(self, url, width_pixels='', height_pixels=''):
 
-        image_structure = self.create_imagestructure(url, width_pixels, height_pixel)
+        image_structure = self.create_image_structure(url, width_pixels, height_pixels)
         if image_structure:
             self.data['images'].append(image_structure.get_data())
         return self

@@ -3,13 +3,14 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/13
+# create_time: 2018/7/20
 
 """
     desc:pass
 """
 import unittest
 from dueros.directive.Display.Hint import Hint
+
 
 class HintTest(unittest.TestCase):
     '''
@@ -35,7 +36,7 @@ class HintTest(unittest.TestCase):
             ]
         }
 
-        self.assertEqual(self.hint1.getData(), data1)
+        self.assertEqual(self.hint1.get_data(), data1)
 
         data2 = {
             'type': 'Hint',
@@ -49,7 +50,7 @@ class HintTest(unittest.TestCase):
                 }
             ]
         }
-        self.assertEqual(self.hint2.getData(), data2)
+        self.assertEqual(self.hint2.get_data(), data2)
 
     pass
 

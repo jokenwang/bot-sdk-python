@@ -3,14 +3,14 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/16
+# create_time: 2018/7/20
 
 """
     desc:pass
 """
 
 
-class __init__py:
+class __init__.py:
     pass
 
 

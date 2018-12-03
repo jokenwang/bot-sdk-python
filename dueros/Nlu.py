@@ -1,27 +1,32 @@
-#!/usr/bin/env python2
-# -*- encoding=utf-8 -*-
+#!/usr/bin/env python3
+# -*- coding=utf-8 -*-
 
 # description:
 # author:jack
 # create_time: 2017/12/30
-
+"""
+语义解析
+"""
 from dueros.Base import Base
 
 
 class Nlu(Base):
 
     def __init__(self, data):
+
         super(Nlu, self).__init__()
         self.data = data
-        self.askSlot = None
+        self.ask_slot = None
         self.directive = None
+        self.afterSearchScore = None
 
     def get_intent_name(self, index=0):
         """
         获取当前的意图intent名
         :return:
         """
-        return self.data[index]['name']
+
+        return self.data[index]['name'] if 'name' in self.data[index] else ''
 
     def set_slot(self, field, value, index=0):
         """
@@ -53,9 +58,7 @@ class Nlu(Base):
         :param field:
         :param index:
         :return:
-        """
-
-        '''
+        例如：
             intent:[
                 {
                    "slots": {
@@ -69,9 +72,10 @@ class Nlu(Base):
                 .....
                 } 
             ]
-        '''
+        """
+
         if not field:
-            return
+            return ''
         # #此处有坑 文档是values 但是PHP demo是value
         return self.__get_slot_value_by_key(field, 'value', index)
 
@@ -82,6 +86,7 @@ class Nlu(Base):
         :param index:
         :return:    NONE: 未确认；CONFIRMED: 确认；DENIED: 否认
         """
+
         return self.__get_slot_value_by_key(field, 'confirmationStatus', index)
 
     def get_intent_confirmation_status(self, index=0):
@@ -90,17 +95,18 @@ class Nlu(Base):
         :param index:
         :return:    NONE: 未确认；CONFIRMED: 确认；DENIED: 否认
         """
-        return self.data[index]['confirmationStatus']
+
+        return self.data[index]['confirmationStatus'] if 'confirmationStatus' in self.data[index] else ''
 
     def __get_slot_value_by_key(self, field, sub_field, index=0):
         """
         :param field:
-        :param sub_field:
+        :param subField:
         :param index:
         :return:
         """
 
-        if 'slots' not in self.data[index]:
+        if not ('slots' in self.data[index]):
             return ''
         slots = self.data[index]['slots']
         if field in slots:
@@ -110,9 +116,10 @@ class Nlu(Base):
 
     def has_asked(self):
         """
-        是否询问过用户
+        是否询问过用户,是否调用过ask
         :return:
         """
+
         if self.directive:
             return True
         else:
@@ -125,8 +132,8 @@ class Nlu(Base):
         :return:
         """
 
-        if slot != '' and slot:
-            self.askSlot = slot
+        if slot and slot != '':
+            self.ask_slot = slot
             self.directive = {
                 'type': 'Dialog.ElicitSlot',
                 'slotToElicit': slot,
@@ -166,15 +173,14 @@ class Nlu(Base):
         在Response 中被调用
         :return:
         """
+        return self.data[0] if self.data[0] else None
 
-        if self.data[0]:
-            return {
-                'intent': self.data[0]
-            }
-        else:
-            return {
-                'intent': {}
-            }
+    def get_after_search_score(self):
+        return self.afterSearchScore
+
+    def set_after_search_score(self, after_search_score):
+        if after_search_score and isinstance(after_search_score, float):
+            self.afterSearchScore = after_search_score
 
     def set_delegate(self):
         """

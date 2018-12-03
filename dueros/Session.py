@@ -1,14 +1,14 @@
-#!/usr/bin/env python2
-# -*- encoding=utf-8 -*-
+#!/usr/bin/env python3
+# -*- coding=utf-8 -*-
 
 # description:
 # author:jack
 # create_time: 2017/12/30
 
 """
-Session相关 暂未搞
+Session相关
+相关文档:https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/response_markdown#session%E5%8F%82%E6%95%B0%E8%AF%B4%E6%98%8E
 """
-
 from dueros.Base import Base
 
 
@@ -17,7 +17,9 @@ class Session(Base):
     def __init__(self, data):
 
         super(Session, self).__init__()
+
         self.data = {}
+
         if 'attributes' in data and isinstance(data['attributes'], list) and len(data['attributes']) > 0:
             self.data = data['attributes']
 
@@ -30,9 +32,9 @@ class Session(Base):
             self.sessionId = None
 
         if 'new' in data:
-            self.isNew = data['new']
+            self.is_new = data['new']
         else:
-            self.isNew = False
+            self.is_new = False
 
     def clear(self):
         self.data = {}
@@ -45,31 +47,30 @@ class Session(Base):
 
     def get_data(self, field, default=''):
         """
-
-        :param field:
-        :param default:
+        获取session中指定key的值
+        :param field:   session key
+        :param default: 默认值
         :return:
         """
-        if field is not None and str(field) in self.data:
-            field = str(field)
+        if field and field in self.data:
             return self.data[field]
         else:
             return default
 
-    def set_data(self, field, value, default=''):
+    def set_data(self, field, value):
         """
-
-        :param field:
-        :param value:
-        :param default:
+        设置session
+        :param field:  session key
+        :param value:  session value
         :return:
         """
-        if field is not None and value is not None:
-            field = str(field)
+        if value is not None:
             self.data[field] = value
-        else:
-            self.data[field] = default
 
+    def clear_session_field(self, field):
+        if field and isinstance(field, str) and field in self.data:
+            value = self.data.pop(field)
 
 if __name__ == '__main__':
+
     pass

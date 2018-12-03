@@ -3,7 +3,7 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/13
+# create_time: 2018/7/20
 
 """
     desc:pass
@@ -12,11 +12,12 @@ import unittest
 from dueros.directive.Display.template.ListTemplate2 import ListTemplate2
 from dueros.directive.Display.template.ListTemplateItem import ListTemplateItem
 
+
 class ListTemplate2Test(unittest.TestCase):
     '''
     ListTemplate2 单元测试
     '''
-    
+
     def setUp(self):
         self.listTemplate2 = ListTemplate2()
 
@@ -28,7 +29,7 @@ class ListTemplate2Test(unittest.TestCase):
 
         self.listTemplate2.set_background_image('http://back-img.com')
 
-        listTemplateItem1 =  ListTemplateItem()
+        listTemplateItem1 = ListTemplateItem()
         listTemplateItem1.set_image('http://item-img1.com', '123', '345')
         listTemplateItem1.set_plain_primary_text('Plain Primary Text')
         listTemplateItem1.set_plain_secondary_text('Plain Secondary Text')
@@ -103,6 +104,7 @@ class ListTemplate2Test(unittest.TestCase):
         }
 
         self.assertEqual(self.listTemplate2.get_data(), ret)
+
     pass
 
 

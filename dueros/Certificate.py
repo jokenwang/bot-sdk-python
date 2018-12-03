@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -12,75 +12,74 @@ import os
 import fcntl
 import hashlib
 import OpenSSL
-import urllib2
-import logging
+import urllib.request
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from Crypto.Hash import SHA
 from base64 import b64encode, b64decode
 from dueros.Base import Base
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 
 class Certificate(Base):
 
-    def __init__(self, environ, request_body, privatekey_content=""):
+    def __init__(self, environ, request_body, private_key_content=''):
         """
         私钥内容,使用统计功能必须要提供
         :param environ: 环境上下文
-        :param request_body:
-        :param privatekey_content:
+        :param requestBody: 请求数据
+        :param privateKeyContent:
         """
 
         super(Certificate, self).__init__()
 
         self.environ = environ
         self.data = request_body
-        self.private_key = privatekey_content
+        self.private_key = private_key_content
         self.verify_request_sign = False
 
     def enable_verify_request_sign(self):
         """
-        开启数据校验
+        校验请求合法性
         :return:
         """
-
-        logging.info('开启数据校验')
         self.verify_request_sign = True
 
     def disable_verify_request_sign(self):
         """
-        关闭数据校验
+        不校验请求合法性
         :return:
         """
-        logging.info('关闭数据校验')
         self.verify_request_sign = False
 
     def get_request_public_key(self):
-
+        """
+        获取Dueros发送过来的公钥(此公钥信息是在技能参数配置中设置的)
+        :return:
+        """
         filename = self.environ['HTTP_SIGNATURECERTURL']
         if not filename:
             return
         md5 = hashlib.md5()
         md5.update(filename.encode('utf-8'))
         cache = os.getcwd() + os.path.sep + md5.hexdigest()
-        content = ''
         if not os.path.exists(cache):
-            content = urllib2.urlopen(filename).read()
+            content = urllib.request.urlopen(filename).read()
             if not content:
                 return
             with open(cache, 'w') as f:
                 fcntl.flock(f, fcntl.LOCK_EX)
-                f.write(content)
+                f.write(content.decode('utf-8'))
                 fcntl.flock(f, fcntl.LOCK_UN)
         content = self.get_file_content_safety(cache)
-        return self.get_publickey_fromX509(content)
+        return self.get_public_key_fromX509(content)
 
     def verify_request(self):
         """
         数据验证
         :return:
         """
-
         if not self.verify_request_sign:
             return True
 
@@ -92,7 +91,7 @@ class Certificate(Base):
         key = RSA.importKey(public_key)
         if key:
             digest = SHA.new()
-            digest.update(self.data)
+            digest.update(self.data.encode('utf-8'))
             verifier = PKCS1_v1_5.new(key)
             if verifier.verify(digest, b64decode(self.get_request_sign())):
                 return True
@@ -105,15 +104,14 @@ class Certificate(Base):
         :param content: 待签名内容
         :return:
         """
-
         if not self.private_key or not content:
             return False
 
-        rsa_key = RSA.importKey(self.private_key)
-        if rsa_key:
+        rsakey = RSA.importKey(self.private_key)
+        if rsakey:
             digest = SHA.new()
-            digest.update(content)
-            signer = PKCS1_v1_5.new(rsa_key)
+            digest.update(content.encode('utf8'))
+            signer = PKCS1_v1_5.new(rsakey)
             signature = signer.sign(digest)
             return b64encode(signature)
         else:
@@ -122,12 +120,12 @@ class Certificate(Base):
     def get_request_sign(self):
         return self.environ['HTTP_SIGNATURE']
     
-    def get_publickey_fromX509(self, content):
+    def get_public_key_fromX509(self, content):
         """
         获取publicKey
-        :param content
+        :param  content
+        :return publicKey
         """
-
         x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, content)
         pk = x509.get_pubkey()
         public_key = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
@@ -139,12 +137,12 @@ class Certificate(Base):
         :param filename
         :return content
         """
-
         with open(filename, 'r') as f:
             fcntl.flock(f, fcntl.LOCK_SH)
             content = f.read()
-            return content
             fcntl.flock(f, fcntl.LOCK_UN)
+            return content
+
 
 if __name__ == '__main__':
 
@@ -174,7 +172,7 @@ IYdYV3QpYohFszH3wQIDAQAB
     def sign(data):
         key = RSA.importKey(priKey)
         digest = SHA.new()
-        digest.update(data)
+        digest.update(data.encode('utf-8'))
         signer = PKCS1_v1_5.new(key)
         signature = signer.sign(digest)
         return b64encode(signature)
@@ -183,7 +181,7 @@ IYdYV3QpYohFszH3wQIDAQAB
     def verify(data, signature):
         key = RSA.importKey(pubKey)
         digest = SHA.new()
-        digest.update(data)
+        digest.update(data.encode('utf-8'))
         verifier = PKCS1_v1_5.new(key)
         if verifier.verify(digest, b64decode(signature)):
             return True

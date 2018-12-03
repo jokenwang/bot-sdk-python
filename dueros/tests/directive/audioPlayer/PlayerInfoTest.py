@@ -3,7 +3,7 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/13
+# create_time: 2018/7/20
 
 """
     desc:pass
@@ -15,7 +15,7 @@ from dueros.directive.AudioPlayer.Control.ShowPlayListButton import ShowPlayList
 from dueros.directive.AudioPlayer.Control.ShowFavoriteListButton import ShowFavoriteListButton
 from dueros.directive.AudioPlayer.Control.RepeatButton import RepeatButton
 from dueros.directive.AudioPlayer.Control.RepeatButtonEnum import RepeatButtonEnum
-from dueros.directive.AudioPlayer.PlayerInfoAudioItemEnum import PlayerInfoAudioItemEnum
+from dueros.directive.AudioPlayer.AudioItemTypeEnum import AudioItemTypeEnum
 
 
 class PlayerInfoTest(unittest.TestCase):
@@ -24,14 +24,13 @@ class PlayerInfoTest(unittest.TestCase):
 
         self.playerInfo = PlayerInfo()
         self.playerInfo.set_provider('yly', 'http://uri-logo.com')
-        self.playerInfo.set_provider_name('yyy-second');
 
         self.playerInfo.set_lyric('http://uri-lrc.com')
         self.playerInfo.set_art('art')
         self.playerInfo.set_title('title')
         self.playerInfo.set_title_subtext1('sub text1')
         self.playerInfo.set_title_subtext2('sub text2')
-        self.playerInfo.set_audio_item_type(PlayerInfoAudioItemEnum.FORMAT_LRC)
+        self.playerInfo.set_audio_item_type(AudioItemTypeEnum.FORMAT_LRC)
         self.playerInfo.set_media_length_in_ms(12321.232)
 
         favoriteButton = FavoriteButton()
@@ -54,7 +53,7 @@ class PlayerInfoTest(unittest.TestCase):
                 'audioItemType': 'LRC',
                 'mediaLengthInMilliseconds': 12321,
                 'provider': {
-                    'name': 'yyy-second',
+                    'name': 'yly',
                     'logo': {
                         'src': 'http://uri-logo.com'
                     }

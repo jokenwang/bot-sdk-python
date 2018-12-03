@@ -3,7 +3,7 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/16
+# create_time: 2018/7/20
 
 """
     desc:pass
@@ -13,15 +13,13 @@ import json
 import sys
 from dueros.Request import Request
 from dueros.Session import Session
-reload(sys)
-sys.setdefaultencoding('utf-8')
 
 
 class LaunchRequsetTest(unittest.TestCase):
 
     def setUp(self):
 
-        with open('../json/launch.json') as f:
+        with open('../json/launch.json', encoding='utf-8') as f:
             self.data = f.read()
         self.data = json.loads(self.data)
 
@@ -93,7 +91,7 @@ class LaunchRequsetTest(unittest.TestCase):
         :return:
         '''
 
-        self.assertEquals(self.request.get_type(), 'LaunchRequest');
+        self.assertEqual(self.request.get_type(), 'LaunchRequest');
 
     def testGetUserId(self):
         '''
@@ -108,16 +106,16 @@ class LaunchRequsetTest(unittest.TestCase):
         测试getCuid方法
         :return:
         '''
-        self.assertEqual(self.request.get_cu_id(), 'cuid')
+        self.assertEqual(self.request.get_cuid(), 'cuid')
 
     def testGetAccessToken(self):
         '''
-
         :return:
         '''
         self.assertEqual(self.request.get_access_token(), 'access_token')
-    pass
 
+    def testGetApiAccessToken(self):
+        self.assertEqual(self.request.get_api_access_token(), 'api_access_token')
 
 if __name__ == '__main__':
     pass

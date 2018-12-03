@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -6,7 +6,8 @@
 # create_time: 2017/12/31
 
 """
-    用于生成Play指令的类
+用于生成Play指令的类
+详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/audioplayer_markdown#AudioPlayer.Play%E6%8C%87%E4%BB%A4
 """
 
 from dueros.directive.BaseDirective import BaseDirective
@@ -31,17 +32,23 @@ class Play(BaseDirective):
         '''
 
         super(Play, self).__init__('AudioPlayer.Play')
-        self.data['playBehavior'] = play_behavior
+        self.data['playBehavior'] = play_behavior.value
         self.data['audioItem'] = {
             'stream': {
-                'streamFormat': StreamFormatEnum.STREAM_FORMAT_MP3,
+                'streamFormat': StreamFormatEnum.STREAM_FORMAT_MP3.value,
                 'url': url,
                 'offsetInMilliSeconds': 0,
                 'token': self.gen_token()
             }
         }
 
+    def set_play_behavior(self, play_behavior):
+
+        if isinstance(play_behavior, PlayBehaviorEnum):
+            self.data['playBehavior'] = play_behavior.value
+
     def set_player_info(self, player_info):
+
         if isinstance(player_info, PlayerInfo):
             self.data['audioItem']['playerInfo'] = player_info.get_data()
 
@@ -51,7 +58,7 @@ class Play(BaseDirective):
         return self
 
     def get_token(self):
-        return self.data['audioItem']['stream']['token']
+        return Utils.get_dict_data_by_keys(self.data,['audioItem','stream','token'])
 
     def set_url(self, url):
         if url:
@@ -64,9 +71,9 @@ class Play(BaseDirective):
         :param milliseconds:    毫秒数。比如5分钟的歌曲，播放的长度是5*60*1000毫秒，选择起始的播放位置
         :return:
         '''
-        milliseconds = Utils.convert_number(milliseconds)
-        if milliseconds:
-            self.data['audioItem']['stream']['offsetInMilliSeconds'] = milliseconds
+        if milliseconds.isdigit():
+            milli_seconds = int(milliseconds)
+            self.data['audioItem']['stream']['offsetInMilliSeconds'] = milli_seconds
         return self
 
     def set_progress_report_interval_ms(self, interval_ms):
@@ -75,8 +82,8 @@ class Play(BaseDirective):
         :param interval_ms:  毫秒数。
         :return:
         '''
-        interval_ms = Utils.convert_number(interval_ms)
-        if interval_ms:
+        if interval_ms.isdigit():
+            interval_ms = int(interval_ms)
             self.data['audioItem']['stream']['progressReportIntervalMs'] = interval_ms
         return self
 
@@ -87,9 +94,9 @@ class Play(BaseDirective):
         :return:
         '''
         if StreamFormatEnum.inEnum(stream_format):
-            self.data['audioItem']['stream']['streamFormat'] = stream_format
+            self.data['audioItem']['stream']['streamFormat'] = stream_format.value
         else:
-            self.data['audioItem']['stream']['streamFormat'] = StreamFormatEnum.STREAM_FORMAT_MP3
+            self.data['audioItem']['stream']['streamFormat'] = StreamFormatEnum.STREAM_FORMAT_MP3.value
         return self
 
 
@@ -105,7 +112,7 @@ if __name__ == '__main__':
     previous.set_selected(True)
     controls = [playpause, previous]
     playerInfo.set_controls(controls)
-    playerInfo.add_control(NextButton())
+    playerInfo.set_controls(NextButton())
 
     playerInfo.set_title('周杰伦')
     playerInfo.set_title_subtext1('七里香')

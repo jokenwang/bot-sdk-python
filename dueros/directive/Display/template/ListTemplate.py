@@ -13,6 +13,7 @@
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
 from dueros.directive.Display.template.ListTemplateItem import ListTemplateItem
 
+
 class ListTemplate(BaseTemplate):
 
     def __init__(self, type):

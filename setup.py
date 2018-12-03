@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -13,16 +13,16 @@ from setuptools import setup
 from setuptools import find_packages
 
 setup(
-    name='dueros-bot-python2',
-    version='1.2.9',
+    name='dueros-bot',
+    version='2.2.0',
     author='jack',
     author_email='mupdf@sina.com',
-    description='Third party DuerOS Bot Python SDK ',
+    description='Third party DuerOS Bot Python SDK',
     keywords='DuerOS Bot',
     url='https://github.com/jokenwang/bot-sdk-python',
     packages=find_packages(),
     install_requires=[
-        'pycryptodome ~> 3.6.6'
+        'pycryptodome >= 3.6.6',
         'requests',
 	    'pyOpenSSL'
     ]

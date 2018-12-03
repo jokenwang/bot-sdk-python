@@ -16,7 +16,7 @@ class LaunchBrowser(BaseDirective):
 
         super(LaunchBrowser, self).__init__('WebBrowser.LaunchBrowser')
         self.data['url'] = url
-        self.data['token'] = self.getToken()
+        self.data['token'] = self.gen_token()
 
 if __name__ == '__main__':
     pass

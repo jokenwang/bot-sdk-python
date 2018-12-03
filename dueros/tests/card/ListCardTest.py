@@ -3,11 +3,12 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/13
+# create_time: 2018/7/20
 
 """
     desc:pass
 """
+
 import unittest
 from dueros.card.ListCardItem import ListCardItem
 from dueros.card.ListCard import ListCard
@@ -15,7 +16,6 @@ from dueros.card.ListCard import ListCard
 
 class ListCardTest(unittest.TestCase):
     '''
-
     '''
 
     def setUp(self):
@@ -56,7 +56,8 @@ class ListCardTest(unittest.TestCase):
                 }
             ]
         }
-        self.assertEquals(self.listCard.get_data(), card)
+        self.assertEqual(self.listCard.get_data(), card)
+
 
 if __name__ == '__main__':
     pass

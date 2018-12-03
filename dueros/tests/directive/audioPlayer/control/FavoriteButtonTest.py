@@ -3,7 +3,7 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/13
+# create_time: 2018/7/20
 
 """
     desc:pass
@@ -15,7 +15,6 @@ from dueros.directive.AudioPlayer.Control.FavoriteButton import FavoriteButton
 
 class FavoriteButtonTest(unittest.TestCase):
     '''
-
     '''
 
     def setUp(self):
@@ -35,6 +34,8 @@ class FavoriteButtonTest(unittest.TestCase):
         self.assertEqual(self.favoriteButton.get_data(), ret)
 
     pass
+
+
 
 
 if __name__ == '__main__':

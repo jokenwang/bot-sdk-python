@@ -1,19 +1,18 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
 # author:jack
 # create_time: 2018/1/2
+"""
+用于调用app的指令类
+"""
 
 from dueros.directive.BaseDirective import BaseDirective
 import logging
 
 
 class LaunchApp(BaseDirective):
-
-    """
-       用于调用app的指令类
-    """
 
     def __init__(self, app_name='', package_name='', deep_link=''):
         """
@@ -22,9 +21,10 @@ class LaunchApp(BaseDirective):
         :param package_name: 应用包
         :param deep_link:    打开应用指定功能
         """
+
         super(LaunchApp, self).__init__('AppLauncher.LaunchApp')
         if not app_name and not package_name and not deep_link:
-            print('app_name package_name deepLink 必须要有一个')
+            print('appName packageName deepLink 必须要有一个')
         else:
             self.data = dict({
                 'appName': app_name,

@@ -3,11 +3,12 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/13
+# create_time: 2018/7/20
 
 """
     desc:pass
 """
+
 import unittest
 from dueros.card.ImageCard import ImageCard
 
@@ -34,7 +35,7 @@ class ImageCardTest(unittest.TestCase):
                 {'src':'www.png'}
             ]
         }
-        self.assertEquals(self.card.get_data(), card)
+        self.assertEqual(self.card.get_data(), card)
         self.card.add_item('www.png', 'www.thumbnail');
         card = {
             'type': 'image',
@@ -43,7 +44,8 @@ class ImageCardTest(unittest.TestCase):
                 {'src': 'www.png', 'thumbnail': 'www.thumbnail'}
             ]
         }
-        self.assertEquals(self.card.get_data(), card)
+        self.assertEqual(self.card.get_data(), card)
+
 
 if __name__ == '__main__':
     pass

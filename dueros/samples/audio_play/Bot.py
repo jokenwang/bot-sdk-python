@@ -11,13 +11,10 @@
 from dueros.Bot import Bot
 from dueros.directive.AudioPlayer.Stop import Stop
 from dueros.directive.AudioPlayer.Play import Play
-from dueros.directive.AudioPlayer.PlayerInfo import PlayerInfo
 from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
-from dueros.directive.AudioPlayer.Control.PlayPauseButton import PlayPauseButton
-from dueros.directive.AudioPlayer.Control.PreviousButton import PreviousButton
-from dueros.directive.AudioPlayer.Control.NextButton import NextButton
-from dueros.directive.AudioPlayer.Control.ShowPlayListButton import ShowPlayListButton
-
+from dueros.directive.Display.template.BodyTemplate2 import BodyTemplate2
+from dueros.directive.Display.RenderTemplate import RenderTemplate
+import json
 class Bot(Bot):
     '''
     自定义的BOT函数
@@ -26,67 +23,29 @@ class Bot(Bot):
         '''
         打开调用名
         '''
+        self.musics = json.loads(self.musicsData())
         self.wait_answer()
         return {
-            'outputSpeech': r'欢迎进入'
+            'directives': [self.getTemplate2(self.musics[self.curIndex])],
+            'outputSpeech': '欢迎使用音乐播放器!'
         }
 
     def audioPlay(self):
         '''
         播放指令
         '''
-        directives = []
-        directive1 = Play('http://audio.xmcdn.com/group27/M07/91/30/wKgJW1kVpTTysDS9ABG_opoNMoA008.m4a', PlayBehaviorEnum.REPLACE_ALL)
-        playerInfo = PlayerInfo()
-        playerInfo.set_title('Python')
-        playerInfo.set_title_subtext1('python')
-        playerInfo.set_art('https://imagev2.xmcdn.com/group26/M03/94/DD/wKgJWFkVpOyzKhU_AABPh3rraa8772.jpg!op_type=5&upload_type=cover&device_type=ios&name=web_meduim&strip=0&quality=7')
-
-        playpause = PlayPauseButton()
-        previous = PreviousButton()
-        next = NextButton()
-        showPlayList = ShowPlayListButton()
-        showPlayList.set_enabled(False)
-        controls = [playpause, previous, next, showPlayList]
-        # controls = [playpause, previous]
-        playerInfo.set_controls(controls)
-        # playerInfo.add_control(NextButton())
-        directive1.set_player_info(playerInfo)
-
-
-        # directive2 = Play('http://audio.xmcdn.com/group27/M04/91/28/wKgJW1kVpMfRrzE5AAzyjIkEf9s698.m4a', PlayBehaviorEnum.ENQUEUE)
-        # playerInfo = PlayerInfo()
-        # playerInfo.set_title('子夜吴歌')
-        # playerInfo.set_art(
-        #     'https://imagev2.xmcdn.com/group26/M03/94/DD/wKgJWFkVpOyzKhU_AABPh3rraa8772.jpg!op_type=5&upload_type=cover&device_type=ios&name=web_meduim&strip=0&quality=7')
-        # playpause = PlayPauseButton()
-        # previous = PreviousButton()
-        # previous.set_selected(True)
-        # controls = [playpause, previous]
-        # playerInfo.set_controls(controls)
-        # playerInfo.add_control(NextButton())
-        # directive2.set_player_info(playerInfo)
-        # directive3 = Play('http://audio.xmcdn.com/group27/M04/91/28/wKgJW1kVpMfRrzE5AAzyjIkEf9s698.m4a', PlayBehaviorEnum.ENQUEUE)
-        #
-        # playerInfo = PlayerInfo()
-        # playerInfo.set_title('子夜吴歌')
-        # playerInfo.set_art(
-        #     'https://imagev2.xmcdn.com/group26/M03/94/DD/wKgJWFkVpOyzKhU_AABPh3rraa8772.jpg!op_type=5&upload_type=cover&device_type=ios&name=web_meduim&strip=0&quality=7')
-        # playpause = PlayPauseButton()
-        # previous = PreviousButton()
-        # previous.set_selected(True)
-        # controls = [playpause, previous]
-        # playerInfo.set_controls(controls)
-        # playerInfo.add_control(NextButton())
-        # directive3.set_player_info(playerInfo)
-        directives.append(directive1)
-        # directives.append(directive2)
-        # directives.append(directive3)
+        self.musics = json.loads(self.musicsData())
 
         return {
-            'directives' : directives,
+            'directives' : [self.getTemplate2(self.musics[self.curIndex]), self.getDirective("0")],
             'outputSpeech': r'正在为你播放歌曲'
         }
+
+    def getDirective(self, offset = "0"):
+        directive = Play(self.musics[self.curIndex]['url'])
+        directive.set_token(self.musics[self.curIndex]['token'])
+        directive.set_offset_in_milliseconds(offset)
+        return directive
 
     def audioStop(self):
         '''
@@ -105,49 +64,53 @@ class Bot(Bot):
         处理事件上报示例
         '''
         offset = event['offsetInMilliSeconds']
-        # directives = []
-        # directive = Play('http://audio.xmcdn.com/group27/M04/91/28/wKgJW1kVpMfRrzE5AAzyjIkEf9s698.m4a')
-        # directives.append(directive)
-        pass
+        directives = []
+        directive = Play('http://music.163.com/song/media/outer/url?id=554191055.mp3', PlayBehaviorEnum.ENQUEUE)
+        directives.append(directive)
+        return {
+            'outputSpeech': r'已处理端上报事件',
+            'directives' : directives,
+        }
 
     def playBackNearlyFinished(self, event):
         '''
         处理事件上报示例
         '''
-        directives = []
-        directive = Play('http://audio.xmcdn.com/group27/M07/91/2E/wKgJW1kVpSnwiF91AA7biCK_BT0527.m4a',
-                         PlayBehaviorEnum.ENQUEUE)
-        directives.append(directive)
+        offset = event['offsetInMilliSeconds']
         return {
-            'directives': directives
+            'outputSpeech': r'已处理端上报事件'
         }
 
-    def progressReportIntervalElapsed(self, event):
+    def getTemplate2(self, music):
+        print(music)
+        bodyTemplate = BodyTemplate2()
+        bodyTemplate.set_token(music['token'])
+        bodyTemplate.set_background_image(self.DEFAULT_IMAGE)
+        bodyTemplate.set_title(music['singer'])
+        bodyTemplate.set_plain_content(music['name'])
+        renderTemplate = RenderTemplate(bodyTemplate)
+        return renderTemplate
 
-        pass
-
-    def buttonClicked(self, event):
-        print(event)
-        pass
 
     def __init__(self, data):
         '''
         构造函数
         '''
         super(Bot, self).__init__(data)
-
         self.add_launch_handler(self.launchRequest)
         #给端下发指令
         self.add_intent_handler('audio_play_intent', self.audioPlay)
         self.add_intent_handler('audio_stop_intent', self.audioStop)
         #处理端上报事件
         self.add_event_listener('AudioPlayer.PlaybackStarted', self.playBackStartedEvent)
-        self.add_event_listener('AudioPlayer.PlaybackNearlyFinished', self.playBackNearlyFinished)
-        self.add_event_listener('AudioPlayer.ProgressReportIntervalElapsed', self.progressReportIntervalElapsed)
-        self.add_event_listener('Form.ButtonClicked', self.buttonClicked)
-        self.add_event_listener('AudioPlayer.PlaybackStopped', self.progressReportIntervalElapsed)
+        self.add_event_listener('AudioPlayer.PlaybackNearlyFinished', self.playBackStartedEvent)
 
-
+    def musicsData(self):
+        with open("./audio_play/musics.json", 'r', encoding='utf-8') as load_f:
+            return load_f.read()
+    curIndex = 0
+    musics = []
+    DEFAULT_IMAGE = 'https://skillstore.cdn.bcebos.com/icon/100/c709eed1-c07a-be4a-b242-0b0d8b777041.jpg';
 
 if __name__ == '__main__':
     pass

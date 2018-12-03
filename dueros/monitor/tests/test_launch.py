@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -20,7 +20,7 @@ class test_launch:
 if __name__ == '__main__':
 
     def requestData():
-        with open("../data/test_launch.json", 'r') as load_f:
+        with open("../data/test_launch.json", 'r', encoding='utf-8') as load_f:
             return load_f.read()
     requestData = requestData()
     # print(requestData)
@@ -28,7 +28,7 @@ if __name__ == '__main__':
     request = Request(json.loads(requestData))
     print(request.get_type())
     print(request.get_user_id())
-    print(request.get_botid())
+    print(request.get_bot_id())
     print(request.is_dialog_state_completed())
 
     pass

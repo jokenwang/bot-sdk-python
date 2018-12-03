@@ -3,14 +3,14 @@
 
 # description:
 # author:jack
-# create_time: 2018/7/13
+# create_time: 2018/7/20
 
 """
     desc:pass
 """
 
 import unittest
-from dueros.directive.VideoPlayer.VideoPlayer import VideoPlayer
+from dueros.directive.VideoPlayer.Play import VideoPlayer
 from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
 
 class PlayTest(unittest.TestCase):
@@ -38,7 +38,7 @@ class PlayTest(unittest.TestCase):
         print(data)
         ret = {
             'type': 'VideoPlayer.Play',
-            'playBehavior': PlayBehaviorEnum.REPLACE_ENQUEUED,
+            'playBehavior': PlayBehaviorEnum.REPLACE_ENQUEUED.value,
             'videoItem': {
                 'videoItemId': 'AGDG-SAHSHD_ASDS_123',
                 'stream': {
