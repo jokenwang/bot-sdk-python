@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -17,7 +17,7 @@ from dueros.Session import Session
 class SessionTest(unittest.TestCase):
 
     def setUp(self):
-        with open('../json/intent_request.json', encoding='utf-8') as f:
+        with open('../json/intent_request.json') as f:
             self.data = f.read()
         self.session = Session(json.loads(self.data)['session'])
 

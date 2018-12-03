@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -14,12 +14,15 @@ import sys
 from dueros.Request import Request
 from dueros.Session import Session
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 class LaunchRequsetTest(unittest.TestCase):
 
     def setUp(self):
 
-        with open('../json/launch.json', encoding='utf-8') as f:
+        with open('../json/launch.json') as f:
             self.data = f.read()
         self.data = json.loads(self.data)
 

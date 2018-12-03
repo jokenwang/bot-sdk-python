@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -11,12 +11,15 @@ Nlu单元测试
 import unittest
 import json
 from dueros.Nlu import Nlu
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 
 class NluTest(unittest.TestCase):
 
     def setUp(self):
-        with open('../json/intent_request.json', encoding='utf-8') as f:
+        with open('../json/intent_request.json') as f:
             self.request_data = f.read()
         self.request_data = json.loads(self.request_data)
         self.data = self.request_data['request']['intents']

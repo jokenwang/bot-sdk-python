@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -14,12 +14,15 @@ import sys
 from dueros.Request import Request
 from dueros.Response import Response
 from dueros.card.TextCard import TextCard
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 
 class ResponseTest(unittest.TestCase):
 
     def setUp(self):
-        with open('../json/intent_request.json', encoding='utf-8') as f:
+        with open('../json/intent_request.json') as f:
             self.request_data = f.read()
         self.request_data = json.loads(self.request_data)
         self.request = Request(self.request_data)
@@ -60,7 +63,7 @@ class ResponseTest(unittest.TestCase):
         }
         json = self.response.build(ret)
 
-        rt = {"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":False,"card":{"type":"txt","content":"测试服务"},"resource":None,"outputSpeech":{"type":"PlainText","text":"测试服务，欢迎光临"},'reprompt': {'outputSpeech': None}}}
+        rt = {"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":False,"card":{"type":"txt","content":"测试服务"},"resource":None,"outputSpeech":{"type":"PlainText","text":"测试服务，欢迎光临"},'reprompt': None}}
         self.assertEqual(json, rt)
 
     def testFormatSpeech(self):
@@ -74,7 +77,7 @@ class ResponseTest(unittest.TestCase):
             'type': 'PlainText',
             'text': '测试服务，欢迎光临'
         }
-        formatSpeech = self.response.format_speech(outputSpeech);
+        formatSpeech = self.response.format_speech(outputSpeech)
         self.assertEqual(formatSpeech, rt)
 
 
@@ -85,10 +88,9 @@ class ResponseTest(unittest.TestCase):
         '''
 
         self.response.set_need_determine()
-        json = self.response.build({})
-        print(json)
-        rt = {"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":True,"card":None,"resource":None,"outputSpeech":None,"reprompt": {"outputSpeech": None},"needDetermine":True}}
-        self.assertEqual(json, rt)
+        result = self.response.build({})
+        rt = {"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":True,"card":None,"resource":None,"outputSpeech":None,"reprompt": None,"needDetermine":True}}
+        self.assertEqual(json.dumps(result), json.dumps(rt))
 
 
     def testSetExpectSpeech(self):
@@ -99,12 +101,12 @@ class ResponseTest(unittest.TestCase):
 
         self.response.set_expect_speech(False)
         json = self.response.build({})
-        rt = {"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":True,"card":None,"resource":None,"outputSpeech":None,"reprompt": {"outputSpeech": None},"expectSpeech":False}}
+        rt = {"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":True,"card":None,"resource":None,"outputSpeech":None,"reprompt": None,"expectSpeech":False}}
         self.assertEqual(json, rt)
 
         self.response.set_expect_speech(True)
         json = self.response.build({})
-        rt = {"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":True,"card":None,"resource":None,"outputSpeech":None,"reprompt": {"outputSpeech": None},"expectSpeech":True}}
+        rt = {"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":True,"card":None,"resource":None,"outputSpeech":None,"reprompt": None,"expectSpeech":True}}
         self.assertEqual(json, rt)
 
     def testSetFallBack(self):
@@ -113,9 +115,9 @@ class ResponseTest(unittest.TestCase):
         :return:
         '''
         self.response.set_fallback()
-        json = self.response.build({})
-        rt = {"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":True,"card":None,"resource":None,"outputSpeech":None,"reprompt": {"outputSpeech": None},"fallBack":True}}
-        self.assertEqual(json, rt)
+        result = self.response.build({})
+        rt = {"version":"2.0","context":{"intent":{"name":"intentName","score":100,"confirmationStatus":"NONE","slots":{"city":{"name":"city","value":"北京","score":0,"confirmationStatus":"NONE"}}}},"session":{"attributes":{}},"response":{"directives":[],"shouldEndSession":True,"card":None,"resource":None,"outputSpeech":None,"reprompt": None,"fallBack":True}}
+        self.assertEqual(json.dumps(result), json.dumps(rt))
 
     pass
 

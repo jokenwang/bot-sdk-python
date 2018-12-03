@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -11,12 +11,16 @@
 import unittest
 
 import math
+import unittest
 
 
 import dueros.Log as log
 import logging
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
-class BaseTest(object):
+class BaseTest(unittest.TestCase):
 
     def test_sqrt(self):
         self.assertEqual(math.sqrt(4) * math.sqrt(4), 4)

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -14,12 +14,15 @@ import json
 import sys
 from dueros.Request import Request
 from dueros.Nlu import Nlu
-from dueros.Utils import Utils
+from dueros import Utils
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 class IntentRequestTest(unittest.TestCase):
 
     def setUp(self):
-        with open('../json/intent_request1.json', encoding='utf-8') as f:
+        with open('../json/intent_request1.json') as f:
 
             self.data = f.read()
         self.data = json.loads(self.data)
@@ -146,7 +149,7 @@ class IntentRequestTest(unittest.TestCase):
         """
         supported_interfaces = self.request.get_supported_interfaces()
         if supported_interfaces and isinstance(supported_interfaces, dict):
-            return Utils.checkKeyInDict(supported_interfaces, support_func)
+            return Utils.check_key_in_dict(supported_interfaces, support_func)
         else:
             return False
 
