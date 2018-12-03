@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -11,10 +11,13 @@
 
 from dueros.directive.Display.template.TextStructure import TextStructure
 from dueros.directive.Display.template.ImageStructure import ImageStructure
-from dueros.directive.Display.template.TextType import TextType
+from dueros.directive.Display.template import TextType
 
 
-class BaseTemplate:
+class BaseTemplate(object):
+    """
+    模板基类
+    """
 
     def __init__(self, field):
         super(BaseTemplate, self).__init__()
@@ -62,10 +65,10 @@ class BaseTemplate:
         if content:
             text_structure = TextStructure()
             text_structure.set_text(content)
-            if TextType.inEnum(structure_type):
-                text_structure.set_type(structure_type.value)
+            if TextType.in_enum(structure_type):
+                text_structure.set_type(structure_type)
             else:
-                text_structure.set_type(TextType.PLAIN_TEXT.value)
+                text_structure.set_type(TextType.PLAIN_TEXT)
 
             return text_structure
 
@@ -93,6 +96,7 @@ class BaseTemplate:
                 print('不支持', operation, field)
 
             return function
+
 
 if __name__ == '__main__':
 

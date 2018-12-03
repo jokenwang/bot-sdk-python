@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -10,10 +10,10 @@
 """
 
 
-class BaseButton:
+class BaseButton(object):
 
     def __init__(self, button_type, name):
-        self.data = {}
+        self.data = dict()
         self.data['type'] = button_type
         self.data['name'] = name
 

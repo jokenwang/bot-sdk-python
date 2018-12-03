@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -8,20 +8,15 @@
 """
     desc:pass
 """
-from enum import Enum, unique
+PLAIN_TEXT = 'PlainText'
+RICH_TEXT = 'RichText'
 
 
-@unique
-class TextType(Enum):
-    PLAIN_TEXT = 'PlainText'
-    RICH_TEXT = 'RichText'
+def in_enum(text_type):
+    return text_type == PLAIN_TEXT or text_type == RICH_TEXT
 
-    @staticmethod
-    def inEnum(position):
-        return position in TextType.__members__.values()
 
 if __name__ == '__main__':
-
     # position = TextContentPosition()
-    print(TextType.PLAIN_TEXT.value)
+    print(PLAIN_TEXT)
     pass

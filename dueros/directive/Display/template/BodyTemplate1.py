@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -11,16 +11,15 @@ BodyTemplate1模板
 """
 
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
-from dueros.directive.Display.template.TextType import TextType
-from dueros.directive.Display.template.TextContentPosition import TextContentPosition
+from dueros.directive.Display.template import TextType
+from dueros.directive.Display.template import TextContentPosition
 
 
 class BodyTemplate1(BaseTemplate):
 
     def __init__(self):
-        super(BodyTemplate1, self).__init__(['token', 'title', 'type'])
+        BaseTemplate.__init__(self, ['token', 'title', 'type'])
         self.set_type('BodyTemplate1')
-        pass
 
     def set_plain_text_content(self, text, position=TextContentPosition.BOTTOM_LEFT):
         """
@@ -31,22 +30,16 @@ class BodyTemplate1(BaseTemplate):
         text_structure = self.create_text_structure(text, TextType.PLAIN_TEXT)
 
         if text_structure:
-            if 'textContent' not in self.data.keys():
+            if 'textContent' not in self.data:
                 self.data['textContent'] = {}
             self.data['textContent']['text'] = text_structure.get_data()
-            if TextContentPosition.inEnum(position):
-                self.data['textContent']['position'] = position.value
+            if TextContentPosition.in_enum(position):
+                self.data['textContent']['position'] = position
             else:
-                self.data['textContent']['position'] = TextContentPosition.BOTTOM_LEFT.value
+                self.data['textContent']['position'] = TextContentPosition.BOTTOM_LEFT
 
             return self
 
-if __name__ == '__main__':
 
-    bodytemplate = BodyTemplate1()
-    bodytemplate.set_title('呵呵')
-    bodytemplate.set_token("tttt")
-    bodytemplate.set_background_image('htt[://///')
-    bodytemplate.set_plain_text_content('bodyTemplate')
-    print(bodytemplate.get_data())
+if __name__ == '__main__':
     pass

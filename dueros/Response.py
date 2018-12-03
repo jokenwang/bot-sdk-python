@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- coding: UTF-8 -*-
 
 # description:
@@ -12,7 +12,7 @@ import re
 from dueros.card.TextCard import TextCard
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.Base import Base
-from dueros.Utils import Utils
+from dueros import Utils
 
 
 class Response(Base):
@@ -115,8 +115,8 @@ class Response(Base):
                 directives.append(arr)
 
         auto_complete_speech = True
-        if Utils.checkKeyInDict(data, 'autoCompleteSpeech') and isinstance(
-                Utils.checkKeyInDict(data, 'autoCompleteSpeech'), bool):
+        if Utils.check_key_in_dict(data, 'autoCompleteSpeech') and isinstance(
+                Utils.check_key_in_dict(data, 'autoCompleteSpeech'), bool):
             auto_complete_speech = data['autoCompleteSpeech']
 
 
@@ -206,7 +206,9 @@ class Response(Base):
         :param text:
         :return:
         """
-        if text and isinstance(text, str):
+        if text:
+            if not isinstance(text, str):
+                text = str(text)
             if not self.expect_response:
                 self.expect_response = []
             self.expect_response.append({
@@ -220,7 +222,9 @@ class Response(Base):
         :param slot:
         :return:
         """
-        if slot and isinstance(slot, str):
+        if slot:
+            if not isinstance(slot, str):
+                slot = str(slot)
             if not self.expect_response:
                 self.expect_response = []
             self.expect_response.append({
@@ -263,7 +267,6 @@ class Response(Base):
         :return:
         """
         self.directives_arrangement = 'STRICT'
-
 
 if __name__ == '__main__':
 

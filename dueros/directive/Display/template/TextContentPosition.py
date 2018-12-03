@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -8,20 +8,14 @@
 """
     desc:pass
 """
-from enum import Enum, unique
+TOP_LEFT = 'TOP-LEFT'
+CENTER = 'CENTER'
+BOTTOM_LEFT = 'BOTTOM-LEFT'
 
 
-@unique
-class TextContentPosition(Enum):
-    TOP_LEFT = 'TOP-LEFT'
-    CENTER = 'CENTER'
-    BOTTOM_LEFT = 'BOTTOM-LEFT'
+def in_enum(position):
+    return position == TOP_LEFT or position == CENTER or position == BOTTOM_LEFT
 
-    @staticmethod
-    def inEnum(position):
-
-        return position in TextContentPosition.__members__.values()
 
 if __name__ == '__main__':
-
     pass

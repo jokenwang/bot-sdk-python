@@ -68,6 +68,7 @@ def init_log(log_path, level=logging.INFO, when="D", backup=7,
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
+
 if __name__ == '__main__':
 
     pass

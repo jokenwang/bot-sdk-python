@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -17,8 +17,6 @@ class VideoPlayInfo(TraitPlayerInfo):
         super(VideoPlayInfo, self).__init__()
         self.set_content(content)
         self.set_controls(controls)
-
-    pass
 
 
 if __name__ == '__main__':

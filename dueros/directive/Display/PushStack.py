@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -13,9 +13,12 @@ from dueros.directive.BaseDirective import BaseDirective
 
 
 class PushStack(BaseDirective):
+    """
+    PushStack指令，用于页面压栈
+    """
 
     def __init__(self):
-        super(PushStack, self).__init__('Display.PushStack')
+        BaseDirective.__init__(self, 'Display.PushStack')
 
 
 if __name__ == '__main__':

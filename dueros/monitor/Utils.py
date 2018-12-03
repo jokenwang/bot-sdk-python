@@ -12,22 +12,22 @@ import json
 import time
 
 
-class Utils:
+class Utils(object):
 
     @staticmethod
-    def checkKeyInDict(dicts, key):
+    def check_key_in_dict(dicts, key):
         '''
         校验字典中是否存在指定的key
         :param dicts:
         :param key:
         :return:
         '''
-        if(isinstance(dicts, dict)):
+        if isinstance(dicts, dict):
             return key in dicts
         return False
 
     @staticmethod
-    def checkKeysInDict(dicts, keys):
+    def check_keys_in_dict(dicts, keys):
 
         if isinstance(dicts, str):
             dicts = json.loads(dicts)

@@ -12,16 +12,25 @@ from dueros.directive.BaseDirective import BaseDirective
 
 
 class Hint(BaseDirective):
+    """
+    Hint 指令 用于展示提示信息
+    """
 
     def __init__(self, text):
-        super(Hint, self).__init__('Hint')
-        self.data['hints'] = []
-        if type(text) == str:
-            text = [text]
+        """
 
-        if type(text) == list:
+        :param text: 用于显示的文本
+        """
+        BaseDirective.__init__(self, 'Hint')
+        self.data['hints'] = list()
+        if not (isinstance(text, str) or isinstance(text, list)):
+            raise ValueError('The text must be str or list')
+
+        if isinstance(text, str):
+            text = [text]
+        if isinstance(text, list):
             for value in text:
-                item = {}
+                item = dict()
                 item['type'] = 'PlainText'
                 item['text'] = value
                 self.data['hints'].append(item)

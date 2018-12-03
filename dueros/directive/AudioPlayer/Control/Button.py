@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -19,14 +19,12 @@ class Button(BaseButton):
         self.data['selected'] = False
 
     def set_enabled(self, enabled):
-
-        self.data['enabled'] = enabled
+        if isinstance(enabled, bool):
+            self.data['enabled'] = enabled
 
     def set_selected(self, selected):
-
-        self.data['selected'] = selected
-
-    pass
+        if isinstance(selected, bool):
+            self.data['selected'] = selected
 
 
 if __name__ == '__main__':

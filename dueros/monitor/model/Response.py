@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -12,7 +12,7 @@ from dueros.monitor.Utils import Utils
 import json
 
 
-class Response:
+class Response(object):
 
     def __init__(self, response_data):
         if not isinstance(response_data, dict):
@@ -26,9 +26,9 @@ class Response:
         return Utils.get_dict_data_by_keys(self.data, ['response', 'shouldEndSession'])
 
     def get_slot_name(self):
-        if Utils.checkKeysInDict(self.data, ['response', 'directives']):
+        if Utils.check_keys_in_dict(self.data, ['response', 'directives']):
             directive = self.data['response']['directives']
-            if directive and Utils.checkKeysInDict(directive[0],['slotToElicit']) and directive[0]['slotToElicit']:
+            if directive and Utils.check_keys_in_dict(directive[0],['slotToElicit']) and directive[0]['slotToElicit']:
                 return directive[0]['slotToElicit']
         return None
 

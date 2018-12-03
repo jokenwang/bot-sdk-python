@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -12,7 +12,7 @@ import os
 import fcntl
 import hashlib
 import OpenSSL
-import urllib.request
+import urllib2
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
 from Crypto.Hash import SHA
@@ -65,7 +65,7 @@ class Certificate(Base):
         md5.update(filename.encode('utf-8'))
         cache = os.getcwd() + os.path.sep + md5.hexdigest()
         if not os.path.exists(cache):
-            content = urllib.request.urlopen(filename).read()
+            content = urllib2.urlopen(filename).read()
             if not content:
                 return
             with open(cache, 'w') as f:
@@ -172,7 +172,7 @@ IYdYV3QpYohFszH3wQIDAQAB
     def sign(data):
         key = RSA.importKey(priKey)
         digest = SHA.new()
-        digest.update(data.encode('utf-8'))
+        # digest.update(data.encode('utf-8'))
         signer = PKCS1_v1_5.new(key)
         signature = signer.sign(digest)
         return b64encode(signature)
@@ -181,7 +181,7 @@ IYdYV3QpYohFszH3wQIDAQAB
     def verify(data, signature):
         key = RSA.importKey(pubKey)
         digest = SHA.new()
-        digest.update(data.encode('utf-8'))
+        # digest.update(data.encode('utf-8'))
         verifier = PKCS1_v1_5.new(key)
         if verifier.verify(digest, b64decode(signature)):
             return True

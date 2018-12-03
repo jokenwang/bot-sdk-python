@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -9,14 +9,14 @@
     desc:pass
 """
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
-from dueros.directive.Display.template.TextType import TextType
+from dueros.directive.Display.template import TextType
 
 
 class TextImageTemplate(BaseTemplate):
 
-    def __init__(self, type):
-        super(TextImageTemplate, self).__init__(['token', 'title', 'type'])
-        self.set_type(type)
+    def __init__(self, template_type):
+        BaseTemplate.__init__(self, ['token', 'title', 'type'])
+        self.set_type(template_type)
 
     def set_image(self, url, width_pixels='', height_pixels=''):
 
@@ -29,7 +29,6 @@ class TextImageTemplate(BaseTemplate):
         text_structure = self.create_text_structure(text, TextType.PLAIN_TEXT)
         if text_structure:
             self.data['content'] = text_structure.get_data()
-        pass
 
 
 if __name__ == '__main__':

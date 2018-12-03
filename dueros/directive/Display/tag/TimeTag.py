@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -9,13 +9,13 @@
     desc:pass
 """
 from dueros.directive.Display.tag.BaseTag import BaseTag
-from dueros.directive.Display.tag.TagTypeEnum import TagTypeEnum
+from dueros.directive.Display.tag import TagTypeEnum
 
 
 class TimeTag(BaseTag):
 
     def __init__(self, time):
-        super(TimeTag, self).__init__(TagTypeEnum.TAG_TYPE_TIME, time)
+        BaseTag.__init__(self, TagTypeEnum.TAG_TYPE_TIME, time)
 
 
 if __name__ == '__main__':

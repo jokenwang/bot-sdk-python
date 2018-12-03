@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -13,9 +13,12 @@ from dueros.directive.Display.media.BaseMediaListItem import BaseMediaListItem
 
 
 class AudioItem(BaseMediaListItem):
+    """
+    音频列表Item
+    """
 
     def __init__(self, title, title_subtext1):
-        super(AudioItem, self).__init__(title, title_subtext1)
+        BaseMediaListItem.__init__(self, title, title_subtext1)
 
     def set_music_video_tag(self, tag):
         """
@@ -25,6 +28,7 @@ class AudioItem(BaseMediaListItem):
         """
         if isinstance(tag, bool):
             self.data['isMusicVideo'] = tag
+
 
 if __name__ == '__main__':
     pass

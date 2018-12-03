@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -14,12 +14,14 @@ from dueros.directive.Display.template.BaseTemplate import BaseTemplate
 
 
 class RenderTemplate(BaseDirective):
+    """
 
+    """
     def __init__(self):
-        super(RenderTemplate, self).__init__('Display.RenderTemplate')
+        BaseDirective.__init__(self, 'Display.RenderTemplate')
 
     def __init__(self, base_template):
-        super(RenderTemplate, self).__init__('Display.RenderTemplate')
+        BaseDirective.__init__(self, 'Display.RenderTemplate')
         self.set_template(base_template)
 
     def set_template(self, template):
@@ -30,6 +32,8 @@ class RenderTemplate(BaseDirective):
         """
         if isinstance(template, BaseTemplate):
             self.data['template'] = template.get_data()
+        else:
+            raise ValueError('The template is not BaseTemplate')
 
 
 if __name__ == '__main__':

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -10,15 +10,15 @@ ListItem
 详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/display-template_markdown#ListItem
 """
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
-from dueros.directive.Display.template.TextType import TextType
+from dueros.directive.Display.template import TextType
 from dueros.directive.Display.tag.BaseTag import BaseTag
-from dueros.Utils import Utils
+from dueros import Utils
 
 
 class ListTemplateItem(BaseTemplate):
 
     def __init__(self):
-        super(ListTemplateItem, self).__init__(['token'])
+        BaseTemplate.__init__(self, ['token'])
         self.image_tags = None
 
     def set_plain_primary_text(self, primary_text):
@@ -28,7 +28,7 @@ class ListTemplateItem(BaseTemplate):
         :return:
         """
 
-        if not Utils.checkKeyInDict(self.data, 'textContent'):
+        if not Utils.check_key_in_dict(self.data, 'textContent'):
             self.data['textContent'] = {}
         primary_text_structure = self.create_text_structure(primary_text, TextType.PLAIN_TEXT)
         if primary_text_structure:
@@ -41,7 +41,7 @@ class ListTemplateItem(BaseTemplate):
         :param secondary_text:
         :return:
         """
-        if not Utils.checkKeyInDict(self.data, 'textContent'):
+        if not Utils.check_key_in_dict(self.data, 'textContent'):
             self.data['textContent'] = {}
         secondary_text_structure = self.create_text_structure(secondary_text, TextType.PLAIN_TEXT)
         if secondary_text_structure:
@@ -54,7 +54,7 @@ class ListTemplateItem(BaseTemplate):
         :param tertiary_text:
         :return:
         """
-        if not Utils.checkKeyInDict(self.data, 'textContent'):
+        if not Utils.check_key_in_dict(self.data, 'textContent'):
             self.data['textContent'] = {}
         tertiary_text_structure = self.create_text_structure(tertiary_text, TextType.PLAIN_TEXT)
         if tertiary_text_structure:
@@ -86,7 +86,7 @@ class ListTemplateItem(BaseTemplate):
         self.image_tags = list(filter(lambda value: isinstance(value, BaseTag), tags))
 
     def get_data(self, key=''):
-        if Utils.checkKeyInDict(self.data, 'image') and self.image_tags:
+        if Utils.check_key_in_dict(self.data, 'image') and self.image_tags:
             self.data['image']['tags'] = get_image_tag_data(self.image_tags)
         if key:
             return self.data[key]

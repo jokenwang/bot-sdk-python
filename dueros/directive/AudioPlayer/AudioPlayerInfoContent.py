@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -9,19 +9,19 @@
     desc:pass
 """
 from dueros.directive.Base.BasePlayerInfoContent import BasePlayerInfoContent
-from dueros.directive.AudioPlayer.AudioItemTypeEnum import AudioItemTypeEnum
-from dueros.Utils import Utils
+from dueros.directive.AudioPlayer import AudioItemTypeEnum
+from dueros import Utils
 
 
 class AudioPlayerInfoContent(BasePlayerInfoContent):
 
     def __init__(self):
         super(AudioPlayerInfoContent, self).__init__()
-        self.data['audioItemType'] = AudioItemTypeEnum.AUDIO_TYPE_MUSIC.value
+        self.data['audioItemType'] = AudioItemTypeEnum.AUDIO_TYPE_MUSIC
 
     def set_audio_item_type(self, audio_type):
-        if isinstance(audio_type, AudioItemTypeEnum):
-            self.data['audioItemType'] = audio_type.value
+        if AudioItemTypeEnum.in_enum(audio_type):
+            self.data['audioItemType'] = audio_type
         else:
             self.data['audioItemType'] = audio_type
 
@@ -40,10 +40,10 @@ class AudioPlayerInfoContent(BasePlayerInfoContent):
     def set_lyric(self, url):
 
         if isinstance(url, str):
-            if not Utils.checkKeyInDict(self.data, 'lyric'):
+            if not Utils.check_key_in_dict(self.data, 'lyric'):
                 self.data['lyric'] = {}
             self.data['lyric']['url'] = url
-            self.data['lyric']['format'] = AudioItemTypeEnum.FORMAT_LRC.value
+            self.data['lyric']['format'] = AudioItemTypeEnum.FORMAT_LRC
 
     def set_media_length_in_ms(self, media_length_in_ms):
 
@@ -52,17 +52,17 @@ class AudioPlayerInfoContent(BasePlayerInfoContent):
 
     def set_art(self, src):
 
-        if not Utils.checkKeyInDict(self.data, 'art'):
+        if not Utils.check_key_in_dict(self.data, 'art'):
             self.data['art'] = {}
         self.data['art']['src'] = src
 
     def set_provider(self, name, logo):
 
-        if not Utils.checkKeyInDict(self.data, 'provider'):
+        if not Utils.check_key_in_dict(self.data, 'provider'):
             self.data['provider'] = {}
         self.data['provider']['name'] = name
 
-        if not Utils.checkKeyInDict(self.data['provider'], 'logo'):
+        if not Utils.check_key_in_dict(self.data['provider'], 'logo'):
             self.data['provider']['logo'] = {}
         self.data['provider']['logo']['src'] = logo
 

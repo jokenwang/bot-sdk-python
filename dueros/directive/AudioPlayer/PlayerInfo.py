@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -8,8 +8,8 @@
 """
     desc:pass
 """
-from dueros.Utils import Utils
-from dueros.directive.AudioPlayer.AudioItemTypeEnum import AudioItemTypeEnum
+from dueros import Utils
+from dueros.directive.AudioPlayer import AudioItemTypeEnum
 from dueros.directive.Base.TraitPlayerInfo import TraitPlayerInfo
 
 
@@ -20,11 +20,11 @@ class PlayerInfo(TraitPlayerInfo):
         self.set_content(content)
         self.set_controls(controls)
         self.data = {'content': {}}
-        self.data['content']['audioItemType'] = AudioItemTypeEnum.AUDIO_TYPE_MUSIC.value
+        self.data['content']['audioItemType'] = AudioItemTypeEnum.AUDIO_TYPE_MUSIC
 
     def set_audio_item_type(self, audio_item_type):
-        if isinstance(audio_item_type, AudioItemTypeEnum):
-            self.data['content']['audioItemType'] = audio_item_type.value
+        if AudioItemTypeEnum.in_enum(audio_item_type):
+            self.data['content']['audioItemType'] = audio_item_type
 
     def set_title(self, title):
 
@@ -40,10 +40,10 @@ class PlayerInfo(TraitPlayerInfo):
 
     def set_lyric(self, url):
 
-        if not Utils.checkKeyInDict(self.data['content'], 'lyric'):
+        if not Utils.check_key_in_dict(self.data['content'], 'lyric'):
             self.data['content']['lyric'] = {}
         self.data['content']['lyric']['url'] = url
-        self.data['content']['lyric']['format'] = AudioItemTypeEnum.FORMAT_LRC.value
+        self.data['content']['lyric']['format'] = AudioItemTypeEnum.FORMAT_LRC
 
     def set_media_length_in_ms(self, media_length_in_ms):
 
@@ -52,17 +52,17 @@ class PlayerInfo(TraitPlayerInfo):
 
     def set_art(self, src):
 
-        if not Utils.checkKeyInDict(self.data['content'], 'art'):
+        if not Utils.check_key_in_dict(self.data['content'], 'art'):
             self.data['content']['art'] = {}
         self.data['content']['art']['src'] = src
 
     def set_provider(self, name, logo):
 
-        if not Utils.checkKeyInDict(self.data['content'], 'provider'):
+        if not Utils.check_key_in_dict(self.data['content'], 'provider'):
             self.data['content']['provider'] = {}
         self.data['content']['provider']['name'] = name
 
-        if not Utils.checkKeyInDict(self.data['content']['provider'], 'logo'):
+        if not Utils.check_key_in_dict(self.data['content']['provider'], 'logo'):
             self.data['content']['provider']['logo'] = {}
         self.data['content']['provider']['logo']['src'] = logo
 

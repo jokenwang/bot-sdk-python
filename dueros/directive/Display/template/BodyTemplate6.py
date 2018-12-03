@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -22,8 +22,7 @@ class BodyTemplate6(TextImageTemplate):
      bodyTemplate.set_plain_content('拖尔斯泰-理想的书籍是智慧的钥匙')
     """
     def __init__(self):
-        super(BodyTemplate6, self).__init__('BodyTemplate6')
-
+        TextImageTemplate.__init__(self, 'BodyTemplate6')
 
 
 if __name__ == '__main__':

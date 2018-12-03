@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- coding=utf-8 -*-
 
 # description:
@@ -17,8 +17,7 @@ from dueros.Intercept import Intercept
 from dueros.Request import Request
 from dueros.Response import Response
 from dueros.Base import Base
-from dueros.Utils import Utils
-
+from dueros import Utils
 
 class Bot(Base):
 
@@ -399,9 +398,9 @@ class Bot(Base):
         event_data = self.request.get_event_data()
         if event_data and event_data['type']:
             key = event_data['type']
-            if key is not None and Utils.checkKeyInDict(self.event, key):
+            if key is not None and Utils.check_key_in_dict(self.event, key):
                 return self.event[key]
-            elif Utils.checkKeyInDict(self.event, '__default__'):
+            elif Utils.check_key_in_dict(self.event, '__default__'):
                 return self.event['__default__']
             else:
                 logging.info('request type = %s 未匹配到任何处理事件' % key)
@@ -575,7 +574,7 @@ class Bot(Base):
         """
         supported_interfaces = self.request.get_supported_interfaces()
         if supported_interfaces and isinstance(supported_interfaces, dict):
-            return Utils.checkKeyInDict(supported_interfaces, support_func)
+            return Utils.check_key_in_dict(supported_interfaces, support_func)
         else:
             return False
 

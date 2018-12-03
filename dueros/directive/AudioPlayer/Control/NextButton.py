@@ -15,7 +15,6 @@ class NextButton(Button):
 
     def __init__(self):
         super(NextButton, self).__init__('NEXT')
-    pass
 
 
 if __name__ == '__main__':

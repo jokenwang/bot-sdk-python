@@ -9,18 +9,16 @@
     desc:pass
 """
 
+REPEAT_ONE = 'REPEAT_ONE'
+REPEAT_ALL = 'REPEAT_ALL'
+REPEAT_SHUFFLE = 'SHUFFLE'
 
-class RepeatButtonEnum(object):
-    REPEAT_ONE = 'REPEAT_ONE'
-    REPEAT_ALL = 'REPEAT_ALL'
-    REPEAT_SHUFFLE = 'SHUFFLE'
 
-    @staticmethod
-    def inEnum(position):
-        return position == RepeatButtonEnum.REPEAT_ONE or position == RepeatButtonEnum.REPEAT_ALL or position == RepeatButtonEnum.REPEAT_SHUFFLE
+def in_enum(position):
+    return position == REPEAT_ONE or position == REPEAT_ALL or position == REPEAT_SHUFFLE
 
-    pass
 
+pass
 
 if __name__ == '__main__':
     pass

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -9,7 +9,7 @@
     desc:pass
 """
 from dueros.directive.Base.BasePlayerInfoContent import BasePlayerInfoContent
-from dueros.Utils import Utils
+from dueros import Utils
 
 
 class VideoPlayerInfoContent(BasePlayerInfoContent):
@@ -27,7 +27,6 @@ class VideoPlayerInfoContent(BasePlayerInfoContent):
         milliseconds = Utils.convert_number(media_length_in_milliseconds)
         if milliseconds:
             self.data['mediaLengthInMilliseconds'] = milliseconds
-    pass
 
 
 if __name__ == '__main__':

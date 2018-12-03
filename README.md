@@ -18,7 +18,7 @@
 1、 通过pip进行安装   
 
 ```
-pip install dueros-bot
+pip install dueros-bot-python2
 ```
   
 2、 下载源码安装
@@ -30,12 +30,10 @@ git clone https://github.com/jokenwang/bot-sdk-python.git
 
 * 通过Pypi获取最新发布版本源码
 
-    * dueros-bot-2.1.2 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/2.1.2)
-    * dueros-bot-2.0.0 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/2.0.0)
-    * dueros-bot-1.1.0 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/1.1)
-    * dueros-bot-0.2.4 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.4)
-    * dueros-bot-0.2.3 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.3)
-    * dueros-bot-0.2.2 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/0.2.2)
+    * dueros-bot-1.3.0 [Pypi地址](https://pypi.python.org/pypi/dueros-bot-python2/1.3.0)
+    * dueros-bot-0.2.4 [Pypi地址](https://pypi.python.org/pypi/dueros-bot-python2/0.2.4)
+    * dueros-bot-0.2.3 [Pypi地址](https://pypi.python.org/pypi/dueros-bot-python2/0.2.3)
+    * dueros-bot-0.2.2 [Pypi地址](https://pypi.python.org/pypi/dueros-bot-python/0.2.2)
 
 下载bot-sdk代码后，可以使用如下命令安装:
 ```python

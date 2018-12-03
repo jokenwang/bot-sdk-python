@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -16,7 +16,7 @@ from dueros.directive.Display.template.BaseTemplate import BaseTemplate
 class BodyTemplate5(BaseTemplate):
 
     def __init__(self):
-        super(BodyTemplate5, self).__init__(['token', 'title', 'type'])
+        BaseTemplate.__init__(self, ['token', 'title', 'type'])
         self.set_type('BodyTemplate5')
         self.data['images'] = []
 

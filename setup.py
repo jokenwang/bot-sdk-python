@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -13,8 +13,8 @@ from setuptools import setup
 from setuptools import find_packages
 
 setup(
-    name='dueros-bot',
-    version='2.2.0',
+    name='dueros-bot-python2',
+    version='1.3.0',
     author='jack',
     author_email='mupdf@sina.com',
     description='Third party DuerOS Bot Python SDK',

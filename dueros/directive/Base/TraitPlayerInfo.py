@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -12,11 +12,11 @@ from dueros.directive.AudioPlayer.Control.BaseButton import BaseButton
 from dueros.directive.Base.BasePlayerInfoContent import BasePlayerInfoContent
 
 
-class TraitPlayerInfo:
+class TraitPlayerInfo(object):
 
     def __init__(self):
-        self.data = {}
-        self.controls = []
+        self.data = dict()
+        self.controls = list()
         self.content = None
 
     def set_controls(self, controls):
@@ -48,7 +48,6 @@ class TraitPlayerInfo:
             controls_data = list(map(lambda value: value.get_data(), self.controls))
             self.data['controls'] = controls_data
         return self.data
-    pass
 
 
 if __name__ == '__main__':

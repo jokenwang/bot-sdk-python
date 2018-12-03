@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -12,7 +12,7 @@
 from dueros.monitor.Utils import Utils
 
 
-class Request:
+class Request(object):
 
     def __init__(self, data):
         self.data = data
@@ -126,7 +126,7 @@ class Request:
 
     def is_dialog_state_completed(self):
 
-        if Utils.checkKeysInDict(self.data, ['request', 'dialogState']):
+        if Utils.check_keys_in_dict(self.data, ['request', 'dialogState']):
             return self.data['request']['dialogState'] == 'COMPLETED'
         return False
 

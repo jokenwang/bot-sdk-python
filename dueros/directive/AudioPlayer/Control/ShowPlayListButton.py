@@ -16,7 +16,6 @@ class ShowPlayListButton(Button):
 
     def __init__(self):
         super(ShowPlayListButton, self).__init__('SHOW_PLAYLIST')
-    pass
 
 
 if __name__ == '__main__':

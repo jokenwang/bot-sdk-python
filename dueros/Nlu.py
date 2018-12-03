@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- coding=utf-8 -*-
 
 # description:
@@ -106,7 +106,7 @@ class Nlu(Base):
         :return:
         """
 
-        if not ('slots' in self.data[index]):
+        if 'slots' not in self.data[index]:
             return ''
         slots = self.data[index]['slots']
         if field in slots:

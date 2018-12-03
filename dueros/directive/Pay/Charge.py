@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -10,15 +10,26 @@ DuerOS 支付协议
 详见：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-pay/pay_markdown
 """
 from dueros.directive.BaseDirective import BaseDirective
-from dueros.Utils import Utils
+from dueros import Utils
 
 
 class Charge(BaseDirective):
+    """
+    生成支付指令
+    """
 
     CODE_CNY = 'CNY'
 
     def __init__(self, amount, seller_order_id, product_name, description):
-        super(Charge, self).__init__('Connections.SendRequest')
+        """
+
+        :param amount:
+        :param seller_order_id:
+        :param product_name:
+        :param description:
+        """
+
+        BaseDirective.__init__(self, 'Connections.SendRequest')
         self.data['name'] = 'Charge'
         self.data['token'] = self.gen_token()
         self.data['payload'] = {}
@@ -30,22 +41,6 @@ class Charge(BaseDirective):
         self.set_seller_order_id(seller_order_id)
         self.set_product_name(product_name)
         self.set_description(description)
-
-    def set_token(self, token):
-        """
-        设置directive的token. 默认在构造时自动生成了token，可以覆盖
-        :param token:
-        :return:
-        """
-        if token:
-            self.data['token'] = token
-
-    def get_token(self):
-        """
-        获取directive的token. 默认在构造时自动生成了token
-        :return:
-        """
-        return Utils.getDictDataByKeyss(self.data, ['videoItem', 'stream', 'token'])
 
     def set_amount(self, amount, currency_code=CODE_CNY):
         """

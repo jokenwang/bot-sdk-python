@@ -16,7 +16,7 @@ from dueros.directive.Display.template.TextImageTemplate import TextImageTemplat
 class BodyTemplate4(TextImageTemplate):
 
     def __init__(self):
-        super(BodyTemplate4, self).__init__('BodyTemplate4')
+        TextImageTemplate.__init__(self, 'BodyTemplate4')
 
 
 if __name__ == '__main__':

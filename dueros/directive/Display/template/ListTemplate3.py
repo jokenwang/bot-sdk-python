@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -14,8 +14,7 @@ from dueros.directive.Display.template.ListTemplate import ListTemplate
 class ListTemplate3(ListTemplate):
 
     def __init__(self):
-        super(ListTemplate3, self).__init__('ListTemplate3')
-
+        ListTemplate.__init__(self, 'ListTemplate3')
 
 
 if __name__ == '__main__':

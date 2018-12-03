@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- coding=utf-8 -*-
 
 # description:
@@ -11,8 +11,7 @@ import json
 from dueros.Nlu import Nlu
 from dueros.Session import Session
 from dueros.Base import Base
-from dueros.Utils import Utils
-
+from dueros import Utils
 
 class Request(Base):
 
@@ -21,11 +20,11 @@ class Request(Base):
         :param data:  请求数据
         """
         super(Request, self).__init__()
-        if isinstance(request_data, str):
-            request_data = json.loads(request_data)
+        if not isinstance(request_data, dict):
+            request_data = json.loads(request_data, encoding='utf-8')
 
         self.data = request_data
-
+        print 'data 类型', type(self.data)
         self.request_type = self.data['request']['type']
         self.session = Session(self.data['session'])
         self.nlu = None
@@ -252,7 +251,7 @@ class Request(Base):
 
     def get_support_video_player(self):
         interfaces = self.get_supported_interfaces()
-        return Utils.getDictDataByKey(interfaces, 'VideoPlayer')
+        return Utils.get_dict_data_by_key(interfaces, 'VideoPlayer')
 
     def get_support_video_player_prefered_bitrate(self):
         video_player = self.get_support_video_player()

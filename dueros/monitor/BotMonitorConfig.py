@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -10,7 +10,7 @@
 """
 
 
-class BotMonitorConfig:
+class BotMonitorConfig(object):
 
     @staticmethod
     def getHost():

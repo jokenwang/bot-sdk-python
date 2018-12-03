@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -10,16 +10,12 @@
 """
 
 from dueros.directive.BaseDirective import BaseDirective
-from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
-from dueros.Utils import Utils
 
 
 class VideoStop(BaseDirective):
 
     def __init__(self):
         super(VideoStop, self).__init__('VideoPlayer.Stop')
-
-    pass
 
 
 if __name__ == '__main__':

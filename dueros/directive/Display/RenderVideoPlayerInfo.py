@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -14,7 +14,7 @@ from dueros.directive.Display.BaseRenderPlayerInfo import BaseRenderPlayerInfo
 class RenderVideoPlayerInfo(BaseRenderPlayerInfo):
 
     def __init__(self, content=None, controls=[]):
-        super(RenderVideoPlayerInfo, self).__init__('Display.RenderVideoPlayerInfo', content, controls)
+        BaseRenderPlayerInfo.__init__(self, 'Display.RenderVideoPlayerInfo', content, controls)
 
 
 if __name__ == '__main__':

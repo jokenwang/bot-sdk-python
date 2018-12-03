@@ -9,20 +9,14 @@
     desc:pass
 """
 
+REPLACE_ALL = 'REPLACE_ALL'
+REPLACE_ENQUEUED = 'REPLACE_ENQUEUED'
+ENQUEUE = 'ENQUEUE'
 
-class PlayBehaviorEnum(object):
-    REPLACE_ALL = 'REPLACE_ALL'
-    REPLACE_ENQUEUED = 'REPLACE_ENQUEUED'
-    ENQUEUE = 'ENQUEUE'
 
-    @staticmethod
-    def inEnum(position):
-        return position == PlayBehaviorEnum.REPLACE_ALL or position == PlayBehaviorEnum.REPLACE_ENQUEUED or position == PlayBehaviorEnum.ENQUEUE
-
-    pass
+def in_enum(position):
+    return position == REPLACE_ALL or position == REPLACE_ENQUEUED or position == ENQUEUE
 
 
 if __name__ == '__main__':
-
-    print(PlayBehaviorEnum.REPLACE_ALL.value)
     pass

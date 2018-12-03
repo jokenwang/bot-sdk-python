@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -15,7 +15,6 @@ from dueros.directive.BaseDirective import BaseDirective
 class Stop(BaseDirective):
     def __init__(self):
         super(Stop, self).__init__('VideoPlayer.Stop')
-    pass
 
 
 if __name__ == '__main__':

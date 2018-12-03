@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -8,32 +8,36 @@
 """
     desc:pass
 """
-from dueros.Utils import Utils
+from dueros import Utils
 
 
-class BaseMediaListItem:
+class BaseMediaListItem(object):
     """
     BaseListItem类
     """
 
     def __init__(self, title, title_subtext1):
-        self.data = {}
+        """
+
+        :param title:
+        :param title_subtext1:
+        """
+
+        self.data = dict()
         self.data['title'] = title
         self.data['titleSubtext1'] = title_subtext1
         self.data['token'] = Utils.gen_token()
 
-    def set_token(self, token):
-        if token:
-            self.data['token'] = token
-
     def set_favorited(self, favorited=False):
         """
         设置isFavorited
-        :param favorited:
+        :param favorited: True/False
         :return:
         """
         if isinstance(favorited, bool):
             self.data['isFavorited'] = favorited
+        else:
+            raise ValueError('The Arg favorited is not bool')
 
     def set_image(self, image):
         """
@@ -41,11 +45,15 @@ class BaseMediaListItem:
         :param image:
         :return:
         """
-        if image and isinstance(image, str):
-            if not Utils.checkKeyInDict(self.data, 'image'):
+        if image:
+            if not isinstance(image, str):
+                image = str(image)
+            if not Utils.check_key_in_dict(self.data, 'image'):
                 self.data['image'] = {}
                 self.data['image']['src'] = {}
             self.data['image']['src'] = image
+        else:
+            raise ValueError('The Arg image is null')
 
     def set_title_subtext1(self, title_subtext1):
         """
@@ -53,8 +61,12 @@ class BaseMediaListItem:
         @:param title_subtext1
         :return:
         """
-        if title_subtext1 and isinstance(title_subtext1, str):
+        if title_subtext1:
+            if not isinstance(title_subtext1, str):
+                title_subtext1 = str(title_subtext1)
             self.data['titleSubtext1'] = title_subtext1
+        else:
+            raise ValueError('The Arg title_subtext1 is null')
 
     def set_title_subtext2(self, text_subtext2):
         """
@@ -62,8 +74,16 @@ class BaseMediaListItem:
         :param text_subtext2:
         :return:
         """
-        if text_subtext2 and isinstance(text_subtext2, str):
+        if text_subtext2:
+            if not isinstance(text_subtext2, str):
+                text_subtext2 = str(text_subtext2)
             self.data['titleSubtext2'] = text_subtext2
+        else:
+            raise ValueError('The Arg text_subtext2 is null')
+
+    def set_token(self, token):
+        if token:
+            self.data['token'] = token
 
     def get_data(self):
         return self.data

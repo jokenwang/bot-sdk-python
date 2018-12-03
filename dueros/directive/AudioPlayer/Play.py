@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -11,13 +11,13 @@
 """
 
 from dueros.directive.BaseDirective import BaseDirective
-from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
-from dueros.directive.AudioPlayer.StreamFormatEnum import StreamFormatEnum
+from dueros.directive.AudioPlayer import PlayBehaviorEnum
+from dueros.directive.AudioPlayer import StreamFormatEnum
 from dueros.directive.AudioPlayer.PlayerInfo import PlayerInfo
 from dueros.directive.AudioPlayer.Control.PlayPauseButton import PlayPauseButton
 from dueros.directive.AudioPlayer.Control.PreviousButton import PreviousButton
 from dueros.directive.AudioPlayer.Control.NextButton import NextButton
-from dueros.Utils import Utils
+from dueros import Utils
 
 
 class Play(BaseDirective):
@@ -32,10 +32,10 @@ class Play(BaseDirective):
         '''
 
         super(Play, self).__init__('AudioPlayer.Play')
-        self.data['playBehavior'] = play_behavior.value
+        self.data['playBehavior'] = play_behavior
         self.data['audioItem'] = {
             'stream': {
-                'streamFormat': StreamFormatEnum.STREAM_FORMAT_MP3.value,
+                'streamFormat': StreamFormatEnum.STREAM_FORMAT_MP3,
                 'url': url,
                 'offsetInMilliSeconds': 0,
                 'token': self.gen_token()
@@ -44,8 +44,8 @@ class Play(BaseDirective):
 
     def set_play_behavior(self, play_behavior):
 
-        if isinstance(play_behavior, PlayBehaviorEnum):
-            self.data['playBehavior'] = play_behavior.value
+        if PlayBehaviorEnum.in_enum(play_behavior):
+            self.data['playBehavior'] = play_behavior
 
     def set_player_info(self, player_info):
 
@@ -93,10 +93,10 @@ class Play(BaseDirective):
         :param stream_format:    取值: STREAM_FORMAT_MP3、STREAM_FORMAT_M3U8、STREAM_FORMAT_M4A
         :return:
         '''
-        if StreamFormatEnum.inEnum(stream_format):
-            self.data['audioItem']['stream']['streamFormat'] = stream_format.value
+        if StreamFormatEnum.in_enum(stream_format):
+            self.data['audioItem']['stream']['streamFormat'] = stream_format
         else:
-            self.data['audioItem']['stream']['streamFormat'] = StreamFormatEnum.STREAM_FORMAT_MP3.value
+            self.data['audioItem']['stream']['streamFormat'] = StreamFormatEnum.STREAM_FORMAT_MP3
         return self
 
 

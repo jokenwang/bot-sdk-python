@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -20,11 +20,6 @@ class BaseRenderPlayerInfo(TraitPlayerInfo, BaseDirective):
         self.data['token'] = self.gen_token()
         self.set_content(content)
         self.set_controls(controls)
-
-    def set_token(self, token):
-        if token:
-            self.data['token'] = token
-    pass
 
 
 if __name__ == '__main__':

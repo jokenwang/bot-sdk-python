@@ -9,8 +9,8 @@
     desc:pass
 """
 from dueros.directive.BaseDirective import BaseDirective
-from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
-from dueros.Utils import Utils
+from dueros.directive.AudioPlayer import PlayBehaviorEnum
+from dueros import Utils
 
 
 class VideoPlayer(BaseDirective):
@@ -58,7 +58,7 @@ class VideoPlayer(BaseDirective):
             report_delay_in_ms = int(report_delay_in_ms)
 
         if isinstance(report_delay_in_ms, int) or isinstance(report_delay_in_ms, float):
-            if not Utils.checkKeyInDict(self.data['videoItem']['stream'], 'progressReport'):
+            if not Utils.check_key_in_dict(self.data['videoItem']['stream'], 'progressReport'):
                 self.data['videoItem']['stream']['progressReport'] = {}
             self.data['videoItem']['stream']['progressReport']['progressReportDelayInMilliseconds'] = int(report_delay_in_ms)
 
@@ -69,7 +69,7 @@ class VideoPlayer(BaseDirective):
 
         if isinstance(interval_ms, int) or isinstance(interval_ms, float):
 
-            if not Utils.checkKeyInDict(self.data['videoItem']['stream'], 'progressReport'):
+            if not Utils.check_key_in_dict(self.data['videoItem']['stream'], 'progressReport'):
                 self.data['videoItem']['stream']['progressReport'] = {}
 
             self.data['videoItem']['stream']['progressReport']['progressReportIntervalInMilliseconds'] = int(interval_ms)

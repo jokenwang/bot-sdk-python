@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -10,15 +10,14 @@ VideoPlayer视频播放
 详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/videoplayer_markdown#VideoPlayer.Play%E6%8C%87%E4%BB%A4
 """
 from dueros.directive.BaseDirective import BaseDirective
-from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
-from dueros.Utils import Utils
-
+from dueros.directive.AudioPlayer import PlayBehaviorEnum
+from dueros import Utils
 
 class VideoPlayer(BaseDirective):
 
     def __init__(self, url, play_behavior=PlayBehaviorEnum.REPLACE_ALL):
         super(VideoPlayer, self).__init__('VideoPlayer.Play')
-        self.data['playBehavior'] = play_behavior.value
+        self.data['playBehavior'] = play_behavior
         self.data['videoItem'] = {
             'videoItemId': self.gen_token(),
             'stream': {

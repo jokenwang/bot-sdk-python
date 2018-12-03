@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -13,6 +13,9 @@ import logging
 
 
 class LaunchApp(BaseDirective):
+    """
+    调用App指令
+    """
 
     def __init__(self, app_name='', package_name='', deep_link=''):
         """
@@ -22,7 +25,7 @@ class LaunchApp(BaseDirective):
         :param deep_link:    打开应用指定功能
         """
 
-        super(LaunchApp, self).__init__('AppLauncher.LaunchApp')
+        BaseDirective.__init__(self, 'AppLauncher.LaunchApp')
         if not app_name and not package_name and not deep_link:
             print('appName packageName deepLink 必须要有一个')
         else:
@@ -34,26 +37,35 @@ class LaunchApp(BaseDirective):
             }, **self.data)
 
     def set_app_name(self, app_name):
-
+        """
+        设置应用名
+        :param app_name:
+        :return:
+        """
         if app_name:
             self.data['appName'] = app_name
         return self
 
     def set_package_name(self, package_name):
-
+        """
+        设置应用包名
+        :param package_name:
+        :return:
+        """
         if package_name:
             self.data['packageName'] = package_name
         return self
 
     def set_deep_link(self, deep_link):
-
+        """
+        设置功能名
+        :param deep_link:
+        :return:
+        """
         if deep_link:
             self.data['deepLink'] = deep_link
         return self
 
+
 if __name__ == '__main__':
-
-    launchApp = LaunchApp('', '', '2')
-    launchApp.set_deep_link('dd')
-    print(launchApp.data)
-
+    pass

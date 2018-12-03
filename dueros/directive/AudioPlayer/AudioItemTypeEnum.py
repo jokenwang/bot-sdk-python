@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -8,18 +8,12 @@
 """
     desc:pass
 """
-from enum import Enum, unique
+AUDIO_TYPE_MUSIC = 'MUSIC'
+FORMAT_LRC = 'LRC'
 
-@unique
-class AudioItemTypeEnum(Enum):
-    AUDIO_TYPE_MUSIC = 'MUSIC'
-    FORMAT_LRC = 'LRC'
 
-    @staticmethod
-    def inEnum(item_type):
-        return item_type in AudioItemTypeEnum.__members__.values()
-
-    pass
+def in_enum(item_type):
+    return item_type == AUDIO_TYPE_MUSIC or item_type == FORMAT_LRC
 
 
 if __name__ == '__main__':

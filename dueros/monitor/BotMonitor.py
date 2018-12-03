@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -14,13 +14,13 @@ from dueros.monitor.BotMonitorConfig import BotMonitorConfig
 from dueros.Certificate import Certificate
 import json
 import base64
-import requests
 import logging
+import urllib2
 from concurrent.futures import ThreadPoolExecutor
 from multiprocessing import cpu_count
 
 
-class BotMonitor:
+class BotMonitor(object):
 
     # process_executor = ProcessPoolExecutor(max_workers=1)
     thread_executor = ThreadPoolExecutor(max_workers=cpu_count())
@@ -167,7 +167,7 @@ class BotMonitor:
 
         logging.info('上传技能统计数据已放到线程池内')
         BotMonitor.thread_executor.submit(upload_data, url=self.config.get_upload_url(), data=base64Data,
-                                   signature=str(signature, encoding='utf-8'), bot_id=str(bot_id),
+                                   signature=str(signature), bot_id=str(bot_id),
                                    timestamp=str(timestamp), pkversion=str(pkversion))
 
     def __build_upload_data(self):
@@ -214,7 +214,7 @@ class BotMonitor:
         orginData = json.dumps(retData)
         logging.info('数据统计原始数据:' + orginData)
 
-        base64Data = str(base64.b64encode(orginData.encode('utf-8')), 'utf-8')
+        base64Data = str(base64.b64encode(orginData.encode('utf-8')))
         # logging.info('数据统计加密数据:' + base64Data)
 
         if self.environment == 0:
@@ -264,8 +264,10 @@ def upload_data(**kwargs):
         'pkversion': str(pkversion)
     }
     logging.info('准备统计数据上送到百度')
-    response = requests.post(url, data=data, headers=headers)
-    logging.info('数据统计回调结果' + response.text)
+    req = urllib2.Request(url, data=data, headers=headers)
+    f = urllib2.urlopen(req)
+    response = f.read()
+    logging.info('数据统计回调结果' + response)
 
 
 if __name__ == '__main__':

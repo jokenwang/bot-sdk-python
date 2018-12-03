@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -12,11 +12,12 @@ import dueros.Log as Log
 from dueros.Constants import constants
 
 
-class Base:
+class Base(object):
 
     def __init__(self):
         # Log.init_log(constants.LOG_PATH)
         pass
+
 
 if __name__ == '__main__':
     pass

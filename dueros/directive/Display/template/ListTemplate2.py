@@ -17,7 +17,8 @@ from dueros.directive.Display.template.ListTemplateItem import ListTemplateItem
 class ListTemplate2(ListTemplate):
 
     def __init__(self):
-        super(ListTemplate2, self).__init__('ListTemplate2')
+        ListTemplate.__init__(self, 'ListTemplate2')
+
 
 if __name__ == '__main__':
 

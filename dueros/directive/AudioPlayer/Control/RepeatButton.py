@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python2
 # -*- encoding=utf-8 -*-
 
 # description:
@@ -9,20 +9,20 @@
     desc:pass
 """
 from dueros.directive.AudioPlayer.Control.RadioButton import RadioButton
-from dueros.directive.AudioPlayer.Control.RepeatButtonEnum import RepeatButtonEnum
+from dueros.directive.AudioPlayer.Control import RepeatButtonEnum
 
 
 class RepeatButton(RadioButton):
 
-    def __init__(self, selected_value=RepeatButtonEnum.REPEAT_ONE.value):
+    def __init__(self, selected_value=RepeatButtonEnum.REPEAT_ONE):
         super(RepeatButton, self).__init__('REPEAT', selected_value)
 
     def set_selected_value(self, selected_value=RepeatButtonEnum.REPEAT_ONE):
 
-        if RepeatButtonEnum.inEnum(selected_value):
-            self.data['selectedValue'] = selected_value.value
+        if RepeatButtonEnum.in_enum(selected_value):
+            self.data['selectedValue'] = selected_value
         else:
-            self.data['selectedValue'] = RepeatButtonEnum.REPEAT_ONE.value
+            self.data['selectedValue'] = RepeatButtonEnum.REPEAT_ONE
 
 
     pass
