@@ -1,4 +1,6 @@
 # bot-sdk 变更记录
+1、方便使用SDK授权功能，SDK会自己完成授权
+***
 * Bot.py 新增功能  
 1、新增获取SessionEndedRequest结束原因回调   
 2、新增获取设备ID, 添加屏幕选择事件回调、屏幕点击回调   

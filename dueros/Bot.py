@@ -11,6 +11,7 @@ Bot入口, 实现自己的技能需要继承此类。并在构造方法内添加
 import json
 import re
 import logging
+import urllib3
 from dueros.monitor.BotMonitor import BotMonitor
 from dueros.Certificate import Certificate
 from dueros.Intercept import Intercept
@@ -18,11 +19,12 @@ from dueros.Request import Request
 from dueros.Response import Response
 from dueros.Base import Base
 from dueros.Utils import Utils
+from dueros.Constants import constants
 
 
 class Bot(Base):
 
-    def __init__(self, request_data, private_key= ''):
+    def __init__(self, request_data, private_key=''):
         """
         构造方法
         :param request_data:
@@ -101,6 +103,7 @@ class Bot(Base):
         :return:
         """
         self.botMonitor.set_environment_info(private_key, environment)
+        return self
 
     def add_launch_handler(self, func):
         """
@@ -109,7 +112,10 @@ class Bot(Base):
         :return:
         """
         if hasattr(func, '__call__'):
-            self.__add_handler('LaunchRequest', func)
+            def innerfunc():
+                self.set_session_attribute(constants.SESSION_KEY_API_ACCESS_TOKEN, self.get_api_access_token(), '')
+                return func()
+            self.__add_handler('LaunchRequest', innerfunc)
 
     def add_session_ended_handler(self, func):
         """
@@ -583,6 +589,13 @@ class Bot(Base):
         """
         return self.request.get_api_access_token()
 
+    def get_api_endpoint(self):
+        """
+        获取ApiEndPoint
+        :return:
+        """
+        return self.request.get_api_endpoint()
+
     def get_device_id(self):
         """
         获取设备ID
@@ -685,14 +698,27 @@ class Bot(Base):
 
     """==================================Dueros授权事件=================================="""
 
-    def add_permission_granted_event(self, func):
+    def add_permission_granted_event(self, func=None):
         """
-        授权成功事件
+        授权成功事件,如果func存在则回调给用户自己处理，否则内部处理授权返回授权信息，回调permission_granted
         :param func:
         :return:
         """
         if hasattr(func, '__call__'):
             self.add_event_listener('Permission.Granted', func)
+        else:
+            self.add_event_listener('Permission.Granted', self.__permission_granted_event)
+
+    def __permission_granted_event(self, event):
+        return self.get_user_profile()
+
+    def permission_granted(self, user_info):
+        """
+        授权成功 返回用户信息
+        :param user_info:
+        :return:
+        """
+        raise NotImplementedError('需要自己实现')
 
     def add_permission_rejected_event(self, func):
         """
@@ -758,6 +784,111 @@ class Bot(Base):
         :return:
         """
         self.add_event_listener('Form.RadioButtonClicked', func)
+
+    def get_user_profile(self):
+        """
+        获取用户百度账号信息
+        :return:
+        """
+
+        opts = {
+            'url': '/saiya/v1/user/profile'
+        }
+        return self.__request(opts)
+
+    def get_record_speech(self):
+        """
+        获取用户录音数据
+        :return:
+        """
+
+        opts = {
+            'url': '/saiya/v1/user/record/speech'
+        }
+        return self.__request(opts)
+
+    def get_device_location(self):
+        """
+        获取地理位置
+        :return:
+        """
+
+        opts = {
+            'url': '/saiya/v1/devices/location'
+        }
+        return self.__request(opts)
+
+    def call_smarthome_printer(self, data):
+        """
+        智能家居打印服务
+        :param data:
+        :return:
+        """
+        data['path'] = '/saiya/v1/smarthome/printer'
+        opts = self.__build_request_post(data)
+        return self.__request(opts)
+
+    def send_mateapp_notification(self, data):
+        """
+
+        :param data:
+        :return:
+        """
+        data['path'] = '/saiya/v1/mateapp/notification'
+        opts = self.__build_request_post(data)
+        return self.__request(opts)
+
+    def __build_request_post(self, data):
+        api_access_token = self.get_api_access_token()
+        headers = {
+            'Authorization': 'bearer %s' % api_access_token,
+            'Content-Type': 'application/json'
+        }
+        opts = {
+            'path': data['path'],
+            'method': 'POST',
+            'data': data,
+            'headers': headers
+        }
+        return opts
+
+    def __request(self, opts):
+
+        api_access_token = self.get_api_access_token()
+        api_endpoint = self.get_api_endpoint()
+        header = {
+            'Authorization': 'bearer %s' % api_access_token
+        }
+        default_opts = {
+            'url': '',
+            'method': 'GET',
+            'timeout': 1,
+            'uri': api_endpoint,
+            'path': '',
+            'data': {},
+            'headers': header
+        }
+        if isinstance(opts, dict):
+            opts = {**default_opts, **opts}
+        else:
+            opts = default_opts
+
+        http = urllib3.PoolManager()
+        url = opts['uri'] + opts['url'] if opts['url'] else ''
+        method = opts['method']
+        logging.info('请求地址:%s , Method:%s' % (url, method))
+        if method == 'GET' or method == 'POST':
+            try:
+                r = http.request(method, url, fields=opts['data'], headers=opts['headers'],
+                             timeout=opts['timeout'])
+                result = str(r.data, 'utf-8')
+                return json.loads(result)
+            except Exception as e:
+                logging.error('请求失败:%s' % e)
+                return None
+        else:
+            logging.error('暂不支持其他类型的请求:', method)
+            pass
 
 
 if __name__ == '__main__':

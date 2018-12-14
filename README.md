@@ -462,7 +462,10 @@ self.get_api_access_token()
 	"logId": "xxxx"
 }
 ```
-status 字段详见[Dueros文档](https://developer.dueros.baidu.com/doc/dueros-bot-platform/dbp-user-info/request-customer-information-api_markdown)
+status 字段详见[Dueros文档](https://developer.dueros.baidu.com/doc/dueros-bot-platform/dbp-user-info/request-customer-information-api_markdown)  
+5、注：如果懒省事的话,可以实现Bot的permission_granted(self, user_info) 方法，SDK会自己完成授权操作，  
+并回调permission_granted方法，将用户信息返回。
+
 
 ### directive指令
 * 播放指令 AudioPlayer.Play

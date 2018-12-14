@@ -173,6 +173,13 @@ class Request(Base):
 
         return self.__get_system_user()['externalAccessTokens']
 
+    def get_api_endpoint(self):
+        """
+        获取apiEndPoint
+        :return:
+        """
+        return Utils.get_dict_data_by_keys(self.data, ['context', 'System', 'apiEndPoint'])
+
     def get_cuid(self):
 
         return self.data['cuid']
