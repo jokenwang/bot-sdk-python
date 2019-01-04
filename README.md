@@ -696,6 +696,10 @@ self.set_monitor_enabled(True)
 ```python
 self.set_environment_info(private_key, environment=0)
 ```
+**重要的事情来三遍**  
+**注意注意注意：模式不匹配会影响数据统计，技能审核通过后一定要配置成1**  
+**注意注意注意：模式不匹配会影响数据统计，技能审核通过后一定要配置成1**  
+**注意注意注意：模式不匹配会影响数据统计，技能审核通过后一定要配置成1**  
 
 ### <span id = "question">常见问题</span>
 * 运行sh start.sh 出现 ImportError: No module named OpenSSL
