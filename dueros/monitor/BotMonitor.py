@@ -48,6 +48,7 @@ class BotMonitor:
         self.enabled = False
         self.certificate = None
         self.response = None
+        self.monitor_url = None
 
     def set_environment_info(self, private_key, environment):
         self.private_key = private_key
@@ -61,6 +62,15 @@ class BotMonitor:
         :return:
         '''
         self.enabled = enabled
+
+    def set_monitor_url(self, url):
+        """
+        设置自己的数据统计地址, 可以不依赖百度的数据统计
+        :param url:
+        :return:
+        """
+        if isinstance(url, str):
+            self.monitor_url = url
 
     def set_response_data(self, response_data):
 
@@ -166,7 +176,8 @@ class BotMonitor:
             return
 
         logging.info('上传技能统计数据已放到线程池内')
-        BotMonitor.thread_executor.submit(upload_data, url=self.config.get_upload_url(), data=base64Data,
+        upload_url = self.monitor_url if self.monitor_url else self.config.get_upload_url()
+        BotMonitor.thread_executor.submit(upload_data, url=upload_url, data=base64Data,
                                    signature=str(signature, encoding='utf-8'), bot_id=str(bot_id),
                                    timestamp=str(timestamp), pkversion=str(pkversion))
 
@@ -222,7 +233,7 @@ class BotMonitor:
         else:
             pkversion = 'online'
 
-        return (base64Data, timestamp, pkversion)
+        return base64Data, timestamp, pkversion
 
     def is_should_disable(self):
         '''

@@ -86,6 +86,15 @@ class Bot(Base):
             self.botMonitor.set_monitor_enabled(enable)
         return self
 
+    def set_monitor_url(self, url):
+        """
+        设置数据统计url，不依赖百度的数据统计，自己可以实现数据统计。否则使用百度的数据统计
+        :param url:
+        :return:
+        """
+        if self.botMonitor:
+            self.botMonitor.set_monitor_url(url)
+
     def set_private_key(self, private_key):
         """
         Deprecated

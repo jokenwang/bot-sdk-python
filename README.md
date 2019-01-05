@@ -693,6 +693,62 @@ self.set_monitor_enabled(True)
 self.set_environment_info(private_key, environment=0)
 ```
 
+默认将数据上送到百度, 你也可以自建数据统计，只需要设置数据上传地址：
+``` python
+bot.set_monitor_url(第三方数据统计平台地址)
+```
+并在自己的数据平台进行数据解析即可。   
+统计数据步骤：   
+1、将原始数据进行base64 
+```python
+{
+  'serviceData': {
+      'sdkType': '',
+      'sdkVersion': '',
+      'requestId': '',
+      'query': '',
+      'reason': '',
+      'deviceId': '',
+      'requestType': '',
+      'userId': '',
+      'intentName': '',
+      'sessionId': '',
+      'location': '',
+      'slotToElicit': '',
+      'shouldEndSession': '',
+      'outputSpeech': '',
+      'reprompt': '',
+      'audioUrl': '',
+      'appInfo': {
+          'appName': '',
+          'packageName': '',
+          'deepLink': ''
+      },
+      'requestStartTime': '',
+      'requestEndTime': '',
+      'timestamp': '',
+      'sysEvent': '',
+      'userEvent': ''
+    }
+}
+```
+2、用技能的私钥计算数据签名    
+signature = sign(base64 + bot_id + timestamp + pkversion)
+
+3、POST 方式上送base64后的数据    
+在请求header中会设置几个字段   
+```python
+headers = {
+   'Content-Type': 'application/x-www-form-urlencoded',
+   'Content-Length': 'base64后的数据长度',
+   'SIGNATURE': '数据签名',
+   'botId': 'bot_id',
+   'timestamp': 'timestamp',
+   'pkversion': 'pkversion'
+}
+```
+4、如果是自己的数据平台，使用公钥验数据，还原数据即可获得统计数据明文。
+
 ### <span id = "question">常见问题</span>
 * 运行sh start.sh 出现 ImportError: No module named OpenSSL
 执行下面命令
