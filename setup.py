@@ -14,13 +14,14 @@ from setuptools import find_packages
 
 setup(
     name='dueros-bot',
-    version='2.2.0',
+    version='2.2.1',
     author='jack',
     author_email='mupdf@sina.com',
     description='Third party DuerOS Bot Python SDK',
     keywords='DuerOS Bot',
     url='https://github.com/jokenwang/bot-sdk-python',
-    packages=find_packages(),
+    packages=['dueros'],
+    platforms='py3',
     install_requires=[
         'pycryptodome >= 3.6.6',
         'requests',
