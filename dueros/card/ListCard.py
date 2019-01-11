@@ -13,21 +13,22 @@
 import json
 from dueros.card.BaseCard import BaseCard
 from dueros.card.ListCardItem import ListCardItem
+import dueros.card.CardType as CardType
 
 
 class ListCard(BaseCard):
 
     def __init__(self):
-        ListCard.__init__(self)
-        self.data['type'] = 'list'
+        super(ListCard, self).__init__()
+        self.data['type'] = CardType.CARD_TYPE_LIST
 
-    def add_item(self, card_ietm):
+    def add_item(self, card_item):
 
-        if isinstance(card_ietm, ListCardItem):
+        if isinstance(card_item, ListCardItem):
 
             if 'list' not in self.data:
                 self.data['list'] = []
-            self.data['list'].append(card_ietm.get_data())
+            self.data['list'].append(card_item.get_data())
         return self
 
 
@@ -53,6 +54,6 @@ if __name__ == '__main__':
     listCard.add_item(listCardItem2)
     listCard.add_item(listCardItem3)
 
-    print(json.dumps(listCard.get_data()))
+    print(json.dumps(listCard.get_data(), ensure_ascii=False))
 
     pass

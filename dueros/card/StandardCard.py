@@ -11,13 +11,14 @@
 """
 
 from dueros.card.BaseCard import BaseCard
+import dueros.card.CardType as CardType
 
 
 class StandardCard(BaseCard):
 
     def __init__(self):
         super(StandardCard, self).__init__(['title', 'content', 'image'])
-        self.data['type'] = 'standard'
+        self.data['type'] = CardType.CARD_TYPE_STANDARD
 
 
 if __name__ == '__main__':

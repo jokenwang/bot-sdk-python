@@ -11,6 +11,7 @@
 """
 
 from dueros.card.BaseCard import BaseCard
+import dueros.card.CardType as CardType
 
 
 class LinkAccountCard(BaseCard):
@@ -20,7 +21,7 @@ class LinkAccountCard(BaseCard):
 
     def __init__(self):
         BaseCard.__init__(self)
-        self.data['type'] = 'LinkAccount'
+        self.data['type'] = CardType.CARD_TYPE_LINKACCOUNT
 
 
 if __name__ == '__main__':

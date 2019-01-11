@@ -11,6 +11,7 @@
 """
 
 from dueros.card.BaseCard import BaseCard
+import dueros.card.CardType as CardType
 
 
 class TextCard(BaseCard):
@@ -19,17 +20,15 @@ class TextCard(BaseCard):
     """
 
     def __init__(self, content):
-        '''
+        """
         文本卡片显示的content
         :param content:
-        '''
+        """
+
         super(TextCard, self).__init__(['content'])
-        self.data['type'] = "txt"
+        self.data['type'] = CardType.CARD_TYPE_TXT
         self.data['content'] = "%s" % content
 
-if __name__ == '__main__':
 
-    textCard = TextCard('sdfasdfs')
-    textCard.set_content('hehe')
-    print(textCard.get_data())
+if __name__ == '__main__':
     pass

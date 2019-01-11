@@ -7,6 +7,7 @@
 """
 卡片基类
 """
+import logging
 
 
 class BaseCard(object):
@@ -16,11 +17,12 @@ class BaseCard(object):
         self.support_set_field = field
 
     def add_cue_words(self, arr):
-        '''
-		为卡片添加cue words 提示用户输入
-		:param arr: 数组
-		:return:
-		'''
+        """
+        为卡片添加cue words 提示用户输入
+        :param arr:
+        :return:
+        """
+
         if arr:
             if isinstance(arr, str):
                 arr = [arr]
@@ -33,42 +35,40 @@ class BaseCard(object):
             self.data['cueWords'].extend(arr)
         return self
 
-    def set_anchor(self, url, anchorText):
-        '''
-		设置卡片链接
-		:param url:	 比如:http(s)://....
-		:param anchorText:	链接显示的文字
-		:return:
-		'''
+    def set_anchor(self, url, anchor_text):
+        """
+        设置卡片链接
+        :param url: 比如:http(s)://....
+        :param anchorText: 链接显示的文字
+        :return:
+        """
 
         if url:
             self.data['url'] = url
-            if anchorText:
-                self.data['anchorText'] = anchorText
+            if anchor_text:
+                self.data['anchorText'] = anchor_text
         return self
 
     def get_data(self):
         return self.data
 
     def __getattr__(self, item):
-        '''
-		添加魔术方法
-		:param item:
-		:return:
-		'''
-        print(item)
+        """
+        添加魔术方法
+        :param item:
+        :return:
+        """
         # 获取操作类型 set
         operation = item[0:3]
-        # 获取被操作的属性
+        # 获取被操作的属性 set_xxxx 获取xxxx
         field = item[4:]
-        print(field)
         if operation == 'set' and field and (field.lower() in self.support_set_field):
             def function(*args):
                 self.data[field.lower()] = args[0]
-
             return function
         else:
             def function(*args):
+                logging.info("不支持 %s_%s" % (operation, field))
                 print('不支持', operation, field)
 
             return function

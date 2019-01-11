@@ -222,7 +222,7 @@ class BotMonitor:
             }
         }
 
-        orginData = json.dumps(retData)
+        orginData = json.dumps(retData, ensure_ascii=False)
         logging.info('数据统计原始数据:' + orginData)
 
         base64Data = str(base64.b64encode(orginData.encode('utf-8')), 'utf-8')

@@ -364,17 +364,17 @@ class Bot(Base):
             ret = intercept.postprocess(self, ret)
             self._botMonitor.setPost_event_end()
         res = self._response.build(ret)
-        logging.info('技能返回数据: %s' % json.dumps(res))
+        logging.info('技能返回数据: %s' % json.dumps(res, ensure_ascii=False))
         self._botMonitor.set_response_data(res)
         self._botMonitor.update_data()
 
         if self._callback_data:
-            return json.dumps(self._callback_data)
+            return json.dumps(self._callback_data, ensure_ascii=False)
 
         if not build:
-            return json.dumps(ret)
+            return json.dumps(ret, ensure_ascii=False)
         else:
-            return json.dumps(res)
+            return json.dumps(res, ensure_ascii=False)
     
     def _dispatch(self):
         """

@@ -10,13 +10,14 @@
 """
 
 from dueros.card.BaseCard import BaseCard
+import dueros.card.CardType as CardType
 
 
 class ImageCard(BaseCard):
 
     def __init__(self):
         BaseCard.__init__(self)
-        self.data['type'] = 'image'
+        self.data['type'] = CardType.CARD_TYPE_IMAGE
 
     def add_item(self, src, thumbnail=''):
         """
@@ -29,10 +30,10 @@ class ImageCard(BaseCard):
         if not src:
             return self
 
-        if not 'list' in self.data:
+        if 'list' not in self.data:
             self.data['list'] = []
 
-        item = {}
+        item = dict()
         item['src'] = src
 
         if thumbnail:
