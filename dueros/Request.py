@@ -16,6 +16,13 @@ from dueros.Utils import Utils
 
 class Request(Base):
 
+    """
+    将数据封装为Request对象, 通过Request来获取相应的请求数据
+    委托Nlu、Session来解析对应数据。
+    1、Nlu 处理请求数据的intent数据
+    2、Session 处理请求数据的session
+    """
+
     def __init__(self, request_data):
         """
         :param data:  请求数据
@@ -25,7 +32,6 @@ class Request(Base):
             request_data = json.loads(request_data)
 
         self.data = request_data
-
         self.request_type = self.data['request']['type']
         self.session = Session(self.data['session'])
         self.nlu = None
@@ -74,35 +80,46 @@ class Request(Base):
         获取来自端上报的原始设备Id
         :return:
         """
-        return Utils.get_dict_data_by_keys(self.data, ['context', 'System', 'device', 'originalDeviceId' ])
+        return Utils.get_dict_data_by_keys(self.data, ['context', 'System', 'device', 'originalDeviceId'])
 
     def get_audio_player_context(self):
         """
         获取设备音频播放状态
         :return:
         """
+
         return Utils.get_dict_data_by_keys(self.data, ['context', 'AudioPlayer'])
 
     def get_video_player_context(self):
+        """
+        获取设备的视频播放状态
+        :return:
+        """
 
         return Utils.get_dict_data_by_keys(self.data, ['context', 'VideoPlayer'])
 
     def get_screen_context(self):
+        """
+        获取设备的屏幕信息
+        :return:
+        """
 
         return Utils.get_dict_data_by_keys(self.data, ['context', 'Screen'])
 
     def get_screen_token_from_context(self):
-
-        return Utils.get_dict_data_by_keys(self.data, ['context', 'Screen', 'token'])
-
-    def get_screen_token_from_context(self):
+        """
+        获取屏幕数据中的token
+        :return:
+        """
 
         return Utils.get_dict_data_by_keys(self.data, ['context', 'Screen', 'token'])
 
     def get_screen_card_from_context(self):
-
+        """
+        获取屏幕card信息
+        :return:
+        """
         return Utils.get_dict_data_by_keys(self.data, ['context', 'Screen', 'card'])
-
 
     def get_app_launcher_context(self):
         """
@@ -114,7 +131,8 @@ class Request(Base):
 
     def get_event_data(self):
         """
-        获取event请求
+        获取event请求, 即请求数据的request字段数据
+        非LaunchRequest会返回request字段数据
         :return:
         """
 
@@ -159,9 +177,9 @@ class Request(Base):
         获取accessToken
         :return:
         """
-        return self.__get_system_user()['accessToken']
+        return self._get_system_user()['accessToken']
 
-    def __get_system_user(self):
+    def _get_system_user(self):
 
         return Utils.get_dict_data_by_keys(self.data, ['context', 'System', 'user'])
 
@@ -171,7 +189,7 @@ class Request(Base):
         :return:
         """
 
-        return self.__get_system_user()['externalAccessTokens']
+        return self._get_system_user()['externalAccessTokens']
 
     def get_api_endpoint(self):
         """
@@ -200,8 +218,8 @@ class Request(Base):
         获取设备位置信息
         :return:
         """
-        if self.__get_system_user()['userInfo']['location']:
-            return self.__get_system_user()['userInfo']['location']
+        if self._get_system_user()['userInfo']['location']:
+            return self._get_system_user()['userInfo']['location']
 
     def is_determined(self):
 
@@ -212,7 +230,7 @@ class Request(Base):
 
     def is_launch_request(self):
         """
-        是否为调起bot请求
+        是否为调起bot LaunchRequest 请求
         :return:
         """
         return self.data['request']['type'] == 'LaunchRequest'
@@ -225,6 +243,10 @@ class Request(Base):
         return self.data['request']['type'] == 'SessionEndedRequest'
 
     def is_session_ended_request(self):
+        """
+        判断是否是结束会话
+        :return:
+        """
         return self.is_session_end_request()
 
     def get_timestamp(self):

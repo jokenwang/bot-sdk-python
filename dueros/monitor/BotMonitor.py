@@ -165,7 +165,7 @@ class BotMonitor:
         bot_id = self.request.get_bot_id()
 
         #组装数据 返回元祖(base64后的data, 时间戳)
-        tup = self.__build_upload_data()
+        tup = self._build_upload_data()
 
         base64Data = tup[0]
         timestamp = tup[1]
@@ -181,7 +181,7 @@ class BotMonitor:
                                    signature=str(signature, encoding='utf-8'), bot_id=str(bot_id),
                                    timestamp=str(timestamp), pkversion=str(pkversion))
 
-    def __build_upload_data(self):
+    def _build_upload_data(self):
         sysEvent = {
             'preEventList': {},
             'postEventList': {},
@@ -274,7 +274,7 @@ def upload_data(**kwargs):
         'timestamp': str(timestamp),
         'pkversion': str(pkversion)
     }
-    logging.info('准备统计数据上送到百度')
+    logging.info('准备上送统计数据')
     response = requests.post(url, data=data, headers=headers)
     logging.info('数据统计回调结果' + response.text)
 
