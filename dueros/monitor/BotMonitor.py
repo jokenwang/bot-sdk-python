@@ -45,7 +45,7 @@ class BotMonitor:
         self.config = BotMonitorConfig()
         self.private_key = private_key
         self.environment = 0
-        self.enabled = False
+        self.enabled = True
         self.certificate = None
         self.response = None
         self.monitor_url = None

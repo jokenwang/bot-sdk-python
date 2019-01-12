@@ -78,7 +78,7 @@ class Bot(Base):
 
     def set_monitor_enabled(self, enable=False):
         """
-        设置是否开启Monitor 默认未开启
+        设置是否开启Monitor 默认开启
         :param enable:
         :return:
         """

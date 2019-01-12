@@ -683,9 +683,9 @@ enable_verify_request_sign()
 ```
 
 ### 技能数据统计
-Bot默认未开启技能数据统计功能，需要手动开启。(确保已经在技能平台配置了公钥)
+Bot默认开启技能数据统计功能(确保已经在技能平台配置了公钥),关闭需要调用
 ```python
-self.set_monitor_enabled(True)
+self.set_monitor_enabled(False)
 
 ```
 之后设置自己的私钥和环境(0:Debug模式, 1:online模式)
