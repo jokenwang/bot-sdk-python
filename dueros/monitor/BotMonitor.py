@@ -167,22 +167,22 @@ class BotMonitor:
         #组装数据 返回元祖(base64后的data, 时间戳)
         tup = self._build_upload_data()
 
-        base64Data = tup[0]
+        base64_data = tup[0]
         timestamp = tup[1]
-        pkversion = tup[2]
-        signData = "%s%s%s%s" % (base64Data, bot_id, timestamp, pkversion)
-        signature = self.certificate.get_sign(signData)
-        if not signature or len(pkversion) == 0:
+        pk_version = tup[2]
+        sign_data = "%s%s%s%s" % (base64_data, bot_id, timestamp, pk_version)
+        signature = self.certificate.get_sign(sign_data)
+        if not signature or len(pk_version) == 0:
             return
 
         logging.info('上传技能统计数据已放到线程池内')
         upload_url = self.monitor_url if self.monitor_url else self.config.get_upload_url()
-        BotMonitor.thread_executor.submit(upload_data, url=upload_url, data=base64Data,
+        BotMonitor.thread_executor.submit(upload_data, url=upload_url, data=base64_data,
                                    signature=str(signature, encoding='utf-8'), bot_id=str(bot_id),
-                                   timestamp=str(timestamp), pkversion=str(pkversion))
+                                   timestamp=str(timestamp), pkversion=str(pk_version))
 
     def _build_upload_data(self):
-        sysEvent = {
+        sys_event = {
             'preEventList': {},
             'postEventList': {},
             'eventCostTime': self.event_cost_time,
@@ -191,7 +191,7 @@ class BotMonitor:
 
         timestamp = Utils.get_millisecond()
 
-        retData = {
+        ret_data = {
             'serviceData': {
                 'sdkType': self.config.get_sdk_type(),
                 'sdkVersion': self.config.get_sdk_version(),
@@ -217,23 +217,21 @@ class BotMonitor:
                 'requestStartTime': self.request_start_time,
                 'requestEndTime': self.request_end_time,
                 'timestamp': timestamp,
-                'sysEvent': sysEvent,
+                'sysEvent': sys_event,
                 'userEvent': self.user_event_list
             }
         }
 
-        orginData = json.dumps(retData, ensure_ascii=False)
-        logging.info('数据统计原始数据:' + orginData)
+        orgin_data = json.dumps(ret_data, ensure_ascii=False)
+        logging.info('数据统计原始数据:' + orgin_data)
 
-        base64Data = str(base64.b64encode(orginData.encode('utf-8')), 'utf-8')
-        logging.info('数据统计加密数据:' + base64Data)
-
+        base64_data = str(base64.b64encode(orgin_data.encode('utf-8')), 'utf-8')
+        logging.info('数据统计加密数据:' + base64_data)
+        pk_version = 'online'
         if self.environment == 0:
-            pkversion = 'debug'
-        else:
-            pkversion = 'online'
+            pk_version = 'debug'
 
-        return base64Data, timestamp, pkversion
+        return base64_data, timestamp, pk_version
 
     def is_should_disable(self):
         '''
