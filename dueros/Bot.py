@@ -802,20 +802,23 @@ class Bot(Base):
         """
 
         opts = {
-            'url': '/saiya/v1/user/profile'
+            'path': '/saiya/v1/user/profile'
         }
-        return self._request(opts)
+        return self._http_request(opts)
 
-    def get_record_speech(self):
+    def get_record_speech(self, audio_token):
         """
         获取用户录音数据
         :return:
         """
 
         opts = {
-            'url': '/saiya/v1/user/record/speech'
+            'path': '/saiya/v1/user/record/speech',
+            'data': {
+                'audioToken': audio_token
+            }
         }
-        return self._request(opts)
+        return self._http_request(opts)
 
     def get_device_location(self):
         """
@@ -824,9 +827,9 @@ class Bot(Base):
         """
 
         opts = {
-            'url': '/saiya/v1/devices/location'
+            'path': '/saiya/v1/devices/location'
         }
-        return self._request(opts)
+        return self._http_request(opts)
 
     def call_smarthome_printer(self, data):
         """
@@ -836,7 +839,7 @@ class Bot(Base):
         """
         data['path'] = '/saiya/v1/smarthome/printer'
         opts = self._build_request_post(data)
-        return self._request(opts)
+        return self._http_request(opts)
 
     def send_mateapp_notification(self, data):
         """
@@ -846,7 +849,7 @@ class Bot(Base):
         """
         data['path'] = '/saiya/v1/mateapp/notification'
         opts = self._build_request_post(data)
-        return self._request(opts)
+        return self._http_request(opts)
 
     def _build_request_post(self, data):
         api_access_token = self.get_api_access_token()
@@ -862,7 +865,7 @@ class Bot(Base):
         }
         return opts
 
-    def _request(self, opts):
+    def _http_request(self, opts):
 
         api_access_token = self.get_api_access_token()
         api_endpoint = self.get_api_endpoint()
@@ -884,7 +887,7 @@ class Bot(Base):
             opts = default_opts
 
         http = urllib3.PoolManager()
-        url = opts['uri'] + opts['url'] if opts['url'] else ''
+        url = opts['uri'] + opts['path'] if not opts['url'] else ''
         method = opts['method']
         logging.info('请求地址:%s , Method:%s' % (url, method))
         if method == 'GET' or method == 'POST':
