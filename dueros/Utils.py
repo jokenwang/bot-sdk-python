@@ -14,6 +14,7 @@ import random
 import hashlib
 import json
 
+
 class Utils:
 
     @staticmethod
@@ -107,6 +108,4 @@ class Utils:
 
 if __name__ == '__main__':
 
-    a =1.09
-    print(Utils.convert_number(a))
     pass
