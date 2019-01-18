@@ -464,7 +464,10 @@ self.get_api_access_token()
 	"logId": "xxxx"
 }
 ```
-status 字段详见[Dueros文档](https://developer.dueros.baidu.com/doc/dueros-bot-platform/dbp-user-info/request-customer-information-api_markdown)
+status 字段详见[Dueros文档](https://developer.dueros.baidu.com/doc/dueros-bot-platform/dbp-user-info/request-customer-information-api_markdown)  
+5、注：如果懒省事的话,可以实现Bot的permission_granted(self, user_info) 方法，SDK会自己完成授权操作，  
+并回调permission_granted方法，将用户信息返回。
+
 
 ### directive指令
 * 播放指令 AudioPlayer.Play
@@ -687,9 +690,9 @@ self.enable_verify_request_sign()
 详见文档[通信认证](https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-deploy/authentication.md)
 
 ### 技能数据统计
-Bot默认未开启技能数据统计功能，需要手动开启。(确保已经在技能平台配置了公钥)
+Bot默认开启技能数据统计功能(确保已经在技能平台配置了公钥),关闭需要调用
 ```python
-self.set_monitor_enabled(True)
+self.set_monitor_enabled(False)
 
 ```
 之后设置自己的私钥和环境(0:Debug模式, 1:online模式)
@@ -700,6 +703,62 @@ self.set_environment_info(private_key, environment=0)
 **注意注意注意：模式不匹配会影响数据统计，技能审核通过后一定要配置成1**  
 **注意注意注意：模式不匹配会影响数据统计，技能审核通过后一定要配置成1**  
 **注意注意注意：模式不匹配会影响数据统计，技能审核通过后一定要配置成1**  
+
+默认将数据上送到百度, 你也可以自建数据统计，只需要设置数据上传地址：
+``` python
+bot.set_monitor_url(第三方数据统计平台地址)
+```
+并在自己的数据平台进行数据解析即可。   
+统计数据步骤：   
+1、将原始数据进行base64 
+```python
+{
+  'serviceData': {
+      'sdkType': '',
+      'sdkVersion': '',
+      'requestId': '',
+      'query': '',
+      'reason': '',
+      'deviceId': '',
+      'requestType': '',
+      'userId': '',
+      'intentName': '',
+      'sessionId': '',
+      'location': '',
+      'slotToElicit': '',
+      'shouldEndSession': '',
+      'outputSpeech': '',
+      'reprompt': '',
+      'audioUrl': '',
+      'appInfo': {
+          'appName': '',
+          'packageName': '',
+          'deepLink': ''
+      },
+      'requestStartTime': '',
+      'requestEndTime': '',
+      'timestamp': '',
+      'sysEvent': '',
+      'userEvent': ''
+    }
+}
+```
+2、用技能的私钥计算数据签名    
+signature = sign(base64 + bot_id + timestamp + pkversion)
+
+3、POST 方式上送base64后的数据    
+在请求header中会设置几个字段   
+```python
+headers = {
+   'Content-Type': 'application/x-www-form-urlencoded',
+   'Content-Length': 'base64后的数据长度',
+   'SIGNATURE': '数据签名',
+   'botId': 'bot_id',
+   'timestamp': 'timestamp',
+   'pkversion': 'pkversion'
+}
+```
+4、如果是自己的数据平台，使用公钥验数据，还原数据即可获得统计数据明文。
 
 ### <span id = "question">常见问题</span>
 * 运行sh start.sh 出现 ImportError: No module named OpenSSL

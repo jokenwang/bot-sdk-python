@@ -72,8 +72,8 @@ class Certificate(Base):
                 fcntl.flock(f, fcntl.LOCK_EX)
                 f.write(content.decode('utf-8'))
                 fcntl.flock(f, fcntl.LOCK_UN)
-        content = self.get_file_content_safety(cache)
-        return self.get_public_key_fromX509(content)
+        content = get_file_content_safety(cache)
+        return get_public_key_fromX509(content)
 
     def verify_request(self):
         """
@@ -119,29 +119,31 @@ class Certificate(Base):
 
     def get_request_sign(self):
         return self.environ['HTTP_SIGNATURE']
-    
-    def get_public_key_fromX509(self, content):
-        """
-        获取publicKey
-        :param  content
-        :return publicKey
-        """
-        x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, content)
-        pk = x509.get_pubkey()
-        public_key = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
-        return public_key
 
-    def get_file_content_safety(self, filename):
-        """
-        获取文件内容
-        :param filename
-        :return content
-        """
-        with open(filename, 'r') as f:
-            fcntl.flock(f, fcntl.LOCK_SH)
-            content = f.read()
-            fcntl.flock(f, fcntl.LOCK_UN)
-            return content
+
+def get_public_key_fromX509(content):
+    """
+    获取publicKey
+    :param  content
+    :return publicKey
+    """
+    x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, content)
+    pk = x509.get_pubkey()
+    public_key = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
+    return public_key
+
+
+def get_file_content_safety(filename):
+    """
+    获取文件内容
+    :param filename
+    :return content
+    """
+    with open(filename, 'r') as f:
+        fcntl.flock(f, fcntl.LOCK_SH)
+        content = f.read()
+        fcntl.flock(f, fcntl.LOCK_UN)
+        return content
 
 
 if __name__ == '__main__':

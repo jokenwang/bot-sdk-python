@@ -18,7 +18,7 @@ from dueros.Utils import Utils
 class BaseDirective(object):
 
     def __init__(self, directive_type):
-        self.data = {}
+        self.data = dict()
 
         self.data['type'] = directive_type
 

@@ -37,14 +37,13 @@ class Response(Base):
 
     def set_should_end_session(self, val):
         """
-        设置对话结束
-        :param val:
+        设置是否结束对话, 默认结束当前会话，不支持多轮会话
+        :param val: true 结束对话、 false 不结束
         :return:
         """
-        if val:
-            self.should_end_session = True
-        else:
-            self.should_end_session = False
+
+        if val and isinstance(val, bool):
+            self.should_end_session = val
 
     def default_result(self):
 
@@ -53,33 +52,38 @@ class Response(Base):
             'msg': ''
         }
 
-    def __pre_build(self, data):
+    def _pre_build(self, data):
+        """
+
+        :param data:
+        :return:
+        """
 
         if self.nlu and self.nlu.has_asked():
             self.should_end_session = False
 
         if 'directives' in data:
-            data['directives'] = data.get('directives')
+            data['directives'] = data['directives']
         else:
             data['directives'] = []
 
         if 'card' in data:
-            data['card'] = data.get('card')
+            data['card'] = data['card']
         else:
             data['card'] = None
 
         if 'outputSpeech' in data:
-            data['outputSpeech'] = data.get('outputSpeech')
+            data['outputSpeech'] = data['outputSpeech']
         else:
             data['outputSpeech'] = None
 
         if 'resource' in data:
-            data['resource'] = data.get('resource')
+            data['resource'] = data['resource']
         else:
             data['resource'] = None
 
         if 'reprompt' in data:
-            data['reprompt'] = data.get('reprompt')
+            data['reprompt'] = data['reprompt']
         else:
             data['reprompt'] = None
 
@@ -99,10 +103,10 @@ class Response(Base):
         if data is None:
             data = {}
 
-        self.__pre_build(data)
+        self._pre_build(data)
 
         if 'directives' in data:
-            directives = data.get('directives')
+            directives = data['directives']
         else:
             directives = []
 
@@ -125,7 +129,7 @@ class Response(Base):
 
         ret = {
             "version": "2.0",
-            "context": self.__build_context(),
+            "context": self._build_context(),
             "session": self.session.to_response(),
             "response": {
                 "directives":  directives,
@@ -232,7 +236,7 @@ class Response(Base):
         self.add_expect_slot_response(slot)
         self.add_expect_text_response(text)
 
-    def __build_context(self):
+    def _build_context(self):
         context = {}
         if self.nlu and self.nlu.to_update_intent():
             context['intent'] = self.nlu.to_update_intent()

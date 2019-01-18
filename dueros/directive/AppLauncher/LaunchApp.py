@@ -51,8 +51,8 @@ class LaunchApp(BaseDirective):
             self.data['deepLink'] = deep_link
         return self
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     launchApp = LaunchApp('', '', '2')
     launchApp.set_deep_link('dd')
     print(launchApp.data)

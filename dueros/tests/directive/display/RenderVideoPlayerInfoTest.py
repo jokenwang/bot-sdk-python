@@ -16,6 +16,7 @@ from dueros.directive.VideoPlayer.VideoPlayerInfoContent import VideoPlayerInfoC
 from dueros.directive.AudioPlayer.Control.PlayPauseButton import PlayPauseButton
 from dueros.directive.AudioPlayer.Control.RepeatButton import RepeatButton
 from dueros.directive.AudioPlayer.Control.ShowPlayListButton import ShowPlayListButton
+from dueros.directive.BaseDirective import BaseDirective
 
 class RenderVideoPlayerInfoTest(unittest.TestCase):
 
@@ -40,6 +41,21 @@ class RenderVideoPlayerInfoTest(unittest.TestCase):
         self.renderVideoPlayerInfo.set_controls(controls);
         self.assertEqual(self.renderVideoPlayerInfo.get_data(), self.data)
     pass
+
+    def testSS(self):
+        content = VideoPlayerInfoContent('title')
+        content.set_media_length_in_milliseconds(10000)
+        playPauseButton = PlayPauseButton()
+        playlistButton = ShowPlayListButton()
+        controls = [playPauseButton, playlistButton]
+
+        self.renderVideoPlayerInfo.set_token('test_token')
+        self.renderVideoPlayerInfo.set_content(content)
+        self.renderVideoPlayerInfo.set_controls(controls);
+        directives = [self.renderVideoPlayerInfo]
+        directives = list(map(lambda value: value.get_data(),
+                              list(filter(lambda value: isinstance(value, BaseDirective), directives))))
+        print(directives)
 
 
 if __name__ == '__main__':
