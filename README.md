@@ -13,6 +13,11 @@
 * directive目录生成指令相关比如：浏览器指令、音频指令
 * tests 目录存放本地测试代码
 * samples 示例demo，其中包括guess_num、audio_play、personal_income_tax
+
+###
+**注意:Bot内的属性变为私有，无法再通过self获取request、nlu等属性，对应
+的方法统一通过self.方法来调用**
+
 ### 安装、使用BOT SDK进行开发
 
 1、 通过pip进行安装   
@@ -545,7 +550,7 @@ def getRemindSlot(self):
     remindTime = self.getSlots('remind_time');
     if remindTime:
         return 返回设置闹钟指令
-    self.nlu.ask('remind_time')
+    self.ask('remind_time')
     return {
         'outputSpeech': r'要几点的闹钟呢?'
     }
@@ -606,7 +611,7 @@ clear()
 def RentCar(self):
     destination = self.get_slots('destination')
     if not destination:
-        self.nlu.ask('destination')
+        self.ask('destination')
         card = TextCard('打车去哪呢')
         return {
             'card': card,
