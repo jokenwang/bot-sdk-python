@@ -301,7 +301,7 @@ return {
 ```
 
 ### 横向列表
-*ListTemplate3
+* ListTemplate3
 ```python
 listTemplate = ListTemplate3()
 #设置模板token
@@ -329,7 +329,7 @@ return {
 ```
 
 ### 纵向列表
-*ListTemplate4
+* ListTemplate4
 ```python
 listTemplate = ListTemplate4()
 #设置模板token
@@ -357,8 +357,17 @@ return {
 ```
 
 ### Tag标签
-*[Tag](https://github.com/jokenwang/bot-sdk-python/tree/master_alpha/dueros/directive/Display/tag) 标签用在List模板的每个Item上(显示在每个item的右下角)，比如:付费、免费、最新、VIP、限时、已购、最热以及自定义标签内容等
+* [Tag](https://github.com/jokenwang/bot-sdk-python/tree/master_alpha/dueros/directive/Display/tag) 标签用在List模板的每个Item上(显示在每个item的右下角)，比如:付费、免费、最新、VIP、限时、已购、最热以及自定义标签内容等
 PayTag、FreeTag、NewTag、HotTag、VipTag、TimeTag、PurchasedTag、HotTag、CustomTag、AmountTag、AuditionTag
+
+```python
+listTemplate = ListTemplate4()
+item = ListTemplateItem()
+#添加tag 
+item.set_image_tags(HotTag())
+listTemplate.add_item(item)
+
+```
 
 ### 音频播放
 * 音频播放 
