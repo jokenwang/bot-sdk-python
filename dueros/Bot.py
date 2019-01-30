@@ -114,6 +114,24 @@ class Bot(Base):
         self._botMonitor.set_environment_info(private_key, environment)
         return self
 
+    def set_delegate(self):
+        """
+        设置delegate 某个槽位或确认意图
+        :return:
+        """
+        if self._nlu:
+            self._nlu.set_delegate()
+
+    def set_confirm_slot(self, field):
+        """
+        设置对一个槽位的确认
+        :param field:
+        :return:
+        """
+        if self._nlu:
+            self._nlu.set_confirm_slot(field)
+
+
     def add_launch_handler(self, func):
         """
         添加对LaunchRequest的处理函数
