@@ -616,12 +616,12 @@ self.add_intent_handler('rent_car.book', self.RentCar)
 * delegate
 将处理交给DuerOS的对话管理模块DM（Dialog Management）,按事先配置的顺序，包括对缺失槽位的询问，槽位值的确认（如果设置了槽位需要确认，以及确认的话术）,整个意图的确认（如果设置了意图需要确认，以及确认的话术。比如可以将收集的槽位依次列出，等待用户确认）
 ```python
-return self.nlu.set_delegate()
+return self.set_delegate()
 ```
 * confirm slot
 主动发起对一个槽位的确认，此时还需同时返回询问的outputSpeach。主动发起的确认，DM不会使用默认配置的话术。
 ```python
-self.nlu.set_confirm_slot('money')
+self.set_confirm_slot('money')
 return {
     'outputSpeech': '你确认充话费：10000000000',
     }
@@ -632,7 +632,7 @@ return {
 money = self.get_slots('money')
 phone = self.get_slots('phone')
 if money and phone:
-    self.nlu.set_confirm_intent()
+    self.set_confirm_intent()
     return {
         'outputSpeech': '你确认充话费：' + money + '，充值手机：' + phone,
     }
