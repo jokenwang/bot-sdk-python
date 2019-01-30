@@ -131,6 +131,13 @@ class Bot(Base):
         if self._nlu:
             self._nlu.set_confirm_slot(field)
 
+    def set_confirm_intent(self):
+        """
+        设置confirm 意图。询问用户是否对意图确认，设置后需要自行返回outputSpeech
+        :return:
+        """
+        if self._nlu:
+            self._nlu.set_confirm_intent()
 
     def add_launch_handler(self, func):
         """
