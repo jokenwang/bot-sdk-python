@@ -10,7 +10,6 @@
 """
 #默认使用个税查询技能， 如果需要切换自己的技能  注意需要要更换成自己的Bot
 from dueros.samples.personal_income_tax.Bot import Bot
-from Bot import Bot
 import dueros.Log as Log
 from dueros.Constants import constants
 #配置日志
