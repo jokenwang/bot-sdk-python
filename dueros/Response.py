@@ -42,7 +42,7 @@ class Response(Base):
         :return:
         """
 
-        if val and isinstance(val, bool):
+        if isinstance(val, bool):
             self.should_end_session = val
 
     def default_result(self):
