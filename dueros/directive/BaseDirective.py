@@ -54,6 +54,9 @@ class BaseDirective(object):
 
         return Utils.get_dict_data_by_keys(self.data, ['token'])
 
+    def get_type(self):
+        return self.data['type']
+
 
 if __name__ == '__main__':
 

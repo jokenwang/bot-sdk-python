@@ -111,7 +111,11 @@ class Response(Base):
             directives = []
 
         if len(directives) > 0:
-            directives = list(map(lambda value: value.get_data(), list(filter(lambda value: isinstance(value, BaseDirective), directives))))
+            directives = list(filter(lambda value: isinstance(value, BaseDirective), directives))
+            for item in directives:
+                if item.get_type() == 'DPL.ExecuteCommands':
+                    item.set_token(self.get_template_token())
+            directives = list(map(lambda value: value.get_data(), directives))
 
         if self.nlu:
             arr = self.nlu.to_directive()
@@ -267,6 +271,14 @@ class Response(Base):
         :return:
         """
         self.directives_arrangement = 'STRICT'
+
+    def get_template_token(self):
+
+        data = self._request.getData()
+        token = ''
+        if data and Utils.checkKeysInDict(data, ['context', 'Screen', 'token']):
+            token = Utils.get_dict_data_by_keys(data, ['context', 'Screen', 'token'])
+        return token
 
 
 if __name__ == '__main__':
