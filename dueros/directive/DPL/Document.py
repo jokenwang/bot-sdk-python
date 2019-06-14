@@ -32,7 +32,8 @@ class Document:
     def get_data(self):
         return self.data
 
-    def get_document_from_path(self, path):
+    @staticmethod
+    def get_document_from_path(path):
         """
         从指定路径(绝对路径)加载数据
         :param path:
