@@ -50,7 +50,7 @@ class SequentialCommand(BaseCommand):
         if isinstance(commands, BaseCommand):
             self.data['commands'].append(commands.get_data())
         elif isinstance(commands, list):
-            self.data['commands'] = list(map(lambda value: value.get_data(), list(filter(lambda value: isinstance(value, BaseCommand), complete_commands))))
+            self.data['commands'] = list(map(lambda value: value.get_data(), list(filter(lambda value: isinstance(value, BaseCommand), commands))))
 
 
 if __name__ == '__main__':
