@@ -30,7 +30,7 @@ class DPLBot(Bot):
         打开调用名
         '''
         self.wait_answer()
-        directive = self.get_dpl_directive(os.path.abspath('.') + '/doc/launch.json')
+        directive = get_dpl_directive(os.path.abspath('.') + '/doc/launch.json')
         return {
             'directives': [directive],
             'outputSpeech': '欢迎来到猜数字游戏'
@@ -39,7 +39,7 @@ class DPLBot(Bot):
     def dpl_demo1(self):
         self.wait_answer()
         self.set_expect_speech(False)
-        directive = self.get_dpl_directive(os.path.abspath('.') + '/doc/demo1.json')
+        directive = get_dpl_directive(os.path.abspath('.') + '/doc/demo1.json')
         return {
             'directives': [directive],
             'outputSpeech': '简单图片'
@@ -48,7 +48,7 @@ class DPLBot(Bot):
     def dpl_demo2(self):
         self.wait_answer()
         self.set_expect_speech(False)
-        directive = self.get_dpl_directive(os.path.abspath('.') + '/doc/demo2.json')
+        directive = get_dpl_directive(os.path.abspath('.') + '/doc/demo2.json')
         return {
             'directives': [directive],
             'outputSpeech': '长文本'
@@ -56,7 +56,7 @@ class DPLBot(Bot):
 
     def dpl_demo3(self):
         self.wait_answer()
-        directive = self.get_dpl_directive(os.path.abspath('.') + '/doc/demo3.json')
+        directive = get_dpl_directive(os.path.abspath('.') + '/doc/demo3.json')
         return {
             'directives': [directive],
             'outputSpeech': '短文本'
@@ -64,7 +64,7 @@ class DPLBot(Bot):
 
     def dpl_demo4(self):
         self.wait_answer()
-        directive = self.get_dpl_directive(os.path.abspath('.') + '/doc/demo4.json')
+        directive = get_dpl_directive(os.path.abspath('.') + '/doc/demo4.json')
         return {
             'directives': [directive],
             'outputSpeech': '右图详情'
@@ -72,20 +72,19 @@ class DPLBot(Bot):
 
     def dpl_demo5(self):
         self.wait_answer()
-        directive = self.get_dpl_directive(os.path.abspath('.') + '/doc/demo5.json')
+        directive = get_dpl_directive(os.path.abspath('.') + '/doc/demo5.json')
         return {
             'directives': [directive],
             'outputSpeech': '左图详情'
         }
 
-    def get_dpl_directive(self, path):
-        doc = Document()
-        render = RenderDocument()
-        doc.init_data(doc.get_document_from_path(path))
-        render.set_document(doc)
-        return render
+def get_dpl_directive(path):
+    doc = Document()
+    render = RenderDocument()
+    doc.init_data(Document.get_document_from_path(path))
+    render.set_document(doc)
+    return render
 
 
 if __name__ == '__main__':
-
     pass
