@@ -72,7 +72,7 @@ class AnimationCommand(BaseCommand):
         :param easing:
         :return:
         """
-        if isinstance(easing, str) and easing.find(easing, 'cubic-bezier') != -1:
+        if isinstance(easing, str) and easing.find('cubic-bezier') != -1:
             self.data['easing'] = easing
         if isinstance(easing, AnimationAttrMode):
             self.data['easing'] = easing.value
