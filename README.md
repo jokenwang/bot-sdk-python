@@ -10,7 +10,7 @@
 * Session.py处理会话信息
 * Certificate.py封装DuerOS和技能通信认证
 * card目录处理展示卡片相关
-* directive目录生成指令相关比如：浏览器指令、音频指令
+* directive目录生成指令相关比如：浏览器指令、音频指令、DPL指令
 * tests 目录存放本地测试代码
 * samples 示例demo，其中包括guess_num、audio_play、personal_income_tax
 
