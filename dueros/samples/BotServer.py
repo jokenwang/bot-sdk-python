@@ -9,12 +9,14 @@
     desc:pass
 """
 #默认使用个税查询技能， 如果需要切换自己的技能  注意需要要更换成自己的Bot
-from dueros.samples.personal_income_tax.Bot import Bot
-from Bot import Bot
-import dueros.Log as Log
-from dueros.Constants import constants
+# from dueros.samples.personal_income_tax.Bot import Bot
+# from Bot import Bot
+# import dueros.Log as Log
+# from dueros.Constants import constants
 #配置日志
-Log.init_log(constants.LOG_PATH)
+# Log.init_log(constants.LOG_PATH)
+
+from dueros.samples.DPL.DPLBot import DPLBot as Bot
 
 def application(environ, start_response):
     try:
@@ -29,16 +31,16 @@ def application(environ, start_response):
     bot = Bot(request_body)
 
     #验证签名enableVerifyRequestSign  disableVerifyRequestSign 关闭验证签名
-    bot.init_certificate(environ).enable_verify_request_sign()
+    # bot.init_certificate(environ).enable_verify_request_sign()
     # bot.initCertificate(environ).disableVerifyRequestSign()
 
     #数据统计相关配置
     #是否开启数据统计功能
-    bot.set_monitor_enabled(True)
+    # bot.set_monitor_enabled(True)
     #设置私钥和统计模式(0:DEBUG模式, 1:ONLINE模式)
-    bot.set_environment_info(priKey, 0)
+    # bot.set_environment_info(priKey, 0)
     body_str = bot.run()
-
+    print(body_str)
     return writeResponse(start_response, body_str)
 
 def writeResponse(start_response, body_str):
