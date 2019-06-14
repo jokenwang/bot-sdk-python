@@ -32,24 +32,23 @@ class Document:
     def get_data(self):
         return self.data
 
+    def get_document_from_path(self, path):
+        """
+        从指定路径(绝对路径)加载数据
+        :param path:
+        :return:
+        """
 
-def get_document_from_path(path):
-    """
-    从指定路径(绝对路径)加载数据
-    :param path:
-    :return:
-    """
-
-    if path and isinstance(path, str):
-        try:
-            with open(path, encoding='utf-8') as f:
-                content = f.read()
-                data = json.loads(content, encoding='utf-8')
-                return data
-        except FileNotFoundError as fileError:
-            logging.error(fileError)
-    else:
-        logging.error('path:%s is error' % path)
+        if path and isinstance(path, str):
+            try:
+                with open(path, encoding='utf-8') as f:
+                    content = f.read()
+                    data = json.loads(content, encoding='utf-8')
+                    return data
+            except FileNotFoundError as fileError:
+                logging.error(fileError)
+        else:
+            logging.error('path:%s is error' % path)
 
 
 if __name__ == '__main__':
