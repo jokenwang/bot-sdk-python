@@ -1,4 +1,0 @@
-#依赖库
-requests
-pyOpenSSL
-pycryptodome >= 3.6.6

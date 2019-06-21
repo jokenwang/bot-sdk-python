@@ -11,7 +11,7 @@
 import os
 import fcntl
 import hashlib
-import OpenSSL
+# import OpenSSL
 import urllib.request
 from Crypto.PublicKey import RSA
 from Crypto.Signature import PKCS1_v1_5
@@ -127,10 +127,10 @@ def get_public_key_fromX509(content):
     :param  content
     :return publicKey
     """
-    x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, content)
-    pk = x509.get_pubkey()
-    public_key = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
-    return public_key
+    # x509 = OpenSSL.crypto.load_certificate(OpenSSL.crypto.FILETYPE_PEM, content)
+    # pk = x509.get_pubkey()
+    # public_key = OpenSSL.crypto.dump_publickey(OpenSSL.crypto.FILETYPE_PEM, pk)
+    return 'public_key'
 
 
 def get_file_content_safety(filename):
