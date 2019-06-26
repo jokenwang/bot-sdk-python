@@ -17,6 +17,7 @@ class ExecuteCommands(BaseDirective):
     def __init__(self):
         super(ExecuteCommands, self).__init__('DPL.ExecuteCommands')
         self.data['commands'] = list()
+        self.data['token'] = self.gen_token()
 
     def set_commands(self, commands):
         if isinstance(commands, BaseCommand):

@@ -17,6 +17,7 @@ class RenderDocument(BaseDirective):
 
     def __init__(self):
         super(RenderDocument, self).__init__('DPL.RenderDocument')
+        self.data['token'] = self.gen_token()
 
     def set_document(self, document):
         if isinstance(document, Document):
