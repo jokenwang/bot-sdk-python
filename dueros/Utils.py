@@ -32,11 +32,18 @@ class Utils:
     @staticmethod
     def checkKeysInDict(dicts, keys):
 
+        last_key = keys[len(keys) - 1]
         if isinstance(dicts, dict):
             for key in keys:
                 if key in dicts:
                     dicts = dicts[key]
-                    continue
+                    if last_key == key:
+                        if dicts is None:
+                            return False
+                        else:
+                            return True
+                    else:
+                        continue
                 return False
 
     @staticmethod

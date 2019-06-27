@@ -21,7 +21,7 @@ class SetPageCommand(BaseCommand):
     def __init__(self):
         super(SetPageCommand, self).__init__('SetPage')
 
-    def set_position(self, position):
+    def set_position(self, position='relative'):
         """
         设置属性值
         :param position:相对或者绝对
