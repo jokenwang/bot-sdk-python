@@ -274,7 +274,7 @@ class Response(Base):
 
     def get_template_token(self):
 
-        data = self._request.getData()
+        data = self.request.getData()
         token = ''
         if data and Utils.checkKeysInDict(data, ['context', 'Screen', 'token']):
             token = Utils.get_dict_data_by_keys(data, ['context', 'Screen', 'token'])
