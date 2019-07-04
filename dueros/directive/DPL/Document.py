@@ -10,6 +10,7 @@
 """
 import json
 import logging
+from dueros.Utils import Utils
 
 
 class Document:
@@ -28,6 +29,16 @@ class Document:
 
         if isinstance(doc, dict):
             self.data = doc
+
+    def set_document_duration(self, duration):
+        """
+        设置页面停留时间
+        :param duration:
+        :return:
+        """
+
+        if Utils.is_numeric(duration):
+            self.data['duration'] = duration
 
     def get_data(self):
         return self.data
