@@ -15,7 +15,7 @@ import hashlib
 import json
 
 
-class Utils:
+class Utils(object):
 
     @staticmethod
     def checkKeyInDict(dicts, key):

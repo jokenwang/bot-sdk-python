@@ -13,7 +13,7 @@ import logging
 from dueros.Utils import Utils
 
 
-class Document:
+class Document(object):
 
     def __init__(self, doc=None):
         self.data = dict()

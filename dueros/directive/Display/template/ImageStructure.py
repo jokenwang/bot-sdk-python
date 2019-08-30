@@ -10,7 +10,7 @@
 """
 
 
-class ImageStructure:
+class ImageStructure(object):
 
     def __init__(self):
         self.data = {}

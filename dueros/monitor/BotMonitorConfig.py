@@ -10,7 +10,7 @@
 """
 
 
-class BotMonitorConfig:
+class BotMonitorConfig(object):
 
     @staticmethod
     def getHost():

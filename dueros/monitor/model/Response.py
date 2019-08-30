@@ -12,7 +12,7 @@ from dueros.monitor.Utils import Utils
 import json
 
 
-class Response:
+class Response(object):
 
     def __init__(self, response_data):
         if not isinstance(response_data, dict):

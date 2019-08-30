@@ -20,7 +20,7 @@ from concurrent.futures import ThreadPoolExecutor
 from multiprocessing import cpu_count
 
 
-class BotMonitor:
+class BotMonitor(object):
 
     # process_executor = ProcessPoolExecutor(max_workers=1)
     thread_executor = ThreadPoolExecutor(max_workers=cpu_count())

@@ -6,7 +6,7 @@
 # create_time: 2018/1/3
 
 
-class Intercept:
+class Intercept(object):
 
     def preprocess(self, bot):
         '''

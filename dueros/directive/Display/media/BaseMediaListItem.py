@@ -11,7 +11,7 @@
 from dueros.Utils import Utils
 
 
-class BaseMediaListItem:
+class BaseMediaListItem(object):
     """
     BaseListItem类
     """

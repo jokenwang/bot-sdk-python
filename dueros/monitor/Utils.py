@@ -12,7 +12,7 @@ import json
 import time
 
 
-class Utils:
+class Utils(object):
 
     @staticmethod
     def checkKeyInDict(dicts, key):

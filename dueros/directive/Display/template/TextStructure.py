@@ -9,7 +9,8 @@
     desc:pass
 """
 
-class TextStructure:
+
+class TextStructure(object):
 
     def __init__(self):
         super(TextStructure, self).__init__()

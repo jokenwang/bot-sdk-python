@@ -12,7 +12,7 @@ from dueros.directive.AudioPlayer.Control.BaseButton import BaseButton
 from dueros.directive.Base.BasePlayerInfoContent import BasePlayerInfoContent
 
 
-class TraitPlayerInfo:
+class TraitPlayerInfo(object):
 
     def __init__(self):
         self.data = {}

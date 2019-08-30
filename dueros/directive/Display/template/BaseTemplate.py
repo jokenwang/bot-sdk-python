@@ -14,7 +14,7 @@ from dueros.directive.Display.template.ImageStructure import ImageStructure
 from dueros.directive.Display.template.TextType import TextType
 
 
-class BaseTemplate:
+class BaseTemplate(object):
 
     def __init__(self, field):
         super(BaseTemplate, self).__init__()

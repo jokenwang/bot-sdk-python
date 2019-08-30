@@ -12,7 +12,7 @@
 from dueros.monitor.Utils import Utils
 
 
-class Request:
+class Request(object):
 
     def __init__(self, data):
         self.data = data

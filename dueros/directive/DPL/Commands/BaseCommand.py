@@ -10,7 +10,7 @@
 """
 
 
-class BaseCommand:
+class BaseCommand(object):
     """
     命令基类
     """

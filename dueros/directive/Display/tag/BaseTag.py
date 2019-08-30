@@ -11,7 +11,7 @@
 from dueros.directive.Display.tag.TagTypeEnum import TagTypeEnum
 
 
-class BaseTag:
+class BaseTag(object):
 
     def __init__(self, tag_type, text=''):
 

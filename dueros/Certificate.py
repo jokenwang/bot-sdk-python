@@ -191,5 +191,5 @@ IYdYV3QpYohFszH3wQIDAQAB
 
     signData = sign(data)
     print(sign(data))
-    print(verify(data, signData))
+    # print(verify(data, signData))
     pass
