@@ -13,6 +13,7 @@
 * directive目录生成指令相关比如：浏览器指令、音频指令、DPL指令
 * tests 目录存放本地测试代码
 * samples 示例demo，其中包括guess_num、audio_play、personal_income_tax
+* 新增Docker镜像
 
 ###
 **注意:Bot内的属性变为私有，无法再通过self获取request、nlu等属性，对应
@@ -31,6 +32,11 @@ pip install dueros-bot
 * 通过GitHub获取最新源码
 ```
 git clone https://github.com/jokenwang/bot-sdk-python.git
+```
+
+3、 Docker镜像
+```
+docker pull tokensss/dueros:v1.0
 ```
 
 * 通过Pypi获取最新发布版本源码
