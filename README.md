@@ -34,11 +34,6 @@ pip install dueros-bot
 git clone https://github.com/jokenwang/bot-sdk-python.git
 ```
 
-3、 Docker镜像
-```
-docker pull tokensss/dueros:v1.0
-```
-
 * 通过Pypi获取最新发布版本源码
 
     * dueros-bot-2.1.2 [Pypi地址](https://pypi.python.org/pypi/dueros-bot/2.1.2)
@@ -77,6 +72,12 @@ def createRemind(self):
         }
 ```
 第一个参数代表意图名称，第二个参数代表意图命中后的回调函数，这里addHandler可以用来建立intent和handler的映射，第一个参数意图名称是条件，如果满足则执行对应的回调函数(第二个参数)。 其中回调函数中，self指向当前的Bot，getSlots继承自父类Bot，通过slot名字来获取对应的槽位值。回调函数返回值是一个字典，可以包含多个字段，比如：card、directives、outputSpeech、reprompt等,下面会一一给出示例。
+
+
+### Docker镜像
+```
+docker pull tokensss/dueros:v1.0
+```
 
 ### 设备相关(Bot方法)
 * 客户端是否支持屏幕展示
