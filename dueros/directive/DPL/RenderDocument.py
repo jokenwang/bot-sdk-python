@@ -5,10 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
-
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.DPL.Document import Document
 
@@ -26,8 +22,3 @@ class RenderDocument(BaseDirective):
     def set_data_source(self, data_source):
         if data_source:
             self.data['dataSources'] = data_source
-
-
-
-if __name__ == '__main__':
-    pass

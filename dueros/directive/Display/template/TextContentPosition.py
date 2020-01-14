@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2018/5/28
 
-"""
-    desc:pass
-"""
 from enum import Enum, unique
 
 
@@ -21,7 +18,3 @@ class TextContentPosition(Enum):
     def inEnum(position):
 
         return position in TextContentPosition.__members__.values()
-
-if __name__ == '__main__':
-
-    pass

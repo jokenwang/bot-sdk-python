@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
 from dueros.directive.DPL.Commands.BaseCommand import BaseCommand
 from dueros.Utils import Utils
 
@@ -51,10 +48,3 @@ class SequentialCommand(BaseCommand):
             self.data['commands'].append(commands.get_data())
         elif isinstance(commands, list):
             self.data['commands'] = list(map(lambda value: value.get_data(), list(filter(lambda value: isinstance(value, BaseCommand), commands))))
-
-
-if __name__ == '__main__':
-
-    a = '1.3'
-    print(a.isdigit())
-    pass

@@ -5,10 +5,6 @@
 # author:jack
 # create_time: 2018/5/27
 
-"""
-    desc:pass
-"""
-
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
 
@@ -30,7 +26,3 @@ class RenderTemplate(BaseDirective):
         """
         if isinstance(template, BaseTemplate):
             self.data['template'] = template.get_data()
-
-
-if __name__ == '__main__':
-    pass

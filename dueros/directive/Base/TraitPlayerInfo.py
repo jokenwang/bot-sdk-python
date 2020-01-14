@@ -5,9 +5,7 @@
 # author:jack
 # create_time: 2018/9/19
 
-"""
-    desc:pass
-"""
+
 from dueros.directive.AudioPlayer.Control.BaseButton import BaseButton
 from dueros.directive.Base.BasePlayerInfoContent import BasePlayerInfoContent
 

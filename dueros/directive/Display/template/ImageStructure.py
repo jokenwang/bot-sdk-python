@@ -5,10 +5,6 @@
 # author:jack
 # create_time: 2018/5/26
 
-"""
-    desc:pass
-"""
-
 
 class ImageStructure(object):
 
@@ -30,6 +26,3 @@ class ImageStructure(object):
 
     def get_data(self):
         return self.data
-
-if __name__ == '__main__':
-    pass

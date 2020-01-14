@@ -5,10 +5,6 @@
 # author:jack
 # create_time: 2018/5/26
 
-"""
-ListItem
-详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/display-template_markdown#ListItem
-"""
 from dueros.directive.Display.template.BaseTemplate import BaseTemplate
 from dueros.directive.Display.template.TextType import TextType
 from dueros.directive.Display.tag.BaseTag import BaseTag
@@ -16,6 +12,10 @@ from dueros.Utils import Utils
 
 
 class ListTemplateItem(BaseTemplate):
+    """
+    ListItem
+    详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/display-template_markdown#ListItem
+    """
 
     def __init__(self):
         super(ListTemplateItem, self).__init__(['token'])
@@ -32,8 +32,7 @@ class ListTemplateItem(BaseTemplate):
             self.data['textContent'] = {}
         primary_text_structure = self.create_text_structure(primary_text, TextType.PLAIN_TEXT)
         if primary_text_structure:
-
-           self.data['textContent']['primaryText'] = primary_text_structure.get_data()
+            self.data['textContent']['primaryText'] = primary_text_structure.get_data()
 
     def set_plain_secondary_text(self, secondary_text):
         """
@@ -46,7 +45,6 @@ class ListTemplateItem(BaseTemplate):
         secondary_text_structure = self.create_text_structure(secondary_text, TextType.PLAIN_TEXT)
         if secondary_text_structure:
             self.data['textContent']['secondaryText'] = secondary_text_structure.get_data()
-        pass
 
     def set_tertiary_text(self, tertiary_text):
         """
@@ -59,7 +57,6 @@ class ListTemplateItem(BaseTemplate):
         tertiary_text_structure = self.create_text_structure(tertiary_text, TextType.PLAIN_TEXT)
         if tertiary_text_structure:
             self.data['textContent']['tertiaryText'] = tertiary_text_structure.get_data()
-        pass
 
     def set_content(self, text):
         text_structure = self.create_text_structure(text)
@@ -96,13 +93,8 @@ class ListTemplateItem(BaseTemplate):
         if anchor_word and isinstance(anchor_word, str):
             self.data['anchorWord'] = anchor_word
 
+
 def get_image_tag_data(tags):
     if not tags or not isinstance(tags, list):
         return []
     return list(map(lambda value: value.get_data(), tags))
-
-
-if __name__ == '__main__':
-
-
-    pass

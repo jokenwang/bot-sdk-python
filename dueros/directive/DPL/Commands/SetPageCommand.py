@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
 import enum
 from dueros.Utils import Utils
 from dueros.directive.DPL.Commands.BaseCommand import BaseCommand
@@ -47,7 +44,3 @@ class SetPageCommand(BaseCommand):
 class SetPageCommandPositionMode(enum.Enum):
     RELATIVE = 'relative'
     ABSOLUTE = 'absolute'
-
-
-if __name__ == '__main__':
-    pass

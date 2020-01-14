@@ -5,10 +5,6 @@
 # author:jack
 # create_time: 2018/5/26
 
-"""
-    desc:pass
-"""
-
 from dueros.directive.Display.template.TextStructure import TextStructure
 from dueros.directive.Display.template.ImageStructure import ImageStructure
 from dueros.directive.Display.template.TextType import TextType
@@ -91,13 +87,4 @@ class BaseTemplate(object):
         else:
             def function(*args):
                 print('不支持', operation, field)
-
             return function
-
-if __name__ == '__main__':
-
-    bodytemplate = BaseTemplate(['token'])
-    bodytemplate.set_token('a')
-    bodytemplate.set_background_image('aaaa')
-    print(bodytemplate.get_data())
-    pass

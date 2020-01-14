@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2018/5/31
 
-"""
-    desc:pass
-"""
 from dueros.directive.BaseDirective import BaseDirective
 
 
@@ -21,14 +18,5 @@ class Hint(BaseDirective):
 
         if type(text) == list:
             for value in text:
-                item = {}
-                item['type'] = 'PlainText'
-                item['text'] = value
+                item = {'type': 'PlainText', 'text': value}
                 self.data['hints'].append(item)
-
-
-if __name__ == '__main__':
-
-    hint = Hint('aaa')
-    print(hint.get_data())
-    pass

@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-06-25
 
-"""
-    desc:pass
-"""
 import enum
 from dueros.directive.DPL.Commands.BaseCommand import BaseCommand
 
@@ -32,7 +29,3 @@ class ControlMediaCommandType(enum.Enum):
     PREVIOUS = 'previous'
     SCREEN_BULLET_ON = 'screenBulletOn'
     SCREEN_BULLET_OFF = 'screenBulletOff'
-
-
-if __name__ == '__main__':
-    pass

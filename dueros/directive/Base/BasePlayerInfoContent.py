@@ -5,10 +5,6 @@
 # author:jack
 # create_time: 2018/9/17
 
-"""
-    desc:pass
-"""
-
 
 class BasePlayerInfoContent(object):
 
@@ -17,6 +13,7 @@ class BasePlayerInfoContent(object):
 
     def get_data(self):
         return self.data
+
 
 if __name__ == '__main__':
     pass

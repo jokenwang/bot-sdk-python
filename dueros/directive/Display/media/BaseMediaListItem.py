@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2018/9/1
 
-"""
-    desc:pass
-"""
 from dueros.Utils import Utils
 
 
@@ -17,10 +14,7 @@ class BaseMediaListItem(object):
     """
 
     def __init__(self, title, title_subtext1):
-        self.data = {}
-        self.data['title'] = title
-        self.data['titleSubtext1'] = title_subtext1
-        self.data['token'] = Utils.gen_token()
+        self.data = {'title': title, 'titleSubtext1': title_subtext1, 'token': Utils.gen_token()}
 
     def set_token(self, token):
         if token:
@@ -67,7 +61,3 @@ class BaseMediaListItem(object):
 
     def get_data(self):
         return self.data
-
-
-if __name__ == '__main__':
-    pass

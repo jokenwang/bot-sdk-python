@@ -7,10 +7,9 @@
 """
 语义解析
 """
-from dueros.Base import Base
 
 
-class Nlu(Base):
+class Nlu(object):
 
     def __init__(self, data):
 

@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
 from dueros.directive.DPL.Commands.BaseCommand import BaseCommand
 
 
@@ -18,7 +15,3 @@ class SendEventCommand(BaseCommand):
 
     def __init__(self):
         super(SendEventCommand, self).__init__('SendEvent')
-
-
-if __name__ == '__main__':
-    pass

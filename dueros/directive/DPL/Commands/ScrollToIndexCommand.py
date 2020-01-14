@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
 import enum
 from dueros.Utils import Utils
 from dueros.directive.DPL.Commands.BaseCommand import BaseCommand
@@ -54,8 +51,3 @@ class ScrollCommandAlign(enum.Enum):
     CENTER = 'center'
     LAST = 'last'
     VISIBLE = 'visible'
-
-
-
-if __name__ == '__main__':
-    pass

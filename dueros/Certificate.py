@@ -22,14 +22,14 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
 
-class Certificate(Base):
+class Certificate(object):
 
     def __init__(self, environ, request_body, private_key_content=''):
         """
         私钥内容,使用统计功能必须要提供
         :param environ: 环境上下文
-        :param requestBody: 请求数据
-        :param privateKeyContent:
+        :param request_body: 请求数据
+        :param private_key_content:
         """
 
         super(Certificate, self).__init__()

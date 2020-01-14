@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
 import enum
 from dueros.Utils import Utils
 from dueros.directive.DPL.Commands.BaseCommand import BaseCommand
@@ -137,7 +134,3 @@ class AnimationEasingMode(enum.Enum):
 class AnimationRepeatMode(enum.Enum):
     RESTART = 'restart'
     REVERSE = 'reverse'
-
-
-if __name__ == '__main__':
-    pass

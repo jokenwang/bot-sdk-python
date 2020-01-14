@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2018/9/19
 
-"""
-    desc:pass
-"""
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.Base.TraitPlayerInfo import TraitPlayerInfo
 
@@ -24,11 +21,7 @@ class BaseRenderPlayerInfo(TraitPlayerInfo, BaseDirective):
     def set_token(self, token):
         if token:
             self.data['token'] = token
-    pass
 
 
 if __name__ == '__main__':
-
-    t = BaseRenderPlayerInfo('aaa', None)
-    print(t.get_data())
     pass

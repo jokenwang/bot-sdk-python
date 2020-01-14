@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2018/9/1
 
-"""
-    desc:pass
-"""
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.Display.media.MediaPlayBehaviorEnum import MediaPlayBehaviorEnum
 from dueros.directive.Display.media.AudioItem import AudioItem
@@ -15,7 +12,7 @@ from dueros.directive.Display.media.AudioItem import AudioItem
 
 class RenderAudioList(BaseDirective):
 
-    def __init__(self, title, behavior = MediaPlayBehaviorEnum.REPLACE):
+    def __init__(self, title, behavior=MediaPlayBehaviorEnum.REPLACE):
         super(RenderAudioList, self).__init__('Display.RenderAudioList')
 
         data = {
@@ -46,9 +43,3 @@ class RenderAudioList(BaseDirective):
         if audio_item and isinstance(audio_item, AudioItem):
             self.data['audioItems'].append(audio_item.get_data())
             self.data['size'] = self.data['size'] + 1
-
-
-if __name__ == '__main__':
-
-
-    pass

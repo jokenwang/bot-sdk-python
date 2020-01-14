@@ -20,7 +20,6 @@ class RecordSpeech(BaseDirective):
     def set_token(self, token):
         if token and isinstance(token, str):
             self.data['token'] = token
-    pass
 
 
 if __name__ == '__main__':

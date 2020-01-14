@@ -5,10 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
-
 
 class BaseCommand(object):
     """
@@ -33,6 +29,3 @@ class BaseCommand(object):
     def get_data(self):
         return self.data
 
-
-if __name__ == '__main__':
-    pass

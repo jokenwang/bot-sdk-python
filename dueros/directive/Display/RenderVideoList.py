@@ -5,16 +5,14 @@
 # author:jack
 # create_time: 2018/9/1
 
-"""
-    desc:pass
-"""
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.Display.media.MediaPlayBehaviorEnum import MediaPlayBehaviorEnum
 from dueros.directive.Display.media.VideoItem import VideoItem
 
+
 class RenderVideoList(BaseDirective):
 
-    def __init__(self, title, behavior = MediaPlayBehaviorEnum.REPLACE):
+    def __init__(self, title, behavior=MediaPlayBehaviorEnum.REPLACE):
         super(RenderVideoList, self).__init__('Display.RenderVideoList')
 
         data = {
@@ -45,7 +43,3 @@ class RenderVideoList(BaseDirective):
         if video_item and isinstance(video_item, VideoItem):
             self.data['videoItems'].append(video_item.get_data())
             self.data['size'] = self.data['size'] + 1
-
-
-if __name__ == '__main__':
-    pass

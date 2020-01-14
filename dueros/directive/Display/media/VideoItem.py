@@ -5,10 +5,6 @@
 # author:jack
 # create_time: 2018/9/1
 
-"""
-    desc:pass
-"""
-
 from dueros.directive.Display.media.BaseMediaListItem import BaseMediaListItem
 from dueros.Utils import Utils
 
@@ -22,6 +18,3 @@ class VideoItem(BaseMediaListItem):
         milliseconds = Utils.convert_number(milliseconds)
         if milliseconds:
             self.data['mediaLengthInMilliseconds'] = milliseconds
-
-if __name__ == '__main__':
-    pass

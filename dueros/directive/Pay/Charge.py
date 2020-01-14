@@ -5,15 +5,15 @@
 # author:jack
 # create_time: 2018/7/20
 
-"""
-DuerOS 支付协议
-详见：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-pay/pay_markdown
-"""
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.Utils import Utils
 
 
 class Charge(BaseDirective):
+    """
+    DuerOS 支付协议
+    详见：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-pay/pay_markdown
+    """
 
     CODE_CNY = 'CNY'
 
@@ -104,7 +104,3 @@ class Charge(BaseDirective):
         """
         if isinstance(seller_note, str) and seller_note:
             self.data['payload']['chargeBaiduPay']['sellerOrderAttributes']['sellerNote'] = seller_note
-
-
-if __name__ == '__main__':
-    pass

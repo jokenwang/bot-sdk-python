@@ -39,7 +39,7 @@ class BaseCard(object):
         """
         设置卡片链接
         :param url: 比如:http(s)://....
-        :param anchorText: 链接显示的文字
+        :param anchor_text: 链接显示的文字
         :return:
         """
 

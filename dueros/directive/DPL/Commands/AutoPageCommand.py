@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
 from dueros.Utils import Utils
 from dueros.directive.DPL.Commands.BaseCommand import BaseCommand
 
@@ -33,7 +30,3 @@ class AutoPageCommand(BaseCommand):
 
         if Utils.is_numeric(duration):
             self.data['durationInMillisecond'] = duration
-
-
-if __name__ == '__main__':
-    pass

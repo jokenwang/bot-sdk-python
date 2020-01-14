@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.DPL.Commands.BaseCommand import BaseCommand
 
@@ -25,8 +22,3 @@ class ExecuteCommands(BaseDirective):
         elif isinstance(commands, list):
             self.data['commands'] = list(map(lambda value: value.get_data(), list(
                 filter(lambda value: isinstance(value, BaseCommand), commands))))
-
-
-if __name__ == '__main__':
-
-    pass

@@ -5,13 +5,13 @@
 # author:jack
 # create_time: 2018/9/17
 
-"""
-    tag基类
-"""
 from dueros.directive.Display.tag.TagTypeEnum import TagTypeEnum
 
 
 class BaseTag(object):
+    """
+        tag基类
+    """
 
     def __init__(self, tag_type, text=''):
 
@@ -47,7 +47,3 @@ class BaseTag(object):
 
     def get_data(self):
         return self.data
-
-
-if __name__ == '__main__':
-    pass

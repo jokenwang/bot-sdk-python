@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
 from dueros.directive.DPL.Commands.BaseCommand import BaseCommand
 
 
@@ -29,7 +26,3 @@ class ScrollCommand(BaseCommand):
 
         if isinstance(distance, str):
             self.data['distance'] = distance
-
-
-if __name__ == '__main__':
-    pass

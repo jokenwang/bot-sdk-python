@@ -16,7 +16,8 @@
 #配置日志
 # Log.init_log(constants.LOG_PATH)
 
-from samples.DPL import DPLBot as Bot
+from samples.DPL.DPLBot import DPLBot
+
 
 def application(environ, start_response):
     try:
@@ -28,17 +29,17 @@ def application(environ, start_response):
     if not request_body:
         return writeResponse(start_response, '未获取到请求数据')
 
-    bot = Bot(request_body)
+    bot = DPLBot(request_body)
 
-    #验证签名enableVerifyRequestSign  disableVerifyRequestSign 关闭验证签名
+    # 验证签名enableVerifyRequestSign  disableVerifyRequestSign 关闭验证签名
     # bot.init_certificate(environ).enable_verify_request_sign()
     # bot.initCertificate(environ).disableVerifyRequestSign()
 
     #数据统计相关配置
     #是否开启数据统计功能
     # bot.set_monitor_enabled(True)
-    #设置私钥和统计模式(0:DEBUG模式, 1:ONLINE模式)
-    # bot.set_environment_info(priKey, 0)
+    # 设置私钥和统计模式(0:DEBUG模式, 1:ONLINE模式)
+    # bot.set_environment_info(priKey, 1)
     body_str = bot.run()
     print(body_str)
     return writeResponse(start_response, body_str)

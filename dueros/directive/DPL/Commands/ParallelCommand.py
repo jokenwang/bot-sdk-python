@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
 from dueros.Utils import Utils
 from dueros.directive.DPL.Commands.BaseCommand import BaseCommand
 
@@ -53,7 +50,3 @@ class ParallelCommand(BaseCommand):
             self.data['commands'].append(commands.get_data())
         elif isinstance(commands, list):
             self.data['commands'] = list(map(lambda value: value.get_data(), list(filter(lambda value: isinstance(value, BaseCommand), commands))))
-
-
-if __name__ == '__main__':
-    pass

@@ -46,13 +46,13 @@ def init_log(log_path, level=logging.INFO, when="D", backup=7,
         IOError: fail to open log file
     """
 
-    formatter = logging.Formatter(format, datefmt)
-    logger = logging.getLogger()
-    logger.setLevel(level)
-
     dir = os.path.dirname(log_path)
     if not os.path.isdir(dir):
         os.makedirs(dir)
+
+    formatter = logging.Formatter(format, datefmt)
+    logger = logging.getLogger()
+    logger.setLevel(level)
 
     handler = logging.handlers.TimedRotatingFileHandler(log_path + ".log",
                                                         when=when,
@@ -68,6 +68,6 @@ def init_log(log_path, level=logging.INFO, when="D", backup=7,
     handler.setFormatter(formatter)
     logger.addHandler(handler)
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     pass

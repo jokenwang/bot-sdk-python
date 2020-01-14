@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
 from dueros.directive.DPL.Commands.BaseCommand import BaseCommand
 
 
@@ -24,7 +21,3 @@ class SetStateCommand(BaseCommand):
 
         if value:
             self.data['value'] = value
-
-
-if __name__ == '__main__':
-    pass

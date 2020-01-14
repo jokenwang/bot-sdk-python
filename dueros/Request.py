@@ -4,17 +4,14 @@
 # description:
 # author:jack
 # create_time: 2017/12/30
-"""
-DuerOS对Bot的请求封装
-"""
+
 import json
 from dueros.Nlu import Nlu
 from dueros.Session import Session
-from dueros.Base import Base
 from dueros.Utils import Utils
 
 
-class Request(Base):
+class Request(object):
 
     """
     将数据封装为Request对象, 通过Request来获取相应的请求数据
@@ -25,7 +22,7 @@ class Request(Base):
 
     def __init__(self, request_data):
         """
-        :param data:  请求数据
+        :param request_data:  请求数据
         """
         super(Request, self).__init__()
         if isinstance(request_data, str):

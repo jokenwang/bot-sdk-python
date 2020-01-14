@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
 import json
 import logging
 from dueros.Utils import Utils
@@ -61,7 +58,3 @@ class Document(object):
                 logging.error(fileError)
         else:
             logging.error('path:%s is error' % path)
-
-
-if __name__ == '__main__':
-    pass

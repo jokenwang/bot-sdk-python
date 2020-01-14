@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2018/5/29
 
-"""
-    desc:pass
-"""
 from enum import Enum, unique
 
 @unique
@@ -19,9 +16,3 @@ class StreamFormatEnum(Enum):
     @staticmethod
     def inEnum(streamFormat):
         return streamFormat in StreamFormatEnum.__members__.values()
-
-    pass
-
-
-if __name__ == '__main__':
-    pass

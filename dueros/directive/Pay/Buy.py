@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-07-04
 
-"""
-    desc:pass
-"""
 from dueros.directive.BaseDirective import BaseDirective
 
 
@@ -21,7 +18,3 @@ class Buy(BaseDirective):
         if token:
             self.data['token'] = token
         self.data['payload']['productId'] = product_id
-
-
-if __name__ == '__main__':
-    pass

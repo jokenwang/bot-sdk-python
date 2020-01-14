@@ -5,16 +5,16 @@
 # author:jack
 # create_time: 2018/5/31
 
-"""
-VideoPlayer视频播放
-详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/videoplayer_markdown#VideoPlayer.Play%E6%8C%87%E4%BB%A4
-"""
 from dueros.directive.BaseDirective import BaseDirective
 from dueros.directive.AudioPlayer.PlayBehaviorEnum import PlayBehaviorEnum
 from dueros.Utils import Utils
 
 
 class VideoPlayer(BaseDirective):
+    """
+    VideoPlayer视频播放
+    详见文档：https://dueros.baidu.com/didp/doc/dueros-bot-platform/dbp-custom/videoplayer_markdown#VideoPlayer.Play%E6%8C%87%E4%BB%A4
+    """
 
     def __init__(self, url, play_behavior=PlayBehaviorEnum.REPLACE_ALL):
         super(VideoPlayer, self).__init__('VideoPlayer.Play')
@@ -116,7 +116,3 @@ class VideoPlayer(BaseDirective):
         """
         if isinstance(title, str):
             self.data['videoItem']['title'] = title
-
-
-if __name__ == '__main__':
-    pass

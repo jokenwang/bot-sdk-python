@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2019-06-13
 
-"""
-    desc:pass
-"""
 from dueros.directive.DPL.Commands.BaseCommand import BaseCommand
 from dueros.directive.DPL.Document import Document
 
@@ -33,7 +30,3 @@ class UpdateComponentCommand(BaseCommand):
 
         if isinstance(document, Document):
             self.data['document'] = document.get_data()
-
-
-if __name__ == '__main__':
-    pass
