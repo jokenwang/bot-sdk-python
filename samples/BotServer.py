@@ -5,9 +5,6 @@
 # author:jack
 # create_time: 2018/1/3
 
-"""
-    desc:pass
-"""
 #默认使用个税查询技能， 如果需要切换自己的技能  注意需要要更换成自己的Bot
 # from dueros.samples.personal_income_tax.Bot import Bot
 # from Bot import Bot
@@ -59,6 +56,7 @@ def writeResponse(start_response, body_str):
 def callback(data):
     print(data)
 
+# 私钥
 priKey = '''-----BEGIN RSA PRIVATE KEY-----
 MIICXQIBAAKBgQDKoeRzRVf8WoRSDYYqUzThpYCr90jfdFwTSXHJ526K8C6TEwdT
 UA+CFPQPRUg9jrYgFcown+J2myzO8BRLynD+XHb9ilLb49Mqk2CvDt/yK32lgHv3
@@ -74,3 +72,11 @@ PjGgsKCRuj6NnOcGDSbDWIitKZhnwfqYkAApfsiBQkYGO0LLaDIeAWG2KoCB9/6e
 lAQZnYPpOcCubWyDq4ECQQCrRDf0gVjPtipnPPS/sGN8m1Ds4znDDChhRlw74MI5
 FydvHFumChPe1Dj2I/BWeG1gA4ymXV1tE9phskV3XZfq
 -----END RSA PRIVATE KEY-----'''
+
+# 公钥
+pubKey = '''-----BEGIN PUBLIC KEY-----
+MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDKoeRzRVf8WoRSDYYqUzThpYCr
+90jfdFwTSXHJ526K8C6TEwdTUA+CFPQPRUg9jrYgFcown+J2myzO8BRLynD+XHb9
+ilLb49Mqk2CvDt/yK32lgHv3QVx14Dpb6h8isjncSF965fxBxlHGbvPwnHkJ9etR
+IYdYV3QpYohFszH3wQIDAQAB
+-----END PUBLIC KEY-----'''
