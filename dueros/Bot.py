@@ -947,8 +947,3 @@ class Bot(object):
                 return None
         else:
             logging.error('暂不支持其他类型的请求:', method)
-            pass
-
-
-if __name__ == '__main__':
-    pass
