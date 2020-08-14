@@ -812,7 +812,7 @@ pip install -r requirements.txt
 
 # 自愿资助
 * 如果感觉还不错，可以用微信扫码请我喝杯咖啡，谢谢！
-* ![image](https://github.com/jokenwang/book-mybatis/blob/master/wt.png)
+* ![image](http://www.aiaibot.xyz/WX_SK.png)
 
 # Known Users
 按照登记顺序排序，更多接入技能，欢迎在 https://github.com/jokenwang/bot-sdk-python/issues/16 登记（仅供用户参考）
