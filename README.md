@@ -1,6 +1,9 @@
 # bot-sdk
 
 
+# 自愿资助
+* 如果感觉还不错，可以用微信扫码请我喝杯咖啡，谢谢！
+* ![image](http://www.aiaibot.xyz/WX_SK.png)
 
 ### SDK结构介绍
 * Bot.py为SDK的入口，用于接收DuerOS请求并返回结果
@@ -14,6 +17,8 @@
 * tests 目录存放本地测试代码
 * samples 示例demo，其中包括guess_num、audio_play、personal_income_tax
 * 新增Docker镜像
+
+
 
 ###
 **注意:Bot内的属性变为私有，无法再通过self获取request、nlu等属性，对应
@@ -809,10 +814,6 @@ pip install -r requirements.txt
 # 变更记录
 
 * 版本变更详见变更记录 CHANGELOG.md
-
-# 自愿资助
-* 如果感觉还不错，可以用微信扫码请我喝杯咖啡，谢谢！
-* ![image](http://www.aiaibot.xyz/WX_SK.png)
 
 # Known Users
 按照登记顺序排序，更多接入技能，欢迎在 https://github.com/jokenwang/bot-sdk-python/issues/16 登记（仅供用户参考）
